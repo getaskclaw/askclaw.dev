@@ -301,20 +301,139 @@ Those belong in a shared DB/API.
 
 ---
 
+## 3. MemPalace/mempalace — local-first AI memory palace
+
+Source:
+
+- Repo: <https://github.com/MemPalace/mempalace>
+- Local clone inspected: `/home/computebox/work/kb-source-analysis/mempalace`
+- Branch inspected: `develop`
+- Commit inspected: `fdfaf01`
+- Package version: `3.3.3`
+
+### What it implements
+
+MemPalace is closer to a real memory substrate than the LLM Wiki sources. It ships a Python package, CLI, ChromaDB-backed local store, and MCP server for agents.
+
+Core model:
+
+```text
+wing    = person / project / top-level domain
+room    = topic within a wing
+closet  = compact index / pointer layer
+drawer  = verbatim stored text chunk
+tunnel  = cross-wing room connection
+KG      = temporal entity relationship graph in SQLite
+```
+
+The default backend is ChromaDB, behind a pluggable backend interface. Core operations are local-first and do not require an API key. Optional LLM paths exist for richer closet generation or reranking, but the advertised core retrieval path is API-free.
+
+### Important implementation details found in code
+
+- `mempalace/backends/base.py` defines a backend abstraction; `mempalace/backends/chroma.py` implements the current ChromaDB backend.
+- `mempalace/miner.py` mines project files into verbatim drawers with metadata. It respects `.gitignore`, skips generated/cache directories, chunks files, and serializes writes to the same palace with file locks.
+- `mempalace/convo_miner.py` mines conversation exports into exchange-pair chunks.
+- `mempalace/normalize.py` supports Claude.ai JSON, ChatGPT export, Claude Code JSONL, OpenAI Codex CLI JSONL, Gemini CLI JSONL, Slack JSON, and plain text.
+- `mempalace/searcher.py` uses hybrid retrieval: vector search plus BM25 reranking, closet boosting, neighbor expansion, and a SQLite BM25 fallback when HNSW/vector state is unsafe.
+- `mempalace/knowledge_graph.py` provides a local SQLite temporal KG with add/query/invalidate/timeline semantics.
+- `mempalace/mcp_server.py` exposes 29 MCP tools for read/write, KG, graph navigation, drawer management, agent diaries, hooks, and reconnect.
+- Write operations are recorded through a redacted write-ahead log in `~/.mempalace/wal/write_log.jsonl`.
+- The docs describe a 4-layer memory stack: L0 identity, L1 essential story, L2 filtered recall, L3 deep search.
+
+### Verification run
+
+Local setup and tests were run in the clone with an isolated `.venv`.
+
+```text
+pip install -e ".[dev]"
+python -m pytest -q
+1461 passed, 1 skipped, 106 deselected, 1 warning in 28.26s
+
+ruff check .
+All checks passed!
+
+ruff format --check .   # with CI-pinned ruff 0.4.10
+115 files already formatted
+```
+
+One environment note: with the default `ulimit -n` of `1024`, the first full test run hit ChromaDB/SQLite open-file exhaustion. Re-running with `ulimit -n 8192` passed. That is operationally relevant for large local-memory workloads or CI containers.
+
+Codebase footprint, excluding venv/cache/build dirs:
+
+```text
+Tracked files: 280
+First-party package + tests: 113 Python files, ~24k Python code lines
+Full repo includes large benchmark/result JSON files and website/docs assets
+```
+
+### Strengths for AskClaw / English Coach
+
+- Strong local-first privacy posture: useful for personal transcripts, agent diaries, and sensitive user context.
+- Verbatim storage is a good antidote to summary drift; agents can cite original drawer text.
+- MCP interface is immediately agent-friendly.
+- Hybrid vector + BM25 search is more practical than pure vector search for logs, code, and language-learning snippets.
+- Temporal KG is relevant for facts that change over time.
+- Agent diary tools map well to AskClaw specialist agents such as reviewer, ops, architect, or coach.
+- The wake-up stack is a useful pattern: small always-loaded context plus on-demand recall.
+- Ingestion adapters for Claude/Codex/Gemini/ChatGPT/Slack are directly relevant to compiling multi-agent work history.
+
+### Gaps for English Coach
+
+MemPalace is a memory/retrieval system, not a learner-progress product.
+
+It does not directly provide:
+
+- spaced-repetition scheduling
+- review cards with `next_due`, ease, lapses, and interval state
+- per-learner term exposure counters
+- mistake/correction lifecycle
+- browser-extension API
+- account/auth/permissions for multiple learners
+- distributed locking across VPSes or many agent hosts
+- transactional event append API for multi-agent writes
+
+Agent diaries are separated by agent name, which is good for specialist continuity but not enough for shared learner state. For English Coach, the learner's progress must belong to the learner, not to each agent's diary wing.
+
+### Fit for English Coach / AskClaw
+
+MemPalace is a strong candidate for the **local semantic memory and agent-history layer**, not the canonical learner-progress database.
+
+Good adaptation:
+
+```text
+English Coach DB/API
+  = learner events, review state, permissions, idempotency
+
+MemPalace-like memory index
+  = verbatim transcripts, agent diaries, semantic recall, source-backed context
+
+LLM Wiki
+  = compiled explanations, grammar concepts, reusable notes
+
+Chrome extension
+  = search/save/review UI over the DB/API, optionally querying the memory index
+```
+
+For AskClaw, MemPalace is more reusable as an **operator memory vault**: mine agent sessions, PR reviews, incidents, user decisions, and research sources, then expose them to agents through MCP search.
+
+For English Coach, copy the ideas, not the whole data model.
+
+---
+
 ## Comparison against English Coach shared-KB design
 
-| Dimension | Karpathy LLM Wiki | Hermes `llm-wiki` skill | English Coach shared KB need |
-|---|---|---|---|
-| Primary unit | Markdown wiki page | Markdown wiki page + agent procedure | Learner event + review card + compiled note |
-| Source of truth | Raw files + wiki | Raw files + wiki | DB event log for progress; raw/wiki for knowledge |
-| Human UI | Obsidian | Obsidian / editor | Chrome extension + chat + optional Obsidian |
-| Agent orientation | `index.md`, `log.md`, schema | Explicit required orientation steps | API should return compact learner context + wiki search |
-| Search | Index file; optional qmd | `search_files`; optional external tools | Full-text + vector + filters + due-review query |
-| Updates | Agent edits markdown | Agent edits markdown by skill rules | Agents append events transactionally; compiler updates wiki |
-| Multi-agent safety | Not addressed | Not addressed beyond conventions | Needs API, locking, idempotency, audit log |
-| Skill freshness | N/A | Manifest / hub lock hashes | Fleet-wide `english-coach` version tracking |
-| SRS | N/A | N/A | Required: SM-2/FSRS-style scheduler |
-| Privacy | Depends on local files | Depends on local files | Per-learner access control and deletion/export |
+| Dimension | Karpathy LLM Wiki | Hermes `llm-wiki` skill | MemPalace | English Coach shared KB need |
+|---|---|---|---|---|
+| Primary unit | Markdown wiki page | Markdown wiki page + agent procedure | Verbatim drawer + wing/room metadata + KG triple | Learner event + review card + compiled note |
+| Source of truth | Raw files + wiki | Raw files + wiki | Local ChromaDB/SQLite palace | DB event log for progress; raw/wiki/index for knowledge |
+| Human UI | Obsidian | Obsidian / editor | CLI/docs; agent-facing MCP | Chrome extension + chat + optional Obsidian |
+| Agent orientation | `index.md`, `log.md`, schema | Explicit required orientation steps | `mempalace_status`, wake-up stack, taxonomy/search tools | API should return compact learner context + wiki/search results |
+| Search | Index file; optional qmd | `search_files`; optional external tools | Hybrid vector + BM25 + metadata filters | Full-text + vector + filters + due-review query |
+| Updates | Agent edits markdown | Agent edits markdown by skill rules | Agents/CLI add drawers, KG facts, diary entries | Agents append events transactionally; compiler updates wiki/index |
+| Multi-agent safety | Not addressed | Not addressed beyond conventions | Local locks and WAL; not distributed | Needs API, locking, idempotency, audit log |
+| Skill freshness | N/A | Manifest / hub lock hashes | N/A for skills; package/plugin version can be tracked | Fleet-wide `english-coach` version tracking |
+| SRS | N/A | N/A | N/A | Required: SM-2/FSRS-style scheduler |
+| Privacy | Depends on local files | Depends on local files | Strong local-first default | Per-learner access control and deletion/export |
 
 ## Recommendation
 
@@ -369,6 +488,17 @@ From Karpathy/Hermes:
 - health checks/linting are first-class operations.
 - Obsidian compatibility is a cheap high-quality human UI.
 
+From MemPalace:
+
+- verbatim drawers instead of lossy summaries
+- wing/room metadata filters for scoped recall
+- hybrid vector + BM25 search
+- MCP-first agent interface
+- temporal KG with explicit invalidation
+- agent diaries as specialist continuity streams
+- wake-up stack: identity + essential story + on-demand recall + deep search
+- local-first privacy posture and optional LLM enrichment
+
 For English Coach, add:
 
 - central learner DB
@@ -377,3 +507,4 @@ For English Coach, add:
 - Chrome extension side panel
 - lock/idempotency rules for multi-agent writes
 - skill version recorded on every event
+- distributed sync/permissions if multiple agents or VPSes write the same learner state
