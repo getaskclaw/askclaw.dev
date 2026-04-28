@@ -418,6 +418,43 @@ For AskClaw, MemPalace is more reusable as an **operator memory vault**: mine ag
 
 For English Coach, copy the ideas, not the whole data model.
 
+### Benchmark positioning update
+
+The original MemPalace benchmark set is a defensible legacy/core set, but it is no longer enough to support a broad "best memory system" claim. For a MemPalace-like text memory/retrieval system, the stronger current suite should be:
+
+| Priority | Benchmark | Use |
+|---|---|---|
+| 1 | LongMemEval-cleaned | Primary long-term chat-memory benchmark. Report raw retrieval R@5/R@10 separately from end-to-end QA. |
+| 2 | ConvoMem full dataset | Best scale/statistical-power benchmark in the set: 75,336 QA pairs across user facts, assistant recall, abstention, preferences, temporal changes, and implicit connections. Do not rely only on a 250-item sample unless disclosed. |
+| 3 | BEAM | Important missing production-like stress test: conversations up to 10M tokens, 100 conversations, 2,000 validated questions across broad memory abilities. |
+| 4 | MemBench / ACL 2025 | Good breadth benchmark for agent memory: factual and reflective memory across participation/observation scenarios, plus effectiveness, efficiency, and capacity. Keep it, but do not frame it as the cleanest external win. |
+| 5 | LoCoMo | Keep for comparability, but demote as headline evidence. It is useful and widely cited, but small and easier to distort with large retrieval windows or reranking. |
+
+Benchmarks worth watching for product claims:
+
+- **Memora** — relevant for evolving memory because it tests consolidation, updates/deletions, and obsolete-memory penalties.
+- **EverMemBench** — relevant for multi-party, multi-group, cross-topic memory and user-profile understanding.
+- **Mem-Gallery** — relevant only if the system claims multimodal long-term memory.
+
+Methodology rule:
+
+```text
+Do not compare retrieval recall against someone else's QA accuracy.
+Report: dataset split, metric, top-k, token budget, latency, and LLM/no-LLM mode.
+```
+
+Safer public wording:
+
+```text
+Very strong public retrieval-recall results on major long-term conversational-memory benchmarks.
+```
+
+Avoid:
+
+```text
+Best memory system.
+```
+
 ---
 
 ## Comparison against English Coach shared-KB design
