@@ -31,6 +31,10 @@ AskClaw builds agentic AI workflows for one-person companies and small teams: pr
 - X: https://x.com/GetAskClaw
 - GitHub: https://github.com/getaskclaw
 
+## 文档 / Docs
+
+- [AskClaw docs](docs/README.md)
+
 ## 联系 / Contact
 
 - Admin: admin@askclaw.dev
