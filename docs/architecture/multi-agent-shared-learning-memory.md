@@ -305,3 +305,5 @@ small useful interfaces
 ```
 
 English Coach is a clean demo domain because progress is visible: words seen, mistakes fixed, reviews due, and improvement over time.
+
+See also: [Knowledge base source analysis](../research/knowledge-base-source-analysis.md).
