@@ -75,7 +75,7 @@
   <h2>The board right now</h2>
   <p class="hint">Same band (high), same 23 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/top5-2026-w38.en.vega-lite.json"><noscript><img src="assets/top5-2026-w38.en.png" width="2979" height="2286" loading="lazy" alt="AMBER board: five rank tiers (2026-W38)"></noscript></div>
+    <div class="chart" data-spec="assets/specs/top5-2026-w38.en.vega-lite.json"><img src="assets/top5-2026-w38.en.png" width="2979" height="2286" loading="lazy" alt="AMBER board: five rank tiers (2026-W38)"></div>
     <figcaption>Snapshot 2026-W38 · leader swe-2-max @ Devin at 18/23 (scored in W37); five-way tie at 17/23. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a></figcaption>
   </figure>
 </section>
@@ -84,7 +84,7 @@
   <h2>Same score, different shape</h2>
   <p class="hint">The nine-axis completion matrix: each cell is a face's pin-level completion. Tied totals hide completely different profiles — the matrix shows what the sum can't.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><noscript><img src="assets/completion-matrix-7way.en.png" width="3033" height="1290" loading="lazy" alt="Nine-axis completion matrix"></noscript></div>
+    <div class="chart" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><img src="assets/completion-matrix-7way.en.png" width="3033" height="1290" loading="lazy" alt="Nine-axis completion matrix"></div>
     <figcaption>Five lanes tied at 17/23, plus doubao 16/23 and gp27b 14/23. Hover any cell. <a href="https://github.com/getaskclaw/amber">details →</a></figcaption>
   </figure>
 </section>
@@ -101,12 +101,12 @@
   <h2>Three counterintuitive findings</h2>
   <p class="hint">Each comes with named boundaries and counterexamples in the original writeups.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/effort-curves-20260911.en.vega-lite.json"><noscript><img src="assets/effort-curves-20260911.en.png" width="2343" height="1308" loading="lazy" alt="Effort curves"></noscript></div>
+    <div class="chart" data-spec="assets/specs/effort-curves-20260911.en.vega-lite.json"><img src="assets/effort-curves-20260911.en.png" width="2343" height="1308" loading="lazy" alt="Effort curves"></div>
     <figcaption>"Think longer ≠ score better": most families backfire at top bands; swe-2 is monotone. Hover for points. <a href="https://github.com/getaskclaw/amber#readme">details →</a></figcaption>
   </figure>
   <div>
     <figure>
-      <div class="chart" data-spec="assets/specs/score-vs-tokens-2026-w37.en.vega-lite.json"><noscript><img src="assets/score-vs-tokens-2026-w37.en.png" width="2451" height="1488" loading="lazy" alt="Score vs thinking budget"></noscript></div>
+      <div class="chart" data-spec="assets/specs/score-vs-tokens-2026-w37.en.vega-lite.json"><img src="assets/score-vs-tokens-2026-w37.en.png" width="2451" height="1488" loading="lazy" alt="Score vs thinking budget"></div>
     <figcaption>Same band, same library: output-token bills span 17× while scores differ by one case. Hover for points. <a href="https://github.com/getaskclaw/amber#readme">details →</a></figcaption>
     </figure>
     <figure>
@@ -158,8 +158,10 @@
 <script>
 document.querySelectorAll('.chart').forEach(function(el){
   fetch(el.dataset.spec).then(function(r){return r.json()}).then(function(spec){
-    vegaEmbed(el, spec, {actions: false, renderer: 'canvas'});
-  }).catch(function(){ el.innerHTML = ''; });
+    var opts = {actions: false, renderer: 'canvas'};
+      if (typeof vegaTooltip !== 'undefined') { opts.tooltip = new vegaTooltip.Handler().call; }
+      vegaEmbed(el, spec, opts);
+  }).catch(function(){ /* 渲染失败保留静态图 / keep the fallback image */ });
 });
 </script>
 </body>
