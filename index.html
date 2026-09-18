@@ -75,7 +75,7 @@
   <h2>当前总榜</h2>
   <p class="hint">同档（high）、同 23 案、同公开哈希索引。五个名次档，并列如实标注。点图看明细仓。小词典：案 = 一道题（来自一件真事）；卷 = 一次作答；档 = 推理力度档位。</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/top5-2026-w38.vega-lite.json"><noscript><img src="assets/top5-2026-w38.png" width="2946" height="2286" loading="lazy" alt="AMBER 当前总榜：五个名次档（2026-W38，全库 23 案）"></noscript></div>
+    <div class="chart" data-spec="assets/specs/top5-2026-w38.vega-lite.json"><img src="assets/top5-2026-w38.png" width="2946" height="2286" loading="lazy" alt="AMBER 当前总榜：五个名次档（2026-W38，全库 23 案）"></div>
     <figcaption>2026-W38 快照 · 榜首 swe-2-max @ Devin 18/23（考于 W37，该车道本周未重考）；#2 并列五席 17/23。图可交互：悬停看数值。 <a href="https://github.com/getaskclaw/amber">明细仓 →</a></figcaption>
   </figure>
 </section>
@@ -84,7 +84,7 @@
   <h2>同分 ≠ 同款</h2>
   <p class="hint">九轴完成度矩阵：每格 = 该面全部案子的钉级完成度。同分的几家，形状完全不同——总分看不见的东西，矩阵看得见。</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/completion-matrix-7way.vega-lite.json"><noscript><img src="assets/completion-matrix-7way.png" width="2901" height="1290" loading="lazy" alt="九轴完成度矩阵"></noscript></div>
+    <div class="chart" data-spec="assets/specs/completion-matrix-7way.vega-lite.json"><img src="assets/completion-matrix-7way.png" width="2901" height="1290" loading="lazy" alt="九轴完成度矩阵"></div>
     <figcaption>五家 17/23 + doubao 16/23 + gp27b 14/23，九轴同场。悬停读格值。 <a href="https://github.com/getaskclaw/amber">明细仓 →</a></figcaption>
   </figure>
 </section>
@@ -101,12 +101,12 @@
   <h2>三个反直觉发现</h2>
   <p class="hint">都有边界，都只代表已测家族——原文里每条都标着反例。</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/effort-curves-20260911.vega-lite.json"><noscript><img src="assets/effort-curves-20260911.png" width="2088" height="1308" loading="lazy" alt="effort 曲线"></noscript></div>
+    <div class="chart" data-spec="assets/specs/effort-curves-20260911.vega-lite.json"><img src="assets/effort-curves-20260911.png" width="2088" height="1308" loading="lazy" alt="effort 曲线"></div>
     <figcaption>「想更久 ≠ 考更好」：多数家族高档反噬，swe-2 单调到底。悬停读点值。 <a href="https://github.com/getaskclaw/amber#readme">明细仓 →</a></figcaption>
   </figure>
   <div>
     <figure>
-      <div class="chart" data-spec="assets/specs/score-vs-tokens-2026-w37.vega-lite.json"><noscript><img src="assets/score-vs-tokens-2026-w37.png" width="2232" height="1488" loading="lazy" alt="分数 × 思考预算"></noscript></div>
+      <div class="chart" data-spec="assets/specs/score-vs-tokens-2026-w37.vega-lite.json"><img src="assets/score-vs-tokens-2026-w37.png" width="2232" height="1488" loading="lazy" alt="分数 × 思考预算"></div>
     <figcaption>同档同库，输出 token 账单跨 17 倍，分差不过一案。悬停读点值。 <a href="https://github.com/getaskclaw/amber#readme">明细仓 →</a></figcaption>
     </figure>
     <figure>
@@ -158,8 +158,10 @@
 <script>
 document.querySelectorAll('.chart').forEach(function(el){
   fetch(el.dataset.spec).then(function(r){return r.json()}).then(function(spec){
-    vegaEmbed(el, spec, {actions: false, renderer: 'canvas'});
-  }).catch(function(){ el.innerHTML = ''; });
+    var opts = {actions: false, renderer: 'canvas'};
+      if (typeof vegaTooltip !== 'undefined') { opts.tooltip = new vegaTooltip.Handler().call; }
+      vegaEmbed(el, spec, opts);
+  }).catch(function(){ /* 渲染失败保留静态图 / keep the fallback image */ });
 });
 </script>
 </body>
