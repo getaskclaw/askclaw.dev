@@ -31,7 +31,6 @@
   figure { margin: 10px 0 6px; }
   figure img { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
   figcaption { color: var(--sub); font-size: 13.5px; margin-top: 6px; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
   .repo { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: block; color: var(--ink); }
   .repo:hover { border-color: var(--teal); text-decoration: none; }
@@ -40,7 +39,7 @@
   .repo p { font-size: 13.5px; color: var(--sub); margin-top: 4px; }
   .rule { border-left: 3px solid var(--teal); padding: 4px 14px; margin: 10px 0; color: var(--sub); }
   footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 26px 0 40px; color: var(--sub); font-size: 13.5px; }
-  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } .hero h1 { font-size: 30px; } }
+  @media (max-width: 720px) { .hero h1 { font-size: 30px; } }
 </style>
 </head>
 <body>
@@ -49,7 +48,7 @@
     <div class="logo">Ask<span>Claw</span></div>
     <nav>
       <a href="https://github.com/getaskclaw">GitHub</a>
-      <a href="../">← Home</a>
+      <a href="../en.html">← Home</a>
       <a href="index.html">中文</a>
     </nav>
   </div>
@@ -71,7 +70,7 @@
   <h2>The board right now</h2>
   <p class="hint">Same band (high), same 23 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
-    <a href="https://github.com/getaskclaw/amber"><img src="../assets/top5-2026-w38.en.png" alt="AMBER board: five rank tiers (2026-W38)"></a>
+    <a href="https://github.com/getaskclaw/amber"><img src="../assets/top5-2026-w38.en.png" width="2979" height="2286" loading="lazy" alt="AMBER board: five rank tiers (2026-W38)"></a>
     <figcaption>Snapshot 2026-W38 · leader swe-2-max @ Devin at 18/23 (scored in W37; that lane was not re-tested this week); a five-way tie at 17/23. The board holds each lane's current standing.</figcaption>
   </figure>
 </section>
@@ -80,7 +79,7 @@
   <h2>Same score, different shape</h2>
   <p class="hint">The nine-axis completion matrix: each cell is a face's pin-level completion. Tied totals hide completely different profiles — the matrix shows what the sum can't.</p>
   <figure>
-    <a href="https://github.com/getaskclaw/amber"><img src="../assets/completion-matrix-7way.en.png" alt="Nine-axis completion matrix"></a>
+    <a href="https://github.com/getaskclaw/amber"><img src="../assets/completion-matrix-7way.en.png" width="3033" height="1290" loading="lazy" alt="Nine-axis completion matrix"></a>
     <figcaption>Five lanes tied at 17/23, plus doubao 16/23 and gp27b 14/23.</figcaption>
   </figure>
 </section>
@@ -89,7 +88,7 @@
   <h2>Why the scores can be trusted</h2>
   <p class="hint">Every weekly issue runs like an exam: cases sealed in advance, a clean-room sitting, per-paper wire audits, anonymized publication, and a public index anyone can re-check.</p>
   <figure>
-    <img src="../assets/trust-chain.en.png" alt="How a result is produced">
+    <img src="../assets/trust-chain.en.png" width="1375" height="795" loading="lazy" alt="How a result is produced">
   </figure>
 </section>
 
@@ -97,16 +96,16 @@
   <h2>Three counterintuitive findings</h2>
   <p class="hint">Each comes with named boundaries and counterexamples in the original writeups.</p>
   <figure>
-    <img src="../assets/effort-curves-20260911.en.png" alt="Effort curves">
+    <img src="../assets/effort-curves-20260911.en.png" width="2343" height="1308" loading="lazy" alt="Effort curves">
     <figcaption>"Think longer ≠ score better": most families backfire at top bands; swe-2 is monotone to the top.</figcaption>
   </figure>
   <div>
     <figure>
-      <img src="../assets/score-vs-tokens-2026-w37.en.png" alt="Score vs thinking budget">
+      <img src="../assets/score-vs-tokens-2026-w37.en.png" width="2451" height="1488" loading="lazy" alt="Score vs thinking budget">
       <figcaption>Same band, same library: output-token bills span 17× while scores differ by one case.</figcaption>
     </figure>
     <figure>
-      <img src="../assets/wallclock-strip-2026-w37.en.png" alt="Per-case wall clock">
+      <img src="../assets/wallclock-strip-2026-w37.en.png" width="1725" height="990" loading="lazy" alt="Per-case wall clock">
       <figcaption>A vendor's high TPS only holds on easy problems; hard ones slow the token stream down.</figcaption>
     </figure>
   </div>

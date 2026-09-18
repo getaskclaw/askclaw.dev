@@ -31,7 +31,6 @@
   figure { margin: 10px 0 6px; }
   figure img { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
   figcaption { color: var(--sub); font-size: 13.5px; margin-top: 6px; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
   .repo { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: block; color: var(--ink); }
   .repo:hover { border-color: var(--teal); text-decoration: none; }
@@ -40,7 +39,7 @@
   .repo p { font-size: 13.5px; color: var(--sub); margin-top: 4px; }
   .rule { border-left: 3px solid var(--teal); padding: 4px 14px; margin: 10px 0; color: var(--sub); }
   footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 26px 0 40px; color: var(--sub); font-size: 13.5px; }
-  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } .hero h1 { font-size: 30px; } }
+  @media (max-width: 720px) { .hero h1 { font-size: 30px; } }
 </style>
 </head>
 <body>
@@ -71,7 +70,7 @@
   <h2>当前总榜</h2>
   <p class="hint">同档（high）、同 23 案、同公开哈希索引。五个名次档，并列如实标注。点图看明细仓。小词典：案 = 一道题（来自一件真事）；卷 = 一次作答；档 = 推理力度档位。</p>
   <figure>
-    <a href="https://github.com/getaskclaw/amber"><img src="../assets/top5-2026-w38.png" alt="AMBER 当前总榜：五个名次档（2026-W38，全库 23 案）"></a>
+    <a href="https://github.com/getaskclaw/amber"><img src="../assets/top5-2026-w38.png" width="2946" height="2286" loading="lazy" alt="AMBER 当前总榜：五个名次档（2026-W38，全库 23 案）"></a>
     <figcaption>2026-W38 快照 · 榜首 swe-2-max @ Devin 18/23（考于 W37，该车道本周未重考）；#2 并列五席 17/23。榜单 = 各车道当前有效成绩。</figcaption>
   </figure>
 </section>
@@ -80,7 +79,7 @@
   <h2>同分 ≠ 同款</h2>
   <p class="hint">九轴完成度矩阵：每格 = 该面全部案子的钉级完成度。同分的几家，形状完全不同——总分看不见的东西，矩阵看得见。</p>
   <figure>
-    <a href="https://github.com/getaskclaw/amber"><img src="../assets/completion-matrix-7way.png" alt="九轴完成度矩阵"></a>
+    <a href="https://github.com/getaskclaw/amber"><img src="../assets/completion-matrix-7way.png" width="2901" height="1290" loading="lazy" alt="九轴完成度矩阵"></a>
     <figcaption>五家 17/23 + doubao 16/23 + gp27b 14/23，九轴同场。</figcaption>
   </figure>
 </section>
@@ -89,7 +88,7 @@
   <h2>分数凭什么可信</h2>
   <p class="hint">每期成绩像一场考试：出卷封存、净室应考、逐卷验脑、脱敏发布、人人可核对。</p>
   <figure>
-    <img src="../assets/trust-chain.png" alt="一期成绩怎么炼成">
+    <img src="../assets/trust-chain.png" width="898" height="795" loading="lazy" alt="一期成绩怎么炼成">
   </figure>
 </section>
 
@@ -97,16 +96,16 @@
   <h2>三个反直觉发现</h2>
   <p class="hint">都有边界，都只代表已测家族——原文里每条都标着反例。</p>
   <figure>
-    <img src="../assets/effort-curves-20260911.png" alt="effort 曲线">
+    <img src="../assets/effort-curves-20260911.png" width="2088" height="1308" loading="lazy" alt="effort 曲线">
     <figcaption>「想更久 ≠ 考更好」：多数家族高档反噬，swe-2 单调到底。</figcaption>
   </figure>
   <div>
     <figure>
-      <img src="../assets/score-vs-tokens-2026-w37.png" alt="分数 × 思考预算">
+      <img src="../assets/score-vs-tokens-2026-w37.png" width="2232" height="1488" loading="lazy" alt="分数 × 思考预算">
       <figcaption>同档同库，输出 token 账单跨 17 倍，分差不过一案。</figcaption>
     </figure>
     <figure>
-      <img src="../assets/wallclock-strip-2026-w37.png" alt="逐题耗时">
+      <img src="../assets/wallclock-strip-2026-w37.png" width="1725" height="990" loading="lazy" alt="逐题耗时">
       <figcaption>厂商的高 TPS 只在简单题上成立；难题想得多，吐字当场变慢。</figcaption>
     </figure>
   </div>
