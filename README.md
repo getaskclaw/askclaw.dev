@@ -1,38 +1,31 @@
-# AskClaw 🦀
+# askclaw.dev
 
-端到端实现一人公司（OPC）。  
-用 AI agents 构建、运行、扩展一个人的公司。
+AskClaw 官网源码。首页 = AMBER（琥珀式封存的历史回放评测）主站；`/amber/` 重定向回首页。
 
-Build, run & scale your one-person company end-to-end with AI agents.
+The askclaw.dev site source. The homepage IS the AMBER site (sealed-replay evaluation); `/amber/` redirects to `/`.
 
-## 我们在构建 / What we build
+## 结构
 
-AskClaw 构建面向一人公司和小团队的 agentic AI 工作流：产品、工程、运营、支持、增长，从想法到交付端到端完成。
+- `index.html` / `en.html` — 首页（中/英）
+- `amber/` — 重定向页
+- `assets/` — 图（PNG 兜底 + Vega-Lite spec + 自托管 vega/vega-embed）
 
-AskClaw builds agentic AI workflows for one-person companies and small teams: product, engineering, operations, support, and growth — from idea to delivery.
+## 部署（DEPLOY）
 
-## 方向 / Focus
+托管：26430 的 Caddy，文档根 `/var/www/askclaw-site`，域名块在 `/etc/caddy/Caddyfile`（改前必备份，改后 `caddy validate && systemctl reload caddy`）。
 
-- 一人公司（OPC）的端到端 AI 工作流  
-  End-to-end AI workflows for one-person companies
+同步流程（在 2651 上）：
 
-- OpenClaw、Hermes、多 agent 协作  
-  OpenClaw, Hermes, and multi-agent collaboration
+```bash
+cd ~/2609/askclaw-dev-site          # 编辑工作区
+tar czf /tmp/site.tgz index.html en.html amber assets
+scp /tmp/site.tgz 26430.tail744929.ts.net:/tmp/
+ssh 26430.tail744929.ts.net 'sudo tar xzf /tmp/site.tgz -C /var/www/askclaw-site'
+```
 
-- 开发者工具、自动化、异步执行  
-  Developer tools, automation, and async-first execution
-
-- 让人和 AI agents 一起把真实工作做完  
-  Helping humans and AI agents finish real work together
-
-## 链接 / Links
-
-- Website: https://askclaw.dev
-- X: https://x.com/GetAskClaw
-- GitHub: https://github.com/getaskclaw
+改完务必同步本仓（PR → review → merge）。图的真源在 [getaskclaw/amber](https://github.com/getaskclaw/amber) 的 `docs/images/`。
 
 ## 联系 / Contact
 
-- Admin: admin@askclaw.dev
 - GitHub: github@askclaw.dev
 - Security: security@askclaw.dev
