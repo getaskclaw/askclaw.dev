@@ -1,0 +1,36 @@
+{
+  "remote_sibling_files_unchanged": 37,
+  "remote_top_level_unchanged": [
+    "README.md",
+    "SECURITY.md",
+    "amber",
+    "assets",
+    "astro-preview",
+    "axes.html",
+    "axes.json",
+    "en.html",
+    "index.html",
+    "robots.txt",
+    "sitemap.xml"
+  ],
+  "remote_preview_file_matches": 15,
+  "changed_preview_files": [
+    "astro-preview/assets/completion-matrix-7way.en.png",
+    "astro-preview/assets/effort-curves-20260911.en.png",
+    "astro-preview/assets/score-vs-tokens-2026-w37.en.png",
+    "astro-preview/assets/top5-2026-w38.en.png",
+    "astro-preview/assets/trust-chain.en.png",
+    "astro-preview/assets/wallclock-strip-2026-w37.en.png",
+    "astro-preview/en/index.html",
+    "astro-preview/method/index.html",
+    "astro-preview/rank/index.html"
+  ],
+  "removed_preview_files": [],
+  "legacy_file_count_unchanged": 33,
+  "legacy_status_unchanged": "## main...origin/main [ahead 1]\n M index.html\n M sitemap.xml\n",
+  "legacy_refs_unchanged": true,
+  "github_main_unchanged": "90b9798b3ccbe1092bfa58ef3d48fb4fffa47f2d\trefs/heads/main",
+  "branch": "feat/astro-batch1",
+  "candidate_remotes": [],
+  "canonical_axes_and_home_unchanged": true
+}

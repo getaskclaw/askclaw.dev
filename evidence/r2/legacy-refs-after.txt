@@ -1,0 +1,15 @@
+0957c9060447567915d25ccef13ae392ffa5fcd3 refs/heads/fix/swe2-low-correction
+ccec417e6882878b8a4f4a4eb2f89866684e1fcc refs/heads/launch/portal-v1
+683531fff604ac184c32fd983a712f0a5e95c17f refs/heads/main
+683531fff604ac184c32fd983a712f0a5e95c17f refs/heads/seo-hupo-keywords
+90b9798b3ccbe1092bfa58ef3d48fb4fffa47f2d refs/remotes/origin/HEAD
+2dff33ab4f2e78a441c043b9d80a310ee02dc2b1 refs/remotes/origin/docs/agent-access-model
+6ffb409ec11333122777a8d6d66d00191003898e refs/remotes/origin/docs/emdash-site-plan
+598e4cee1c24446ba1dfcfbfbef2f16c014a08b5 refs/remotes/origin/docs/paperclip-positioning
+6c5d4e57af812768e99c618ca698b73b253af02a refs/remotes/origin/docs/shared-learning-memory
+0957c9060447567915d25ccef13ae392ffa5fcd3 refs/remotes/origin/fix/swe2-low-correction
+0938b7f50fab6776744915f201a8a303857d4e53 refs/remotes/origin/fix/tooltips-and-fallback
+3604b1d6b964f162cb91f09d477b979c821d2250 refs/remotes/origin/launch/amber-landing
+ccec417e6882878b8a4f4a4eb2f89866684e1fcc refs/remotes/origin/launch/portal-v1
+90b9798b3ccbe1092bfa58ef3d48fb4fffa47f2d refs/remotes/origin/main
+683531fff604ac184c32fd983a712f0a5e95c17f refs/remotes/origin/seo-hupo-keywords
