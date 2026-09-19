@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="AskClaw — AMBER sealed-replay evaluation"
+  description="AMBER replays real, auditable historical events with a private case library, public scores, and a checkable hash index."
+  lang="en"
+  canonicalPath="/en/"
+  languagePair={true}
+>
+  <div class="wrap">
+    <section class="hero">
+      <h1><em>AMBER</em> static migration placeholder</h1>
+      <p>
+        Batch 1 keeps this home route small while the deterministic content routes move to Astro.
+        The public record remains auditable and ready for the next visual batch.
+      </p>
+      <div class="badges" aria-label="Evaluation facts">
+        <div class="badge"><strong>23 cases</strong><small>26 papers in the private case library</small></div>
+        <div class="badge"><strong>11 result repos</strong><small>one public record for each result lane</small></div>
+        <div class="badge"><strong>W38</strong><small>the latest preserved snapshot</small></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="routes-title">
+      <h2 id="routes-title">Batch 1 routes</h2>
+      <p class="hint">Choose a route. Each one is statically rendered and works without a client framework.</p>
+      <div class="hero-actions">
+        <a class="action-card" href={import.meta.env.BASE_URL + 'method/'}>
+          <strong>Method</strong>
+          <small>AMBER rules, public hash index, and result repositories.</small>
+        </a>
+        <a class="action-card" href={import.meta.env.BASE_URL + 'rank/'}>
+          <strong>Rank by work</strong>
+          <small>Eight native filter chips and the preserved lane data.</small>
+        </a>
+        <a class="action-card" href={import.meta.env.BASE_URL}>
+          <strong>中文</strong>
+          <small>Return to the Chinese home route.</small>
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const resultRepos = [
+  ['amber-devin', '18/23', 'swe-2-max @ Devin', 'W37'],
+  ['amber-kimi', '17/23', 'k3 @ Kimi official coding', 'W38'],
+  ['amber-ollama', '17/23', 'glm-5.3-flash / d41f @ Ollama Cloud', 'W36'],
+  ['amber-commandcode', '17/23', 'd41f @ CommandCode', 'W37'],
+  ['amber-workbuddy', '17/23', 'hy4-preview-f @ WorkBuddy ACP', 'W37'],
+  ['amber-gpt', '16/23', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex', 'W38'],
+  ['amber-crof', '16/23', 'qwen3.8-27b @ CrofAI', 'W36'],
+  ['amber-deepseek', '16/23', 'deepseek-flash @ DeepSeek official', 'W37'],
+  ['amber-opencode', '16/23', 'deepseek-flash @ OpenCode Go', 'W37'],
+  ['amber-doubao', '16/23', 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
+  ['amber-goldenpotato', '14/23', 'Qwen3.8-27B @ community self-hosted', 'W38'],
+];
+---
+<BaseLayout
+  title="方法 — AMBER 琥珀评测"
+  description="AMBER 琥珀评测方法：23 案、26 卷、11 个成绩仓、W38 快照和公开哈希索引。"
+  canonicalPath="/method/"
+>
+  <div class="wrap">
+    <section class="hero">
+      <h1><em>AMBER</em> 方法</h1>
+      <p class="lead">
+        琥珀评测把真实、可审计的历史事件封存到答案揭晓前，让模型只用当时可得的信息重做一次。
+        评分规则先冻结，题库不公开，分数和校验材料公开。
+      </p>
+      <div class="stat-grid" aria-label="AMBER facts">
+        <div class="stat-card"><strong>23 / 26</strong><span>案 / 卷，私有题库</span></div>
+        <div class="stat-card"><strong>11</strong><span>公开成绩仓</span></div>
+        <div class="stat-card"><strong>W38</strong><span>保留的最新快照</span></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rules-title">
+      <h2 id="rules-title">方法原则</h2>
+      <p class="hint">公开材料可以复核成绩，但不会泄露私有题库。</p>
+      <div class="rule-list">
+        <div class="rule">私有内容：题库、oracle、transcript、内部案号和变体名不公开。</div>
+        <div class="rule">公开内容：成绩、汇总、裁决和哈希索引，任何人都可以重新核对。</div>
+        <div class="rule">历史结果是证据，不是唯一正解；运行时封存也不等于训练数据纯净。</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="repos-title">
+      <h2 id="repos-title">11 个成绩仓</h2>
+      <p class="hint">每个仓对应一条模型结果记录；名称、分数、期号和链接沿用公开材料。</p>
+      <div class="repo-grid">
+        {resultRepos.map(([repo, score, model, week]) => (
+          <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>
+            <span class="score">{score}</span>
+            <strong>{repo}</strong>
+            <small>{model}</small>
+            <small>{week} · 23 cases</small>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="verify-title">
+      <h2 id="verify-title">公开校验入口</h2>
+      <p class="hint">这些链接是方法和公开记录的原始入口。</p>
+      <div class="panel">
+        <p><a href="https://github.com/getaskclaw/amber/blob/main/AMBER-Core-Specification.md">AMBER Core Specification</a></p>
+        <p><a href="https://github.com/getaskclaw/amber/blob/main/hash-index/v2026-09.md">public hash index</a></p>
+        <p><a href="https://github.com/getaskclaw/amber/blob/main/PLAN.md">AMBER roadmap</a></p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

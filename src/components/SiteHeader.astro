@@ -1,0 +1,34 @@
+---
+interface Props {
+  lang?: string;
+  currentPath?: string;
+}
+
+const { lang = 'zh-CN', currentPath = '/' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const isEnglish = lang === 'en';
+const items = isEnglish
+  ? [
+      ['home', 'Home', '/'],
+      ['method', 'Method', '/method/'],
+      ['rank', 'Rank by work', '/rank/'],
+    ]
+  : [
+      ['home', '总榜', '/'],
+      ['method', '方法', '/method/'],
+      ['rank', '按轴挑模型', '/rank/'],
+    ];
+---
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href={route('/')} aria-label="AskClaw home">Ask<span>Claw</span></a>
+    <nav class="header-nav" aria-label={isEnglish ? 'Primary navigation' : '主导航'}>
+      {items.map(([key, label, path]) => (
+        <a href={route(path)} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>
+      ))}
+      <a href="https://github.com/getaskclaw">GitHub</a>
+      {isEnglish ? <a href={route('/')}>中文</a> : <a href={route('/en/')}>English</a>}
+    </nav>
+  </div>
+</header>
