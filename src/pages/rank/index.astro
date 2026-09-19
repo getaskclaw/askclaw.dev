@@ -13,11 +13,11 @@ const faces = [
   ['vision', '视觉审图'],
 ] as const;
 
-// The source record is kept byte-for-byte in src/data/axes.json. The public
-// label replaces one internal source word before data reaches the browser.
+// Keep the canonical records byte-for-byte. Only this lane's public vendor
+// label is mapped; never substring-replace ordinary domain terminology.
 const lanes = rawLanes.map((lane) => ({
   ...lane,
-  vendor: lane.vendor.replace(/\u7aef\u70b9/g, 'coding'),
+  vendor: lane.id === 'kimi' ? 'Kimi official coding' : lane.vendor,
 }));
 
 const stats = faces.map(([id, label]) => {

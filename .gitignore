@@ -2,3 +2,4 @@ node_modules/
 .astro/
 dist/
 .DS_Store
+evidence/r2/local-screens/
