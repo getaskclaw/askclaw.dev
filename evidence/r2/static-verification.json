@@ -1,0 +1,252 @@
+{
+  "pages": {
+    "en/index.html": {
+      "bytes": 14149,
+      "script_count": 0,
+      "inline_js_bytes": 0,
+      "forbidden_terms": [],
+      "repo_cards": [
+        {
+          "href": "https://github.com/getaskclaw/amber",
+          "text": "amber spec Method spec + public hash index + cross-repo weekly board "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-devin",
+          "text": "amber-devin 18/23 swe-2-max @ Devin — current leader "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-kimi",
+          "text": "amber-kimi 17/23 k3 @ Kimi official coding endpoint + the K2.8 duel "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-ollama",
+          "text": "amber-ollama 17/23 glm-5.3-flash / d41f @ Ollama Cloud "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-commandcode",
+          "text": "amber-commandcode 17/23 d41f @ CommandCode — five-band ladder "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-workbuddy",
+          "text": "amber-workbuddy 17/23 hy4-preview-f @ WorkBuddy ACP "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-gpt",
+          "text": "amber-gpt 16/23 gpt-6-astra / gpt-5.6 family @ OpenAI Codex "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-crof",
+          "text": "amber-crof 16/23 qwen3.8-27b @ CrofAI — the $1.15 value king "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-deepseek",
+          "text": "amber-deepseek 16/23 deepseek-flash @ DeepSeek official "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-opencode",
+          "text": "amber-opencode 16/23 deepseek-flash @ OpenCode Go "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-doubao",
+          "text": "amber-doubao 16/23 doubao-seed-evolving @ Volcengine Ark Agent Plan "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-goldenpotato",
+          "text": "amber-goldenpotato 14/23 Qwen3.8-27B @ community self-hosted (3× V100) "
+        }
+      ]
+    },
+    "index.html": {
+      "bytes": 2886,
+      "script_count": 0,
+      "inline_js_bytes": 0,
+      "forbidden_terms": [],
+      "repo_cards": []
+    },
+    "method/index.html": {
+      "bytes": 6124,
+      "script_count": 0,
+      "inline_js_bytes": 0,
+      "forbidden_terms": [],
+      "repo_cards": [
+        {
+          "href": "https://github.com/getaskclaw/amber-devin",
+          "text": "18/23 amber-devin swe-2-max @ Devin W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-kimi",
+          "text": "17/23 amber-kimi k3 @ Kimi official coding W38 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-ollama",
+          "text": "17/23 amber-ollama glm-5.3-flash / d41f @ Ollama Cloud W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-commandcode",
+          "text": "17/23 amber-commandcode d41f @ CommandCode W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-workbuddy",
+          "text": "17/23 amber-workbuddy hy4-preview-f @ WorkBuddy ACP W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-gpt",
+          "text": "16/23 amber-gpt gpt-6-astra / gpt-5.6 family @ OpenAI Codex W38 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-crof",
+          "text": "16/23 amber-crof qwen3.8-27b @ CrofAI W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-deepseek",
+          "text": "16/23 amber-deepseek deepseek-flash @ DeepSeek official W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-opencode",
+          "text": "16/23 amber-opencode deepseek-flash @ OpenCode Go W37 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-doubao",
+          "text": "16/23 amber-doubao doubao-seed-evolving @ Volcengine Ark Agent Plan W38 · 23 cases "
+        },
+        {
+          "href": "https://github.com/getaskclaw/amber-goldenpotato",
+          "text": "14/23 amber-goldenpotato Qwen3.8-27B @ community self-hosted W38 · 23 cases "
+        }
+      ]
+    },
+    "rank/index.html": {
+      "bytes": 17093,
+      "script_count": 1,
+      "inline_js_bytes": 3522,
+      "forbidden_terms": [],
+      "repo_cards": []
+    }
+  },
+  "assets": {
+    "completion-matrix-7way.en.png": {
+      "bytes": 722723,
+      "dimensions": [
+        3033,
+        1290
+      ],
+      "sha256": "fc977e27df40570038fceb224750ce7108bab33277db592c2beff477cdc408c1"
+    },
+    "effort-curves-20260911.en.png": {
+      "bytes": 408709,
+      "dimensions": [
+        2343,
+        1308
+      ],
+      "sha256": "3295a6fdff54e5e06d501b58d52c6e6791723ed7811d0c8caae30c8e6e47ddd9"
+    },
+    "score-vs-tokens-2026-w37.en.png": {
+      "bytes": 492800,
+      "dimensions": [
+        2451,
+        1488
+      ],
+      "sha256": "267d836e9e896a00063a22025e405b9192792985aaf3c989bdd0621a92e8669b"
+    },
+    "top5-2026-w38.en.png": {
+      "bytes": 973588,
+      "dimensions": [
+        2979,
+        2286
+      ],
+      "sha256": "802311d9469a64f183125b21d15dd04ece7cef6a6dc539c552c61e056087cd05"
+    },
+    "trust-chain.en.png": {
+      "bytes": 69847,
+      "dimensions": [
+        1375,
+        795
+      ],
+      "sha256": "0a79fda71a1fa514545281a9a0b6c74e75770e450ef8aa237f2a5e61026c0da5"
+    },
+    "wallclock-strip-2026-w37.en.png": {
+      "bytes": 159335,
+      "dimensions": [
+        1725,
+        990
+      ],
+      "sha256": "083a8edc3e530371fa5424f4663f3e81fdde327c64d01a1ce7134455d14f081d"
+    }
+  },
+  "data_sha256": "2ae8b63ef898bd60106d0cc374801cbb7fd061bac6d1465fc4d3fd2c6ec222be",
+  "sitemap": {
+    "routes": [
+      "https://askclaw.dev/astro-preview/",
+      "https://askclaw.dev/astro-preview/en/",
+      "https://askclaw.dev/astro-preview/method/",
+      "https://askclaw.dev/astro-preview/rank/"
+    ],
+    "hreflang_count": 4,
+    "generated": true
+  },
+  "frameworks": [],
+  "external_js_files": [],
+  "network_fonts": [],
+  "dist": {
+    "_astro/BaseLayout.Bc8_lLlO.css": {
+      "bytes": 5459,
+      "sha256": "71c9d37d868d57f00aaf486c80d9b05daa4cb05ff058d0141d4b3f4a0b2a3918"
+    },
+    "assets/completion-matrix-7way.en.png": {
+      "bytes": 722723,
+      "sha256": "fc977e27df40570038fceb224750ce7108bab33277db592c2beff477cdc408c1"
+    },
+    "assets/effort-curves-20260911.en.png": {
+      "bytes": 408709,
+      "sha256": "3295a6fdff54e5e06d501b58d52c6e6791723ed7811d0c8caae30c8e6e47ddd9"
+    },
+    "assets/score-vs-tokens-2026-w37.en.png": {
+      "bytes": 492800,
+      "sha256": "267d836e9e896a00063a22025e405b9192792985aaf3c989bdd0621a92e8669b"
+    },
+    "assets/top5-2026-w38.en.png": {
+      "bytes": 973588,
+      "sha256": "802311d9469a64f183125b21d15dd04ece7cef6a6dc539c552c61e056087cd05"
+    },
+    "assets/trust-chain.en.png": {
+      "bytes": 69847,
+      "sha256": "0a79fda71a1fa514545281a9a0b6c74e75770e450ef8aa237f2a5e61026c0da5"
+    },
+    "assets/wallclock-strip-2026-w37.en.png": {
+      "bytes": 159335,
+      "sha256": "083a8edc3e530371fa5424f4663f3e81fdde327c64d01a1ce7134455d14f081d"
+    },
+    "en/index.html": {
+      "bytes": 14149,
+      "sha256": "de232d2558c271237fae1422a3b91b1b6a0c52dbfbbc5f75e1beb8d467567dab"
+    },
+    "favicon.svg": {
+      "bytes": 284,
+      "sha256": "8e012ed2af38f2fffe498747eaacb71a6ef177d861d38c1b5f917d40b0f04c96"
+    },
+    "index.html": {
+      "bytes": 2886,
+      "sha256": "70c879f50ffec8b6c9f34a8797abc75a1b6753813b216560c388412542169a6a"
+    },
+    "method/index.html": {
+      "bytes": 6124,
+      "sha256": "4acf2efeaa499339d9d4132d4bb0d576cf2ebd212859f092885238ed3c026066"
+    },
+    "rank/index.html": {
+      "bytes": 17093,
+      "sha256": "8fc23776c7d9c348ad3a8810a0e34565e430b803542759e85ac95f306b295ab7"
+    },
+    "robots.txt": {
+      "bytes": 85,
+      "sha256": "40c1bf548ef7445857026f87cb81c7a3d2e43b3b6322a931538a9d1c371e7d06"
+    },
+    "sitemap-0.xml": {
+      "bytes": 925,
+      "sha256": "2ff11f3f3ba83a6b1f5e6083ae6ac5fec55f7a5601c341bdc4399a8cfb78ac8c"
+    },
+    "sitemap-index.xml": {
+      "bytes": 196,
+      "sha256": "b79bb7040280f46cd7b8c0ea9638645ca64e5fb5b2b4ab21944c3dbff4c501a2"
+    }
+  }
+}

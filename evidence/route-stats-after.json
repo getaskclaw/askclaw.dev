@@ -1,0 +1,58 @@
+{
+  "/": {
+    "status": 200,
+    "scriptTags": 0,
+    "scriptRequests": 0,
+    "overflow1440": false,
+    "overflow390": false,
+    "ground": "rgb(251, 252, 248)",
+    "mainTextLen": 683,
+    "mainTextHead": "AMBER / PUBLIC BENCHMARK\n\n你想先问哪一句？\nA\n同一个模型，官方端点和第三方有差吗？\n同模型，分 lane 对照。\n•\n看 lane\nB\n新出的模型能不能打？\n同一套 23 案，进榜即见。\n•\n看 W38\nC\n我干",
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "httpErrors": []
+  },
+  "/method/": {
+    "status": 200,
+    "scriptTags": 0,
+    "scriptRequests": 0,
+    "overflow1440": false,
+    "overflow390": false,
+    "ground": "rgb(250, 253, 254)",
+    "mainTextLen": 1292,
+    "mainTextHead": "AMBER 方法\n\n琥珀评测把真实、可审计的历史事件封存到答案揭晓前，让模型只用当时可得的信息重做一次。 评分规则先冻结，题库不公开，分数和校验材料公开。\n\n23 / 26\n案 / 卷，私有题库\n11\n公开成绩仓\nW38\n保留的最新快照\n方",
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "httpErrors": []
+  },
+  "/rank/": {
+    "status": 200,
+    "scriptTags": 1,
+    "scriptRequests": 0,
+    "overflow1440": false,
+    "overflow390": false,
+    "ground": "rgb(250, 253, 254)",
+    "mainTextLen": 359,
+    "mainTextHead": "按轴挑模型 — 别只看总分\n\n选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。 这让 12 条公开车道的差异更容易核对。\n\n选择工作类型\n\n每个 chip 显示该类型里满分车道的数量。默认不选任何类型。\n\n施工0/12 ",
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "httpErrors": []
+  },
+  "/en/": {
+    "status": 200,
+    "scriptTags": 0,
+    "scriptRequests": 0,
+    "overflow1440": false,
+    "overflow390": false,
+    "ground": "rgb(250, 253, 254)",
+    "mainTextLen": 3593,
+    "mainTextHead": "AMBER — real history,\nsealed in amber, replayed\n\nWe take real, auditable incidents and freeze them at the moment before ",
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": [],
+    "httpErrors": []
+  }
+}

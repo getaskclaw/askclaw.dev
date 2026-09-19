@@ -1,0 +1,10 @@
+# Baseline hashes recorded BEFORE the CSS append (sha256)
+2f05502d34fbf173d696fc23225c63542b849e51f127ed1ba46e337a372773ec  src/pages/index.astro
+8bd4b5622899727a0cd2d47eda4b2e5550ff489bfc7e65e617e6f9bbfb365022  src/components/SiteHeader.astro
+29a5f4e5f6fca5e715279ff64cf32a5f3526d353c86b14841dcfb005f0cdf0d8  src/layouts/BaseLayout.astro
+7c806e6fce23dd3395765f1fad8df1f0ea4811e5b7ac97ca3c637ba100608c5c  src/pages/en/index.astro
+95cf0dbfbb5ef05b3a5127204a0491bc8ece99a1ea7da5fec4268a794a82ef28  /home/computebox/2609/askclaw-design-05/mockups/01-hero-questions-4-desktop.svg
+daaa9a92ec99a8189c353b25029df5a4c4bfdb6a2504f38bc779e4ef2f9732fe  /home/computebox/2609/askclaw-design-05/mockups/02-hero-questions-4-mobile.svg
+71d6ecfb1b4fd494ff18a15dec6103e64c826d9a31b1a945754ece4c24c118f3  /home/computebox/2609/askclaw-design-05/mockups/03-pending-section.svg
+# global.css before append:
+e969637ba06f0c957b4e587b4f370fbd84e2cc047080f33f7eb5096f68084f5d  /tmp/global.css.bak-before-home-append

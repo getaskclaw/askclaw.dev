@@ -1,0 +1,121 @@
+{
+  "publicFiles": [
+    {
+      "file": "_astro/BaseLayout.Bc8_lLlO.css",
+      "status": 200,
+      "bytes": 5459,
+      "sha256": "71c9d37d868d57f00aaf486c80d9b05daa4cb05ff058d0141d4b3f4a0b2a3918"
+    },
+    {
+      "file": "assets/completion-matrix-7way.en.png",
+      "status": 200,
+      "bytes": 722723,
+      "sha256": "fc977e27df40570038fceb224750ce7108bab33277db592c2beff477cdc408c1"
+    },
+    {
+      "file": "assets/effort-curves-20260911.en.png",
+      "status": 200,
+      "bytes": 408709,
+      "sha256": "3295a6fdff54e5e06d501b58d52c6e6791723ed7811d0c8caae30c8e6e47ddd9"
+    },
+    {
+      "file": "assets/score-vs-tokens-2026-w37.en.png",
+      "status": 200,
+      "bytes": 492800,
+      "sha256": "267d836e9e896a00063a22025e405b9192792985aaf3c989bdd0621a92e8669b"
+    },
+    {
+      "file": "assets/top5-2026-w38.en.png",
+      "status": 200,
+      "bytes": 973588,
+      "sha256": "802311d9469a64f183125b21d15dd04ece7cef6a6dc539c552c61e056087cd05"
+    },
+    {
+      "file": "assets/trust-chain.en.png",
+      "status": 200,
+      "bytes": 69847,
+      "sha256": "0a79fda71a1fa514545281a9a0b6c74e75770e450ef8aa237f2a5e61026c0da5"
+    },
+    {
+      "file": "assets/wallclock-strip-2026-w37.en.png",
+      "status": 200,
+      "bytes": 159335,
+      "sha256": "083a8edc3e530371fa5424f4663f3e81fdde327c64d01a1ce7134455d14f081d"
+    },
+    {
+      "file": "en/index.html",
+      "status": 200,
+      "bytes": 14149,
+      "sha256": "de232d2558c271237fae1422a3b91b1b6a0c52dbfbbc5f75e1beb8d467567dab"
+    },
+    {
+      "file": "favicon.svg",
+      "status": 200,
+      "bytes": 284,
+      "sha256": "8e012ed2af38f2fffe498747eaacb71a6ef177d861d38c1b5f917d40b0f04c96"
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "bytes": 2886,
+      "sha256": "70c879f50ffec8b6c9f34a8797abc75a1b6753813b216560c388412542169a6a"
+    },
+    {
+      "file": "method/index.html",
+      "status": 200,
+      "bytes": 6124,
+      "sha256": "4acf2efeaa499339d9d4132d4bb0d576cf2ebd212859f092885238ed3c026066"
+    },
+    {
+      "file": "rank/index.html",
+      "status": 200,
+      "bytes": 17093,
+      "sha256": "8fc23776c7d9c348ad3a8810a0e34565e430b803542759e85ac95f306b295ab7"
+    },
+    {
+      "file": "robots.txt",
+      "status": 200,
+      "bytes": 85,
+      "sha256": "40c1bf548ef7445857026f87cb81c7a3d2e43b3b6322a931538a9d1c371e7d06"
+    },
+    {
+      "file": "sitemap-0.xml",
+      "status": 200,
+      "bytes": 925,
+      "sha256": "2ff11f3f3ba83a6b1f5e6083ae6ac5fec55f7a5601c341bdc4399a8cfb78ac8c"
+    },
+    {
+      "file": "sitemap-index.xml",
+      "status": 200,
+      "bytes": 196,
+      "sha256": "b79bb7040280f46cd7b8c0ea9638645ca64e5fb5b2b4ab21944c3dbff4c501a2"
+    }
+  ],
+  "noJavaScript": [
+    {
+      "route": "/",
+      "status": 200,
+      "contentChars": 628,
+      "scripts": 0,
+      "cards": 0,
+      "errors": []
+    },
+    {
+      "route": "/method/",
+      "status": 200,
+      "contentChars": 1292,
+      "scripts": 0,
+      "cards": 11,
+      "errors": []
+    },
+    {
+      "route": "/en/",
+      "status": 200,
+      "contentChars": 3593,
+      "scripts": 0,
+      "cards": 12,
+      "errors": []
+    }
+  ],
+  "sitemapsAndRobotsInBrowser": true
+}

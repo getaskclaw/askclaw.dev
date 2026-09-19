@@ -1,0 +1,56 @@
+=== 2026-09-19T11:11:37Z final run ===
+BUILD_EXIT=0
+
+> askclaw.dev-astro@0.1.0 build
+> astro build
+
+11:11:38 [types] Generated 52ms
+11:11:38 [build] output: "static"
+11:11:38 [build] mode: "static"
+11:11:38 [build] directory: /home/computebox/2609/askclaw.dev-astro/dist/
+11:11:38 [build] Collecting build info...
+11:11:38 [build] ✓ Completed in 108ms.
+11:11:38 [build] Building static entrypoints...
+11:11:38 [vite] ✓ built in 201ms
+11:11:38 [vite] ✓ built in 30ms
+11:11:38 [build] Rearranging server assets...
+
+ generating static routes 
+11:11:38   ├─ /en/index.html (+10ms) 
+11:11:38   ├─ /method/index.html (+5ms) 
+11:11:38   ├─ /rank/index.html (+2ms) 
+11:11:38   ├─ /index.html (+4ms) 
+11:11:38 ✓ Completed in 29ms.
+
+11:11:38 [build] ✓ Completed in 296ms.
+11:11:38 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+11:11:38 [build] 4 page(s) built in 415ms
+11:11:38 [build] Complete!
+SCP_EXIT=0
+SSH_EXIT=0
+--- parent dir entries ---
+total 80
+-rw-rw-r-- 1 computebox computebox  1200 2026-09-18T01:12:02Z README.md
+-rw-rw-r-- 1 computebox computebox   170 2026-09-18T01:12:02Z SECURITY.md
+drwxrwxr-x 2 computebox computebox  4096 2026-09-18T08:01:35Z amber
+drwxrwxr-x 4 computebox computebox  4096 2026-09-18T09:35:47Z assets
+drwxrwxr-x 7 computebox computebox  4096 2026-09-19T08:58:14Z astro-preview
+-rw-r--r-- 1 root       root       14689 2026-09-19T05:55:27Z axes.html
+-rw-r--r-- 1 root       root        6937 2026-09-19T05:55:27Z axes.json
+-rw-rw-r-- 1 computebox computebox 12123 2026-09-19T00:11:46Z en.html
+-rw-rw-r-- 1 computebox computebox 12953 2026-09-19T05:56:26Z index.html
+-rw-r--r-- 1 root       root          65 2026-09-19T00:11:46Z robots.txt
+-rw-r--r-- 1 root       root         582 2026-09-19T05:56:26Z sitemap.xml
+--- astro-preview top level ---
+total 44
+drwxrwxr-x 2 computebox computebox 4096 2026-09-19T11:07:36Z _astro
+drwxrwxr-x 2 computebox computebox 4096 2026-09-19T10:41:49Z assets
+drwxrwxr-x 2 computebox computebox 4096 2026-09-19T08:58:14Z en
+-rw-rw-r-- 1 computebox computebox  284 2026-09-19T11:11:38Z favicon.svg
+-rw-rw-r-- 1 computebox computebox 7839 2026-09-19T11:11:38Z index.html
+drwxrwxr-x 2 computebox computebox 4096 2026-09-19T08:58:14Z method
+drwxrwxr-x 2 computebox computebox 4096 2026-09-19T08:58:14Z rank
+-rw-rw-r-- 1 computebox computebox   85 2026-09-19T11:11:38Z robots.txt
+-rw-rw-r-- 1 computebox computebox  925 2026-09-19T11:11:38Z sitemap-0.xml
+-rw-rw-r-- 1 computebox computebox  196 2026-09-19T11:11:38Z sitemap-index.xml
+RESULT build=0 scp=0 ssh=0

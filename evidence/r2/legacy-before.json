@@ -1,0 +1,148 @@
+{
+  "root": "/home/computebox/2609/askclaw.dev",
+  "top_level": [
+    "README.md",
+    "SECURITY.md",
+    "amber",
+    "assets",
+    "en.html",
+    "index.html",
+    "robots.txt",
+    "sitemap.xml"
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 1144,
+      "sha256": "92223fa29af6c9b96b797a919b9567bd1a38c8d50e65c7db51dc8a0eddb586a7"
+    },
+    "SECURITY.md": {
+      "bytes": 170,
+      "sha256": "9a9ed96f3451162876e398a08edb445f44ad84c0e4849484bb44af6ed3916498"
+    },
+    "amber/en.html": {
+      "bytes": 171,
+      "sha256": "b7996a1cdb658a42f208db8e667ebe2d7e2b784681c1c3aed2c8ec323925a0b9"
+    },
+    "amber/index.html": {
+      "bytes": 204,
+      "sha256": "f4f2aa0fbffaf4a881a76faa4f9833aa93b695aab04db9b083abb5885aae189c"
+    },
+    "assets/completion-matrix-7way.en.png": {
+      "bytes": 722723,
+      "sha256": "fc977e27df40570038fceb224750ce7108bab33277db592c2beff477cdc408c1"
+    },
+    "assets/completion-matrix-7way.png": {
+      "bytes": 674563,
+      "sha256": "800677e7e2ab8782fede32ff6707bc72a37cb7ed154426fab5766acb0f83559b"
+    },
+    "assets/effort-curves-20260911.en.png": {
+      "bytes": 408709,
+      "sha256": "3295a6fdff54e5e06d501b58d52c6e6791723ed7811d0c8caae30c8e6e47ddd9"
+    },
+    "assets/effort-curves-20260911.png": {
+      "bytes": 376615,
+      "sha256": "3f1ffb39f65a275f2cdf5e55783456d648949bd9961e8bcbffefc2e1f913d085"
+    },
+    "assets/score-vs-tokens-2026-w37.en.png": {
+      "bytes": 492800,
+      "sha256": "267d836e9e896a00063a22025e405b9192792985aaf3c989bdd0621a92e8669b"
+    },
+    "assets/score-vs-tokens-2026-w37.png": {
+      "bytes": 460025,
+      "sha256": "2cd52d3f84c6a0c71f4f76c5116af39d3c00bd377a782cce4adb86fbfed30f81"
+    },
+    "assets/specs/completion-matrix-7way.en.vega-lite.json": {
+      "bytes": 17048,
+      "sha256": "00767a466bbad5b8d87795e8f5f77480913d40523d57b10efb907d2f83e9f502"
+    },
+    "assets/specs/completion-matrix-7way.vega-lite.json": {
+      "bytes": 16981,
+      "sha256": "cbba0992c1c1260f9b61be6360a0e38e7ea8e312cbc2e728d2d606b93e91e58d"
+    },
+    "assets/specs/effort-curves-20260911.en.vega-lite.json": {
+      "bytes": 5493,
+      "sha256": "04b4c08821907f1599aa046bf37f735d05650530d9e62a2cb748e0ce937f83a9"
+    },
+    "assets/specs/effort-curves-20260911.vega-lite.json": {
+      "bytes": 5503,
+      "sha256": "cd363f953082d5a1b41b4b51daf853d35bfb896c3612886ead87d4425510517f"
+    },
+    "assets/specs/score-vs-tokens-2026-w37.en.vega-lite.json": {
+      "bytes": 19914,
+      "sha256": "a63c288d08381d45db55067c48c1620339a1fc5d11c3a90ffc15f61bfab1759b"
+    },
+    "assets/specs/score-vs-tokens-2026-w37.vega-lite.json": {
+      "bytes": 19889,
+      "sha256": "e58988647aaa4a5b363f40505f26f0ee3c2523de8db9748bbc2c94fd28d22d88"
+    },
+    "assets/specs/top5-2026-w38.en.vega-lite.json": {
+      "bytes": 4544,
+      "sha256": "ffb21e0efd5ffc42950852c8e4f836ab448deacd8c3991fdf1482b68556ec957"
+    },
+    "assets/specs/top5-2026-w38.vega-lite.json": {
+      "bytes": 4624,
+      "sha256": "cc4a3c3d5f51b94c7f891ad27409e89881f94d0961d9c4d38e5a0f53131991f3"
+    },
+    "assets/top5-2026-w38.en.png": {
+      "bytes": 973588,
+      "sha256": "802311d9469a64f183125b21d15dd04ece7cef6a6dc539c552c61e056087cd05"
+    },
+    "assets/top5-2026-w38.png": {
+      "bytes": 952004,
+      "sha256": "13007f14031762c9b639e0f530026a2a55899933141b04171d45e59f6c015704"
+    },
+    "assets/top5-card.en.png": {
+      "bytes": 236075,
+      "sha256": "c17f479bd9ec1437b20d08b4c0da47b56219f3153a66cabedf07b09ece7bf1f9"
+    },
+    "assets/top5-card.png": {
+      "bytes": 238097,
+      "sha256": "23bf2c5922fb68c55f24b7499ff978b0ddcad443ac2674e48978030d4a41b8d8"
+    },
+    "assets/trust-chain.en.png": {
+      "bytes": 69847,
+      "sha256": "0a79fda71a1fa514545281a9a0b6c74e75770e450ef8aa237f2a5e61026c0da5"
+    },
+    "assets/trust-chain.png": {
+      "bytes": 73288,
+      "sha256": "1aa2ffc7ea558bdda0a5cd36b1819adac5baf75ce64029c997a041cda91ffb9e"
+    },
+    "assets/vendor/vega-embed.min.js": {
+      "bytes": 60630,
+      "sha256": "12d02acfbe3ec59ef9a37dd4822a2e04e2961b5bbb671bbe661d2221715b99da"
+    },
+    "assets/vendor/vega-lite.min.js": {
+      "bytes": 252198,
+      "sha256": "58c27358e26f2d319cf62f45bc17a4c8362f08645001df2ec8d341eee4097c7f"
+    },
+    "assets/vendor/vega.min.js": {
+      "bytes": 515242,
+      "sha256": "463f3db6a40b20e9747b4ed38f37ed0add508838f9141b1cf8366784b07b30c8"
+    },
+    "assets/wallclock-strip-2026-w37.en.png": {
+      "bytes": 159335,
+      "sha256": "083a8edc3e530371fa5424f4663f3e81fdde327c64d01a1ce7134455d14f081d"
+    },
+    "assets/wallclock-strip-2026-w37.png": {
+      "bytes": 164160,
+      "sha256": "f302b1bccd8f3a7616ce8d05c7fcd945370480676dde13d44455d228123a8472"
+    },
+    "en.html": {
+      "bytes": 12123,
+      "sha256": "fcb14a08bcfb26d74908587c24913b0fa23a7b117cdeb79decc84ac390a4ac8b"
+    },
+    "index.html": {
+      "bytes": 12953,
+      "sha256": "944dd8aa82cc4cb4dbb10cb1831b5b4ba877e70269676349caf9d97d264f2c18"
+    },
+    "robots.txt": {
+      "bytes": 65,
+      "sha256": "de267505bf202a86895648c8cef1646a91501c5720e433af8ba27e2886436606"
+    },
+    "sitemap.xml": {
+      "bytes": 582,
+      "sha256": "05190fb9c57173d1195f8fe3d12bed4b8c11e46384cf06a4214f32fbf325f5b8"
+    }
+  },
+  "symlinks": {}
+}

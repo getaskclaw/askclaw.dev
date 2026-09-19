@@ -1,0 +1,2 @@
+# Keep captured command output verbatim, including terminal whitespace.
+evidence/r2/*.log -whitespace
