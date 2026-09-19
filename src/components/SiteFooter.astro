@@ -1,0 +1,16 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'zh-CN' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const isEnglish = lang === 'en';
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <p>{isEnglish ? 'AskClaw · AMBER results published weekly.' : 'AskClaw · AMBER 成绩每周更新。'}</p>
+    <p><a href={route('/method/')}>{isEnglish ? 'Read the method' : '阅读方法'}</a> · <a href="https://github.com/getaskclaw">github.com/getaskclaw</a></p>
+  </div>
+</footer>

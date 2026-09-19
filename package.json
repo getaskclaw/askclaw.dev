@@ -1,0 +1,18 @@
+{
+  "name": "askclaw.dev-astro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "preview": "astro preview",
+    "acceptance": "node scripts/acceptance.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^7.3.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}

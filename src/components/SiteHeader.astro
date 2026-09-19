@@ -1,0 +1,43 @@
+---
+interface Props {
+  lang?: string;
+  currentPath?: string;
+}
+
+const { lang = 'zh-CN', currentPath = '/' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const isEnglish = lang === 'en';
+const items = isEnglish
+  ? [
+      ['home', 'Home', '/'],
+      ['matrix', 'Axis matrix', '/rank/'],
+      ['repos', 'Results', '/method/#repos-title'],
+      ['method', 'Method', '/method/#verify-title'],
+    ]
+  : [
+      ['home', '总榜', '/'],
+      ['matrix', '九轴矩阵', '/rank/'],
+      ['repos', '成绩仓', '/method/#repos-title'],
+      ['method', '规范', '/method/#verify-title'],
+    ];
+---
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href={route('/')} aria-label="AskClaw home">Ask<span>Claw</span></a>
+    <nav class="header-nav" aria-label={isEnglish ? 'Primary navigation' : '主导航'}>
+      {items.map(([key, label, path]) => (
+        <a href={route(path)} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>
+      ))}
+      <a
+        class="language-toggle"
+        href={isEnglish ? route('/') : route('/en/')}
+        aria-label={isEnglish ? '切换到中文' : 'Switch to English'}
+      >
+        <span class={isEnglish ? undefined : 'language-current'}>中</span>
+        <span aria-hidden="true">/</span>
+        <span class={isEnglish ? 'language-current' : undefined}>EN</span>
+      </a>
+    </nav>
+  </div>
+</header>
