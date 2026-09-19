@@ -1,0 +1,26 @@
+
+> askclaw.dev-astro@0.1.0 build
+> astro build
+
+11:11:23 [types] Generated 49ms
+11:11:23 [build] output: "static"
+11:11:23 [build] mode: "static"
+11:11:23 [build] directory: /home/computebox/2609/askclaw.dev-astro/dist/
+11:11:23 [build] Collecting build info...
+11:11:23 [build] ✓ Completed in 116ms.
+11:11:23 [build] Building static entrypoints...
+11:11:23 [vite] ✓ built in 234ms
+11:11:23 [vite] ✓ built in 16ms
+11:11:23 [build] Rearranging server assets...
+
+ generating static routes 
+11:11:23   ├─ /en/index.html (+8ms) 
+11:11:23   ├─ /method/index.html (+7ms) 
+11:11:23   ├─ /rank/index.html (+3ms) 
+11:11:23   ├─ /index.html (+4ms) 
+11:11:23 ✓ Completed in 30ms.
+
+11:11:23 [build] ✓ Completed in 313ms.
+11:11:23 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+11:11:23 [build] 4 page(s) built in 443ms
+11:11:23 [build] Complete!

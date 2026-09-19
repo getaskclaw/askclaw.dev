@@ -1,43 +1,187 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const crabAsset = `${base}assets/crab-hero.webp`;
+
+const questions = [
+  {
+    code: 'A',
+    tone: 'teal',
+    question: '同一个模型，官方端点和第三方有差吗？',
+    preview: '同模型，分 lane 对照。',
+    cue: '看 lane',
+    href: route('/method/#repos-title'),
+    ariaLabel: '同一个模型，官方端点和第三方有差吗？同模型，分 lane 对照。查看成绩仓。',
+  },
+  {
+    code: 'B',
+    tone: 'amber',
+    question: '新出的模型能不能打？',
+    preview: '同一套 23 案，进榜即见。',
+    cue: '看 W38',
+    href: route('/#leaderboard'),
+    ariaLabel: '新出的模型能不能打？同一套 23 案，进榜即见。查看 2026-W38 总榜。',
+  },
+  {
+    code: 'C',
+    tone: 'cobalt',
+    question: '我干这个活该用谁？',
+    preview: '按活挑轴，不看总分。',
+    cue: '按轴排',
+    href: route('/rank/'),
+    ariaLabel: '我干这个活该用谁？按活挑轴，不看总分。按工作类型查看九轴排行。',
+  },
+  {
+    code: 'D',
+    tone: 'gold',
+    question: '这榜自己可信吗？',
+    preview: '封存、净室、hash 可查。',
+    cue: '看规范',
+    href: route('/method/#verify-title'),
+    ariaLabel: '这榜自己可信吗？封存、净室、hash 可查。查看规范和证据链。',
+  },
+] as const;
+
+const tiedLanes = [
+  ['glm-5.3-flash @ Ollama Cloud', 'teal'],
+  ['deepseek-v4.1-flash @ CommandCode', 'cobalt'],
+  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky'],
+  ['k3 @ Kimi 官方 coding', 'coral'],
+  ['hy4-preview-f @ WorkBuddy', 'mint'],
+] as const;
 ---
 <BaseLayout
-  title="AskClaw — AMBER 琥珀评测"
-  description="AMBER 琥珀评测的 Astro 静态迁移预览：23 cases, 11 result repos, and the W38 public record."
+  title="AskClaw — AMBER 公开总榜"
+  description="AskClaw AMBER 公开总榜：23 案、11 个成绩仓和 2026-W38 的真实成绩。"
   canonicalPath="/"
   languagePair={true}
+  pageClass="home-document"
 >
-  <div class="wrap">
-    <section class="hero">
-      <h1><em>AMBER</em> static migration placeholder</h1>
-      <p>
-        Batch 1 keeps this home route small while the deterministic content routes move to Astro.
-        The data record stays public, auditable, and ready for the next visual batch.
-      </p>
-      <div class="badges" aria-label="Migration facts">
-        <div class="badge"><strong>23 cases</strong><small>26 papers in the private case library</small></div>
-        <div class="badge"><strong>11 result repos</strong><small>one public record for each result lane</small></div>
-        <div class="badge"><strong>W38</strong><small>the latest preserved snapshot</small></div>
-      </div>
-    </section>
+  <div class="home-page">
+    <div class="wrap home-wrap">
+      <section class="question-hero" aria-labelledby="question-heading">
+        <div class="question-panel">
+          <p class="eyebrow">AMBER / PUBLIC BENCHMARK</p>
+          <div class="eyebrow-rule" aria-hidden="true"></div>
+          <h1 id="question-heading">你想先问哪一句？</h1>
+          <div class="question-grid" aria-label="四个公开数据入口">
+            {questions.map((entry) => (
+              <a
+                class={`question-entry question-entry-${entry.tone}`}
+                href={entry.href}
+                aria-label={entry.ariaLabel}
+              >
+                <span class="question-meta">
+                  <span class="question-dot" aria-hidden="true"></span>
+                  <span>{entry.code}</span>
+                </span>
+                <span class="question-copy">
+                  <span class="question">{entry.question}</span>
+                  <span class="preview">{entry.preview}</span>
+                </span>
+                <span class="edge-cue">
+                  <span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>
+                  {entry.cue}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
 
-    <section class="section" aria-labelledby="routes-title">
-      <h2 id="routes-title">Batch 1 routes</h2>
-      <p class="hint">Choose a route. Each one is statically rendered and works without a client framework.</p>
-      <div class="hero-actions">
-        <a class="action-card" href={import.meta.env.BASE_URL + 'method/'}>
-          <strong>Method</strong>
-          <small>AMBER rules, public hash index, and result repositories.</small>
-        </a>
-        <a class="action-card" href={import.meta.env.BASE_URL + 'rank/'}>
-          <strong>Rank by work</strong>
-          <small>Eight native filter chips and the preserved lane data.</small>
-        </a>
-        <a class="action-card" href={import.meta.env.BASE_URL + 'en/'}>
-          <strong>English</strong>
-          <small>An English mirror of the AMBER introduction.</small>
-        </a>
-      </div>
-    </section>
+        <aside class="crab-guide" aria-label="首屏导览">
+          <div class="crab-frame">
+            <img
+              src={crabAsset}
+              width="1200"
+              height="400"
+              alt="珊瑚色蟹托着珍珠，邀请访客查看 AMBER W38 总榜"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+          <p class="crab-bubble">先问一句，我把路递给你。</p>
+          <div class="fact-rail" aria-label="AMBER 当前事实">
+            <span class="fact-dot" aria-hidden="true"></span>
+            <span>23 案 · 11 个成绩仓 · 2026-W38</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="leaderboard" id="leaderboard" aria-labelledby="leaderboard-title">
+        <header class="leaderboard-header">
+          <div>
+            <h2 id="leaderboard-title">当前总榜</h2>
+            <p>真实公开成绩 · 2026-W38</p>
+          </div>
+          <span class="leaderboard-badge">23 案 · 11 个成绩仓</span>
+        </header>
+
+        <div class="leaderboard-body">
+          <article class="champion-card" aria-labelledby="champion-title">
+            <div class="rank-label"><span class="rank-dot" aria-hidden="true"></span>#1 · 当前榜首</div>
+            <div class="champion-main">
+              <div>
+                <h3 id="champion-title">swe-2-max @ Devin</h3>
+                <p>考于 W37 · W38 未重考</p>
+              </div>
+              <strong class="champion-score">18/23</strong>
+            </div>
+            <p class="champion-detail">榜首成绩 · 23 案题库</p>
+            <div class="progress-block">
+              <div class="progress-track" role="img" aria-label="榜首通过 18 案，共 23 案">
+                <span style="width: 78.26%"></span>
+              </div>
+              <span>通过案数 / 题库总案数</span>
+            </div>
+          </article>
+
+          <article class="tied-card" aria-labelledby="tied-title">
+            <h3 id="tied-title">#2 · 五席并列 · 均为 17/23</h3>
+            <ol class="tied-list">
+              {tiedLanes.map(([name, tone]) => (
+                <li>
+                  <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
+                  <span class="lane-name" title={name}>{name}</span>
+                  <strong>17/23</strong>
+                </li>
+              ))}
+            </ol>
+          </article>
+        </div>
+
+        <footer class="leaderboard-footer">
+          <strong>同分 ≠ 同款</strong>
+          <span>榜单先给结果，详情页保留证据</span>
+        </footer>
+      </section>
+
+      <section class="pending-section" aria-labelledby="pending-title">
+        <header class="pending-header">
+          <h2 id="pending-title">在补什么</h2>
+          <p>先补齐证据，再回到首屏。</p>
+        </header>
+        <div class="pending-list">
+          <div class="pending-row pending-row-e">
+            <span class="pending-letter" aria-hidden="true">E</span>
+            <div>
+              <h3>AI 模型降智了吗？</h3>
+              <p>跨家复测还未齐，暂不声称能力回退。</p>
+            </div>
+            <span class="pending-status">数据待发布</span>
+          </div>
+          <div class="pending-row pending-row-f">
+            <span class="pending-letter" aria-hidden="true">F</span>
+            <div>
+              <h3>在我关注的方面，有更好的平替吗？</h3>
+              <p>便宜候选需要成体系的价格 / 成本源。</p>
+            </div>
+            <span class="pending-status">价格待发布</span>
+          </div>
+        </div>
+        <p class="pending-note">次级区只记缺口，不替数据提前下结论。</p>
+      </section>
+    </div>
   </div>
 </BaseLayout>

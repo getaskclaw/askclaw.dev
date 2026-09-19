@@ -11,13 +11,15 @@ const isEnglish = lang === 'en';
 const items = isEnglish
   ? [
       ['home', 'Home', '/'],
-      ['method', 'Method', '/method/'],
-      ['rank', 'Rank by work', '/rank/'],
+      ['matrix', 'Axis matrix', '/rank/'],
+      ['repos', 'Results', '/method/#repos-title'],
+      ['method', 'Method', '/method/#verify-title'],
     ]
   : [
       ['home', '总榜', '/'],
-      ['method', '方法', '/method/'],
-      ['rank', '按轴挑模型', '/rank/'],
+      ['matrix', '九轴矩阵', '/rank/'],
+      ['repos', '成绩仓', '/method/#repos-title'],
+      ['method', '规范', '/method/#verify-title'],
     ];
 ---
 <header class="site-header">
@@ -27,8 +29,15 @@ const items = isEnglish
       {items.map(([key, label, path]) => (
         <a href={route(path)} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>
       ))}
-      <a href="https://github.com/getaskclaw">GitHub</a>
-      {isEnglish ? <a href={route('/')}>中文</a> : <a href={route('/en/')}>English</a>}
+      <a
+        class="language-toggle"
+        href={isEnglish ? route('/') : route('/en/')}
+        aria-label={isEnglish ? '切换到中文' : 'Switch to English'}
+      >
+        <span class={isEnglish ? undefined : 'language-current'}>中</span>
+        <span aria-hidden="true">/</span>
+        <span class={isEnglish ? 'language-current' : undefined}>EN</span>
+      </a>
     </nav>
   </div>
 </header>

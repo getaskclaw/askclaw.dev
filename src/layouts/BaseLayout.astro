@@ -9,6 +9,7 @@ interface Props {
   lang?: string;
   canonicalPath?: string;
   languagePair?: boolean;
+  pageClass?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   lang = 'zh-CN',
   canonicalPath = '/',
   languagePair = false,
+  pageClass = '',
 } = Astro.props;
 
 const site = 'https://askclaw.dev';
@@ -40,7 +42,7 @@ const favicon = route('/favicon.svg');
     {languagePair && <link rel="alternate" hreflang="en" href={enHome} />}
     {languagePair && <link rel="alternate" hreflang="x-default" href={zhHome} />}
   </head>
-  <body>
+  <body class={pageClass}>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <SiteHeader lang={lang} currentPath={canonicalPath} />
     <main id="main-content">

@@ -1,0 +1,317 @@
+{
+  "url": "https://askclaw.dev/astro-preview/",
+  "at": "2026-09-19T11:11:42.585Z",
+  "v1440": {
+    "status": 200,
+    "jsBytes": 0,
+    "cssBytes": 4307,
+    "totalTransferBytes": 26322,
+    "scriptRequests": 0,
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "bodyScrollWidth": 1440
+    },
+    "ground": {
+      "html": "rgb(251, 252, 248)",
+      "body": "rgb(251, 252, 248)",
+      "homePage": "rgb(251, 252, 248)"
+    },
+    "grid": {
+      "columns": "390.578px 390.594px",
+      "columnGap": "16px",
+      "rowGap": "14px"
+    },
+    "cards": [
+      {
+        "code": "A",
+        "bg": "rgb(230, 244, 240)",
+        "border": "rgb(215, 234, 229)",
+        "radius": "20px",
+        "w": 390.58,
+        "h": 96,
+        "x": 140,
+        "y": 216.28
+      },
+      {
+        "code": "B",
+        "bg": "rgb(255, 243, 210)",
+        "border": "rgb(215, 234, 229)",
+        "radius": "20px",
+        "w": 390.59,
+        "h": 96,
+        "x": 546.58,
+        "y": 216.28
+      },
+      {
+        "code": "C",
+        "bg": "rgb(229, 233, 255)",
+        "border": "rgb(215, 234, 229)",
+        "radius": "20px",
+        "w": 390.58,
+        "h": 96,
+        "x": 140,
+        "y": 326.28
+      },
+      {
+        "code": "D",
+        "bg": "rgb(255, 247, 222)",
+        "border": "rgb(215, 234, 229)",
+        "radius": "20px",
+        "w": 390.59,
+        "h": 96,
+        "x": 546.58,
+        "y": 326.28
+      }
+    ],
+    "geom": [
+      {
+        "code": "A",
+        "secondColumn": "col1",
+        "height": 96,
+        "rowIndex": 0,
+        "gapToPrevInRow": null,
+        "rowGapBetween": null
+      },
+      {
+        "code": "B",
+        "secondColumn": "same-row-col2",
+        "height": 96,
+        "rowIndex": 0,
+        "gapToPrevInRow": 16,
+        "rowGapBetween": null
+      },
+      {
+        "code": "C",
+        "secondColumn": "col1",
+        "height": 96,
+        "rowIndex": 1,
+        "gapToPrevInRow": null,
+        "rowGapBetween": 14
+      },
+      {
+        "code": "D",
+        "secondColumn": "same-row-col2",
+        "height": 96,
+        "rowIndex": 1,
+        "gapToPrevInRow": 16,
+        "rowGapBetween": 14
+      }
+    ],
+    "crabFrame": {
+      "background": "rgb(255, 246, 222)",
+      "borderColor": "rgb(240, 228, 194)",
+      "radius": "28px",
+      "box": {
+        "x": 965.171875,
+        "y": 107.09375,
+        "width": 334.828125,
+        "height": 112.9375,
+        "top": 107.09375,
+        "right": 1300,
+        "bottom": 220.03125,
+        "left": 965.171875
+      }
+    },
+    "bubble": {
+      "background": "rgb(18, 60, 70)",
+      "color": "rgb(255, 255, 255)",
+      "text": "先问一句，我把路递给你。",
+      "box": {
+        "x": 965.171875,
+        "y": 232.03125,
+        "width": 334.828125,
+        "height": 40.1875,
+        "top": 232.03125,
+        "right": 1300,
+        "bottom": 272.21875,
+        "left": 965.171875
+      }
+    },
+    "factRail": {
+      "background": "rgb(255, 255, 255)",
+      "text": "23 案 · 11 个成绩仓 · 2026-W38",
+      "box": {
+        "x": 965.171875,
+        "y": 284.21875,
+        "width": 334.828125,
+        "height": 48,
+        "top": 284.21875,
+        "right": 1300,
+        "bottom": 332.21875,
+        "left": 965.171875
+      }
+    },
+    "pendingRows": [
+      {
+        "cls": "pending-row pending-row-e",
+        "letter": "E",
+        "heading": "AI 模型降智了吗？",
+        "detail": "跨家复测还未齐，暂不声称能力回退。",
+        "status": "数据待发布",
+        "letterBg": "rgb(255, 243, 210)",
+        "letterBorder": "rgb(247, 184, 62)",
+        "statusBg": "rgb(255, 243, 210)",
+        "statusBorder": "rgb(238, 220, 169)"
+      },
+      {
+        "cls": "pending-row pending-row-f",
+        "letter": "F",
+        "heading": "在我关注的方面，有更好的平替吗？",
+        "detail": "便宜候选需要成体系的价格 / 成本源。",
+        "status": "价格待发布",
+        "letterBg": "rgb(229, 233, 255)",
+        "letterBorder": "rgb(108, 115, 217)",
+        "statusBg": "rgb(229, 233, 255)",
+        "statusBorder": "rgb(205, 212, 245)"
+      }
+    ],
+    "errors": {
+      "console": [],
+      "page": [],
+      "failed": []
+    }
+  },
+  "v390": {
+    "status": 200,
+    "jsBytes": 0,
+    "cssBytes": 4307,
+    "totalTransferBytes": 26322,
+    "scriptRequests": 0,
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "bodyScrollWidth": 390
+    },
+    "cards": [
+      {
+        "code": "A",
+        "bg": "rgb(230, 244, 240)",
+        "x": 20,
+        "y": 241.27,
+        "w": 167,
+        "h": 128.89
+      },
+      {
+        "code": "B",
+        "bg": "rgb(255, 243, 210)",
+        "x": 203,
+        "y": 241.27,
+        "w": 167,
+        "h": 128.89
+      },
+      {
+        "code": "C",
+        "bg": "rgb(229, 233, 255)",
+        "x": 20,
+        "y": 384.16,
+        "w": 167,
+        "h": 118
+      },
+      {
+        "code": "D",
+        "bg": "rgb(255, 247, 222)",
+        "x": 203,
+        "y": 384.16,
+        "w": 167,
+        "h": 118
+      }
+    ],
+    "grid": {
+      "columns": "167px 167px",
+      "columnGap": "16px",
+      "rowGap": "14px"
+    },
+    "mobileGap": {
+      "lowerCardBottomY": 502.16,
+      "bannerTopY": 520.16,
+      "gapPx": 18,
+      "cardRows": [
+        241,
+        384
+      ],
+      "cardColumns": [
+        20,
+        203
+      ]
+    },
+    "crabFrame": {
+      "background": "rgb(255, 246, 222)",
+      "borderColor": "rgb(240, 228, 194)",
+      "radius": "24px",
+      "box": {
+        "x": 20,
+        "y": 520.15625,
+        "width": 350,
+        "height": 118,
+        "top": 520.15625,
+        "right": 370,
+        "bottom": 638.15625,
+        "left": 20
+      }
+    },
+    "bubble": {
+      "background": "rgb(18, 60, 70)",
+      "color": "rgb(255, 255, 255)",
+      "text": "先问一句，我把路递给你。",
+      "box": {
+        "x": 20,
+        "y": 650.15625,
+        "width": 350,
+        "height": 40.1875,
+        "top": 650.15625,
+        "right": 370,
+        "bottom": 690.34375,
+        "left": 20
+      }
+    },
+    "factRail": {
+      "background": "rgb(255, 255, 255)",
+      "text": "23 案 · 11 个成绩仓 · 2026-W38",
+      "box": {
+        "x": 20,
+        "y": 702.34375,
+        "width": 350,
+        "height": 48,
+        "top": 702.34375,
+        "right": 370,
+        "bottom": 750.34375,
+        "left": 20
+      }
+    },
+    "ground": {
+      "html": "rgb(251, 252, 248)",
+      "body": "rgb(251, 252, 248)",
+      "homePage": "rgb(251, 252, 248)"
+    },
+    "pendingRows": [
+      {
+        "cls": "pending-row pending-row-e",
+        "letter": "E",
+        "heading": "AI 模型降智了吗？",
+        "detail": "跨家复测还未齐，暂不声称能力回退。",
+        "status": "数据待发布",
+        "letterBg": "rgb(255, 243, 210)",
+        "letterBorder": "rgb(247, 184, 62)",
+        "statusBg": "rgb(255, 243, 210)",
+        "statusBorder": "rgb(238, 220, 169)"
+      },
+      {
+        "cls": "pending-row pending-row-f",
+        "letter": "F",
+        "heading": "在我关注的方面，有更好的平替吗？",
+        "detail": "便宜候选需要成体系的价格 / 成本源。",
+        "status": "价格待发布",
+        "letterBg": "rgb(229, 233, 255)",
+        "letterBorder": "rgb(108, 115, 217)",
+        "statusBg": "rgb(229, 233, 255)",
+        "statusBorder": "rgb(205, 212, 245)"
+      }
+    ],
+    "errors": {
+      "console": [],
+      "page": [],
+      "failed": []
+    }
+  }
+}
