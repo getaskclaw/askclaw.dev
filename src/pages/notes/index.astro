@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { route } from '../../utils/route';
+
+const notes = [
+  {
+    href: '/notes/agent-is-new-software/',
+    title: 'Agent 是新的软件吗？',
+    desc: '软件只有两样核心：逻辑和状态。Agent 化是把这两样搬进了 agent 的肚子里，代码退居工具层。谁积累上下文，谁有壁垒。',
+    date: '2026-09-20',
+  },
+];
+---
+<BaseLayout
+  title="随笔 — AskClaw"
+  description="AskClaw 随笔：关于 agent、软件形态与评测的思考。"
+  canonicalPath="/notes/"
+>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow">AskClaw / NOTES</p>
+      <h1>随笔</h1>
+      <p class="lede">跑分之外的思考。慢更，写完就发。</p>
+    </section>
+    <section class="notes-list">
+      {notes.map((n) => (
+        <a class="note-card" href={route(n.href)}>
+          <span class="note-date">{n.date}</span>
+          <h2>{n.title}</h2>
+          <p>{n.desc}</p>
+        </a>
+      ))}
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .notes-list { display: grid; gap: 16px; padding-bottom: 64px; }
+  .note-card {
+    display: block; background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px 24px; color: var(--ink); text-decoration: none;
+  }
+  .note-card:hover { text-decoration: none; border-color: var(--teal); }
+  .note-card h2 { font-size: 20px; margin: 6px 0 8px; }
+  .note-card p { color: var(--sub); font-size: 15px; margin: 0; }
+  .note-date { color: var(--sub); font-size: 13px; }
+</style>
