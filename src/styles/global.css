@@ -461,10 +461,8 @@ table.board tbody tr:hover {
 
 /* ------------------------------------------------------------------
    AskClaw home visual batch (appended block, additive only).
-   Color values and geometry are read from the design sources:
-   ~/2609/askclaw-design-05/mockups/01-hero-questions-4-desktop.svg
-   ~/2609/askclaw-design-05/mockups/02-hero-questions-4-mobile.svg
-   ~/2609/askclaw-design-05/mockups/03-pending-section.svg
+   Color values and geometry are read from the design mockups
+   (hero-questions-4 desktop/mobile, pending-section).
    Page ground #FBFCF8 · card edges #D7EAE5 · card radius 20px
    A #E6F4F0  B #FFF3D2  C #E5E9FF  D #FFF7DE · crab bubble #123C46
    ------------------------------------------------------------------ */

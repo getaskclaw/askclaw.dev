@@ -57,9 +57,27 @@ CRAB_ASSET = 'crab-hero.webp'
 
 root = Path(__file__).resolve().parent.parent
 dist = root / 'dist'
-legacy = Path(os.environ.get('LEGACY_SITE_ROOT', root)).expanduser().resolve()
+# The legacy checkout (~/2609/askclaw.dev) is the ground truth for the chart PNGs. It is NOT part
+# of this repo, so the dependency is checked up front and reported readably instead of blowing up
+# on a later file read.
+legacy = Path(os.environ.get('LEGACY_SITE_ROOT', root.parent / 'askclaw.dev')).expanduser().resolve()
+missing_legacy = [name for name in CHART_ASSETS.values() if not (legacy / 'assets' / name).is_file()]
+if missing_legacy:
+    raise SystemExit(
+        f'Legacy site assets not found under {legacy / "assets"}: {sorted(missing_legacy)}\n'
+        'This gate compares each built WebP against the legacy PNG, which lives in its own checkout\n'
+        '(~/2609/askclaw.dev) and is not tracked in this repo. Point LEGACY_SITE_ROOT at it, e.g.\n'
+        '  LEGACY_SITE_ROOT=~/2609/askclaw.dev python3 scripts/verify-dist.py'
+    )
 axes_source = Path(os.environ.get('AXES_SOURCE', root / 'src/data/axes.json')).expanduser().resolve()
-base = 'https://askclaw.dev/astro-preview/'
+# Base comes from SITE_BASE (same env var the Astro config reads); default is the production root,
+# so `npm run build && python3 scripts/verify-dist.py` checks the artifact that actually ships.
+base_path = os.environ.get('SITE_BASE') or '/'
+if not base_path.startswith('/'):
+    base_path = '/' + base_path
+if not base_path.endswith('/'):
+    base_path += '/'
+expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html'}
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
@@ -101,8 +119,8 @@ for relative in sorted(expected_routes):
         url = urlparse(ref)
         if url.scheme or not url.path:
             continue
-        assert url.path.startswith('/astro-preview/'), ref
-        target = dist / url.path.removeprefix('/astro-preview/')
+        assert url.path.startswith(base_path), ref
+        target = dist / url.path.removeprefix(base_path)
         if url.path.endswith('/'):
             target /= 'index.html'
         assert target.is_file(), ref
@@ -144,21 +162,36 @@ for path in assets:
     report['assets'][path.name] = {'bytes': len(data), 'dimensions': dimensions, 'sha256': hashlib.sha256(data).hexdigest()}
 
 ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'x': 'http://www.w3.org/1999/xhtml'}
-sitemap = ET.parse(dist / 'sitemap-0.xml')
-urls = sitemap.findall('s:url', ns)
-locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-assert len(locations) == 4 and set(locations) == {base, base + 'en/', base + 'rank/', base + 'method/'}
-for url in urls:
-    location = url.findtext('s:loc', namespaces=ns)
-    alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
-    assert alternates == ({'zh-CN': base, 'en': base + 'en/'} if location in {base, base + 'en/'} else {})
-assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == base + 'sitemap-0.xml'
-assert base + 'sitemap-index.xml' in (dist / 'robots.txt').read_text()
+robots_text = (dist / 'robots.txt').read_text()
 tracked = subprocess.check_output(['git', 'ls-files'], cwd=root, text=True).splitlines()
 assert not any(Path(p).name.startswith('sitemap') and p.endswith('.xml') for p in tracked)
 config = (root / 'astro.config.mjs').read_text()
 assert "import sitemap from '@astrojs/sitemap'" in config and 'sitemap({' in config
-report['sitemap'] = {'routes': locations, 'hreflang_count': len(sitemap.findall('.//x:link', ns)), 'generated': True}
+if base_path == '/':
+    # Production root: a real sitemap of production URLs plus a robots.txt that advertises it
+    # (the legacy site published robots.txt + sitemap.xml at the same paths).
+    sitemap = ET.parse(dist / 'sitemap-0.xml')
+    urls = sitemap.findall('s:url', ns)
+    locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
+    assert len(locations) == 4 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'method/'}
+    for url in urls:
+        location = url.findtext('s:loc', namespaces=ns)
+        alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
+        assert alternates == ({'zh-CN': expected_base, 'en': expected_base + 'en/'} if location in {expected_base, expected_base + 'en/'} else {})
+    assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
+    assert expected_base + 'sitemap-index.xml' in robots_text
+    assert 'Disallow: /' not in robots_text
+    for relative in expected_routes:
+        assert 'noindex' not in (dist / relative).read_text(), relative
+    report['sitemap'] = {'routes': locations, 'hreflang_count': len(sitemap.findall('.//x:link', ns)), 'generated': True, 'base': base_path}
+else:
+    # Preview base: not indexable. No sitemap is generated and robots.txt forbids crawling; every
+    # page carries noindex,nofollow so the preview never becomes a duplicate of the real site.
+    assert not (dist / 'sitemap-0.xml').exists() and not (dist / 'sitemap-index.xml').exists()
+    assert robots_text == 'User-agent: *\nDisallow: /\n', robots_text
+    for relative in expected_routes:
+        assert '<meta name="robots" content="noindex,nofollow"' in (dist / relative).read_text(), relative
+    report['sitemap'] = {'routes': [], 'hreflang_count': 0, 'generated': False, 'base': base_path}
 assert not list(dist.rglob('*.js'))
 for path in [*dist.rglob('*.html'), *dist.rglob('*.css')]:
     assert not re.search(r'@font-face|fonts\.(?:googleapis|gstatic)\.com|\.(?:woff2?|ttf|otf)\b', path.read_text()), path

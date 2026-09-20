@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { existsSync } from 'node:fs';
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,8 +9,21 @@ import astroConfig from '../astro.config.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
-const legacySiteRoot = resolve(process.env.LEGACY_SITE_ROOT ?? projectRoot);
-const previewPrefix = '/astro-preview';
+// The legacy site lives in its own checkout (~/2609/askclaw.dev); this repo no longer keeps a
+// mirror of it, so point LEGACY_SITE_ROOT at that checkout when it is not a sibling directory.
+const legacySiteRoot = resolve(process.env.LEGACY_SITE_ROOT ?? resolve(projectRoot, '..', 'askclaw.dev'));
+const legacyEnglish = resolve(legacySiteRoot, 'en.html');
+if (!existsSync(legacyEnglish)) {
+  throw new Error(
+    `Legacy English page not found: ${legacyEnglish}\n`
+    + 'The /en/ mirror check compares against the legacy checkout, which is not part of this repo.\n'
+    + 'Set LEGACY_SITE_ROOT to the legacy site root and rerun, e.g.\n'
+    + '  LEGACY_SITE_ROOT=~/2609/askclaw.dev npm run acceptance',
+  );
+}
+// Prefix comes from the Astro config (SITE_BASE, default '/'), so the production root build and
+// the /astro-preview/ build are both checked by this script with no edits.
+const previewPrefix = `/${(astroConfig.base ?? '/').replace(/^\/+|\/+$/g, '')}`.replace(/^\/$/, '');
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -264,7 +278,7 @@ try {
     result.scriptRequests = requests.filter((request) => request.type === 'script');
     result.forbiddenTerms = (await page.content()).match(/点线面|图结构|节点|出边|点→跳转/g) ?? [];
     result.canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
-    result.expectedCanonical = `https://askclaw.dev${previewPrefix}${route}`;
+    result.expectedCanonical = new URL(`${previewPrefix}${route}`, astroConfig.site).href;
     if (result.scriptTags !== (route === '/rank/' ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     if (route === '/' && initialTransfer.totalBytes >= 200_000) failed = true;
@@ -274,7 +288,7 @@ try {
     result.refreshStatus = refreshed?.status();
     result.refreshContentPreserved = (await page.locator('main').innerText()) === mainText;
     if (route !== '/method/') {
-      await page.locator('.header-nav a[href^="/astro-preview/method/"]').first().click();
+      await page.locator(`.header-nav a[href^="${previewPrefix}/method/"]`).first().click();
       await page.waitForURL((url) => url.pathname === `${previewPrefix}/method/`, { waitUntil: 'load' });
       await page.goBack({ waitUntil: 'networkidle' });
       result.backUrl = page.url();
