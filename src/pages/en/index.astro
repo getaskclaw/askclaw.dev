@@ -3,6 +3,59 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { route } from '../../utils/route';
 
 const asset = (file: string) => route(`/assets/${file}`);
+
+// Four-card hero, translated from the Chinese home (/src/pages/index.astro) and sharing its
+// question-* / crab-* / leaderboard-* classes. hrefs follow the Chinese page's real hrefs:
+// A and D point at the method page anchors the Chinese cards use (repos-title, verify-title).
+const crabAsset = asset('crab-hero.webp');
+
+const questions = [
+  {
+    code: 'A',
+    tone: 'teal',
+    question: 'Same model — official endpoint vs third-party. Any difference?',
+    preview: 'One model, compared lane by lane.',
+    cue: 'See lanes',
+    href: route('/method/#repos-title'),
+    ariaLabel: 'Same model — official endpoint vs third-party. Any difference? One model, compared lane by lane. See the result repos.',
+  },
+  {
+    code: 'B',
+    tone: 'amber',
+    question: 'Can the newly released models actually hold up?',
+    preview: 'Same 23 cases; enter the board and see.',
+    cue: 'See W38',
+    href: route('/#leaderboard'),
+    ariaLabel: 'Can the newly released models actually hold up? Same 23 cases; enter the board and see. See the 2026-W38 board.',
+  },
+  {
+    code: 'C',
+    tone: 'cobalt',
+    question: 'Which model should I use for this kind of work?',
+    preview: 'Pick the axis by work, not the total.',
+    cue: 'Rank by axis',
+    href: route('/rank/'),
+    ariaLabel: 'Which model should I use for this kind of work? Pick the axis by work, not the total. Rank by work type.',
+  },
+  {
+    code: 'D',
+    tone: 'gold',
+    question: 'Can this board itself be trusted?',
+    preview: 'Sealed, clean-room, hash-checkable.',
+    cue: 'Read the spec',
+    href: route('/method/#verify-title'),
+    ariaLabel: 'Can this board itself be trusted? Sealed, clean-room, hash-checkable. Read the spec and the evidence chain.',
+  },
+] as const;
+
+// #2 five-way tie: original lane names, exactly as published on the Chinese home.
+const tiedLanes = [
+  ['glm-5.3-flash @ Ollama Cloud', 'teal'],
+  ['deepseek-v4.1-flash @ CommandCode', 'cobalt'],
+  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky'],
+  ['k3 @ Kimi 官方 coding', 'coral'],
+  ['hy4-preview-f @ WorkBuddy', 'mint'],
+] as const;
 // Published repository summaries from the legacy English home, not axes.json:
 // the axis picker deliberately retains older W36 21-case records for two lanes.
 const repos = [
@@ -31,8 +84,131 @@ const repos = [
   schemaInLanguage="en"
 >
   <div class="wrap english-mirror">
+    <section class="question-hero" aria-labelledby="question-heading">
+      <div class="question-panel">
+        <p class="eyebrow">AMBER / PUBLIC BENCHMARK</p>
+        <div class="eyebrow-rule" aria-hidden="true"></div>
+        <h1 id="question-heading">Which question do you want to start with?</h1>
+        <div class="question-grid" aria-label="Four public data entry points">
+          {questions.map((entry) => (
+            <a
+              class={`question-entry question-entry-${entry.tone}`}
+              href={entry.href}
+              aria-label={entry.ariaLabel}
+            >
+              <span class="question-meta">
+                <span class="question-dot" aria-hidden="true"></span>
+                <span>{entry.code}</span>
+              </span>
+              <span class="question-copy">
+                <span class="question">{entry.question}</span>
+                <span class="preview">{entry.preview}</span>
+              </span>
+              <span class="edge-cue">
+                <span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>
+                {entry.cue}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <aside class="crab-guide" aria-label="Hero guide">
+        <div class="crab-frame">
+          <img
+            src={crabAsset}
+            width="1200"
+            height="400"
+            alt="A coral crab holding a pearl, inviting visitors to view the AMBER 2026-W38 board"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <p class="crab-bubble">Ask one question; I'll hand you the path.</p>
+        <div class="fact-rail" aria-label="AMBER current facts">
+          <span class="fact-dot" aria-hidden="true"></span>
+          <span>23 cases · 11 result repos · 2026-W38</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="leaderboard" id="leaderboard" aria-labelledby="leaderboard-title">
+      <header class="leaderboard-header">
+        <div>
+          <h2 id="leaderboard-title">Current board</h2>
+          <p>Real published scores · 2026-W38</p>
+        </div>
+        <span class="leaderboard-badge">23 cases · 11 result repos</span>
+      </header>
+
+      <div class="leaderboard-body">
+        <article class="champion-card" aria-labelledby="champion-title">
+          <div class="rank-label"><span class="rank-dot" aria-hidden="true"></span>#1 · Current leader</div>
+          <div class="champion-main">
+            <div>
+              <h3 id="champion-title">swe-2-max @ Devin</h3>
+              <p>Scored in W37 · not re-run in W38</p>
+            </div>
+            <strong class="champion-score">18/23</strong>
+          </div>
+          <p class="champion-detail">Leader's score · 23-case library</p>
+          <div class="progress-block">
+            <div class="progress-track" role="img" aria-label="Leader passed 18 of 23 cases">
+              <span style="width: 78.26%"></span>
+            </div>
+            <span>Cases passed / total cases in the library</span>
+          </div>
+        </article>
+
+        <article class="tied-card" aria-labelledby="tied-title">
+          <h3 id="tied-title">#2 · five-way tie · all 17/23</h3>
+          <ol class="tied-list">
+            {tiedLanes.map(([name, tone]) => (
+              <li>
+                <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
+                <span class="lane-name" title={name}>{name}</span>
+                <strong>17/23</strong>
+              </li>
+            ))}
+          </ol>
+          <p class="leaderboard-footnote">Ollama Cloud lanes use their W36 21-case records on the axis board; the 17/23 total is a W37 composite.</p>
+        </article>
+      </div>
+
+      <footer class="leaderboard-footer">
+        <strong>Same score ≠ same shape</strong>
+        <span>The board gives the result first; the detail pages keep the evidence</span>
+      </footer>
+    </section>
+
+    <section class="pending-section" aria-labelledby="pending-title">
+      <header class="pending-header">
+        <h2 id="pending-title">Still being filled in</h2>
+        <p>Evidence first, then it comes back to the hero.</p>
+      </header>
+      <div class="pending-list">
+        <div class="pending-row pending-row-e">
+          <span class="pending-letter" aria-hidden="true">E</span>
+          <div>
+            <h3>Has the model gotten dumber?</h3>
+            <p>Cross-vendor re-tests aren't complete; no capability regression is claimed yet.</p>
+          </div>
+          <span class="pending-status">data pending</span>
+        </div>
+        <div class="pending-row pending-row-f">
+          <span class="pending-letter" aria-hidden="true">F</span>
+          <div>
+            <h3>A cheaper alternative for my workload?</h3>
+            <p>Cheaper candidates need a systematic price / cost source.</p>
+          </div>
+          <span class="pending-status">pricing pending</span>
+        </div>
+      </div>
+      <p class="pending-note">The secondary section only records the gaps; it doesn't pre-decide the data.</p>
+    </section>
+
     <section class="hero">
-      <h1><em>AMBER</em> — real history,<br />sealed in amber, replayed</h1>
+      <h2 class="hero-heading"><em>AMBER</em> — real history,<br />sealed in amber, replayed</h2>
       <p class="lead">
         We take real, auditable incidents and freeze them at the moment before the answer was revealed.
         Models must redo the work with only what was knowable then, against a rubric frozen before any output existed.{' '}
@@ -153,6 +329,31 @@ const repos = [
 </BaseLayout>
 
 <style>
+  /* The top-of-page four-card hero owns the page's single <h1>; the legacy English strapline
+     below stays visually identical to before, hence the explicit sizing. */
+  .hero-heading {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .hero-heading em {
+    color: var(--teal);
+    font-style: normal;
+  }
+
+  /* Scoped English-only difference from the shared card layout: the English cue labels
+     ("Rank by axis", "Read the spec") are wider than the Chinese ones ("按轴排", "看规范") and
+     the shared .edge-cue is nowrap. Because the card's cue column is an `auto` grid track, it
+     sized to the cue's max-content and starved the preview column down to a few characters per
+     line at 390px. Capping the cue width lets it wrap and gives the preview its column back. */
+  .question-entry .edge-cue {
+    max-width: 5.6em;
+    white-space: normal;
+  }
+
   figure {
     margin: 18px 0 28px;
   }
