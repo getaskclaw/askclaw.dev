@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://askclaw.dev/astro-preview/sitemap-index.xml

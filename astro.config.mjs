@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://askclaw.dev',
-  base: '/astro-preview/',
+  base: process.env.SITE_BASE || '/',
   trailingSlash: 'always',
   output: 'static',
   integrations: [

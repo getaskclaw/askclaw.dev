@@ -215,17 +215,28 @@ try {
       ].map((text) => ({ text, passed: mainText.includes(text) }));
       result.englishImages = [];
       for (const image of legacy.images) {
-        const locator = page.locator(`main img[src$="/${image.file}"]`);
+        // The legacy English charts were migrated from PNG to WebP and capped at 1400px wide,
+        // so match the migrated file and assert the declared size matches the decoded size
+        // (no layout shift) instead of the retired PNG name and pixel dimensions.
+        const migratedFile = image.file.replace(/\.png$/, '.webp');
+        const locator = page.locator(`main img[src$="/${migratedFile}"]`);
         let passed = false;
         if (await locator.count() === 1) {
           await locator.scrollIntoViewIfNeeded();
           await locator.evaluate((img) => img.decode());
-          passed = await locator.evaluate((img, expected) =>
-            img.naturalWidth === Number(expected.width) && img.naturalHeight === Number(expected.height)
-            && img.getAttribute('width') === expected.width && img.getAttribute('height') === expected.height
-            && img.loading === 'lazy' && img.alt === expected.alt, image);
+          passed = await locator.evaluate((img, expected) => {
+            // Same chart as the legacy PNG, resized to at most 1400px wide with both
+            // dimensions scaled together; allow 1px rounding on the height.
+            const expectedWidth = Math.min(Number(expected.width), 1400);
+            const expectedHeight = Number(expected.height) * expectedWidth / Number(expected.width);
+            return img.naturalWidth === expectedWidth
+              && Math.abs(img.naturalHeight - expectedHeight) <= 1
+              && img.getAttribute('width') === String(img.naturalWidth)
+              && img.getAttribute('height') === String(img.naturalHeight)
+              && img.loading === 'lazy' && img.alt === expected.alt;
+          }, image);
         }
-        result.englishImages.push({ ...image, passed });
+        result.englishImages.push({ ...image, migratedFile, passed });
       }
       result.englishLinks = [];
       for (const href of [
@@ -245,10 +256,11 @@ try {
       if (!result.englishMirrorPassed) failed = true;
     }
 
-    result.scriptTags = await page.locator('script').count();
+    result.scriptTags = await page.locator('script:not([type="application/ld+json"])').count();
+    result.structuredDataTags = await page.locator('script[type="application/ld+json"]').count();
     result.fontRequests = requests.filter((request) => request.type === 'font');
     result.scriptRequests = requests.filter((request) => request.type === 'script');
-    result.forbiddenTerms = (await page.content()).match(/[点线面]|图结构/g) ?? [];
+    result.forbiddenTerms = (await page.content()).match(/点线面|图结构|节点|出边|点→跳转/g) ?? [];
     result.canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
     result.expectedCanonical = `https://askclaw.dev${previewPrefix}${route}`;
     if (result.scriptTags !== (route === '/rank/' ? 1 : 0) || result.fontRequests.length
@@ -260,8 +272,8 @@ try {
     result.refreshStatus = refreshed?.status();
     result.refreshContentPreserved = (await page.locator('main').innerText()) === mainText;
     if (route !== '/method/') {
-      await page.locator('.header-nav a[href="/astro-preview/method/"]').click();
-      await page.waitForURL(`${baseUrl}/method/`);
+      await page.locator('.header-nav a[href^="/astro-preview/method/"]').first().click();
+      await page.waitForURL((url) => url.pathname === `${previewPrefix}/method/`, { waitUntil: 'load' });
       await page.goBack({ waitUntil: 'networkidle' });
       result.backUrl = page.url();
     }

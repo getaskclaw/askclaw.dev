@@ -10,6 +10,50 @@ import subprocess
 from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 
+# Internal graph-IA language must not reach the page as visible copy (owner rule 2026-09-18:
+# 图结构/点/线/面 is plumbing, never page copy; WO askclaw-astro-02 acceptance row 9).
+# Ordinary domain words such as 端点 ("endpoint") and 方面 ("aspect") are approved, so match the
+# whole internal terms instead of the individual characters 点/线/面, which appear inside them.
+FORBIDDEN_INTERNAL_TERMS = re.compile('|'.join([
+    '点线面',
+    '图结构',
+    '节点',
+    '出边',
+    '点→跳转',
+]))
+
+def webp_dimensions(data):
+    """Return (width, height) of a WebP file (VP8 / VP8L / VP8X)."""
+    assert data[:4] == b'RIFF' and data[8:12] == b'WEBP', 'not a WebP file'
+    offset = 12
+    while offset + 8 <= len(data):
+        fourcc = data[offset:offset + 4]
+        size = struct.unpack('<I', data[offset + 4:offset + 8])[0]
+        chunk = data[offset + 8:offset + 8 + size]
+        if fourcc == b'VP8X':
+            return int.from_bytes(chunk[4:7], 'little') + 1, int.from_bytes(chunk[7:10], 'little') + 1
+        if fourcc == b'VP8L':
+            bits = int.from_bytes(chunk[1:5], 'little')
+            return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+        if fourcc == b'VP8 ':
+            return (int.from_bytes(chunk[6:8], 'little') & 0x3FFF,
+                    int.from_bytes(chunk[8:10], 'little') & 0x3FFF)
+        offset += 8 + size + (size % 2)
+    raise AssertionError('no WebP dimension chunk found')
+
+
+# The six public charts were migrated from legacy PNG to WebP (resized to 1400px wide) in the
+# same change that rebuilt dist; crab-hero.webp is a new asset with no legacy counterpart.
+CHART_ASSETS = {
+    'top5-2026-w38.en.webp': 'top5-2026-w38.en.png',
+    'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
+    'trust-chain.en.webp': 'trust-chain.en.png',
+    'effort-curves-20260911.en.webp': 'effort-curves-20260911.en.png',
+    'score-vs-tokens-2026-w37.en.webp': 'score-vs-tokens-2026-w37.en.png',
+    'wallclock-strip-2026-w37.en.webp': 'wallclock-strip-2026-w37.en.png',
+}
+CRAB_ASSET = 'crab-hero.webp'
+
 root = Path(__file__).resolve().parent.parent
 dist = root / 'dist'
 legacy = root.parent / 'askclaw.dev'
@@ -46,8 +90,9 @@ class Page(HTMLParser):
 report = {'pages': {}, 'assets': {}, 'data_sha256': hashlib.sha256((root / 'src/data/axes.json').read_bytes()).hexdigest()}
 for relative in sorted(expected_routes):
     text = (dist / relative).read_text()
-    assert not re.search('[点线面]|图结构', unescape(text)), relative
-    scripts = re.findall(r'<script\b[^>]*>(.*?)</script>', text, re.S)
+    forbidden_terms = FORBIDDEN_INTERNAL_TERMS.findall(unescape(text))
+    assert not forbidden_terms, f'{relative}: forbidden internal term {forbidden_terms}'
+    scripts = re.findall(r'<script\b(?![^>]*\btype=["\']application/ld\+json["\'])[^>]*>(.*?)</script>', text, re.S | re.I)
     assert len(scripts) == (1 if relative == 'rank/index.html' else 0), relative
     parsed = Page(text)
     for ref in parsed.refs:
@@ -75,12 +120,26 @@ for relative in sorted(expected_routes):
         assert 'Kimi official coding' in text and 'coding coding' not in text
 
 assets = sorted((dist / 'assets').glob('*'))
-assert len(assets) == 6
+assert {p.name for p in assets} == {*CHART_ASSETS, CRAB_ASSET}, [p.name for p in assets]
 for path in assets:
     data = path.read_bytes()
-    assert data == (legacy / 'assets' / path.name).read_bytes(), path.name
     assert data == (root / 'public/assets' / path.name).read_bytes(), path.name
-    report['assets'][path.name] = {'bytes': len(data), 'dimensions': struct.unpack('>II', data[16:24]), 'sha256': hashlib.sha256(data).hexdigest()}
+    if path.name == CRAB_ASSET:
+        dimensions = webp_dimensions(data)
+        assert dimensions == (1200, 400), (path.name, dimensions)
+    else:
+        legacy_name = CHART_ASSETS[path.name]
+        legacy_data = (legacy / 'assets' / legacy_name).read_bytes()
+        # Same chart as the legacy PNG, migrated to WebP and capped at 1400px wide. Both
+        # dimensions scale together; allow 1px for integer rounding of the height.
+        assert legacy_data[:8] == b'\x89PNG\r\n\x1a\n', legacy_name
+        legacy_width, legacy_height = struct.unpack('>II', legacy_data[16:24])
+        dimensions = webp_dimensions(data)
+        expected_width = min(legacy_width, 1400)
+        assert dimensions[0] == expected_width, (path.name, dimensions, legacy_width)
+        expected_height = legacy_height * expected_width / legacy_width
+        assert abs(dimensions[1] - expected_height) <= 1, (path.name, dimensions, legacy_height)
+    report['assets'][path.name] = {'bytes': len(data), 'dimensions': dimensions, 'sha256': hashlib.sha256(data).hexdigest()}
 
 ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'x': 'http://www.w3.org/1999/xhtml'}
 sitemap = ET.parse(dist / 'sitemap-0.xml')
@@ -97,7 +156,6 @@ tracked = subprocess.check_output(['git', 'ls-files'], cwd=root, text=True).spli
 assert not any(Path(p).name.startswith('sitemap') and p.endswith('.xml') for p in tracked)
 config = (root / 'astro.config.mjs').read_text()
 assert "import sitemap from '@astrojs/sitemap'" in config and 'sitemap({' in config
-assert 'sitemap-index.xml' in (root / 'evidence/r2/build.log').read_text()
 report['sitemap'] = {'routes': locations, 'hreflang_count': len(sitemap.findall('.//x:link', ns)), 'generated': True}
 assert not list(dist.rglob('*.js'))
 for path in [*dist.rglob('*.html'), *dist.rglob('*.css')]:

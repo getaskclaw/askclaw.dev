@@ -10,6 +10,13 @@ interface Props {
   canonicalPath?: string;
   languagePair?: boolean;
   pageClass?: string;
+  keywords?: string;
+  ogImagePath?: string;
+  ogType?: string;
+  schemaType?: 'WebSite' | 'WebPage';
+  schemaName?: string;
+  schemaAlternateName?: string[];
+  schemaInLanguage?: string | string[];
 }
 
 const {
@@ -19,6 +26,13 @@ const {
   canonicalPath = '/',
   languagePair = false,
   pageClass = '',
+  keywords = '琥珀评测, AMBER, AI评测, 大模型评测, 模型排行榜, AskClaw',
+  ogImagePath = '/assets/top5-2026-w38.en.webp',
+  ogType = 'website',
+  schemaType = 'WebPage',
+  schemaName = title,
+  schemaAlternateName = [],
+  schemaInLanguage = lang,
 } = Astro.props;
 
 const site = 'https://askclaw.dev';
@@ -28,6 +42,16 @@ const canonical = new URL(route(canonicalPath), site).href;
 const zhHome = new URL(route('/'), site).href;
 const enHome = new URL(route('/en/'), site).href;
 const favicon = route('/favicon.svg');
+const ogImage = new URL(route(ogImagePath), site).href;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  name: schemaName,
+  ...(schemaAlternateName.length > 0 ? { alternateName: schemaAlternateName } : {}),
+  url: canonical,
+  description,
+  inLanguage: schemaInLanguage,
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -35,9 +59,21 @@ const favicon = route('/favicon.svg');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={favicon} type="image/svg+xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'zh_CN'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     {languagePair && <link rel="alternate" hreflang="zh-CN" href={zhHome} />}
     {languagePair && <link rel="alternate" hreflang="en" href={enHome} />}
     {languagePair && <link rel="alternate" hreflang="x-default" href={zhHome} />}
