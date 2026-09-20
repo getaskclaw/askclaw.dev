@@ -36,7 +36,7 @@ const {
 
 const site = Astro.site!;
 const base = import.meta.env.BASE_URL;
-// The preview deployment is a copy of the production site served under /astro-preview/.
+// Preview deployments (base !== '/') are marked noindex below.
 // It must never be indexed, so every page below the production root (base !== '/') carries
 // noindex,nofollow. The production root build emits no robots meta at all.
 const isPreviewBase = base !== '/';
