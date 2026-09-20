@@ -70,13 +70,32 @@ if missing_legacy:
         '  LEGACY_SITE_ROOT=~/2609/askclaw.dev python3 scripts/verify-dist.py'
     )
 axes_source = Path(os.environ.get('AXES_SOURCE', root / 'src/data/axes.json')).expanduser().resolve()
-# Base comes from SITE_BASE (same env var the Astro config reads); default is the production root,
-# so `npm run build && python3 scripts/verify-dist.py` checks the artifact that actually ships.
-base_path = os.environ.get('SITE_BASE') or '/'
-if not base_path.startswith('/'):
-    base_path = '/' + base_path
-if not base_path.endswith('/'):
-    base_path += '/'
+
+
+def normalize_base_path(value):
+    base = value or '/'
+    if not base.startswith('/'):
+        base = '/' + base
+    if not base.endswith('/'):
+        base += '/'
+    return '/' if base == '//' else base
+
+
+def detect_dist_base_path():
+    try:
+        index_html = (dist / 'index.html').read_text()
+        match = re.search(r'<link rel="canonical" href="https://askclaw\.dev([^"]*)"', index_html)
+        if match:
+            return normalize_base_path(match.group(1))
+    except OSError:
+        pass
+    return '/'
+
+
+# SITE_BASE is explicit when present. In the required shell form
+# `SITE_BASE=... npm run build && python3 scripts/verify-dist.py`, the assignment only applies to
+# the build process; infer the already-built base from its canonical URL for the second process.
+base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html'}
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes

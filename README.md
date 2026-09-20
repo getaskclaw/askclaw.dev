@@ -19,14 +19,14 @@ The askclaw.dev site source (Astro). The homepage IS the AMBER site (sealed-repl
 
 ```bash
 # 预览底（部署到 /astro-preview/）：不索引，不生成 sitemap
-SITE_BASE=/astro-preview/ npm run build
-SITE_BASE=/astro-preview/ npm run acceptance
-SITE_BASE=/astro-preview/ python3 scripts/verify-dist.py
+# In the exact `&&` form below, each command is a new process, so the gate scripts also infer the
+# already-built base from dist/index.html when SITE_BASE is not exported to the second command.
+SITE_BASE=/astro-preview/ npm run build && npm run acceptance
+SITE_BASE=/astro-preview/ npm run build && python3 scripts/verify-dist.py
 
 # 生产底（默认，合并后真站产物）：
-npm run build
-npm run acceptance
-python3 scripts/verify-dist.py
+npm run build && npm run acceptance
+npm run build && python3 scripts/verify-dist.py
 ```
 
 - 机检脚本从 `SITE_BASE` / `astro.config.mjs` 推导 base 与期望 URL，不写死 `/astro-preview/`。

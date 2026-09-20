@@ -9,6 +9,30 @@ import astroConfig from '../astro.config.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
+
+function normalizeBasePath(value) {
+  let base = value || '/';
+  if (!base.startsWith('/')) base = `/${base}`;
+  if (!base.endsWith('/')) base += '/';
+  return base === '//' ? '/' : base;
+}
+
+async function detectDistBasePath() {
+  try {
+    const indexHtml = await readFile(resolve(distRoot, 'index.html'), 'utf8');
+    const canonicalPath = indexHtml.match(/<link rel="canonical" href="https:\/\/askclaw\.dev([^\"]*)"/)?.[1];
+    if (canonicalPath) return normalizeBasePath(canonicalPath);
+  } catch {
+    // A missing or incomplete dist falls back to the Astro config; the gate will report the real
+    // missing-artifact failure below instead of masking it here.
+  }
+  return normalizeBasePath(astroConfig.base ?? '/');
+}
+
+// The base is explicit from SITE_BASE when the gate receives it; otherwise infer the already-built
+// artifact's canonical URL so `SITE_BASE=... npm run build && <gate>` checks the same build.
+const previewPrefix = normalizeBasePath(process.env.SITE_BASE ?? await detectDistBasePath());
+const basePrefix = previewPrefix === '/' ? '' : previewPrefix.replace(/\/$/, '');
 // The legacy site lives in its own checkout (~/2609/askclaw.dev); this repo no longer keeps a
 // mirror of it, so point LEGACY_SITE_ROOT at that checkout when it is not a sibling directory.
 const legacySiteRoot = resolve(process.env.LEGACY_SITE_ROOT ?? resolve(projectRoot, '..', 'askclaw.dev'));
@@ -21,9 +45,8 @@ if (!existsSync(legacyEnglish)) {
     + '  LEGACY_SITE_ROOT=~/2609/askclaw.dev npm run acceptance',
   );
 }
-// Prefix comes from the Astro config (SITE_BASE, default '/'), so the production root build and
-// the /astro-preview/ build are both checked by this script with no edits.
-const previewPrefix = `/${(astroConfig.base ?? '/').replace(/^\/+|\/+$/g, '')}`.replace(/^\/$/, '');
+// The resolved base is explicit from SITE_BASE or inferred from the built canonical URL; the
+// production root and any prefixed preview build are checked without editing this script.
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -43,7 +66,7 @@ function distPath(urlPath) {
   const cleanPath = withoutPrefix.endsWith('/')
     ? `${withoutPrefix}index.html`
     : withoutPrefix;
-  const candidate = resolve(distRoot, `.${cleanPath}`);
+  const candidate = resolve(distRoot, cleanPath.replace(/^\/+/, ''));
   if (candidate !== distRoot && !candidate.startsWith(`${distRoot}/`)) return null;
   return candidate;
 }
@@ -82,7 +105,7 @@ if (!baseUrl) {
   await new Promise((resolveServer) => server.listen(0, '127.0.0.1', resolveServer));
   const address = server.address();
   const port = typeof address === 'object' && address ? address.port : 0;
-  baseUrl = `http://127.0.0.1:${port}${previewPrefix}`;
+  baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
 const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/rank/', '/en/'];
@@ -260,7 +283,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/hash-index/v2026-09.md',
         'https://github.com/getaskclaw/amber/blob/main/PLAN.md',
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
-        `${previewPrefix}/method/`, `${previewPrefix}/rank/`,
+        `${basePrefix}/method/`, `${basePrefix}/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
       result.englishMirrorPassed = result.resultRepoCount === 11
         && result.englishLeadPreserved
@@ -278,7 +301,7 @@ try {
     result.scriptRequests = requests.filter((request) => request.type === 'script');
     result.forbiddenTerms = (await page.content()).match(/点线面|图结构|节点|出边|点→跳转/g) ?? [];
     result.canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
-    result.expectedCanonical = new URL(`${previewPrefix}${route}`, astroConfig.site).href;
+    result.expectedCanonical = new URL(`${basePrefix}${route}`, astroConfig.site).href;
     if (result.scriptTags !== (route === '/rank/' ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     if (route === '/' && initialTransfer.totalBytes >= 200_000) failed = true;
@@ -288,8 +311,8 @@ try {
     result.refreshStatus = refreshed?.status();
     result.refreshContentPreserved = (await page.locator('main').innerText()) === mainText;
     if (route !== '/method/') {
-      await page.locator(`.header-nav a[href^="${previewPrefix}/method/"]`).first().click();
-      await page.waitForURL((url) => url.pathname === `${previewPrefix}/method/`, { waitUntil: 'load' });
+      await page.locator(`.header-nav a[href^="${basePrefix}/method/"]`).first().click();
+      await page.waitForURL((url) => url.pathname === `${basePrefix}/method/`, { waitUntil: 'load' });
       await page.goBack({ waitUntil: 'networkidle' });
       result.backUrl = page.url();
     }
