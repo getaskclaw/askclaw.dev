@@ -54,6 +54,18 @@ CHART_ASSETS = {
     'wallclock-strip-2026-w37.en.webp': 'wallclock-strip-2026-w37.en.png',
 }
 CRAB_ASSET = 'crab-hero.webp'
+# Legacy verbatim assets rescued into public/assets/ (referenced by hand-written pages:
+# en.html charts + notes article figures + vega specs/vendor libs). Dirs checked recursively.
+LEGACY_ASSETS = {
+    'top5-2026-w38.png', 'top5-2026-w38.en.png', 'top5-card.png', 'top5-card.en.png',
+    'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
+    'trust-chain.png', 'trust-chain.en.png',
+    'effort-curves-20260911.png', 'effort-curves-20260911.en.png',
+    'score-vs-tokens-2026-w37.png', 'score-vs-tokens-2026-w37.en.png',
+    'wallclock-strip-2026-w37.png', 'wallclock-strip-2026-w37.en.png',
+    'what-is-amber.png', 'what-is-amber.en.png',
+    'agent-anatomy.png', 'traditional-vs-agent.png',
+}
 
 root = Path(__file__).resolve().parent.parent
 dist = root / 'dist'
@@ -161,8 +173,17 @@ for relative in sorted(expected_routes):
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
 
 assets = sorted((dist / 'assets').glob('*'))
-assert {p.name for p in assets} == {*CHART_ASSETS, CRAB_ASSET}, [p.name for p in assets]
+top_level = {p.name for p in assets}
+assert top_level == {*CHART_ASSETS, CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
+# specs/ and vendor/ are vega chart specs + libs for the hand-written pages; verify they exist and are non-empty.
+assert len(list((dist / 'assets/specs').glob('*.json'))) == 8
+assert {p.name for p in (dist / 'assets/vendor').glob('*.js')} == {'vega.min.js', 'vega-lite.min.js', 'vega-embed.min.js'}
 for path in assets:
+    if path.name in LEGACY_ASSETS or path.is_dir():
+        # Verbatim legacy files: existence + byte-identity with public/ is enough.
+        if path.is_file():
+            assert path.read_bytes() == (root / 'public/assets' / path.name).read_bytes(), path.name
+        continue
     data = path.read_bytes()
     assert data == (root / 'public/assets' / path.name).read_bytes(), path.name
     if path.name == CRAB_ASSET:
