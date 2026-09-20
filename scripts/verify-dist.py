@@ -97,8 +97,10 @@ def detect_dist_base_path():
 # the build process; infer the already-built base from its canonical URL for the second process.
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
-expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html'}
-assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes
+expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html', 'notes/index.html'}
+# public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
+public_routes = {'axes.html', 'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
+assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 
 class Page(HTMLParser):
