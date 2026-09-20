@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%2300a5b5'/%3E%3Ctext x='50' y='68' font-size='52' font-family='system-ui' font-weight='bold' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://askclaw.dev/axes.html">
+<meta property="og:title" content="按轴挑模型 — AMBER 琥珀评测">
+<meta property="og:description" content="别看总分。勾选你这活儿涉及的轴，AMBER 用短板排序告诉你该用谁。12 条车道 × 8 轴，数据全部来自公开成绩仓。">
+<meta property="og:url" content="https://askclaw.dev/axes.html">
+<meta property="og:image" content="https://askclaw.dev/assets/top5-card.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>按轴挑模型 — AMBER 琥珀评测</title>
+<meta name="description" content="别看总分。勾选你的工作涉及的轴，AMBER 按短板排序告诉你该用谁：12 条车道 × 8 轴，逐案过/挂全部来自公开成绩仓，可点进明细核对。">
+<meta name="keywords" content="琥珀评测,AMBER,按轴挑模型,AI模型选型,大模型排行榜,AI评测,施工模型,运维模型,AskClaw">
+<script type="application/ld+json">
+{"@context":"https://***@type":"WebPage","name":"按轴挑模型 — AMBER 琥珀评测","url":"https://askclaw.dev/axes.html","description":"勾选工作涉及的轴，按短板排序挑模型。数据来自 AMBER 公开成绩仓。","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"AskClaw","url":"https://askclaw.dev/"}}
+</script>
+<style>
+  :root { --ink:#17242b; --sub:#5a6b73; --teal:#00a5b5; --teal-dark:#0b7c88; --bg:#fafdfe; --card:#fff; --line:#e3ecef; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
+  a { color: var(--teal-dark); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  header { border-bottom: 1px solid var(--line); padding: 18px 0; }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 800; font-size: 20px; color: var(--ink); }
+  .logo span { color: var(--teal); }
+  nav a { margin-left: 18px; font-size: 14px; color: var(--sub); }
+  h1 { font-size: 32px; line-height: 1.35; margin-top: 40px; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lead { margin-top: 12px; font-size: 17px; color: var(--sub); max-width: 760px; }
+  section { padding: 32px 0; }
+  h2 { font-size: 22px; margin-bottom: 6px; }
+  .hint { color: var(--sub); font-size: 14.5px; margin-bottom: 16px; }
+
+  .picker { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 14px; cursor: pointer; user-select: none; background: #fff; transition: .12s; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip:hover { border-color: var(--teal); }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; font-weight: 600; }
+  .chip .d { font-size: 12px; opacity: .7; margin-left: 5px; }
+  .pickerbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; }
+  .preset { font-size: 13px; color: var(--teal-dark); border: 1px solid var(--teal); border-radius: 999px; padding: 5px 11px; cursor: pointer; background: #fff; }
+  .preset:hover { background: var(--teal); color: #fff; }
+  .btn-clear { font-size: 13px; color: var(--sub); cursor: pointer; border: none; background: none; }
+  .btn-clear:hover { color: var(--ink); text-decoration: underline; }
+
+  .verdict { margin-top: 16px; font-size: 15.5px; background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--teal); border-radius: 8px; padding: 12px 16px; color: var(--sub); }
+  .verdict b { color: var(--ink); }
+
+  table.board { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 14.5px; background: #fff; }
+  .boardwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table.board th, table.board td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  table.board th { font-size: 13px; color: var(--sub); font-weight: 600; background: #f6fafb; }
+  table.board td.num, table.board th.num { text-align: right; }
+  table.board tbody tr:hover { background: #f7fcfd; }
+  .rank { color: var(--sub); font-variant-numeric: tabular-nums; }
+  .lane { font-weight: 600; }
+  .lane small { display: block; font-weight: 400; color: var(--sub); font-size: 12.5px; }
+  .cell { display: inline-block; min-width: 44px; font-variant-numeric: tabular-nums; }
+  .cell.p { color: var(--teal-dark); font-weight: 600; }
+  .cell.f { color: #c0392b; }
+  .cell.dim { color: #b9c4c8; }
+  .cell.sel { background: #eefafb; border-radius: 4px; padding: 0 4px; }
+  .min { font-weight: 700; }
+  .min.bad { color: #c0392b; }
+  .min.good { color: var(--teal-dark); }
+  .total { color: var(--sub); font-variant-numeric: tabular-nums; }
+
+  .sat { background: #fffbe9; border: 1px solid #f0e3b0; border-radius: 8px; padding: 10px 14px; font-size: 14px; color: #7a6a2f; margin-top: 14px; }
+  .note { color: var(--sub); font-size: 13.5px; margin-top: 12px; }
+  .rule { border-left: 3px solid var(--teal); padding: 4px 14px; margin: 10px 0; color: var(--sub); font-size: 14.5px; }
+  footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 26px 0 40px; color: var(--sub); font-size: 13.5px; }
+  @media (max-width: 720px) { h1 { font-size: 25px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo"><a href="/" style="color:inherit">Ask<span>Claw</span></a></div>
+    <nav>
+      <a href="/">总榜</a>
+      <a href="/amber/">方法</a>
+      <a href="https://github.com/getaskclaw">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<h1>按轴挑模型 —— <em>别看总分</em></h1>
+<p class="lead">总分是给排行榜看的。干活要的是：<b>你这活儿涉及的每一轴，它都不能塌</b>。勾上你要干的活儿涉及的轴，下表按<b>短板</b>排序 —— 某一轴挂了，别的轴满分也救不回来。</p>
+
+<section style="padding-top:24px">
+  <h2>① 勾轴</h2>
+  <p class="hint">轴 = 一类活儿。括号里是该轴在 12 条车道里的过案情况，用来看这条轴挑不挑得出人。</p>
+  <div class="picker">
+    <div class="chips" id="chips"></div>
+    <div class="pickerbar">
+      <div class="presets">
+        <button class="preset" data-p="build,ops">日常施工</button>
+        <button class="preset" data-p="build,ops,ui-build">交付全才</button>
+        <button class="preset" data-p="review,verify">对抗审查</button>
+        <button class="preset" data-p="build,ops,text,req-drift">省钱干活</button>
+        <button class="preset" data-p="build,ops,text,verify,review,req-drift,ui-build,vision">全选（= 总分排序）</button>
+      </div>
+      <button class="btn-clear" id="clear">清空</button>
+    </div>
+    <div class="verdict" id="verdict">还没有勾轴 —— 先选一类活儿。</div>
+  </div>
+</section>
+
+<section>
+  <h2>② 短板排序</h2>
+  <p class="hint">排序规则：先比<b>短板</b>（所选轴里最低那一轴的过案数），再比所选轴的过案总数。并列如实并列。</p>
+  <div class="boardwrap">
+    <table class="board">
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+  <div class="sat" id="sat"></div>
+  <p class="note">小词典：案 = 一道题（来自一件真事）；轴 = 一类活儿；车道 = 模型 × 端点 × 档位。逐案过/挂与哈希对照在各自成绩仓里可核对。</p>
+</section>
+
+<section>
+  <h2>怎么用这张表</h2>
+  <div class="rule">只看总分会挑错人：swe-2-max 18/23 是榜首，但如果你的活儿是「审查 + 核验」，它核验 0/3 —— 换 ds@wb 才对。</div>
+  <div class="rule">有些轴挑不出人：<b>文本</b>和<b>需求漂移</b>目前 12 条车道全过 —— 这两轴对选型没用，说明题该加难了，我们已在补。</div>
+  <div class="rule"><b>核验</b>轴 12 条车道里只有 1 家过案。这不代表模型差，更可能是这几道题偏狠 —— 单看这一轴下结论容易翻车。</div>
+  <p class="note">口径提醒：多数车道取自 W37 成绩，kimi / gpt / doubao / goldenpotato 是 W38，ollama / crof 是 W36 的 21 案版题集。跨仓比分数请带期号与档位声明。</p>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    AskClaw · 数据来自各 AMBER 成绩仓公开矩阵 · <a href="https://github.com/getaskclaw">github.com/getaskclaw</a> · <a href="/">回到总榜</a>
+  </div>
+</footer>
+
+<script>
+const FACES = [
+  ['build','施工'], ['ops','运维'], ['text','文本'], ['verify','核验'],
+  ['review','审查'], ['req-drift','需求漂移'], ['ui-build','界面搭建'], ['vision','视觉审图']
+];
+let LANES = [], sel = new Set();
+
+fetch('axes.json').then(r => r.json()).then(d => {
+  LANES = d;
+  buildChips();
+  render();
+}).catch(() => {
+  document.getElementById('verdict').textContent = '数据加载失败（axes.json）。请稍后重试。';
+});
+
+function laneCount(f) { return LANES.filter(l => l.axis[f].n > 0).length; }
+function passCount(f) { return LANES.filter(l => l.axis[f].n > 0 && l.axis[f].p === l.axis[f].n).length; }
+
+function buildChips() {
+  const box = document.getElementById('chips');
+  box.innerHTML = '';
+  FACES.forEach(([f, zh]) => {
+    const pass = passCount(f), n = laneCount(f);
+    const lab = document.createElement('label');
+    lab.className = 'chip';
+    lab.dataset.f = f;
+    lab.innerHTML = `<input type="checkbox" data-f="${f}">${zh}<span class="d">${pass}/${n} 满</span>`;
+    const inp = lab.querySelector('input');
+    inp.addEventListener('change', () => {
+      inp.checked ? sel.add(f) : sel.delete(f);
+      lab.classList.toggle('on', inp.checked);
+      render();
+    });
+    box.appendChild(lab);
+  });
+  document.querySelectorAll('.preset').forEach(b => b.addEventListener('click', () => {
+    sel = new Set(b.dataset.p.split(','));
+    document.querySelectorAll('.chip').forEach(c => {
+      const on = sel.has(c.dataset.f);
+      c.classList.toggle('on', on);
+      c.querySelector('input').checked = on;
+    });
+    render();
+  }));
+  document.getElementById('clear').addEventListener('click', () => {
+    sel.clear();
+    document.querySelectorAll('.chip').forEach(c => { c.classList.remove('on'); c.querySelector('input').checked = false; });
+    render();
+  });
+}
+
+function score(l, fs) {
+  const per = fs.map(f => l.axis[f].p);
+  return { mn: Math.min(...per), sum: per.reduce((a, b) => a + b, 0) };
+}
+
+function render() {
+  const fs = FACES.map(x => x[0]).filter(f => sel.has(f));
+  const head = document.getElementById('head'), body = document.getElementById('body');
+  const v = document.getElementById('verdict'), sat = document.getElementById('sat');
+
+  if (fs.length === 0) {
+    head.innerHTML = ''; body.innerHTML = '';
+    v.textContent = '还没有勾轴 —— 先选一类活儿。';
+    sat.textContent = '';
+    return;
+  }
+
+  head.innerHTML = '<th>#</th><th>车道（模型 × 端点）</th><th class="num">总分</th>' +
+    FACES.filter(x => sel.has(x[0])).map(([f, zh]) => `<th class="num">${zh}</th>`).join('') +
+    '<th class="num">短板</th><th class="num">合计</th><th class="num">期 / 案数</th>';
+
+  const rows = LANES.filter(l => fs.every(f => l.axis[f].n > 0))
+    .map(l => ({ l, s: score(l, fs) }))
+    .sort((a, b) => b.s.mn - a.s.mn || b.s.sum - a.s.sum);
+
+  body.innerHTML = rows.map((r, i) => {
+    const cells = FACES.filter(x => sel.has(x[0])).map(([f, zh]) => {
+      const a = r.l.axis[f];
+      const full = a.p === a.n;
+      const cls = full ? 'p' : (a.p === 0 ? 'f' : '');
+      return `<td class="num"><span class="cell sel ${cls}">${a.p}/${a.n}</span></td>`;
+    }).join('');
+    const mcls = r.s.mn === 0 ? 'bad' : 'good';
+    return `<tr>
+      <td class="rank">${i + 1}</td>
+      <td class="lane"><a href="https://github.com/getaskclaw/${r.l.repo}" target="_blank" rel="noopener">${r.l.name}</a><small>${r.l.vendor}</small></td>
+      <td class="num total">${r.l.total}/${r.l.n}</td>
+      ${cells}
+      <td class="num"><span class="min ${mcls}">${r.s.mn}</span></td>
+      <td class="num">${r.s.sum}</td>
+      <td class="num total">${r.l.wk} · ${r.l.n}</td>
+    </tr>`;
+  }).join('');
+
+  const top = rows[0];
+  const maxmn = top.s.mn;
+  const winners = rows.filter(r => r.s.mn === maxmn);
+  const zh = FACES.filter(x => sel.has(x[0])).map(x => x[1]).join(' + ');
+
+  let vtxt = `你选的是 <b>${zh}</b>。`;
+  if (winners.length === rows.length) {
+    vtxt += `<b>这组合挑不出人</b> —— ${rows.length} 条车道短板全是 ${maxmn}，谁都一样。加一轴再试，或直接看总分。`;
+  } else {
+    const names = winners.slice(0, 4).map(r => r.l.name).join(' / ');
+    const more = winners.length > 4 ? ` 等 ${winners.length} 家` : '';
+    vtxt += `短板最高 <b>${maxmn}</b> —— <b>${names}</b>${more}。`;
+    if (winners.length > 1) vtxt += `（${winners.length} 家并列，短板一样，按合计排先后）`;
+  }
+  if (maxmn === 0 && fs.some(f => LANES.every(l => l.axis[f].n === 0 || l.axis[f].p === 0))) {
+    const dead = fs.filter(f => LANES.every(l => l.axis[f].n === 0 || l.axis[f].p === 0));
+    vtxt += ` ⚠️ 其中 <b>${dead.map(f => FACES.find(x => x[0] === f)[1]).join('、')}</b> 目前<b>无人过案</b>——短板被压到 0，排序实际退化成总分排序。`;
+  }
+  v.innerHTML = vtxt;
+
+  const satSel = fs.filter(f => passCount(f) === laneCount(f));
+  sat.innerHTML = satSel.length
+    ? `⚠️ 你勾的 <b>${satSel.map(f => FACES.find(x => x[0] === f)[1]).join('、')}</b> 目前所有车道都满分 —— 这几轴挑不出人，勾了也不影响排序（不是模型强，是题太简单，我们已在补难题）。`
+    : '';
+}
+</script>
+</body>
+</html>
