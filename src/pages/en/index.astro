@@ -5,8 +5,8 @@ import { route } from '../../utils/route';
 const asset = (file: string) => route(`/assets/${file}`);
 
 // Four-card hero, translated from the Chinese home (/src/pages/index.astro) and sharing its
-// question-* / crab-* / leaderboard-* classes. hrefs follow the Chinese page's real hrefs:
-// A and D point at the method page anchors the Chinese cards use (repos-title, verify-title).
+// question-* / crab-* / leaderboard-* classes. A follows the Chinese page's repos anchor;
+// D keeps the requested method-page entry path.
 const crabAsset = asset('crab-hero.webp');
 
 const questions = [
@@ -43,7 +43,7 @@ const questions = [
     question: 'Can this board itself be trusted?',
     preview: 'Sealed, clean-room, hash-checkable.',
     cue: 'Read the spec',
-    href: route('/method/#verify-title'),
+    href: route('/method/'),
     ariaLabel: 'Can this board itself be trusted? Sealed, clean-room, hash-checkable. Read the spec and the evidence chain.',
   },
 ] as const;
