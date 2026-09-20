@@ -1,19 +1,20 @@
 ---
+import { route } from '../utils/route';
+
 interface Props {
   lang?: string;
   currentPath?: string;
 }
 
 const { lang = 'zh-CN', currentPath = '/' } = Astro.props;
-const base = import.meta.env.BASE_URL;
-const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const isEnglish = lang === 'en';
+const homePath = isEnglish ? '/en/' : '/';
 const items = isEnglish
   ? [
-      ['home', 'Home', '/'],
-      ['matrix', 'Axis matrix', '/rank/'],
-      ['repos', 'Results', '/method/#repos-title'],
-      ['method', 'Method', '/method/#verify-title'],
+      ['home', 'Home', '/en/'],
+      ['matrix', 'Axis matrix (中文)', '/rank/'],
+      ['repos', 'Results (中文)', '/method/#repos-title'],
+      ['method', 'Method (中文)', '/method/#verify-title'],
     ]
   : [
       ['home', '总榜', '/'],
@@ -24,7 +25,7 @@ const items = isEnglish
 ---
 <header class="site-header">
   <div class="wrap">
-    <a class="logo" href={route('/')} aria-label="AskClaw home">Ask<span>Claw</span></a>
+    <a class="logo" href={route(homePath)} aria-label="AskClaw home">Ask<span>Claw</span></a>
     <nav class="header-nav" aria-label={isEnglish ? 'Primary navigation' : '主导航'}>
       {items.map(([key, label, path]) => (
         <a href={route(path)} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>

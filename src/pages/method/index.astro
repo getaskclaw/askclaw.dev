@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { route } from '../../utils/route';
 
 const resultRepos = [
   ['amber-devin', '18/23', 'swe-2-max @ Devin', 'W37'],
-  ['amber-kimi', '17/23', 'k3 @ Kimi official coding', 'W38'],
+  ['amber-kimi', '17/23', 'k3 @ Kimi 官方 coding', 'W38'],
   ['amber-ollama', '17/23', 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
   ['amber-commandcode', '17/23', 'd41f @ CommandCode', 'W37'],
   ['amber-workbuddy', '17/23', 'hy4-preview-f @ WorkBuddy ACP', 'W37'],
@@ -50,7 +51,7 @@ const resultRepos = [
       <p class="note">
         Ollama 的 glm-5.3-flash 与 CrofAI 的 qwen3.8-27b 使用 W37 补考合成成绩：
         W36 的 15/21、14/21 各加两案，成为 17/23、16/23；d41f 的 17/23 为 W37 全库首考。
-        <a href={import.meta.env.BASE_URL + 'rank/'}>按轴榜</a>保留这两条 W36 的 21 案记录，不是这份合成总分。
+        <a href={route('/rank/')}>按轴榜</a>保留这两条 W36 的 21 案记录，不是这份合成总分。
         原始说明：<a href="https://github.com/getaskclaw/amber-ollama/blob/main/results/2026-W37.md">Ollama W37</a> ·{' '}
         <a href="https://github.com/getaskclaw/amber-crof/blob/main/results/2026-W37.md">CrofAI W37</a>。
       </p>

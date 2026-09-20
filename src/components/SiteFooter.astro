@@ -1,11 +1,11 @@
 ---
+import { route } from '../utils/route';
+
 interface Props {
   lang?: string;
 }
 
 const { lang = 'zh-CN' } = Astro.props;
-const base = import.meta.env.BASE_URL;
-const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const isEnglish = lang === 'en';
 ---
 <footer class="site-footer">

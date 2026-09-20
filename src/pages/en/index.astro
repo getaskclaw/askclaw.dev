@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { route } from '../../utils/route';
 
-const base = import.meta.env.BASE_URL;
-const asset = (file: string) => `${base}assets/${file}`;
+const asset = (file: string) => route(`/assets/${file}`);
 // Published repository summaries from the legacy English home, not axes.json:
 // the axis picker deliberately retains older W36 21-case records for two lanes.
 const repos = [
@@ -25,7 +25,6 @@ const repos = [
   description="AMBER replays real, auditable historical events — frozen the moment before the answer was revealed. Private case library, public scores, independently checkable. A sealed-in-amber AI benchmark and leaderboard, updated weekly."
   lang="en"
   canonicalPath="/en/"
-  languagePair={true}
   keywords="AMBER, sealed-in-amber replay evaluation, AI benchmark, model leaderboard, AskClaw"
   schemaType="WebSite"
   schemaName="AskClaw — AMBER: sealed-in-amber replay evaluation"
@@ -72,7 +71,7 @@ const repos = [
       <p class="hint">
         The nine-axis completion matrix: each cell is a face's pin-level completion.
         Tied totals hide completely different profiles — the matrix shows what the sum can't.{' '}
-        <a href={base + 'rank/'}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
+        <a href={route('/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
       </p>
       <figure>
         <a href={asset('completion-matrix-7way.en.webp')} aria-label="Open full-size completion matrix">
@@ -124,7 +123,7 @@ const repos = [
       <p class="note">
         The published glm-5.3-flash 17/23 and qwen3.8-27b 16/23 totals are W37 composites:
         W36 results of 15/21 and 14/21 plus two new ops cases each. The axis picker retains their W36 records.{' '}
-        <a href={base + 'method/'}>Read the method and score-period notes</a>.
+        <a href={route('/method/')}>Read the method and score-period notes</a>.
       </p>
       <div class="repo-grid">
         {repos.map(([repo, score, description]) => (

@@ -3,6 +3,7 @@ import hashlib
 from html import unescape
 from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import re
 import struct
@@ -56,11 +57,12 @@ CRAB_ASSET = 'crab-hero.webp'
 
 root = Path(__file__).resolve().parent.parent
 dist = root / 'dist'
-legacy = root.parent / 'askclaw.dev'
+legacy = Path(os.environ.get('LEGACY_SITE_ROOT', root)).expanduser().resolve()
+axes_source = Path(os.environ.get('AXES_SOURCE', root / 'src/data/axes.json')).expanduser().resolve()
 base = 'https://askclaw.dev/astro-preview/'
 expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html'}
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes
-assert (root / 'src/data/axes.json').read_bytes() == (root.parent / 'amber-axes/axes.json').read_bytes()
+assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -117,7 +119,7 @@ for relative in sorted(expected_routes):
         for phrase in ['23 cases / 26 papers', 'Snapshot 2026-W38', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase
     if relative == 'rank/index.html':
-        assert 'Kimi official coding' in text and 'coding coding' not in text
+        assert 'Kimi 官方 coding' in text and 'coding coding' not in text
 
 assets = sorted((dist / 'assets').glob('*'))
 assert {p.name for p in assets} == {*CHART_ASSETS, CRAB_ASSET}, [p.name for p in assets]

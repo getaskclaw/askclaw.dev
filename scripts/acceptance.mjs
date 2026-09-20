@@ -8,6 +8,7 @@ import astroConfig from '../astro.config.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
+const legacySiteRoot = resolve(process.env.LEGACY_SITE_ROOT ?? projectRoot);
 const previewPrefix = '/astro-preview';
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -18,6 +19,7 @@ const mimeTypes = {
   '.txt': 'text/plain; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
+  '.webp': 'image/webp',
 };
 
 function distPath(urlPath) {
@@ -141,12 +143,12 @@ try {
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
         ...lane,
-        vendor: lane.id === 'kimi' ? 'Kimi official coding' : lane.vendor,
+        vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
       }));
       result.laneDataPreserved = isDeepStrictEqual(shippedLanes, expectedLanes);
       result.kimiVendor = await page.locator('#rank-body tr').filter({ has: page.locator('a[href="https://github.com/getaskclaw/amber-kimi"]') }).locator('small').innerText();
       result.presetContent = await page.locator('#rank-body').innerText();
-      if (!result.laneDataPreserved || result.kimiVendor !== 'Kimi official coding') failed = true;
+      if (!result.laneDataPreserved || result.kimiVendor !== 'Kimi 官方 coding') failed = true;
       const axes = ['build', 'ops', 'ui-build'];
       const expectedOrder = sourceLanes.map((lane) => ({
         name: lane.name,
@@ -177,7 +179,7 @@ try {
     }
 
     if (route === '/en/') {
-      const legacyHtml = await readFile(resolve(process.env.LEGACY_SITE_ROOT ?? resolve(projectRoot, '../askclaw.dev'), 'en.html'), 'utf8');
+      const legacyHtml = await readFile(resolve(legacySiteRoot, 'en.html'), 'utf8');
       const legacy = await page.evaluate((html) => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         return {

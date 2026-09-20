@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import rawLanes from '../../data/axes.json';
+import { route } from '../../utils/route';
 
 const faces = [
   ['build', '施工'],
@@ -17,7 +18,7 @@ const faces = [
 // label is mapped; never substring-replace ordinary domain terminology.
 const lanes = rawLanes.map((lane) => ({
   ...lane,
-  vendor: lane.id === 'kimi' ? 'Kimi official coding' : lane.vendor,
+  vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
 }));
 
 const stats = faces.map(([id, label]) => {
@@ -31,12 +32,13 @@ const stats = faces.map(([id, label]) => {
   description="AMBER 按八类工作筛选模型：12 条车道、公开成绩、短板排序和原生浏览器交互。"
   canonicalPath="/rank/"
 >
-  <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)}>
+  <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
     <h1>按轴挑模型 — <em>别只看总分</em></h1>
     <p class="lead">
       选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
       这让 12 条公开车道的差异更容易核对。
     </p>
+    <noscript>本页的筛选需要启用 JavaScript。</noscript>
 
     <section class="section" aria-labelledby="pick-title">
       <h2 id="pick-title">选择工作类型</h2>
@@ -76,7 +78,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note">数据来自公开成绩仓。期号和案数随原始记录保留；方法与公开哈希索引见 <a href={import.meta.env.BASE_URL + 'method/'}>方法</a>。</p>
+      <p class="note">数据来自公开成绩仓。期号和案数随原始记录保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
     </section>
   </div>
 </BaseLayout>
@@ -84,16 +86,7 @@ const stats = faces.map(([id, label]) => {
 <script>
   const app = document.querySelector('#rank-app');
   const lanes = JSON.parse(app.dataset.lanes);
-  const faces = [
-    ['build', '施工'],
-    ['ops', '运维'],
-    ['text', '文本'],
-    ['verify', '核验'],
-    ['review', '审查'],
-    ['req-drift', '需求漂移'],
-    ['ui-build', 'UI 搭建'],
-    ['vision', '视觉审图'],
-  ];
+  const faces = JSON.parse(app.dataset.faces);
   const selected = new Set();
   const chips = [...app.querySelectorAll('[data-face]')];
   const head = app.querySelector('#rank-head');
@@ -167,6 +160,17 @@ const stats = faces.map(([id, label]) => {
         };
       })
       .sort((a, b) => b.min - a.min || b.sum - a.sum);
+
+    if (rows.length === 0) {
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.colSpan = 6 + active.length;
+      cell.textContent = '无匹配车道，请减少筛选条件。';
+      row.append(cell);
+      body.append(row);
+      verdict.textContent = '无匹配车道，请减少筛选条件。';
+      return;
+    }
 
     rows.forEach(({ lane, min, sum }, index) => {
       const row = document.createElement('tr');

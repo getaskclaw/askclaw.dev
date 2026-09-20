@@ -9,6 +9,8 @@ The askclaw.dev site source. The homepage IS the AMBER site (sealed-replay evalu
 - `index.html` / `en.html` — 首页（中/英）
 - `amber/` — 重定向页
 - `assets/` — 图（PNG 兜底 + Vega-Lite spec + 自托管 vega/vega-embed）
+- 运行时边界：内容页零 JS，`/rank/` 有 3.5KB 内联交互脚本。
+- Runtime boundary: content pages ship zero JS; `/rank/` has a 3.5KB inline interaction script.
 
 ## 部署（DEPLOY）
 

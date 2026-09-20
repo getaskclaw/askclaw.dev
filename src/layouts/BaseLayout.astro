@@ -2,13 +2,13 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { route } from '../utils/route';
 
 interface Props {
   title: string;
   description: string;
   lang?: string;
   canonicalPath?: string;
-  languagePair?: boolean;
   pageClass?: string;
   keywords?: string;
   ogImagePath?: string;
@@ -24,7 +24,6 @@ const {
   description,
   lang = 'zh-CN',
   canonicalPath = '/',
-  languagePair = false,
   pageClass = '',
   keywords = '琥珀评测, AMBER, AI评测, 大模型评测, 模型排行榜, AskClaw',
   ogImagePath = '/assets/top5-2026-w38.en.webp',
@@ -35,12 +34,11 @@ const {
   schemaInLanguage = lang,
 } = Astro.props;
 
-const site = 'https://askclaw.dev';
-const base = import.meta.env.BASE_URL;
-const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const site = Astro.site!;
 const canonical = new URL(route(canonicalPath), site).href;
-const zhHome = new URL(route('/'), site).href;
-const enHome = new URL(route('/en/'), site).href;
+const hasLanguagePair = canonicalPath === '/' || canonicalPath === '/en/';
+const zhHome = hasLanguagePair ? new URL(route('/'), site).href : undefined;
+const enHome = hasLanguagePair ? new URL(route('/en/'), site).href : undefined;
 const favicon = route('/favicon.svg');
 const ogImage = new URL(route(ogImagePath), site).href;
 const structuredData = {
@@ -74,9 +72,9 @@ const structuredData = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-    {languagePair && <link rel="alternate" hreflang="zh-CN" href={zhHome} />}
-    {languagePair && <link rel="alternate" hreflang="en" href={enHome} />}
-    {languagePair && <link rel="alternate" hreflang="x-default" href={zhHome} />}
+    {hasLanguagePair && <link rel="alternate" hreflang="zh-CN" href={zhHome} />}
+    {hasLanguagePair && <link rel="alternate" hreflang="en" href={enHome} />}
+    {hasLanguagePair && <link rel="alternate" hreflang="x-default" href={zhHome} />}
   </head>
   <body class={pageClass}>
     <a class="skip-link" href="#main-content">Skip to content</a>

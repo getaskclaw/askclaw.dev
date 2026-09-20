@@ -52,8 +52,7 @@ a:hover {
 
 .site-header .wrap,
 .site-footer .wrap,
-.header-nav,
-.header-links {
+.header-nav {
   display: flex;
   align-items: center;
 }
@@ -75,14 +74,12 @@ a:hover {
   color: var(--teal);
 }
 
-.header-nav,
-.header-links {
+.header-nav {
   flex-wrap: wrap;
   gap: 16px;
 }
 
-.header-nav a,
-.header-links a {
+.header-nav a {
   color: var(--sub);
   font-size: 14px;
 }
@@ -117,7 +114,6 @@ h1 em {
   font-size: 1.08rem;
 }
 
-.hero-actions,
 .badges,
 .stat-grid,
 .repo-grid,
@@ -126,25 +122,16 @@ h1 em {
   gap: 14px;
 }
 
-.hero-actions {
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  max-width: 620px;
-  margin-top: 28px;
-}
-
-.action-card,
 .badge,
 .stat-card,
 .repo-card,
 .panel,
-.rule,
-.notice {
+.rule {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--card);
 }
 
-.action-card,
 .badge,
 .stat-card,
 .repo-card,
@@ -152,31 +139,17 @@ h1 em {
   padding: 16px 18px;
 }
 
-.action-card {
-  display: block;
-  color: var(--ink);
-}
-
-.action-card:hover {
-  border-color: var(--teal);
-  text-decoration: none;
-}
-
-.action-card strong,
 .repo-card strong {
   color: var(--teal-dark);
 }
 
-.action-card small,
 .badge small,
 .repo-card small,
-.muted,
 .hint,
 .note {
   color: var(--sub);
 }
 
-.action-card small,
 .badge small,
 .repo-card small {
   display: block;
@@ -245,12 +218,6 @@ h1 em {
 .rule {
   border-left: 3px solid var(--teal);
   padding: 10px 14px;
-  color: var(--sub);
-}
-
-.notice {
-  border-left: 3px solid var(--teal);
-  padding: 12px 16px;
   color: var(--sub);
 }
 
@@ -1020,6 +987,13 @@ html:has(> body.home-document) {
   border-bottom: 0;
 }
 
+.leaderboard-footnote {
+  margin: 14px 0 0;
+  color: #6C8B91;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
 .lane-marker {
   flex: none;
   width: 10px;
@@ -1150,18 +1124,6 @@ html:has(> body.home-document) {
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
-}
-
-.pending-row-e .pending-letter {
-  border-color: #F7B83E;
-  background: #FFF3D2;
-  color: #F7B83E;
-}
-
-.pending-row-e .pending-status {
-  border-color: #EEDCA9;
-  background: #FFF3D2;
-  color: #335F67;
 }
 
 .pending-row-f .pending-letter {

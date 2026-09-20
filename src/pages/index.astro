@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { route } from '../utils/route';
 
-const base = import.meta.env.BASE_URL;
-const route = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
-const crabAsset = `${base}assets/crab-hero.webp`;
+const crabAsset = route('/assets/crab-hero.webp');
 
 const questions = [
   {
@@ -56,7 +55,6 @@ const tiedLanes = [
   title="AskClaw — 琥珀评测 AMBER：封存回放式 AI 基准测试"
   description="琥珀评测 AMBER：把真实历史事件封进琥珀，让 AI 只用当时可得的信息重做一次。私有题库、公开成绩、人人可核对的模型评测与排行榜。"
   canonicalPath="/"
-  languagePair={true}
   keywords="琥珀评测, 琥珀, AMBER, AI评测, 大模型评测, LLM评测, 模型排行榜, AI基准测试, AskClaw"
   schemaType="WebSite"
   schemaName="AskClaw"
@@ -153,6 +151,7 @@ const tiedLanes = [
                 </li>
               ))}
             </ol>
+            <p class="leaderboard-footnote">Ollama Cloud 车道按轴榜使用 W36 21 案记录，总分 17/23 为 W37 合成。</p>
           </article>
         </div>
 
