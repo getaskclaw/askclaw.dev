@@ -479,6 +479,13 @@ html:has(> body.home-document) {
   border-bottom-color: #DCEBE6;
 }
 
+.home-document .site-header .wrap,
+.home-document .site-footer .wrap {
+  /* 与 .home-wrap 同宽（1160px），header/footer 与主内容左右对齐。
+     单条规则覆盖所有断点：.home-wrap 无媒体查询覆盖，min() 自动收敛。 */
+  width: min(1160px, calc(100% - 40px));
+}
+
 .home-document .site-footer {
   border-top-color: #DCEBE6;
 }
