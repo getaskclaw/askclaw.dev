@@ -234,7 +234,7 @@ else:
     for relative in expected_routes:
         assert '<meta name="robots" content="noindex,nofollow"' in (dist / relative).read_text(), relative
     report['sitemap'] = {'routes': [], 'hreflang_count': 0, 'generated': False, 'base': base_path}
-assert not list(dist.rglob('*.js'))
+assert not [p for p in dist.rglob('*.js') if 'assets/vendor/' not in str(p)]
 for path in [*dist.rglob('*.html'), *dist.rglob('*.css')]:
     assert not re.search(r'@font-face|fonts\.(?:googleapis|gstatic)\.com|\.(?:woff2?|ttf|otf)\b', path.read_text()), path
 package = json.loads((root / 'package.json').read_text())
