@@ -108,7 +108,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/rank/', '/en/', '/en/rank/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/'];
 const browser = await chromium.launch({ headless: true });
 const results = [];
 let failed = false;
@@ -263,6 +263,21 @@ try {
       if (!result.compositeExplanation) failed = true;
     }
 
+    if (route === '/claim/' || route === '/en/claim/') {
+      const english = route === '/en/claim/';
+      result.claimRows = await page.locator('.claim-table tbody tr').count();
+      result.claimExample = mainText.includes('A-87c472cb')
+        && mainText.includes(english ? '20 failures' : '20 个 failure');
+      result.claimLinks = {
+        method: await page.locator(`a[href="${basePrefix}/method/"]`).count() > 0,
+        rank: await page.locator(`a[href="${basePrefix}${english ? '/en/rank/' : '/rank/'}"]`).count() > 0,
+      };
+      result.claimCopy = english
+        ? ['Completion claims', 'Weak verification (82)', 'Missing discipline (53)', 'W38 by public result repo'].every((text) => mainText.includes(text))
+        : ['完成声明', '验证弱（82）', '纪律缺失（53）', 'W38 分仓数字'].every((text) => mainText.includes(text));
+      if (result.claimRows !== 11 || !result.claimExample || !Object.values(result.claimLinks).every(Boolean) || !result.claimCopy) failed = true;
+    }
+
     if (route === '/en/') {
       const legacyHtml = await readFile(resolve(legacySiteRoot, 'en.html'), 'utf8');
       const legacy = await page.evaluate((html) => {
@@ -349,7 +364,7 @@ try {
       if (Object.values(result.englishRankEntries).some((href) => href !== `${basePrefix}/en/rank/`)) failed = true;
     }
 
-    if (route === '/en/' || route === '/en/rank/') {
+    if (route.startsWith('/en/')) {
       result.accidentalChinese = await page.evaluate(() => {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         const matches = [];

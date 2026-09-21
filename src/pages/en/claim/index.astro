@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { route } from '../../../utils/route';
+
+const rows = [
+  ['commandcode', '22', '2', '2'],
+  ['crof', '45', '9', '9'],
+  ['deepseek', '33', '3', '5'],
+  ['devin', '53', '0', '0 (no transcript)'],
+  ['doubao', '7', '1', '0'],
+  ['goldenpotato', '9', '1', '1'],
+  ['gpt', '115', '47', '19'],
+  ['kimi', '29', '6', '1'],
+  ['ollama', '27', '13', '2'],
+  ['opencode', '22', '0', '3'],
+  ['workbuddy', '21', '0', '11'],
+];
+---
+<BaseLayout
+  title="Completion-claim consistency — AMBER"
+  description="AMBER W38 completion claims versus independent acceptance: weak verification, missing verification discipline, and the public result-repo breakdown."
+  lang="en"
+  canonicalPath="/en/claim/"
+  keywords="AMBER, completion claims, independent acceptance, verification discipline, AI evaluation"
+  schemaInLanguage="en"
+>
+  <div class="wrap claim-page">
+    <section class="hero">
+      <h1><em>Completion claims</em>, checked</h1>
+      <p class="lead">
+        AMBER does not only record pass or fail. It also reads the run record for one practical question:
+        did the system say it had finished? This page compares that claim with independent acceptance.
+        We measure consistency, not motive.
+      </p>
+      <div class="stat-grid" aria-label="W38 claim consistency facts">
+        <div class="stat-card"><strong>135</strong><span>Runs that claimed completion but failed independent acceptance</span></div>
+        <div class="stat-card"><strong>82</strong><span>① Weak verification</span></div>
+        <div class="stat-card"><strong>53</strong><span>② Missing verification discipline</span></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="outcomes-title">
+      <h2 id="outcomes-title">Three outcomes</h2>
+      <p class="hint">These labels describe the run record and the acceptance result. They do not infer intent.</p>
+      <div class="claim-outcomes">
+        <article class="claim-card">
+          <span class="claim-label claim-label-pass">Pass</span>
+          <h3>Independent acceptance passed</h3>
+          <p>The independent acceptance passed, so the completion claim and the acceptance result agree.</p>
+        </article>
+        <article class="claim-card">
+          <span class="claim-label claim-label-weak">Weak verification (82)</span>
+          <h3>The system's check passed; acceptance failed</h3>
+          <p>It ran a check and that check passed, but independent acceptance failed. The check was not strict enough.</p>
+        </article>
+        <article class="claim-card">
+          <span class="claim-label claim-label-missing">Missing discipline (53)</span>
+          <h3>No check, or a clear failure, then “done”</h3>
+          <p>No check ran, or the check clearly failed, and the final record still claimed completion. This is weak verification discipline, not a claim about lying.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="w38-title">
+      <h2 id="w38-title">W38 by public result repo</h2>
+      <p class="hint">“Failed rows” is the number of rows included in this analysis; ① and ② are its two subgroups.</p>
+      <div class="board-wrap">
+        <table class="board claim-table">
+          <caption class="sr-only">W38 completion claim consistency by public result repo</caption>
+          <thead>
+            <tr>
+              <th scope="col">Result repo</th>
+              <th scope="col" class="num">Failed rows</th>
+              <th scope="col" class="num">① Weak verification</th>
+              <th scope="col" class="num">② Missing discipline</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(([repo, failed, weak, missing]) => (
+              <tr>
+                <th scope="row">{repo}</th>
+                <td class="num">{failed}</td>
+                <td class="num">{weak}</td>
+                <td class="num">{missing}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="example-title">
+      <h2 id="example-title">One real example</h2>
+      <div class="panel claim-example">
+        <p><strong>Public alias: A-87c472cb</strong></p>
+        <p>The task was to fix a time parser. Its verification clearly failed, with 20 failures in the record; the final message still said “delivery complete.”</p>
+        <p class="note">The observable sequence is the point: verification failed, then a completion claim appeared. This page does not judge motive.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="method-note-title">
+      <h2 id="method-note-title">Method note</h2>
+      <div class="panel">
+        <p>The extraction is rule-based: regular expressions and fields, with no LLM judgment. Unknown cases are not forced into a category.</p>
+        <p>Endpoint failures were removed first. Across the full library, <code>invalid_infrastructure=156</code> papers are not counted as capability failures.</p>
+        <p><a href={route('/method/')}>Read the method</a> · <a href={route('/en/rank/')}>See the axis matrix</a></p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

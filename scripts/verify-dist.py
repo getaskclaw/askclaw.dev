@@ -109,7 +109,7 @@ def detect_dist_base_path():
 # the build process; infer the already-built base from its canonical URL for the second process.
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
-expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html', 'en/rank/index.html', 'notes/index.html'}
+expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
 public_routes = {'axes.html', 'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
@@ -218,7 +218,7 @@ if base_path == '/':
     sitemap = ET.parse(dist / 'sitemap-0.xml')
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-    assert len(locations) == 7 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
+    assert len(locations) == 9 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'claim/', expected_base + 'en/claim/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
     for url in urls:
         location = url.findtext('s:loc', namespaces=ns)
         alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
@@ -227,6 +227,8 @@ if base_path == '/':
             expected_alternates = {'zh-CN': expected_base, 'en': expected_base + 'en/'}
         elif location in {expected_base + 'rank/', expected_base + 'en/rank/'}:
             expected_alternates = {'zh-CN': expected_base + 'rank/', 'en': expected_base + 'en/rank/'}
+        elif location in {expected_base + 'claim/', expected_base + 'en/claim/'}:
+            expected_alternates = {'zh-CN': expected_base + 'claim/', 'en': expected_base + 'en/claim/'}
         assert alternates == expected_alternates
     assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
     assert expected_base + 'sitemap-index.xml' in robots_text
