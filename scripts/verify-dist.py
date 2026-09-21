@@ -159,13 +159,13 @@ for relative in sorted(expected_routes):
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
     if relative == 'method/index.html':
-        assert len(parsed.cards) == 11
+        assert len(parsed.cards) == 12
         for repo, score in [('amber-ollama', '17/23'), ('amber-crof', '16/23')]:
             card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
             assert score in card['text'] and 'W37' in card['text'] and 'W36' not in card['text']
     if relative == 'en/index.html':
-        assert len(parsed.cards) == 12
-        assert sum('/amber-' in c['href'] for c in parsed.cards) == 11
+        assert len(parsed.cards) == 13
+        assert sum('/amber-' in c['href'] for c in parsed.cards) == 12
         assert 'placeholder' not in text
         for phrase in ['23 cases / 26 papers', 'Snapshot 2026-W38', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase

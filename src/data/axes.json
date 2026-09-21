@@ -360,6 +360,51 @@
   }
  },
  {
+  "id": "stepfun",
+  "name": "step-5-preview",
+  "vendor": "stepfun plan 端点",
+  "wk": "W39",
+  "cases": 23,
+  "repo": "amber-stepfun",
+  "file": "amber-stepfun/results/2026-W39.md",
+  "total": 15,
+  "n": 23,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "text": {
+    "p": 2,
+    "n": 3
+   },
+   "verify": {
+    "p": 0,
+    "n": 3
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   }
+  }
+ },
+ {
   "id": "gpt-sol",
   "name": "gpt-5.6-sol-900k (high 档)",
   "vendor": "OpenAI Codex",

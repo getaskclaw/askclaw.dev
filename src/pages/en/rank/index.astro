@@ -22,6 +22,7 @@ const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   doubao: { vendor: 'Volcengine Ark Agent Plan' },
   'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
   gp: { vendor: 'Community self-hosted 3×V100' },
+  stepfun: { vendor: 'stepfun plan endpoint' },
 };
 const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 
@@ -44,7 +45,7 @@ const stats = faces.map(([id, label]) => {
     <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
       Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
-      This makes the differences between the 12 public lanes easier to check.
+      This makes the differences between the 13 public lanes easier to check.
     </p>
     <noscript>Enable JavaScript to use the filters on this page.</noscript>
 

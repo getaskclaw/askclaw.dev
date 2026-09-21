@@ -181,11 +181,12 @@ try {
         doubao: { vendor: 'Volcengine Ark Agent Plan' },
         'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
         gp: { vendor: 'Community self-hosted 3×V100' },
+        stepfun: { vendor: 'stepfun plan endpoint' },
       };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
-      if (result.chipCount !== 8 || result.presetRowCount !== 12) failed = true;
+      if (result.chipCount !== 8 || result.presetRowCount !== 13) failed = true;
       const sourceLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
@@ -217,7 +218,7 @@ try {
         result.everydayRows = await page.locator('#rank-body tr').count();
         result.englishVerdict = await page.locator('#rank-verdict').innerText();
         result.englishHeadings = await page.locator('#rank-head th').allTextContents();
-        if (result.everydayRows !== 12
+        if (result.everydayRows !== 13
           || !result.englishVerdict.startsWith('Selected: Engineering + Operations. Lowest pass count: 5.')
           || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', 'Engineering', 'Operations', 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
         result.englishPresets = [];
@@ -239,8 +240,8 @@ try {
         await page.locator('#clear-rank').click();
         await page.locator('[data-face="text"]').click();
         result.englishSaturation = await page.locator('#rank-saturation').innerText();
-        if (!(await page.locator('#rank-saturation').isVisible())
-          || result.englishSaturation !== 'Note: all lanes currently have full marks for Text; these types do not change the ranking.') failed = true;
+        // step-5-preview (text 2/3) broke Text saturation in W39: the note must stay hidden now.
+        if (await page.locator('#rank-saturation').isVisible()) failed = true;
         await page.locator('#clear-rank').click();
         if (await page.locator('#rank-verdict').innerText() !== 'Nothing selected yet. Choose a work type to start.'
           || await page.locator('#rank-body').innerText() !== 'Choose a work type to display the lanes.') failed = true;
@@ -294,7 +295,7 @@ try {
       }
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
-        'real history,', 'sealed in amber, replayed', '23 cases / 26 papers', '11 result repos',
+        'real history,', 'sealed in amber, replayed', '23 cases / 26 papers', '12 result repos',
         'Snapshot 2026-W38', 'leader swe-2-max @ Devin at 18/23 (scored in W37)',
         'five-way tie at 17/23', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
@@ -332,7 +333,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
         `${basePrefix}/method/`, `${basePrefix}/en/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
-      result.englishMirrorPassed = result.resultRepoCount === 11
+      result.englishMirrorPassed = result.resultRepoCount === 12
         && result.englishLeadPreserved
         && result.englishCards.every((check) => check.passed)
         && result.englishCopy.every((check) => check.passed)
