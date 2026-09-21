@@ -9,6 +9,12 @@ import astroConfig from '../astro.config.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
+if (!isDeepStrictEqual(astroConfig.redirects?.['/axes.html'], { destination: '/rank/', status: 301 })) {
+  throw new Error('Expected /axes.html -> /rank/ (301) in Astro redirect config');
+}
+if (astroConfig.build?.redirects !== false || astroConfig.trailingSlash !== 'always' || astroConfig.output !== 'static') {
+  throw new Error('Expected static output without redirect HTML, preserving trailingSlash: always');
+}
 
 function normalizeBasePath(value) {
   let base = value || '/';
@@ -186,7 +192,7 @@ try {
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
-      if (result.chipCount !== 8 || result.presetRowCount !== 13) failed = true;
+      if (result.chipCount !== 9 || result.presetRowCount !== 13) failed = true;
       const sourceLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
@@ -249,6 +255,20 @@ try {
         result.englishRankLink = await page.getByRole('link', { name: 'English version → /en/rank/', exact: true }).getAttribute('href');
         if (result.englishRankLink !== `${basePrefix}/en/rank/`) failed = true;
       }
+
+      await page.locator('#clear-rank').click();
+      const convergenceChip = page.locator('[data-face="convergence"]');
+      result.convergenceChip = await convergenceChip.innerText();
+      await convergenceChip.click();
+      result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
+      result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
+      const convergenceIds = ['kimi', 'gpt-luna', 'ocgo', 'doubao', 'ollama'];
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence5/5 full marks' : '收敛5/5 满分')
+        && await convergenceChip.getAttribute('aria-pressed') === 'true'
+        && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
+        && isDeepStrictEqual(result.convergenceScores, Array(5).fill('1/1'));
+      if (!result.convergencePassed) failed = true;
+      await page.locator('#clear-rank').click();
     }
 
     if (route === '/method/') {

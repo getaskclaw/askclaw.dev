@@ -11,6 +11,12 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   output: 'static',
+  redirects: {
+    '/axes.html': { destination: '/rank/', status: 301 },
+  },
+  // Keep retired HTML absent. The static host must apply the HTTP 301 above
+  // (Caddy: redir /axes.html /rank/ 301); Astro's HTML fallback is not an HTTP 301.
+  build: { redirects: false },
   integrations: base === '/' ? [
     sitemap({
       i18n: {
