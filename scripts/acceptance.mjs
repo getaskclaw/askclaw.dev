@@ -108,13 +108,14 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/rank/', '/en/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/rank/', '/en/', '/en/rank/'];
 const browser = await chromium.launch({ headless: true });
 const results = [];
 let failed = false;
 
 try {
   for (const route of routes) {
+    const isRankRoute = route === '/rank/' || route === '/en/rank/';
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     const consoleErrors = [];
     const consoleMessages = [];
@@ -171,7 +172,16 @@ try {
       failed = true;
     }
 
-    if (route === '/rank/') {
+    if (isRankRoute) {
+      const english = route === '/en/rank/';
+      const englishLabels = {
+        kimi: { vendor: 'Kimi official coding' },
+        'gpt-luna': { name: 'gpt-5.6-luna-900k (max band)' },
+        ds: { vendor: 'DeepSeek official' },
+        doubao: { vendor: 'Volcengine Ark Agent Plan' },
+        'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
+        gp: { vendor: 'Community self-hosted 3×V100' },
+      };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
@@ -180,14 +190,14 @@ try {
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
         ...lane,
-        vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
+        ...(english ? englishLabels[lane.id] : { vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor }),
       }));
       result.laneDataPreserved = isDeepStrictEqual(shippedLanes, expectedLanes);
       result.kimiVendor = await page.locator('#rank-body tr').filter({ has: page.locator('a[href="https://github.com/getaskclaw/amber-kimi"]') }).locator('small').innerText();
       result.presetContent = await page.locator('#rank-body').innerText();
-      if (!result.laneDataPreserved || result.kimiVendor !== 'Kimi 官方 coding') failed = true;
+      if (!result.laneDataPreserved || result.kimiVendor !== (english ? 'Kimi official coding' : 'Kimi 官方 coding')) failed = true;
       const axes = ['build', 'ops', 'ui-build'];
-      const expectedOrder = sourceLanes.map((lane) => ({
+      const expectedOrder = expectedLanes.map((lane) => ({
         name: lane.name,
         minimum: Math.min(...axes.map((axis) => lane.axis[axis].p)),
         sum: axes.reduce((total, axis) => total + lane.axis[axis].p, 0),
@@ -201,6 +211,43 @@ try {
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.chipInteractionPassed = cleared && toggled && await page.locator('.chip[aria-pressed="true"]').count() === 3;
       if (!result.rankOrderPreserved || !result.chipInteractionPassed) failed = true;
+
+      if (english) {
+        await page.getByRole('button', { name: 'Everyday engineering', exact: true }).click();
+        result.everydayRows = await page.locator('#rank-body tr').count();
+        result.englishVerdict = await page.locator('#rank-verdict').innerText();
+        result.englishHeadings = await page.locator('#rank-head th').allTextContents();
+        if (result.everydayRows !== 12
+          || !result.englishVerdict.startsWith('Selected: Engineering + Operations. Lowest pass count: 5.')
+          || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', 'Engineering', 'Operations', 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
+        result.englishPresets = [];
+        for (const button of await page.locator('[data-preset]').all()) {
+          const preset = await button.getAttribute('data-preset');
+          const active = preset.split(',');
+          const expected = expectedLanes.filter((lane) => active.every((axis) => lane.axis[axis].n > 0))
+            .map((lane) => ({
+              name: lane.name,
+              minimum: Math.min(...active.map((axis) => lane.axis[axis].p)),
+              sum: active.reduce((total, axis) => total + lane.axis[axis].p, 0),
+            })).sort((a, b) => b.minimum - a.minimum || b.sum - a.sum).map((lane) => lane.name);
+          await button.click();
+          const passed = isDeepStrictEqual(await page.locator('#rank-body .lane a').allTextContents(), expected)
+            && !/[\u3400-\u9fff]/u.test(await page.locator('main').innerText());
+          result.englishPresets.push({ preset, passed });
+          if (!passed) failed = true;
+        }
+        await page.locator('#clear-rank').click();
+        await page.locator('[data-face="text"]').click();
+        result.englishSaturation = await page.locator('#rank-saturation').innerText();
+        if (!(await page.locator('#rank-saturation').isVisible())
+          || result.englishSaturation !== 'Note: all lanes currently have full marks for Text; these types do not change the ranking.') failed = true;
+        await page.locator('#clear-rank').click();
+        if (await page.locator('#rank-verdict').innerText() !== 'Nothing selected yet. Choose a work type to start.'
+          || await page.locator('#rank-body').innerText() !== 'Choose a work type to display the lanes.') failed = true;
+      } else {
+        result.englishRankLink = await page.getByRole('link', { name: 'English version → /en/rank/', exact: true }).getAttribute('href');
+        if (result.englishRankLink !== `${basePrefix}/en/rank/`) failed = true;
+      }
     }
 
     if (route === '/method/') {
@@ -283,7 +330,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/hash-index/v2026-09.md',
         'https://github.com/getaskclaw/amber/blob/main/PLAN.md',
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
-        `${basePrefix}/method/`, `${basePrefix}/rank/`,
+        `${basePrefix}/method/`, `${basePrefix}/en/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
       result.englishMirrorPassed = result.resultRepoCount === 11
         && result.englishLeadPreserved
@@ -293,6 +340,63 @@ try {
         && result.englishLinks.every((check) => check.passed)
         && !mainText.includes('placeholder');
       if (!result.englishMirrorPassed) failed = true;
+      result.englishRankEntries = {
+        card: await page.locator('.question-entry-cobalt').getAttribute('href'),
+        textLink: await page.getByRole('link', { name: 'Rank by work', exact: true }).getAttribute('href'),
+        navigation: await page.getByRole('link', { name: 'Axis matrix', exact: true }).getAttribute('href'),
+      };
+      if (Object.values(result.englishRankEntries).some((href) => href !== `${basePrefix}/en/rank/`)) failed = true;
+    }
+
+    if (route === '/en/' || route === '/en/rank/') {
+      result.accidentalChinese = await page.evaluate(() => {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const matches = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const parent = node.parentElement;
+          if (!parent || parent.closest('script, style, .language-toggle') || !parent.checkVisibility()) continue;
+          const text = parent.closest('.header-nav') ? node.textContent.replaceAll('(中文)', '') : node.textContent;
+          if (/[\u3400-\u9fff]/u.test(text)) matches.push(text.trim());
+        }
+        return matches;
+      });
+      if (result.accidentalChinese.length) failed = true;
+      if (route === '/en/rank/') {
+        const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+        result.englishRankSeo = await page.locator('html').getAttribute('lang') === 'en'
+          && schema['@type'] === 'WebPage' && schema.inLanguage === 'en'
+          && schema.url === new URL(`${basePrefix}/en/rank/`, astroConfig.site).href
+          && await page.locator('meta[property="og:url"]').getAttribute('content') === schema.url
+          && await page.locator('meta[property="og:title"]').getAttribute('content') === schema.name
+          && await page.locator('meta[property="og:description"]').getAttribute('content') === schema.description
+          && !/[\u3400-\u9fff]/u.test(JSON.stringify(schema));
+        if (!result.englishRankSeo) failed = true;
+      }
+    }
+
+    if (route === '/' || route === '/en/') {
+      await page.setViewportSize({ width: 375, height: 844 });
+      result.mobileLanes = await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
+        text: element.textContent, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth,
+        whiteSpace: getComputedStyle(element).whiteSpace, textOverflow: getComputedStyle(element).textOverflow,
+      })));
+      result.fourCardsIntact = await page.locator('.question-entry').count() === 4;
+      result.homeMobileOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+      const bannerStyle = () => page.locator('.crab-bubble').evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { cursor: style.cursor, background: style.backgroundColor, shadow: style.boxShadow, transform: style.transform, color: style.color };
+      });
+      await page.mouse.move(0, 0);
+      result.bannerStyle = await bannerStyle();
+      await page.locator('.crab-bubble').hover();
+      result.bannerNonInteractive = isDeepStrictEqual(await bannerStyle(), result.bannerStyle)
+        && result.bannerStyle.cursor === 'default' && result.bannerStyle.background === 'rgba(0, 0, 0, 0)'
+        && result.bannerStyle.shadow === 'none';
+      if (result.mobileLanes.length !== 5 || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
+        || lane.whiteSpace !== 'normal' || lane.textOverflow === 'ellipsis')
+        || !result.fourCardsIntact || result.homeMobileOverflow || !result.bannerNonInteractive) failed = true;
+      await page.setViewportSize({ width: 1440, height: 900 });
     }
 
     result.scriptTags = await page.locator('script:not([type="application/ld+json"])').count();
@@ -302,7 +406,7 @@ try {
     result.forbiddenTerms = (await page.content()).match(/点线面|图结构|节点|出边|点→跳转/g) ?? [];
     result.canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
     result.expectedCanonical = new URL(`${basePrefix}${route}`, astroConfig.site).href;
-    if (result.scriptTags !== (route === '/rank/' ? 1 : 0) || result.fontRequests.length
+    if (result.scriptTags !== (isRankRoute ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     if (route === '/' && initialTransfer.totalBytes >= 200_000) failed = true;
 
@@ -323,7 +427,7 @@ try {
       const directory = resolve(process.env.ACCEPTANCE_SCREENSHOT_DIR);
       await mkdir(directory, { recursive: true });
       const label = route === '/' ? 'home' : route.replaceAll('/', '');
-      if (route === '/rank/') await page.locator('[data-preset="build,ops,ui-build"]').click();
+      if (isRankRoute) await page.locator('[data-preset="build,ops,ui-build"]').click();
       for (const image of await page.locator('main img').all()) {
         await image.scrollIntoViewIfNeeded();
         await image.evaluate((img) => img.decode());

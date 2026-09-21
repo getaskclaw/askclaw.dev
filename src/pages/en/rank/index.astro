@@ -1,25 +1,29 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import rawLanes from '../../data/axes.json';
-import { route } from '../../utils/route';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import rawLanes from '../../../data/axes.json';
+import { route } from '../../../utils/route';
 
 const faces = [
-  ['build', '施工'],
-  ['ops', '运维'],
-  ['text', '文本'],
-  ['verify', '核验'],
-  ['review', '审查'],
-  ['req-drift', '需求漂移'],
-  ['ui-build', 'UI 搭建'],
-  ['vision', '视觉审图'],
+  ['build', 'Engineering'],
+  ['ops', 'Operations'],
+  ['text', 'Text'],
+  ['verify', 'Verification'],
+  ['review', 'Review'],
+  ['req-drift', 'Requirement drift'],
+  ['ui-build', 'UI building'],
+  ['vision', 'Visual review'],
 ] as const;
 
-// Keep the canonical records byte-for-byte. Only this lane's public vendor
-// label is mapped; never substring-replace ordinary domain terminology.
-const lanes = rawLanes.map((lane) => ({
-  ...lane,
-  vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
-}));
+// Translate display labels only. Scores, periods, IDs and source records stay intact.
+const laneLabels: Record<string, { name?: string; vendor?: string }> = {
+  kimi: { vendor: 'Kimi official coding' },
+  'gpt-luna': { name: 'gpt-5.6-luna-900k (max band)' },
+  ds: { vendor: 'DeepSeek official' },
+  doubao: { vendor: 'Volcengine Ark Agent Plan' },
+  'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
+  gp: { vendor: 'Community self-hosted 3×V100' },
+};
+const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 
 const stats = faces.map(([id, label]) => {
   const available = lanes.filter((lane) => lane.axis[id].n > 0);
@@ -28,58 +32,61 @@ const stats = faces.map(([id, label]) => {
 });
 ---
 <BaseLayout
-  title="按轴挑模型 — AMBER 琥珀评测"
-  description="AMBER 按八类工作筛选模型：12 条车道、公开成绩、短板排序和原生浏览器交互。"
-  canonicalPath="/rank/"
+  title="Rank models by work — AMBER benchmark"
+  description="Choose models across eight work types with AMBER: 12 lanes, public scores, weakest-axis ordering and native browser filters."
+  lang="en"
+  canonicalPath="/en/rank/"
+  keywords="AMBER, AI benchmark, model ranking, work types, axis matrix, AskClaw"
+  schemaType="WebPage"
+  schemaInLanguage="en"
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
-    <p class="note"><a href={route('/en/rank/')} lang="en">English version → /en/rank/</a></p>
-    <h1>按轴挑模型 — <em>别只看总分</em></h1>
+    <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
-      选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 12 条公开车道的差异更容易核对。
+      Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
+      This makes the differences between the 12 public lanes easier to check.
     </p>
-    <noscript>本页的筛选需要启用 JavaScript。</noscript>
+    <noscript>Enable JavaScript to use the filters on this page.</noscript>
 
     <section class="section" aria-labelledby="pick-title">
-      <h2 id="pick-title">选择工作类型</h2>
-      <p class="hint">每个 chip 显示该类型里满分车道的数量。默认不选任何类型。</p>
+      <h2 id="pick-title">Choose work types</h2>
+      <p class="hint">Each chip shows how many lanes earned full marks for that type. No types are selected by default.</p>
       <div class="panel picker">
-        <div class="chips" aria-label="工作类型筛选">
+        <div class="chips" aria-label="Work-type filters">
           {stats.map(({ id, label, full, available }) => (
             <button class="chip" type="button" data-face={id} aria-pressed="false">
-              {label}<span class="count">{full}/{available} 满分</span>
+              {label}<span class="count">{full}/{available} full marks</span>
             </button>
           ))}
         </div>
         <div class="picker-bar">
-          <div class="preset-list" aria-label="预设">
-            <button class="preset" type="button" data-preset="build,ops">日常施工</button>
-            <button class="preset" type="button" data-preset="build,ops,ui-build">交付全才</button>
-            <button class="preset" type="button" data-preset="review,verify">对抗审查</button>
-            <button class="preset" type="button" data-preset="build,ops,text,req-drift">省钱干活</button>
-            <button class="preset" type="button" data-preset="build,ops,text,verify,review,req-drift,ui-build,vision">全选</button>
+          <div class="preset-list" aria-label="Presets">
+            <button class="preset" type="button" data-preset="build,ops">Everyday engineering</button>
+            <button class="preset" type="button" data-preset="build,ops,ui-build">All-round delivery</button>
+            <button class="preset" type="button" data-preset="review,verify">Adversarial review</button>
+            <button class="preset" type="button" data-preset="build,ops,text,req-drift">Budget work</button>
+            <button class="preset" type="button" data-preset="build,ops,text,verify,review,req-drift,ui-build,vision">Select all</button>
           </div>
-          <button class="clear-button" id="clear-rank" type="button">清空</button>
+          <button class="clear-button" id="clear-rank" type="button">Clear</button>
         </div>
-        <div class="verdict" id="rank-verdict" role="status">还没有选择。先选一种工作类型。</div>
+        <div class="verdict" id="rank-verdict" role="status">Nothing selected yet. Choose a work type to start.</div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="board-title">
-      <h2 id="board-title">短板排序</h2>
-      <p class="hint">规则：先比最低通过数，再比所选类型的通过总数；并列会保留。</p>
+      <h2 id="board-title">Weakest-axis ranking</h2>
+      <p class="hint">Rule: compare the lowest pass count first, then the combined pass count across the selected types. Ties are kept.</p>
       <div class="board-wrap">
         <table class="board">
           <caption class="sr-only">AMBER work-type ranking</caption>
           <thead><tr id="rank-head"></tr></thead>
           <tbody id="rank-body">
-            <tr><td colspan="12">选择一种工作类型后显示车道。</td></tr>
+            <tr><td colspan="12">Choose a work type to display the lanes.</td></tr>
           </tbody>
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note">数据来自公开成绩仓。期号和案数随原始记录保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
+      <p class="note">Data comes from the public result repositories. Each record keeps its original week and case count. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
 </BaseLayout>
@@ -122,13 +129,13 @@ const stats = faces.map(([id, label]) => {
 
     if (active.length === 0) {
       const row = document.createElement('tr');
-      appendCell(row, '选择一种工作类型后显示车道。');
+      appendCell(row, 'Choose a work type to display the lanes.');
       body.append(row);
-      verdict.textContent = '还没有选择。先选一种工作类型。';
+      verdict.textContent = 'Nothing selected yet. Choose a work type to start.';
       return;
     }
 
-    ['#', '车道（模型 × 交付位置）', '总分'].forEach((label, index) => {
+    ['#', 'Lane (model × endpoint)', 'Total score'].forEach((label, index) => {
       const cell = document.createElement('th');
       cell.scope = 'col';
       cell.textContent = label;
@@ -142,7 +149,7 @@ const stats = faces.map(([id, label]) => {
       cell.textContent = faceLabel(id);
       head.append(cell);
     });
-    ['短板', '合计', '期 / 案数'].forEach((label) => {
+    ['Weakest axis', 'Combined', 'Week / cases'].forEach((label) => {
       const cell = document.createElement('th');
       cell.scope = 'col';
       cell.className = 'num';
@@ -166,10 +173,10 @@ const stats = faces.map(([id, label]) => {
       const row = document.createElement('tr');
       const cell = document.createElement('td');
       cell.colSpan = 6 + active.length;
-      cell.textContent = '无匹配车道，请减少筛选条件。';
+      cell.textContent = 'No matching lanes. Try selecting fewer work types.';
       row.append(cell);
       body.append(row);
-      verdict.textContent = '无匹配车道，请减少筛选条件。';
+      verdict.textContent = 'No matching lanes. Try selecting fewer work types.';
       return;
     }
 
@@ -211,20 +218,20 @@ const stats = faces.map(([id, label]) => {
     const winners = rows.filter((row) => row.min === best.min);
     const chosen = active.map(faceLabel).join(' + ');
     verdict.replaceChildren();
-    const prefix = document.createTextNode(`已选：${chosen}。最低通过数 `);
+    const prefix = document.createTextNode(`Selected: ${chosen}. Lowest pass count: `);
     verdict.append(prefix);
     const strong = document.createElement('strong');
     strong.textContent = String(best.min);
     verdict.append(strong);
-    verdict.append(document.createTextNode(`。`));
+    verdict.append(document.createTextNode('. '));
     const names = winners.slice(0, 4).map((row) => row.lane.name).join(' / ');
-    verdict.append(document.createTextNode(`领先车道：${names}${winners.length > 4 ? ` 等 ${winners.length} 家` : ''}。`));
-    if (winners.length > 1) verdict.append(document.createTextNode(`共 ${winners.length} 家并列。`));
+    verdict.append(document.createTextNode(`Leading lanes: ${names}${winners.length > 4 ? ` (among ${winners.length} lanes)` : ''}.`));
+    if (winners.length > 1) verdict.append(document.createTextNode(` ${winners.length} lanes tied.`));
 
     const saturated = active.filter((id) => fullCount(id) === laneCount(id));
     if (saturated.length > 0) {
       saturation.hidden = false;
-      saturation.textContent = `提示：${saturated.map(faceLabel).join('、')} 当前所有车道均满分，不改变排序。`;
+      saturation.textContent = `Note: all lanes currently have full marks for ${saturated.map(faceLabel).join(', ')}; these types do not change the ranking.`;
     }
   }
 

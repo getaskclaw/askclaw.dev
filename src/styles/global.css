@@ -739,25 +739,12 @@ html:has(> body.home-document) {
   position: relative;
   margin: 0;
   padding: 11px 20px;
-  border-radius: 22px;
-  background: #123C46;
-  color: #FFFFFF;
+  color: #335F67;
+  cursor: default;
   font-size: 13px;
   font-weight: 700;
   line-height: 1.4;
   text-align: center;
-  box-shadow: 0 5px 12px rgba(23, 75, 84, 0.16);
-}
-
-.crab-bubble::before {
-  content: "";
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  margin-left: -9px;
-  border-right: 9px solid transparent;
-  border-bottom: 9px solid #123C46;
-  border-left: 9px solid transparent;
 }
 
 .fact-rail {
@@ -1193,6 +1180,13 @@ html:has(> body.home-document) {
 
   .crab-frame {
     border-radius: 24px;
+  }
+
+  .lane-name {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
   }
 }
 

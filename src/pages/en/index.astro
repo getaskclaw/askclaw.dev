@@ -34,7 +34,7 @@ const questions = [
     question: 'Which model should I use for this kind of work?',
     preview: 'Pick the axis by work, not the total.',
     cue: 'Rank by axis',
-    href: route('/rank/'),
+    href: route('/en/rank/'),
     ariaLabel: 'Which model should I use for this kind of work? Pick the axis by work, not the total. Rank by work type.',
   },
   {
@@ -53,7 +53,7 @@ const tiedLanes = [
   ['glm-5.3-flash @ Ollama Cloud', 'teal'],
   ['deepseek-v4.1-flash @ CommandCode', 'cobalt'],
   ['deepseek-v4.1-flash @ Ollama Cloud', 'sky'],
-  ['k3 @ Kimi 官方 coding', 'coral'],
+  ['k3 @ Kimi official coding', 'coral'],
   ['hy4-preview-f @ WorkBuddy', 'mint'],
 ] as const;
 // Published repository summaries from the legacy English home, not axes.json:
@@ -247,7 +247,7 @@ const repos = [
       <p class="hint">
         The nine-axis completion matrix: each cell is a face's pin-level completion.
         Tied totals hide completely different profiles — the matrix shows what the sum can't.{' '}
-        <a href={route('/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
+        <a href={route('/en/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
       </p>
       <figure>
         <a href={asset('completion-matrix-7way.en.webp')} aria-label="Open full-size completion matrix">
@@ -345,7 +345,7 @@ const repos = [
   }
 
   /* Scoped English-only difference from the shared card layout: the English cue labels
-     ("Rank by axis", "Read the spec") are wider than the Chinese ones ("按轴排", "看规范") and
+     ("Rank by axis", "Read the spec") are wider than the Chinese cue labels and
      the shared .edge-cue is nowrap. Because the card's cue column is an `auto` grid track, it
      sized to the cue's max-content and starved the preview column down to a few characters per
      line at 390px. Capping the cue width lets it wrap and gives the preview its column back. */

@@ -109,7 +109,7 @@ def detect_dist_base_path():
 # the build process; infer the already-built base from its canonical URL for the second process.
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
-expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html', 'notes/index.html'}
+expected_routes = {'index.html', 'method/index.html', 'rank/index.html', 'en/index.html', 'en/rank/index.html', 'notes/index.html'}
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
 public_routes = {'axes.html', 'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
@@ -146,7 +146,7 @@ for relative in sorted(expected_routes):
     forbidden_terms = FORBIDDEN_INTERNAL_TERMS.findall(unescape(text))
     assert not forbidden_terms, f'{relative}: forbidden internal term {forbidden_terms}'
     scripts = re.findall(r'<script\b(?![^>]*\btype=["\']application/ld\+json["\'])[^>]*>(.*?)</script>', text, re.S | re.I)
-    assert len(scripts) == (1 if relative == 'rank/index.html' else 0), relative
+    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html'} else 0), relative
     parsed = Page(text)
     for ref in parsed.refs:
         url = urlparse(ref)
@@ -171,6 +171,9 @@ for relative in sorted(expected_routes):
             assert phrase in text, phrase
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
+    if relative == 'en/rank/index.html':
+        assert 'Kimi official coding' in text and 'Everyday engineering' in text
+        assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese rank script copy'
 
 assets = sorted((dist / 'assets').glob('*'))
 top_level = {p.name for p in assets}
@@ -215,11 +218,16 @@ if base_path == '/':
     sitemap = ET.parse(dist / 'sitemap-0.xml')
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-    assert len(locations) == 5 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'method/', expected_base + 'notes/'}
+    assert len(locations) == 6 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'method/', expected_base + 'notes/'}
     for url in urls:
         location = url.findtext('s:loc', namespaces=ns)
         alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
-        assert alternates == ({'zh-CN': expected_base, 'en': expected_base + 'en/'} if location in {expected_base, expected_base + 'en/'} else {})
+        expected_alternates = {}
+        if location in {expected_base, expected_base + 'en/'}:
+            expected_alternates = {'zh-CN': expected_base, 'en': expected_base + 'en/'}
+        elif location in {expected_base + 'rank/', expected_base + 'en/rank/'}:
+            expected_alternates = {'zh-CN': expected_base + 'rank/', 'en': expected_base + 'en/rank/'}
+        assert alternates == expected_alternates
     assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
     assert expected_base + 'sitemap-index.xml' in robots_text
     assert 'Disallow: /' not in robots_text
