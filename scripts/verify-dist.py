@@ -218,7 +218,7 @@ if base_path == '/':
     sitemap = ET.parse(dist / 'sitemap-0.xml')
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-    assert len(locations) == 6 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'method/', expected_base + 'notes/'}
+    assert len(locations) == 7 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
     for url in urls:
         location = url.findtext('s:loc', namespaces=ns)
         alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
