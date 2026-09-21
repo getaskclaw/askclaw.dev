@@ -23,10 +23,10 @@ const questions = [
     code: 'B',
     tone: 'amber',
     question: 'Can the newly released models actually hold up?',
-    preview: 'Same 23 cases; enter the board and see.',
-    cue: 'See W38',
+    preview: 'Same 24 cases; enter the board and see.',
+    cue: 'See W39',
     href: route('/#leaderboard'),
-    ariaLabel: 'Can the newly released models actually hold up? Same 23 cases; enter the board and see. See the 2026-W38 board.',
+    ariaLabel: 'Can the newly released models actually hold up? Same 24 cases; enter the board and see. See the 2026-W39 board.',
   },
   {
     code: 'C',
@@ -48,30 +48,33 @@ const questions = [
   },
 ] as const;
 
-// #2 five-way tie: original lane names, exactly as published on the Chinese home.
+// #2 tie: the four lanes that sit at 18/24 after the convergence make-up. The CommandCode lane
+// was frozen at the owner's call and is rendered separately below with its sealed 17/23 basis.
 const tiedLanes = [
-  ['glm-5.3-flash @ Ollama Cloud', 'teal'],
-  ['deepseek-v4.1-flash @ CommandCode', 'cobalt'],
-  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky'],
-  ['k3 @ Kimi official coding', 'coral'],
-  ['hy4-preview-f @ WorkBuddy', 'mint'],
+  ['glm-5.3-flash @ Ollama Cloud', 'teal', '18/24'],
+  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky', '18/24'],
+  ['k3 @ Kimi official coding', 'coral', '18/24'],
+  ['hy4-preview-f @ WorkBuddy', 'mint', '18/24'],
 ] as const;
-// Published repository summaries from the legacy English home, not axes.json:
-// the axis picker deliberately retains older W36 21-case records for two lanes.
+const frozenLanes = [
+  ['deepseek-v4.1-flash @ CommandCode', 'cobalt', '17/23 ∅'],
+] as const;
+// Published repository summaries, now on the /24 basis (amber README headline scores,
+// commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
 const repos = [
   ['amber', 'spec', 'Method spec + public hash index + cross-repo weekly board'],
-  ['amber-devin', '18/23', 'swe-2-max @ Devin — current leader'],
-  ['amber-kimi', '17/23', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
-  ['amber-ollama', '17/23', 'glm-5.3-flash / d41f @ Ollama Cloud'],
-  ['amber-commandcode', '17/23', 'd41f @ CommandCode — five-band ladder'],
-  ['amber-workbuddy', '17/23', 'hy4-preview-f @ WorkBuddy ACP'],
-  ['amber-gpt', '16/23', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex'],
-  ['amber-crof', '16/23', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
-  ['amber-deepseek', '16/23', 'deepseek-flash @ DeepSeek official'],
-  ['amber-opencode', '16/23', 'deepseek-flash @ OpenCode Go'],
-  ['amber-doubao', '16/23', 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
-  ['amber-stepfun', '15/23', 'step-5-preview @ stepfun plan endpoint — new in W39'],
-  ['amber-goldenpotato', '14/23', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
+  ['amber-devin', '19/24', 'swe-2-max @ Devin — current leader'],
+  ['amber-kimi', '18/24', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
+  ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
+  ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode — frozen at the owner\'s call'],
+  ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP'],
+  ['amber-gpt', '16/24', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex'],
+  ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
+  ['amber-deepseek', '17/24', 'deepseek-flash @ DeepSeek official'],
+  ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go'],
+  ['amber-doubao', '17/24', 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
+  ['amber-stepfun', '16/24', 'step-5-preview @ stepfun plan endpoint — new in W39'],
+  ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
 <BaseLayout
@@ -120,7 +123,7 @@ const repos = [
             src={crabAsset}
             width="1200"
             height="400"
-            alt="A coral crab holding a pearl, inviting visitors to view the AMBER 2026-W38 board"
+            alt="A coral crab holding a pearl, inviting visitors to view the AMBER 2026-W39 board"
             fetchpriority="high"
             decoding="async"
           />
@@ -128,7 +131,7 @@ const repos = [
         <p class="crab-bubble">Ask one question; I'll hand you the path.</p>
         <div class="fact-rail" aria-label="AMBER current facts">
           <span class="fact-dot" aria-hidden="true"></span>
-          <span>23 cases · 12 result repos · 2026-W39</span>
+          <span>24 cases · 12 result repos · 2026-W39</span>
         </div>
       </aside>
     </section>
@@ -139,7 +142,7 @@ const repos = [
           <h2 id="leaderboard-title">Current board</h2>
           <p>Real published scores · 2026-W39</p>
         </div>
-        <span class="leaderboard-badge">23 cases · 12 result repos</span>
+        <span class="leaderboard-badge">24 cases · 12 result repos</span>
       </header>
 
       <div class="leaderboard-body">
@@ -148,31 +151,44 @@ const repos = [
           <div class="champion-main">
             <div>
               <h3 id="champion-title">swe-2-max @ Devin</h3>
-              <p>Scored in W37 · not re-run in W38</p>
+              <p>Scored in W37 · convergence case folded in on W39</p>
             </div>
-            <strong class="champion-score">18/23</strong>
+            <strong class="champion-score">19/24</strong>
           </div>
-          <p class="champion-detail">Leader's score · 23-case library</p>
+          <p class="champion-detail">Leader's score · 24-case library</p>
           <div class="progress-block">
-            <div class="progress-track" role="img" aria-label="Leader passed 18 of 23 cases">
-              <span style="width: 78.26%"></span>
+            <div class="progress-track" role="img" aria-label="Leader passed 19 of 24 cases">
+              <span style="width: 79.17%"></span>
             </div>
             <span>Cases passed / total cases in the library</span>
           </div>
         </article>
 
         <article class="tied-card" aria-labelledby="tied-title">
-          <h3 id="tied-title">#2 · five-way tie · all 17/23</h3>
+          <h3 id="tied-title">#2 · four-way tie · all 18/24</h3>
           <ol class="tied-list">
-            {tiedLanes.map(([name, tone]) => (
+            {tiedLanes.map(([name, tone, score]) => (
               <li>
                 <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
                 <span class="lane-name" title={name}>{name}</span>
-                <strong>17/23</strong>
+                <strong>{score}</strong>
               </li>
             ))}
           </ol>
-          <p class="leaderboard-footnote">Ollama Cloud lanes use their W36 21-case records on the axis board; the 17/23 total is a W37 composite.</p>
+          <p class="leaderboard-footnote">
+            The former five-way 17/23 tie broke up in the convergence make-ups: k3 / glm-5.3-flash /
+            v4.1-flash @ Ollama / hy4 now sit at 18/24, while the CommandCode lane was frozen at ∅
+            at the owner's call and keeps its sealed 17/23 record.
+          </p>
+          <ol class="tied-list tied-list-frozen">
+            {frozenLanes.map(([name, tone, score]) => (
+              <li>
+                <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
+                <span class="lane-name" title={name}>{name}</span>
+                <strong>{score}</strong>
+              </li>
+            ))}
+          </ol>
         </article>
       </div>
 
@@ -216,7 +232,7 @@ const repos = [
         <b>The cases are never published. The scores always are.</b>
       </p>
       <div class="badges" aria-label="Evaluation facts">
-        <div class="badge"><strong>23 cases / 26 papers</strong><small>private library, hash-sealed</small></div>
+        <div class="badge"><strong>24 cases / 27 papers</strong><small>private library, hash-sealed</small></div>
         <div class="badge"><strong>12 result repos</strong><small>one per vendor × endpoint</small></div>
         <div class="badge"><strong>Updated weekly</strong><small>same library, same band, public hash index</small></div>
       </div>
@@ -225,20 +241,24 @@ const repos = [
     <section class="section" aria-labelledby="board-title">
       <h2 id="board-title">The board right now</h2>
       <p class="hint">
-        Same band (high), same 23 cases, same public hash index. Five rank tiers; ties are labeled as ties.
+        Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties.
         Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.
         These are static chart snapshots: open an image at full size, or follow its source details.
       </p>
       <figure>
-        <a href={asset('top5-2026-w38.en.webp')} aria-label="Open full-size AMBER board">
-          <img src={asset('top5-2026-w38.en.webp')} width="1400" height="1074" loading="lazy" alt="AMBER board: five rank tiers (2026-W38)" />
+        <a href={asset('top5-2026-w39.en.webp')} aria-label="Open full-size AMBER board">
+          <img src={asset('top5-2026-w39.en.webp')} width="1400" height="1117" loading="lazy" alt="AMBER board: five rank tiers (2026-W39)" />
         </a>
         <figcaption>
-          Snapshot 2026-W38 · leader swe-2-max @ Devin at 18/23 (scored in W37); five-way tie at 17/23.{' '}
+          Snapshot 2026-W39 · leader swe-2-max @ Devin at 19/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
           the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low —
           that model does not exist; the server silently routed to swe-2-high.
+          <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-21.en.md">Correction 2026-09-21</a>:
+          astra's W36 UI-build cells were fallback-delivered, so its total is 16/24.<br />
+          Note: the board artwork is the upstream W39 file, published before the convergence fold landed,
+          so its axis still reads the 23-case basis while the scores above are on the 24-case basis.
         </figcaption>
       </figure>
     </section>
@@ -246,15 +266,15 @@ const repos = [
     <section class="section" aria-labelledby="matrix-title">
       <h2 id="matrix-title">Same score, different shape</h2>
       <p class="hint">
-        The nine-axis completion matrix: each cell is a face's pin-level completion.
+        The ten-axis completion matrix: each cell is a face's pin-level completion.
         Tied totals hide completely different profiles — the matrix shows what the sum can't.{' '}
         <a href={route('/en/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
       </p>
       <figure>
         <a href={asset('completion-matrix-7way.en.webp')} aria-label="Open full-size completion matrix">
-          <img src={asset('completion-matrix-7way.en.webp')} width="1400" height="595" loading="lazy" alt="Nine-axis completion matrix" />
+          <img src={asset('completion-matrix-7way.en.webp')} width="1400" height="485" loading="lazy" alt="Ten-axis completion matrix" />
         </a>
-        <figcaption>Five lanes tied at 17/23, plus doubao 16/23 and gp27b 14/23. <a href="https://github.com/getaskclaw/amber">Matrix details →</a></figcaption>
+        <figcaption>The former five-way 17/23 tie broke up in the convergence make-ups (k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 at 18/24; CommandCode frozen at ∅), plus doubao 16/23 and gp27b 14/23. <a href="https://github.com/getaskclaw/amber">Matrix details →</a></figcaption>
       </figure>
     </section>
 
@@ -298,8 +318,9 @@ const repos = [
       <h2 id="repos-title">Result repos</h2>
       <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
       <p class="note">
-        The published glm-5.3-flash 17/23 and qwen3.8-27b 16/23 totals are W37 composites:
-        W36 results of 15/21 and 14/21 plus two new ops cases each. The axis picker retains their W36 records.{' '}
+        Scores are on the 24-case basis (convergence case folded in 2026-09-21). Two lanes are frozen
+        at ∅ at the owner's call — CommandCode 17/23 and CrofAI 16/23 — so they keep their sealed
+        earlier records. The axis picker retains its own older W36 records for two lanes.{' '}
         <a href={route('/method/')}>Read the method and score-period notes</a>.
       </p>
       <div class="repo-grid">

@@ -3,23 +3,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { route } from '../../utils/route';
 
 const resultRepos = [
-  ['amber-devin', '18/23', 'swe-2-max @ Devin', 'W37'],
-  ['amber-kimi', '17/23', 'k3 @ Kimi 官方 coding', 'W38'],
-  ['amber-ollama', '17/23', 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
-  ['amber-commandcode', '17/23', 'd41f @ CommandCode', 'W37'],
-  ['amber-workbuddy', '17/23', 'hy4-preview-f @ WorkBuddy ACP', 'W37'],
-  ['amber-gpt', '16/23', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex', 'W38'],
-  ['amber-crof', '16/23', 'qwen3.8-27b @ CrofAI', 'W37'],
-  ['amber-deepseek', '16/23', 'deepseek-flash @ DeepSeek official', 'W37'],
-  ['amber-opencode', '16/23', 'deepseek-flash @ OpenCode Go', 'W37'],
-  ['amber-doubao', '16/23', 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
-  ['amber-stepfun', '15/23', 'step-5-preview @ stepfun plan 端点', 'W39'],
-  ['amber-goldenpotato', '14/23', 'Qwen3.8-27B @ community self-hosted', 'W38'],
+  ['amber-devin', '19/24', 'swe-2-max @ Devin', 'W37'],
+  ['amber-kimi', '18/24', 'k3 @ Kimi 官方 coding', 'W38'],
+  ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
+  ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode · owner 令冻结', 'W37'],
+  ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP', 'W37'],
+  ['amber-gpt', '16/24', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex', 'W38'],
+  ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI · 道停用冻结', 'W37'],
+  ['amber-deepseek', '17/24', 'deepseek-flash @ DeepSeek official', 'W37'],
+  ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go', 'W37'],
+  ['amber-doubao', '17/24', 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
+  ['amber-stepfun', '16/24', 'step-5-preview @ stepfun plan 端点', 'W39'],
+  ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted', 'W38'],
 ];
 ---
 <BaseLayout
   title="方法 — AMBER 琥珀评测"
-  description="AMBER 琥珀评测方法：23 案、26 卷、12 个成绩仓、W39 快照和公开哈希索引。"
+  description="AMBER 琥珀评测方法：24 案、27 卷、12 个成绩仓、W39 快照和公开哈希索引。"
   canonicalPath="/method/"
 >
   <div class="wrap">
@@ -30,7 +30,7 @@ const resultRepos = [
         评分规则先冻结，题库不公开，分数和校验材料公开。
       </p>
       <div class="stat-grid" aria-label="AMBER facts">
-        <div class="stat-card"><strong>23 / 26</strong><span>案 / 卷，私有题库</span></div>
+        <div class="stat-card"><strong>24 / 27</strong><span>案 / 卷，私有题库</span></div>
         <div class="stat-card"><strong>12</strong><span>公开成绩仓</span></div>
         <div class="stat-card"><strong>W39</strong><span>保留的最新快照</span></div>
       </div>
@@ -50,11 +50,14 @@ const resultRepos = [
       <h2 id="repos-title">12 个成绩仓</h2>
       <p class="hint">每个仓对应一条模型结果记录；名称、分数、期号和链接沿用公开材料。</p>
       <p class="note">
-        Ollama 的 glm-5.3-flash 与 CrofAI 的 qwen3.8-27b 使用 W37 补考合成成绩：
-        W36 的 15/21、14/21 各加两案，成为 17/23、16/23；d41f 的 17/23 为 W37 全库首考。
-        <a href={route('/rank/')}>按轴榜</a>保留这两条 W36 的 21 案记录，不是这份合成总分。
-        原始说明：<a href="https://github.com/getaskclaw/amber-ollama/blob/main/results/2026-W37.md">Ollama W37</a> ·{' '}
-        <a href="https://github.com/getaskclaw/amber-crof/blob/main/results/2026-W37.md">CrofAI W37</a>。
+        2026-09-21 起题库升到 24 案：收敛轴首案 A-3f2a9cdd 并入 headline，榜单口径从 /23 换到 /24。
+        k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 四家补测后为 18/24；CommandCode 与 CrofAI
+        两道按 owner 令冻结，保留旧口径 17/23、16/23 并标 ∅，不参与 /24 换算。
+        历史沿革（史实，不改）：Ollama 的 glm-5.3-flash 与 CrofAI 的 qwen3.8-27b 曾用 W37 补考合成成绩——
+        W36 的 15/21、14/21 各加两案，成为 17/23、16/23。
+        <a href={route('/rank/')}>按轴榜</a>保留各行原始期号与案数（含两条 W36 的 21 案记录），不是合成总分。
+        口径更正见{' '}
+        <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-21.md">2026-09-21 更正</a>。
       </p>
       <div class="repo-grid">
         {resultRepos.map(([repo, score, model, week]) => (
@@ -62,7 +65,7 @@ const resultRepos = [
             <span class="score">{score}</span>
             <strong>{repo}</strong>
             <small>{model}</small>
-            <small>{week} · 23 cases</small>
+            <small>{week} · {score.endsWith('∅') ? '23' : '24'} cases</small>
           </a>
         ))}
       </div>

@@ -65,7 +65,7 @@
   <h1><em>AMBER</em> — real history,<br>sealed in amber, replayed</h1>
   <p class="lead">We take real, auditable incidents and freeze them at the moment before the answer was revealed. Models must redo the work with only what was knowable then, against a rubric frozen before any output existed. <b>The cases are never published. The scores always are.</b></p>
   <div class="badges">
-    <div class="badge"><b>23 cases / 26 papers</b><small>private library, hash-sealed</small></div>
+    <div class="badge"><b>24 cases / 27 papers</b><small>private library, hash-sealed</small></div>
     <div class="badge"><b>11 result repos</b><small>one per vendor × endpoint</small></div>
     <div class="badge"><b>Updated weekly</b><small>same library, same band, public hash index</small></div>
   </div>
@@ -73,19 +73,19 @@
 
 <section>
   <h2>The board right now</h2>
-  <p class="hint">Same band (high), same 23 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
+  <p class="hint">Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/top5-2026-w38.en.vega-lite.json"><img src="assets/top5-2026-w38.en.png" width="2979" height="2286" loading="lazy" alt="AMBER board: five rank tiers (2026-W38)"></div>
-    <figcaption>Snapshot 2026-W38 · leader swe-2-max @ Devin at 18/23 (scored in W37); five-way tie at 17/23. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.</figcaption>
+    <div class="chart" data-spec="assets/specs/top5-2026-w39.en.vega-lite.json"><img src="assets/top5-2026-w39.en.png" width="2979" height="2376" loading="lazy" alt="AMBER board: five rank tiers (2026-W39)"></div>
+    <figcaption>Snapshot 2026-W39 · leader swe-2-max @ Devin at 19/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.<br>Note: the board artwork is the upstream W39 file, published before the convergence fold landed, so its axis still reads the 23-case basis while the scores above are on the 24-case basis.</figcaption>
   </figure>
 </section>
 
 <section>
   <h2>Same score, different shape</h2>
-  <p class="hint">The nine-axis completion matrix: each cell is a face's pin-level completion. Tied totals hide completely different profiles — the matrix shows what the sum can't.</p>
+  <p class="hint">The ten-axis completion matrix: each cell is a face's pin-level completion. Tied totals hide completely different profiles — the matrix shows what the sum can't.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><img src="assets/completion-matrix-7way.en.png" width="3033" height="1290" loading="lazy" alt="Nine-axis completion matrix"></div>
-    <figcaption>Five lanes tied at 17/23, plus doubao 16/23 and gp27b 14/23. Hover any cell. <a href="https://github.com/getaskclaw/amber">details →</a></figcaption>
+    <div class="chart" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><img src="assets/completion-matrix-7way.en.png" width="2480" height="860" loading="lazy" alt="Ten-axis completion matrix"></div>
+    <figcaption>The former five-way 17/23 tie broke up in the convergence make-ups (k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 at 18/24; CommandCode frozen at ∅), plus doubao 16/23 and gp27b 14/23. Hover any cell. <a href="https://github.com/getaskclaw/amber">details →</a></figcaption>
   </figure>
 </section>
 
@@ -121,17 +121,17 @@
   <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
   <div class="repos">
     <a class="repo" href="https://github.com/getaskclaw/amber"><b>amber</b><span class="score">spec</span><p>Method spec + public hash index + cross-repo weekly board</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">18/23</span><p>swe-2-max @ Devin — current leader</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-kimi"><b>amber-kimi</b><span class="score">17/23</span><p>k3 @ Kimi official coding endpoint + the K2.8 duel</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-ollama"><b>amber-ollama</b><span class="score">17/23</span><p>glm-5.3-flash / d41f @ Ollama Cloud</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-commandcode"><b>amber-commandcode</b><span class="score">17/23</span><p>d41f @ CommandCode — five-band ladder</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-workbuddy"><b>amber-workbuddy</b><span class="score">17/23</span><p>hy4-preview-f @ WorkBuddy ACP</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16/23</span><p>gpt-6-astra / gpt-5.6 family @ OpenAI Codex</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-crof"><b>amber-crof</b><span class="score">16/23</span><p>qwen3.8-27b @ CrofAI — the $1.15 value king</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-deepseek"><b>amber-deepseek</b><span class="score">16/23</span><p>deepseek-flash @ DeepSeek official</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-opencode"><b>amber-opencode</b><span class="score">16/23</span><p>deepseek-flash @ OpenCode Go</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-doubao"><b>amber-doubao</b><span class="score">16/23</span><p>doubao-seed-evolving @ Volcengine Ark Agent Plan</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-goldenpotato"><b>amber-goldenpotato</b><span class="score">14/23</span><p>Qwen3.8-27B @ community self-hosted (3× V100)</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">19/24</span><p>swe-2-max @ Devin — current leader</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-kimi"><b>amber-kimi</b><span class="score">18/24</span><p>k3 @ Kimi official coding endpoint + the K2.8 duel</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-ollama"><b>amber-ollama</b><span class="score">18/24</span><p>glm-5.3-flash / d41f @ Ollama Cloud</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-commandcode"><b>amber-commandcode</b><span class="score">17/23 ∅</span><p>d41f @ CommandCode — frozen at the owner's call</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-workbuddy"><b>amber-workbuddy</b><span class="score">18/24</span><p>hy4-preview-f @ WorkBuddy ACP</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16/24</span><p>gpt-6-astra / gpt-5.6 family @ OpenAI Codex</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-crof"><b>amber-crof</b><span class="score">16/23 ∅</span><p>qwen3.8-27b @ CrofAI — the $1.15 value king</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-deepseek"><b>amber-deepseek</b><span class="score">17/24</span><p>deepseek-flash @ DeepSeek official</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-opencode"><b>amber-opencode</b><span class="score">17/24</span><p>deepseek-flash @ OpenCode Go</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-doubao"><b>amber-doubao</b><span class="score">17/24</span><p>doubao-seed-evolving @ Volcengine Ark Agent Plan</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-goldenpotato"><b>amber-goldenpotato</b><span class="score">15/24</span><p>Qwen3.8-27B @ community self-hosted (3× V100)</p></a>
   </div>
 </section>
 

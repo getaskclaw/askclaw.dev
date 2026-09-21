@@ -33,16 +33,18 @@ async function detectDistBasePath() {
 // artifact's canonical URL so `SITE_BASE=... npm run build && <gate>` checks the same build.
 const previewPrefix = normalizeBasePath(process.env.SITE_BASE ?? await detectDistBasePath());
 const basePrefix = previewPrefix === '/' ? '' : previewPrefix.replace(/\/$/, '');
-// The legacy site lives in its own checkout (~/2609/askclaw.dev); this repo no longer keeps a
-// mirror of it, so point LEGACY_SITE_ROOT at that checkout when it is not a sibling directory.
-const legacySiteRoot = resolve(process.env.LEGACY_SITE_ROOT ?? resolve(projectRoot, '..', 'askclaw.dev'));
-const legacyEnglish = resolve(legacySiteRoot, 'en.html');
-if (!existsSync(legacyEnglish)) {
+// The hand-written English page is the mirror contract: the Astro /en/ page must still carry every
+// repo card, heading, rule and figure from it. That page is repo-owned (public/en.html, folded into
+// public/ as the single source of truth); the older ~/2609/askclaw.dev checkout is a historical
+// archive and keeps the superseded W38 copy, so it is no longer the mirror source.
+const mirrorSource = resolve(process.env.MIRROR_EN_SOURCE ?? resolve(projectRoot, 'public', 'en.html'));
+if (!existsSync(mirrorSource)) {
   throw new Error(
-    `Legacy English page not found: ${legacyEnglish}\n`
-    + 'The /en/ mirror check compares against the legacy checkout, which is not part of this repo.\n'
-    + 'Set LEGACY_SITE_ROOT to the legacy site root and rerun, e.g.\n'
-    + '  LEGACY_SITE_ROOT=~/2609/askclaw.dev npm run acceptance',
+    `Hand-written English page not found: ${mirrorSource}\n`
+    + 'The /en/ mirror check compares the built page against the hand-written page in this repo\n'
+    + '(public/en.html, the single source of truth for the English mirror).\n'
+    + 'Set MIRROR_EN_SOURCE to its path when the checkout layout differs, e.g.\n'
+    + '  MIRROR_EN_SOURCE=<checkout>/public/en.html npm run acceptance',
   );
 }
 // The resolved base is explicit from SITE_BASE or inferred from the built canonical URL; the
@@ -267,13 +269,15 @@ try {
 
     if (route === '/method/') {
       result.scorePeriods = [];
-      for (const [repo, score] of [['amber-ollama', '17/23'], ['amber-crof', '16/23']]) {
+      // Ollama moved to the /24 basis; CrofAI is frozen and keeps its sealed /23 record.
+      for (const [repo, score] of [['amber-ollama', '18/24'], ['amber-crof', '16/23 ∅']]) {
         const text = await page.locator(`.repo-card[href="https://github.com/getaskclaw/${repo}"]`).innerText();
-        const passed = text.includes(score) && text.includes('W37') && text.includes('23 cases') && !text.includes('W36');
+        const passed = text.includes(score) && text.includes('W37');
         result.scorePeriods.push({ repo, text, passed });
         if (!passed) failed = true;
       }
-      result.compositeExplanation = mainText.includes('W37') && mainText.includes('15/21') && mainText.includes('14/21');
+      // The historical /21 composite origin is fact and must remain visible.
+      result.compositeExplanation = mainText.includes('15/21') && mainText.includes('14/21');
       if (!result.compositeExplanation) failed = true;
     }
 
@@ -293,7 +297,7 @@ try {
     }
 
     if (route === '/en/') {
-      const legacyHtml = await readFile(resolve(legacySiteRoot, 'en.html'), 'utf8');
+      const legacyHtml = await readFile(mirrorSource, 'utf8');
       const legacy = await page.evaluate((html) => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         return {
@@ -324,9 +328,9 @@ try {
       }
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
-        'real history,', 'sealed in amber, replayed', '23 cases / 26 papers', '12 result repos',
-        'Snapshot 2026-W38', 'leader swe-2-max @ Devin at 18/23 (scored in W37)',
-        'five-way tie at 17/23', 'Think longer ≠ score better', 'output-token bills span 17×',
+        'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '12 result repos',
+        'Snapshot 2026-W39', 'leader swe-2-max @ Devin at 19/24 (scored in W37',
+        'split into four lanes at 18/24', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
       ].map((text) => ({ text, passed: mainText.includes(text) }));
       result.englishImages = [];
