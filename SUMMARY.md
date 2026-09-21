@@ -1,5 +1,9 @@
 # WO-AXES-ASTRO — 验收摘要
 
+当前裁决（2026-09-21）：owner 原话「屁的代价 不留」。axes redirect 全部摘除，不保留 Astro 跳转、专用 build 设置或 Caddy 接管方案。下文第一轮所有 301 配置和部署建议均已作废；本轮实施与验收见文末补节。
+
+## 第一轮历史记录（redirect 决策已被 owner 终裁取代）
+
 日期：2026-09-21（UTC）
 执行：codex 席；Kanban：`default / t_269f19c9`
 仓：`/home/computebox/2609/askclaw.dev-astro`
@@ -233,13 +237,7 @@ AssertionError: axes.html
 }
 ```
 
-Vesper 部署时的 Caddy 替代方案（只给方案，本单未执行）：在 askclaw.dev 对应 site block 的静态文件服务前配置：
-
-```caddyfile
-redir /axes.html /rank/ 301
-```
-
-部署后由 Vesper 复核原 URL 的响应状态为 301、Location 为 `/rank/`，再跟随到 rank 页得到 200；同时同步清走服务器上的旧 axes.html/axes.json，不能只覆盖新文件而遗留旧页。本单未读取或修改线上 Caddy，未声称实测线上响应。
+原 Caddy 替代方案及其部署验收要求已由 owner 终裁撤销，不再提供可执行配置。不给 axes 旧 URL 留兼容跳转，也不交由 Vesper 补跳转。本单没有读取或修改线上 Caddy。
 
 依据：亲读安装版 `node_modules/astro/dist/core/build/generate.js:324-337` 与配置类型 `node_modules/astro/dist/types/public/config.d.ts:1404-1429`，并用真实浏览器核对官方 Astro 配置文档 redirects/build.redirects 与 Caddy redir 文档。官方说明与本机产物一致：无 adapter 的静态 HTML 跳转不提供 HTTP 状态码；关闭 build.redirects 则不输出该 HTML。
 
@@ -265,3 +263,48 @@ redir /axes.html /rank/ 301
 - `wo-axes-astro-redirect-config.json`：实际加载的配置层证据。
 
 最终交付文件：仓根 `SUMMARY.md` 与 `/tmp/wo-axes-astro-summary.md`。完成标记仅在最终提交、验收、交付文件均成功后写入 `/home/computebox/.hermes/pending/wo-axes-astro.json.done`。
+
+## Owner 终裁执行：redirect 全摘（2026-09-21）
+
+Owner 原话：「屁的代价 不留」。本节取代第一轮所有 redirect/301/Caddy 接管决策。
+
+- 删除 `astro.config.mjs` 的整个 `redirects` 块、专用 `build: { redirects: false }` 和相关 Caddy 注释；配置已与最初 `3d45c29` 版本逐字节一致。
+- 删除 `scripts/acceptance.mjs` 的 redirect 映射断言与配套 static/build.redirects 断言，其他浏览器检查保留。
+- 逐项检查 `scripts/verify-dist.py`：不存在 redirect 配置、状态码或目标断言，因此无需删代码。该文件与上一交付 `015b862` 逐字节一致，继续检查旧 axes 文件不存在、13 车道、收敛分布、标签、资产和 SEO。
+- 本轮 `src/data/axes.json`、两张 rank 页、依赖清单均未改；不部署、不 push、不改 main 或线上 Caddy，不增加兼容入口。
+
+实跑三件套，两种 base 均 exit 0：
+
+```text
+SITE_BASE=/astro-preview/ npm run build
+06:28:13 [build] 9 page(s) built in 404ms
+06:28:13 [build] Complete!
+preview verify-dist exit=0
+preview acceptance exit=0
+
+npm run build
+06:28:57 [build] 9 page(s) built in 447ms
+06:28:57 [build] Complete!
+production verify-dist exit=0
+production acceptance exit=0
+```
+
+两份构建日志都没有 axes.html 路由。最终 dist 保留生产 base `/`；`dist/axes.html`、`dist/axes.json` 不存在，中文 rank 含「收敛」，英文 rank 含「Convergence」。浏览器 JSONL 的实际统计，两种 base 相同：
+
+```json
+{
+  "routes": 7,
+  "all_status_200": true,
+  "all_error_arrays_empty": true,
+  "rank_pages": [
+    {"route":"/rank/","chipCount":9,"presetRowCount":13,"laneDataPreserved":true,"rankOrderPreserved":true,"convergencePassed":true},
+    {"route":"/en/rank/","chipCount":9,"presetRowCount":13,"laneDataPreserved":true,"rankOrderPreserved":true,"convergencePassed":true}
+  ]
+}
+```
+
+数据 gate 仍报告 13 车道、指定 5 条有数据、其余 8 条无数据和 `legacy_artifacts_absent: true`；数据 SHA-256 仍为 `0d724d79a6ee08e9d4f84913b1eb16ffa371da332c63c75bd15ef9d7a4c5186e`。源代码/脚本搜索的 redirect 专用配置与断言结果为 0；`node --check`（配置和 acceptance）、`git diff --check` 均通过。
+
+本轮一个独立提交包含配置删除、断言删除和本摘要更新，message 明示 owner 令摘 redirect。最终 commit 与提交后 clean 复核补入 `/tmp/wo-axes-astro-summary.md`，成功后创建 `.done2`。
+
+原始 stdout/stderr 在 `/home/computebox/.hermes/profiles/codex/cache/scratch/`，文件名前缀 `wo-axes-astro-no-redirect-`，分别为 `build-preview.log`、`verify-preview.json`/`.stderr`、`acceptance-preview.jsonl`/`.stderr` 与对应 `production` 版本。

@@ -9,12 +9,6 @@ import astroConfig from '../astro.config.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
-if (!isDeepStrictEqual(astroConfig.redirects?.['/axes.html'], { destination: '/rank/', status: 301 })) {
-  throw new Error('Expected /axes.html -> /rank/ (301) in Astro redirect config');
-}
-if (astroConfig.build?.redirects !== false || astroConfig.trailingSlash !== 'always' || astroConfig.output !== 'static') {
-  throw new Error('Expected static output without redirect HTML, preserving trailingSlash: always');
-}
 
 function normalizeBasePath(value) {
   let base = value || '/';
