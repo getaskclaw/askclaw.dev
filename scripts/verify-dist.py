@@ -111,9 +111,20 @@ base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.en
 expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
-public_routes = {'axes.html', 'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
+public_routes = {'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
+for retired in ('axes.html', 'axes.json'):
+    assert not (root / 'public' / retired).exists(), retired
+    assert not (dist / retired).exists(), retired
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
+lanes = json.loads((root / 'src/data/axes.json').read_text())
+convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'doubao-seed-evolving', 'glm-5.3-flash'}
+assert len(lanes) == 13 and len({lane['id'] for lane in lanes}) == 13
+assert 'step-5-preview' in {lane['name'] for lane in lanes}
+assert convergence_names <= {lane['name'] for lane in lanes}
+for lane in lanes:
+    value = 1 if lane['name'] in convergence_names else 0
+    assert lane['axis']['convergence'] == {'p': value, 'n': value}, lane['name']
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -141,6 +152,12 @@ class Page(HTMLParser):
             self.card = None
 
 report = {'pages': {}, 'assets': {}, 'data_sha256': hashlib.sha256((root / 'src/data/axes.json').read_bytes()).hexdigest()}
+report['convergence'] = {
+    'lanes': len(lanes),
+    'scored': [lane['name'] for lane in lanes if lane['axis']['convergence']['n'] > 0],
+    'no_data': [lane['name'] for lane in lanes if lane['axis']['convergence']['n'] == 0],
+    'legacy_artifacts_absent': True,
+}
 for relative in sorted(expected_routes):
     text = (dist / relative).read_text()
     forbidden_terms = FORBIDDEN_INTERNAL_TERMS.findall(unescape(text))
@@ -171,8 +188,10 @@ for relative in sorted(expected_routes):
             assert phrase in text, phrase
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
+        assert 'data-face="convergence"' in text and '收敛' in text
     if relative == 'en/rank/index.html':
         assert 'Kimi official coding' in text and 'Everyday engineering' in text
+        assert 'data-face="convergence"' in text and 'Convergence' in text
         assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese rank script copy'
 
 assets = sorted((dist / 'assets').glob('*'))

@@ -10,6 +10,10 @@
   "total": 18,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -55,6 +59,10 @@
   "total": 17,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -100,6 +108,10 @@
   "total": 17,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -145,6 +157,10 @@
   "total": 17,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -190,6 +206,10 @@
   "total": 16,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -235,6 +255,10 @@
   "total": 16,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -280,6 +304,10 @@
   "total": 16,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -325,6 +353,10 @@
   "total": 16,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -370,6 +402,10 @@
   "total": 15,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -415,6 +451,10 @@
   "total": 15,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -460,6 +500,10 @@
   "total": 15,
   "n": 21,
   "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -505,6 +549,10 @@
   "total": 14,
   "n": 23,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
@@ -550,6 +598,10 @@
   "total": 14,
   "n": 21,
   "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 0
+   },
    "build": {
     "p": 5,
     "n": 6
