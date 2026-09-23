@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "white",
   "title": {
-    "text": "AMBER full board: five rank tiers (2026-W38, 23-case library)",
+    "text": "AMBER full board: five rank tiers (2026-W39, 23-case library)",
     "fontSize": 16,
     "anchor": "start"
   },
@@ -104,6 +104,11 @@
         "rank": "#4 tie"
       },
       {
+        "lane": "step-5-preview @ stepfun plan",
+        "pass": 15,
+        "rank": "#4 tie"
+      },
+      {
         "lane": "glm-5.3-flash @ CrofAI",
         "pass": 14,
         "rank": "#5 tie"
@@ -131,7 +136,7 @@
     ]
   },
   "width": 620,
-  "height": 700,
+  "height": 730,
   "layer": [
     {
       "mark": {

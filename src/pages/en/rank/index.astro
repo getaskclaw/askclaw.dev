@@ -24,6 +24,7 @@ const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
   gp: { vendor: 'Community self-hosted 3×V100' },
   stepfun: { vendor: 'stepfun plan endpoint' },
+  claude: { vendor: 'Anthropic subscription lane' },
 };
 const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 
@@ -35,7 +36,7 @@ const stats = faces.map(([id, label]) => {
 ---
 <BaseLayout
   title="Rank models by work — AMBER benchmark"
-  description="Choose models across eight work types with AMBER: 12 lanes, public scores, weakest-axis ordering and native browser filters."
+  description="Choose models across eight work types with AMBER: 14 lanes, public scores, weakest-axis ordering and native browser filters."
   lang="en"
   canonicalPath="/en/rank/"
   keywords="AMBER, AI benchmark, model ranking, work types, axis matrix, AskClaw"
@@ -46,7 +47,7 @@ const stats = faces.map(([id, label]) => {
     <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
       Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
-      This makes the differences between the 13 public lanes easier to check.
+      This makes the differences between the 14 public lanes easier to check.
     </p>
     <noscript>Enable JavaScript to use the filters on this page.</noscript>
 
@@ -88,6 +89,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
+      <p class="note rank-legend">' = 1 case contested (NA, not counted as a win or a loss): claude-opus-5-5's A-1fd3683a probabilistic safety refusal</p>
       <p class="note">Data comes from the public result repositories. Each record keeps its original week and case count. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
