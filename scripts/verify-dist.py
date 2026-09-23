@@ -43,21 +43,27 @@ def webp_dimensions(data):
     raise AssertionError('no WebP dimension chunk found')
 
 
-# The six public charts were migrated from legacy PNG to WebP (resized to 1400px wide) in the
-# same change that rebuilt dist; crab-hero.webp is a new asset with no legacy counterpart.
-CHART_ASSETS = {
-    'top5-2026-w38.en.webp': 'top5-2026-w38.en.png',
-    'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
+# Public charts served as WebP, resized to at most 1400px wide. Two groups:
+#  * charts still owned by the legacy checkout (~/2609/askclaw.dev/assets) — it holds their PNG
+#    and is the dimension ground truth;
+#  * charts refreshed 2026-09-21 for the /24 + ten-axis flip (pulled from the amber public repo),
+#    whose authoritative PNG sibling now lives in this repo's public/assets/.
+LEGACY_CHART_ASSETS = {
     'trust-chain.en.webp': 'trust-chain.en.png',
     'effort-curves-20260911.en.webp': 'effort-curves-20260911.en.png',
     'score-vs-tokens-2026-w37.en.webp': 'score-vs-tokens-2026-w37.en.png',
     'wallclock-strip-2026-w37.en.webp': 'wallclock-strip-2026-w37.en.png',
 }
+REFRESHED_CHART_ASSETS = {
+    'top5-2026-w39.en.webp': 'top5-2026-w39.en.png',
+    'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
+}
+CHART_ASSETS = {**LEGACY_CHART_ASSETS, **REFRESHED_CHART_ASSETS}
 CRAB_ASSET = 'crab-hero.webp'
 # Legacy verbatim assets rescued into public/assets/ (referenced by hand-written pages:
 # en.html charts + notes article figures + vega specs/vendor libs). Dirs checked recursively.
 LEGACY_ASSETS = {
-    'top5-2026-w38.png', 'top5-2026-w38.en.png', 'top5-card.png', 'top5-card.en.png',
+    'top5-2026-w39.png', 'top5-2026-w39.en.png', 'top5-card.png', 'top5-card.en.png',
     'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
     'trust-chain.png', 'trust-chain.en.png',
     'effort-curves-20260911.png', 'effort-curves-20260911.en.png',
@@ -73,13 +79,14 @@ dist = root / 'dist'
 # of this repo, so the dependency is checked up front and reported readably instead of blowing up
 # on a later file read.
 legacy = Path(os.environ.get('LEGACY_SITE_ROOT', root.parent / 'askclaw.dev')).expanduser().resolve()
-missing_legacy = [name for name in CHART_ASSETS.values() if not (legacy / 'assets' / name).is_file()]
+missing_legacy = [name for name in LEGACY_CHART_ASSETS.values() if not (legacy / 'assets' / name).is_file()]
 if missing_legacy:
     raise SystemExit(
         f'Legacy site assets not found under {legacy / "assets"}: {sorted(missing_legacy)}\n'
-        'This gate compares each built WebP against the legacy PNG, which lives in its own checkout\n'
-        '(~/2609/askclaw.dev) and is not tracked in this repo. Point LEGACY_SITE_ROOT at it, e.g.\n'
-        '  LEGACY_SITE_ROOT=~/2609/askclaw.dev python3 scripts/verify-dist.py'
+        'This gate compares four unchanged charts against their original PNG, which lives in the\n'
+        'older static-site checkout (a sibling directory, not tracked in this repo). Point\n'
+        'LEGACY_SITE_ROOT at it, e.g.\n'
+        '  LEGACY_SITE_ROOT=<legacy-checkout> python3 scripts/verify-dist.py'
     )
 axes_source = Path(os.environ.get('AXES_SOURCE', root / 'src/data/axes.json')).expanduser().resolve()
 
@@ -118,9 +125,10 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'doubao-seed-evolving', 'glm-5.3-flash'}
-assert len(lanes) == 13 and len({lane['id'] for lane in lanes}) == 13
+convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5'}
+assert len(lanes) == 14 and len({lane['id'] for lane in lanes}) == 14
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
+assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
 assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
     value = 1 if lane['name'] in convergence_names else 0
@@ -176,16 +184,24 @@ for relative in sorted(expected_routes):
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
     if relative == 'method/index.html':
-        assert len(parsed.cards) == 12
-        for repo, score in [('amber-ollama', '17/23'), ('amber-crof', '16/23')]:
-            card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
-            assert score in card['text'] and 'W37' in card['text'] and 'W36' not in card['text']
-    if relative == 'en/index.html':
         assert len(parsed.cards) == 13
-        assert sum('/amber-' in c['href'] for c in parsed.cards) == 12
+        # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
+        # the new claude lane carries its own W39 public score.
+        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', '17/24')]:
+            card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
+            assert score in card['text'], (repo, card['text'])
+        # The historical /21 composite note is fact and stays on the page.
+        assert '15/21' in text and '14/21' in text
+    if relative == 'en/index.html':
+        assert len(parsed.cards) == 14
+        assert sum('/amber-' in c['href'] for c in parsed.cards) == 13
+        assert any(c['href'].endswith('/amber-claude') for c in parsed.cards)
         assert 'placeholder' not in text
-        for phrase in ['23 cases / 26 papers', 'Snapshot 2026-W38', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
+        for phrase in ['24 cases / 27 papers', 'Snapshot 2026-W39', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase
+        # Frozen lanes must keep the sealed /23 basis on the English mirror too.
+        for score in ['17/23 ∅', '16/23 ∅']:
+            assert score in text, score
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
@@ -213,8 +229,13 @@ for path in assets:
         assert dimensions == (1200, 400), (path.name, dimensions)
     else:
         legacy_name = CHART_ASSETS[path.name]
-        legacy_data = (legacy / 'assets' / legacy_name).read_bytes()
-        # Same chart as the legacy PNG, migrated to WebP and capped at 1400px wide. Both
+        if path.name in REFRESHED_CHART_ASSETS:
+            # Refreshed 2026-09-21: the PNG sibling in this repo is the source of truth (the legacy
+            # checkout still holds the superseded W38 / nine-axis artwork).
+            legacy_data = (root / 'public/assets' / legacy_name).read_bytes()
+        else:
+            legacy_data = (legacy / 'assets' / legacy_name).read_bytes()
+        # Same chart as the source PNG, migrated to WebP and capped at 1400px wide. Both
         # dimensions scale together; allow 1px for integer rounding of the height.
         assert legacy_data[:8] == b'\x89PNG\r\n\x1a\n', legacy_name
         legacy_width, legacy_height = struct.unpack('>II', legacy_data[16:24])

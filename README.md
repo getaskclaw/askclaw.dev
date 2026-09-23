@@ -35,17 +35,19 @@ npm run build && python3 scripts/verify-dist.py
 
 ## 机检依赖
 
-两个脚本都要读老站 checkout（对比 `/en/` 镜像与图的原图），它是独立目录、不在本仓内：
+两个脚本都要读图的原图（对比 WebP 与源 PNG）与手写英文页（对比 `/en/` 镜像）：
 
 | 变量 | 默认值 | 用途 |
 |---|---|---|
-| `LEGACY_SITE_ROOT` | `../askclaw.dev`（相对本仓） | 老站根；缺 `en.html` / `assets/*.png` 时脚本开头给可读报错 |
+| `MIRROR_EN_SOURCE` | 本仓 `public/en.html` | 手写英文页；`/en/` 镜像对比的真源 |
+| `LEGACY_SITE_ROOT` | `../askclaw.dev`（相对本仓） | 老站根；只用于四张未改动的图（trust-chain / effort / score-vs-tokens / wallclock）的原图 |
 | `AXES_SOURCE` | 本仓 `src/data/axes.json` | 轴数据真源 |
 | `SITE_BASE` | `/` | 构建 base，同时决定机检期望的 URL 前缀 |
 
 在标准机器上无需设置（老站仓为相邻 checkout）。换机器或路径不同时显式指定：
 
 ```bash
+MIRROR_EN_SOURCE=/path/to/checkout/public/en.html npm run acceptance
 LEGACY_SITE_ROOT=/path/to/legacy-site npm run acceptance
 LEGACY_SITE_ROOT=/path/to/legacy-site python3 scripts/verify-dist.py
 ```

@@ -1036,6 +1036,23 @@ html:has(> body.home-document) {
   border-bottom: 0;
 }
 
+/* Frozen lane (owner order 2026-09-21): kept in the #2 card, visually split from the tie and
+   labelled with the old /23 basis plus the ∅ marker so the frozen score reads as history. */
+.tied-list-frozen {
+  margin-top: 10px;
+  padding-top: 4px;
+  border-top: 1px dashed #DCEBE6;
+}
+
+.tied-list-frozen .lane-marker {
+  opacity: 0.55;
+}
+
+.tied-list-frozen .lane-name,
+.tied-list-frozen strong {
+  color: #6C8B91;
+}
+
 .leaderboard-footnote {
   margin: 14px 0 0;
   color: #6C8B91;

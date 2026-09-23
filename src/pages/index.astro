@@ -18,10 +18,10 @@ const questions = [
     code: 'B',
     tone: 'amber',
     question: '新出的模型能不能打？',
-    preview: '同一套 23 案，进榜即见。',
-    cue: '看 W38',
+    preview: '同一套 24 案，进榜即见。',
+    cue: '看 W39',
     href: route('/#leaderboard'),
-    ariaLabel: '新出的模型能不能打？同一套 23 案，进榜即见。查看 2026-W38 总榜。',
+    ariaLabel: '新出的模型能不能打？同一套 24 案，进榜即见。查看 2026-W39 总榜。',
   },
   {
     code: 'C',
@@ -30,7 +30,7 @@ const questions = [
     preview: '按活挑轴，不看总分。',
     cue: '按轴排',
     href: route('/rank/'),
-    ariaLabel: '我干这个活该用谁？按活挑轴，不看总分。按工作类型查看九轴排行。',
+    ariaLabel: '我干这个活该用谁？按活挑轴，不看总分。按工作类型查看十轴排行。',
   },
   {
     code: 'D',
@@ -44,11 +44,13 @@ const questions = [
 ] as const;
 
 const tiedLanes = [
-  ['glm-5.3-flash @ Ollama Cloud', 'teal'],
-  ['deepseek-v4.1-flash @ CommandCode', 'cobalt'],
-  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky'],
-  ['k3 @ Kimi 官方 coding', 'coral'],
-  ['hy4-preview-f @ WorkBuddy', 'mint'],
+  ['glm-5.3-flash @ Ollama Cloud', 'teal', '18/24'],
+  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky', '18/24'],
+  ['k3 @ Kimi 官方 coding', 'coral', '18/24'],
+  ['hy4-preview-f @ WorkBuddy', 'mint', '18/24'],
+] as const;
+const frozenLanes = [
+  ['deepseek-v4.1-flash @ CommandCode', 'cobalt', '17/23 ∅'],
 ] as const;
 ---
 <BaseLayout
@@ -99,7 +101,7 @@ const tiedLanes = [
               src={crabAsset}
               width="1200"
               height="400"
-              alt="珊瑚色蟹托着珍珠，邀请访客查看 AMBER W38 总榜"
+              alt="珊瑚色蟹托着珍珠，邀请访客查看 AMBER W39 总榜"
               fetchpriority="high"
               decoding="async"
             />
@@ -107,7 +109,7 @@ const tiedLanes = [
           <p class="crab-bubble">先问一句，我把路递给你。</p>
           <div class="fact-rail" aria-label="AMBER 当前事实">
             <span class="fact-dot" aria-hidden="true"></span>
-            <span>23 案 · 12 个成绩仓 · 2026-W39</span>
+            <span>24 案 · 13 个成绩仓 · 2026-W39</span>
           </div>
         </aside>
       </section>
@@ -118,7 +120,7 @@ const tiedLanes = [
             <h2 id="leaderboard-title">当前总榜</h2>
             <p>真实公开成绩 · 2026-W39</p>
           </div>
-          <span class="leaderboard-badge">23 案 · 12 个成绩仓</span>
+          <span class="leaderboard-badge">24 案 · 13 个成绩仓</span>
         </header>
 
         <div class="leaderboard-body">
@@ -127,31 +129,43 @@ const tiedLanes = [
             <div class="champion-main">
               <div>
                 <h3 id="champion-title">swe-2-max @ Devin</h3>
-                <p>考于 W37 · W38 未重考</p>
+                <p>考于 W37 · W39 收敛轴首案并入记分</p>
               </div>
-              <strong class="champion-score">18/23</strong>
+              <strong class="champion-score">19/24</strong>
             </div>
-            <p class="champion-detail">榜首成绩 · 23 案题库</p>
+            <p class="champion-detail">榜首成绩 · 24 案题库</p>
             <div class="progress-block">
-              <div class="progress-track" role="img" aria-label="榜首通过 18 案，共 23 案">
-                <span style="width: 78.26%"></span>
+              <div class="progress-track" role="img" aria-label="榜首通过 19 案，共 24 案">
+                <span style="width: 79.17%"></span>
               </div>
               <span>通过案数 / 题库总案数</span>
             </div>
           </article>
 
           <article class="tied-card" aria-labelledby="tied-title">
-            <h3 id="tied-title">#2 · 五席并列 · 均为 17/23</h3>
+            <h3 id="tied-title">#2 · 四席并列 · 均为 18/24</h3>
             <ol class="tied-list">
-              {tiedLanes.map(([name, tone]) => (
+              {tiedLanes.map(([name, tone, score]) => (
                 <li>
                   <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
                   <span class="lane-name" title={name}>{name}</span>
-                  <strong>17/23</strong>
+                  <strong>{score}</strong>
                 </li>
               ))}
             </ol>
-            <p class="leaderboard-footnote">Ollama Cloud 车道按轴榜使用 W36 21 案记录，总分 17/23 为 W37 合成。</p>
+            <p class="leaderboard-footnote">
+              原 17/23 五席在收敛补测后分流：k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 四家 18/24；
+              CommandCode 道 owner 令冻结 ∅，成绩保留旧口径 17/23。
+            </p>
+            <ol class="tied-list tied-list-frozen">
+              {frozenLanes.map(([name, tone, score]) => (
+                <li>
+                  <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
+                  <span class="lane-name" title={name}>{name}</span>
+                  <strong>{score}</strong>
+                </li>
+              ))}
+            </ol>
           </article>
         </div>
 
