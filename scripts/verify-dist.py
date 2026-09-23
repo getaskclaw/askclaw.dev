@@ -125,9 +125,10 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'doubao-seed-evolving', 'glm-5.3-flash'}
-assert len(lanes) == 13 and len({lane['id'] for lane in lanes}) == 13
+convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5'}
+assert len(lanes) == 14 and len({lane['id'] for lane in lanes}) == 14
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
+assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
 assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
     value = 1 if lane['name'] in convergence_names else 0
@@ -183,16 +184,18 @@ for relative in sorted(expected_routes):
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
     if relative == 'method/index.html':
-        assert len(parsed.cards) == 12
-        # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21).
-        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅')]:
+        assert len(parsed.cards) == 13
+        # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
+        # the new claude lane carries its own W39 public score.
+        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', '17/24')]:
             card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
-            assert score in card['text'] and 'W37' in card['text']
+            assert score in card['text'], (repo, card['text'])
         # The historical /21 composite note is fact and stays on the page.
         assert '15/21' in text and '14/21' in text
     if relative == 'en/index.html':
-        assert len(parsed.cards) == 13
-        assert sum('/amber-' in c['href'] for c in parsed.cards) == 12
+        assert len(parsed.cards) == 14
+        assert sum('/amber-' in c['href'] for c in parsed.cards) == 13
+        assert any(c['href'].endswith('/amber-claude') for c in parsed.cards)
         assert 'placeholder' not in text
         for phrase in ['24 cases / 27 papers', 'Snapshot 2026-W39', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase

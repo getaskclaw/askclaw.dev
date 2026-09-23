@@ -184,11 +184,12 @@ try {
         'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
         gp: { vendor: 'Community self-hosted 3×V100' },
         stepfun: { vendor: 'stepfun plan endpoint' },
+        claude: { vendor: 'Anthropic subscription lane' },
       };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
-      if (result.chipCount !== 9 || result.presetRowCount !== 13) failed = true;
+      if (result.chipCount !== 9 || result.presetRowCount !== 14) failed = true;
       const sourceLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
@@ -220,7 +221,7 @@ try {
         result.everydayRows = await page.locator('#rank-body tr').count();
         result.englishVerdict = await page.locator('#rank-verdict').innerText();
         result.englishHeadings = await page.locator('#rank-head th').allTextContents();
-        if (result.everydayRows !== 13
+        if (result.everydayRows !== 14
           || !result.englishVerdict.startsWith('Selected: Engineering + Operations. Lowest pass count: 5.')
           || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', 'Engineering', 'Operations', 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
         result.englishPresets = [];
@@ -258,11 +259,11 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['kimi', 'gpt-luna', 'ocgo', 'doubao', 'ollama'];
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence5/5 full marks' : '收敛5/5 满分')
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp'];
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence11/11 full marks' : '收敛11/11 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
-        && isDeepStrictEqual(result.convergenceScores, Array(5).fill('1/1'));
+        && isDeepStrictEqual(result.convergenceScores, Array(11).fill('1/1'));
       if (!result.convergencePassed) failed = true;
       await page.locator('#clear-rank').click();
     }
@@ -328,7 +329,7 @@ try {
       }
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
-        'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '12 result repos',
+        'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '13 result repos',
         'Snapshot 2026-W39', 'leader swe-2-max @ Devin at 19/24 (scored in W37',
         'split into four lanes at 18/24', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
@@ -366,7 +367,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
         `${basePrefix}/method/`, `${basePrefix}/en/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
-      result.englishMirrorPassed = result.resultRepoCount === 12
+      result.englishMirrorPassed = result.resultRepoCount === 13
         && result.englishLeadPreserved
         && result.englishCards.every((check) => check.passed)
         && result.englishCopy.every((check) => check.passed)

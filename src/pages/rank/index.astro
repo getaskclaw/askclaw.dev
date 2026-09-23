@@ -30,7 +30,7 @@ const stats = faces.map(([id, label]) => {
 ---
 <BaseLayout
   title="按轴挑模型 — AMBER 琥珀评测"
-  description="AMBER 按八类工作筛选模型：12 条车道、公开成绩、短板排序和原生浏览器交互。"
+  description="AMBER 按八类工作筛选模型：14 条车道、公开成绩、短板排序和原生浏览器交互。"
   canonicalPath="/rank/"
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
@@ -38,7 +38,7 @@ const stats = faces.map(([id, label]) => {
     <h1>按轴挑模型 — <em>别只看总分</em></h1>
     <p class="lead">
       选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 13 条公开车道的差异更容易核对。
+      这让 14 条公开车道的差异更容易核对。
     </p>
     <noscript>本页的筛选需要启用 JavaScript。</noscript>
 
@@ -80,6 +80,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
+      <p class="note rank-legend">' = 1 案 contested 挂起（NA，不计胜负）：claude-opus-5-5 的 A-1fd3683a 概率性安全拒答</p>
       <p class="note">数据来自公开成绩仓。期号和案数随原始记录保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
     </section>
   </div>
