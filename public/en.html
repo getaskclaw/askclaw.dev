@@ -76,7 +76,7 @@
   <p class="hint">Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
     <div class="chart" data-spec="assets/specs/top5-2026-w39.en.vega-lite.json"><img src="assets/top5-2026-w39.en.png" width="2979" height="2376" loading="lazy" alt="AMBER board: five rank tiers (2026-W39)"></div>
-    <figcaption>Snapshot 2026-W39 · leader swe-2-max @ Devin at 19/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.<br>Note: the board artwork is the upstream W39 file, published before the convergence fold landed, so its axis still reads the 23-case basis while the scores above are on the 24-case basis.</figcaption>
+    <figcaption>Snapshot 2026-W39 · leader swe-2-max @ Devin at 19'/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.<br>Note: the board artwork is the upstream W39 file, published before the convergence fold landed, so its axis still reads the 23-case basis while the scores above are on the 24-case basis.</figcaption>
   </figure>
 </section>
 
@@ -119,20 +119,21 @@
 <section>
   <h2>Result repos</h2>
   <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
-  <div class="repos">
+  <p class="note score-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+      <div class="repos">
     <a class="repo" href="https://github.com/getaskclaw/amber"><b>amber</b><span class="score">spec</span><p>Method spec + public hash index + cross-repo weekly board</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">19/24</span><p>swe-2-max @ Devin — current leader</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">19'/24</span><p>swe-2-max @ Devin — current leader</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-kimi"><b>amber-kimi</b><span class="score">18/24</span><p>k3 @ Kimi official coding endpoint + the K2.8 duel</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-ollama"><b>amber-ollama</b><span class="score">18/24</span><p>glm-5.3-flash / d41f @ Ollama Cloud</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-commandcode"><b>amber-commandcode</b><span class="score">17/23 ∅</span><p>d41f @ CommandCode — frozen at the owner's call</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-workbuddy"><b>amber-workbuddy</b><span class="score">18/24</span><p>hy4-preview-f @ WorkBuddy ACP</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16/24</span><p>gpt-6-astra / gpt-5.6 family @ OpenAI Codex</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16/24</span><p>gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ @ OpenAI Codex</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-crof"><b>amber-crof</b><span class="score">16/23 ∅</span><p>qwen3.8-27b @ CrofAI — the $1.15 value king</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-deepseek"><b>amber-deepseek</b><span class="score">17/24</span><p>deepseek-flash @ DeepSeek official</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-opencode"><b>amber-opencode</b><span class="score">17/24</span><p>deepseek-flash @ OpenCode Go</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-doubao"><b>amber-doubao</b><span class="score">17/24</span><p>doubao-seed-evolving @ Volcengine Ark Agent Plan</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-stepfun"><b>amber-stepfun</b><span class="score">16/24</span><p>step-5-preview @ stepfun plan endpoint — new in W39</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-claude"><b>amber-claude</b><span class="score">17/24</span><p>Anthropic Claude subscription-lane model results</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-doubao"><b>amber-doubao</b><span class="score">17'/24</span><p>doubao-seed-evolving @ Volcengine Ark Agent Plan</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-stepfun"><b>amber-stepfun</b><span class="score">16'/24</span><p>step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-claude"><b>amber-claude</b><span class="score">17'/24</span><p>Anthropic Claude subscription-lane model results</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-goldenpotato"><b>amber-goldenpotato</b><span class="score">15/24</span><p>Qwen3.8-27B @ community self-hosted (3× V100)</p></a>
   </div>
 </section>

@@ -18,7 +18,7 @@ const faces = [
 // Translate display labels only. Scores, periods, IDs and source records stay intact.
 const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   kimi: { vendor: 'Kimi official coding' },
-  'gpt-luna': { name: 'gpt-5.6-luna-900k (max band)' },
+  'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
   ds: { vendor: 'DeepSeek official' },
   doubao: { vendor: 'Volcengine Ark Agent Plan' },
   'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
@@ -28,9 +28,16 @@ const laneLabels: Record<string, { name?: string; vendor?: string }> = {
 };
 const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 
+// NA channel: `p` = effective passes, `n` = case slots (NA included), `na` = held/void cases,
+// which count as neither a win nor a loss. `n === 0` means the lane never sat that axis (not
+// the same as a hold). Chip full marks require every case slot to have passed, so a lane with
+// any held case is not full — and a wholly held axis contributes no full marks (package G4).
+const held = (cell) => cell.na ?? 0;
+const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
+
 const stats = faces.map(([id, label]) => {
   const available = lanes.filter((lane) => lane.axis[id].n > 0);
-  const full = available.filter((lane) => lane.axis[id].p === lane.axis[id].n);
+  const full = available.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0);
   return { id, label, full: full.length, available: available.length };
 });
 ---
@@ -89,13 +96,13 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = 1 case contested (NA, not counted as a win or a loss): claude-opus-5-5's A-1fd3683a probabilistic safety refusal</p>
-      <p class="note">Data comes from the public result repositories. Each record keeps its original week and case count. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
+      <p class="note rank-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and stays out of the weakest-axis ranking and the full-marks count; a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. Claude 17'/24: 17 wins · 6 losses · 1 test-harness infrastructure NA (A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner). Luna high 16'/24: 16 wins · 4 losses · 4 held; UI / Vision / Review NA, not zero. StepFun 16'/24: 4 held cells, not losses. Week labels mean the baseline test week: Luna W37 (2026-09-07), StepFun W38 (2026-09-20); both add a separate W39 make-up (2026-09-21). Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+      <p class="note">Data comes from the public result repositories. Week labels follow the baseline test week; make-up weeks are disclosed separately. Case-set sizes stay on record. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
 </BaseLayout>
 
-<script>
+<script is:inline>
   const app = document.querySelector('#rank-app');
   const lanes = JSON.parse(app.dataset.lanes);
   const faces = JSON.parse(app.dataset.faces);
@@ -106,9 +113,12 @@ const stats = faces.map(([id, label]) => {
   const verdict = app.querySelector('#rank-verdict');
   const saturation = app.querySelector('#rank-saturation');
 
+  const held = (cell) => cell.na ?? 0;
+  const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
+  const isAllHeld = (cell) => cell.n > 0 && usable(cell) === 0;
   const faceLabel = (id) => faces.find(([face]) => face === id)?.[1] ?? id;
   const laneCount = (id) => lanes.filter((lane) => lane.axis[id].n > 0).length;
-  const fullCount = (id) => lanes.filter((lane) => lane.axis[id].n > 0 && lane.axis[id].p === lane.axis[id].n).length;
+  const fullCount = (id) => lanes.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0).length;
 
   function setSelection(values) {
     selected.clear();
@@ -161,17 +171,23 @@ const stats = faces.map(([id, label]) => {
       head.append(cell);
     });
 
+    // A lane stays on the board when every selected axis has case slots, even if some axes are
+    // wholly held. All-held axes leave the min/sum math (a hold is not a zero); a lane whose
+    // selected axes are all held cannot be ordered and shows '—' outside the ranking.
     const rows = lanes
       .filter((lane) => active.every((id) => lane.axis[id].n > 0))
       .map((lane) => {
-        const values = active.map((id) => lane.axis[id].p);
+        const values = active.filter((id) => usable(lane.axis[id]) > 0).map((id) => lane.axis[id].p);
         return {
           lane,
-          min: Math.min(...values),
-          sum: values.reduce((total, value) => total + value, 0),
+          min: values.length ? Math.min(...values) : null,
+          sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
         };
       })
-      .sort((a, b) => b.min - a.min || b.sum - a.sum);
+      .sort((a, b) => {
+        if (a.min === null || b.min === null) return (a.min === null) - (b.min === null);
+        return b.min - a.min || b.sum - a.sum;
+      });
 
     if (rows.length === 0) {
       const row = document.createElement('tr');
@@ -199,43 +215,65 @@ const stats = faces.map(([id, label]) => {
       vendor.textContent = lane.vendor;
       laneCell.append(vendor);
       row.append(laneCell);
-      appendCell(row, `${lane.total}/${lane.n}`, 'num total');
+      // Draft presentation only; release remains blocked on NA-aware data and ranking.
+      const heldLane = Object.values(lane.axis).some((cell) => (cell.na ?? 0) > 0)
+        || ["devin", "gpt-luna", "doubao", "claude", "stepfun", "gpt-sol"].includes(lane.id);
+      const displayTotal = heldLane ? String(lane.total).replace(/'$/, '') + "'" : String(lane.total);
+      appendCell(row, `${displayTotal}/${lane.n}`, 'num total');
 
       active.forEach((id) => {
         const value = lane.axis[id];
         const cell = document.createElement('td');
         cell.className = 'num';
         const span = document.createElement('span');
-        span.className = `cell ${value.p === value.n ? 'pass' : value.p === 0 ? 'fail' : ''}`;
-        span.textContent = `${value.p}/${value.n}`;
+        if (isAllHeld(value)) {
+          // Whole axis held: NA, and no part of the min/sum math.
+          span.className = 'cell na';
+          span.textContent = 'NA';
+        } else {
+          // Mixed axis: show the effective-case result (holds are not losses), then the
+          // held count beside it.
+          const eff = usable(value);
+          span.className = `cell ${value.p === eff ? 'pass' : value.p === 0 ? 'fail' : ''}`;
+          span.textContent = `${value.p}/${eff}`;
+        }
         cell.append(span);
+        if (held(value) > 0 && usable(value) > 0) {
+          const note = document.createElement('span');
+          note.className = 'na-note';
+          note.textContent = `NA ${held(value)}`;
+          cell.append(note);
+        }
         row.append(cell);
       });
 
-      appendCell(row, String(min), `num min ${min === 0 ? 'bad' : 'good'}`);
-      appendCell(row, String(sum), 'num');
-      appendCell(row, `${lane.wk} · ${lane.n}`, 'num total');
+      appendCell(row, min === null ? '—' : String(min), min === null ? 'num min' : `num min ${min === 0 ? 'bad' : 'good'}`);
+      appendCell(row, sum === null ? '—' : String(sum), 'num');
+      const baselineWeek = lane.id === 'gpt-luna' ? 'W37' : lane.id === 'stepfun' ? 'W38' : lane.wk;
+      appendCell(row, `${baselineWeek} · ${lane.n}`, 'num total');
       body.append(row);
     });
 
-    const best = rows[0];
-    const winners = rows.filter((row) => row.min === best.min);
+    const ranked = rows.filter((row) => row.min !== null);
+    const best = ranked[0];
+    const winners = best ? ranked.filter((row) => row.min === best.min) : [];
     const chosen = active.map(faceLabel).join(' + ');
     verdict.replaceChildren();
-    const prefix = document.createTextNode(`Selected: ${chosen}. Lowest pass count: `);
-    verdict.append(prefix);
+    verdict.append(document.createTextNode(`Selected: ${chosen}. Lowest pass count: `));
     const strong = document.createElement('strong');
-    strong.textContent = String(best.min);
+    strong.textContent = best ? String(best.min) : '—';
     verdict.append(strong);
     verdict.append(document.createTextNode('. '));
     const names = winners.slice(0, 4).map((row) => row.lane.name).join(' / ');
     verdict.append(document.createTextNode(`Leading lanes: ${names}${winners.length > 4 ? ` (among ${winners.length} lanes)` : ''}.`));
     if (winners.length > 1) verdict.append(document.createTextNode(` ${winners.length} lanes tied.`));
+    const unranked = rows.length - ranked.length;
+    if (unranked > 0) verdict.append(document.createTextNode(` ${unranked} lane(s) are wholly held on the selected types and stay outside the ranking.`));
 
-    const saturated = active.filter((id) => fullCount(id) === laneCount(id));
+    const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
     if (saturated.length > 0) {
       saturation.hidden = false;
-      saturation.textContent = `Note: all lanes currently have full marks for ${saturated.map(faceLabel).join(', ')}; these types do not change the ranking.`;
+      saturation.textContent = `Note: all scored lanes currently have full marks for ${saturated.map(faceLabel).join(', ')}; these types do not change the ranking.`;
     }
   }
 

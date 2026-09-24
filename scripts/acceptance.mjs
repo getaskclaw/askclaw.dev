@@ -111,6 +111,27 @@ if (!baseUrl) {
 }
 
 const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/'];
+
+// NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
+// held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
+// shows NA and leaves the min/sum math; n === 0 means the lane never sat that axis.
+const heldOf = (cell) => cell.na ?? 0;
+const usableOf = (cell) => (cell.n > 0 ? cell.n - heldOf(cell) : 0);
+const expectedRankRows = (lanes, active) => lanes
+  .filter((lane) => active.every((axis) => lane.axis[axis].n > 0))
+  .map((lane) => {
+    const values = active.filter((axis) => usableOf(lane.axis[axis]) > 0).map((axis) => lane.axis[axis].p);
+    return {
+      lane,
+      min: values.length ? Math.min(...values) : null,
+      sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
+    };
+  })
+  .sort((a, b) => {
+    if (a.min === null || b.min === null) return (a.min === null) - (b.min === null);
+    return b.min - a.min || b.sum - a.sum;
+  });
+
 const browser = await chromium.launch({ headless: true });
 const results = [];
 let failed = false;
@@ -178,7 +199,7 @@ try {
       const english = route === '/en/rank/';
       const englishLabels = {
         kimi: { vendor: 'Kimi official coding' },
-        'gpt-luna': { name: 'gpt-5.6-luna-900k (max band)' },
+        'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
         ds: { vendor: 'DeepSeek official' },
         doubao: { vendor: 'Volcengine Ark Agent Plan' },
         'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
@@ -201,11 +222,9 @@ try {
       result.presetContent = await page.locator('#rank-body').innerText();
       if (!result.laneDataPreserved || result.kimiVendor !== (english ? 'Kimi official coding' : 'Kimi 官方 coding')) failed = true;
       const axes = ['build', 'ops', 'ui-build'];
-      const expectedOrder = expectedLanes.map((lane) => ({
-        name: lane.name,
-        minimum: Math.min(...axes.map((axis) => lane.axis[axis].p)),
-        sum: axes.reduce((total, axis) => total + lane.axis[axis].p, 0),
-      })).sort((a, b) => b.minimum - a.minimum || b.sum - a.sum).map((lane) => lane.name);
+      // The DOM keeps every lane that has case slots on the selected axes, in the same order the
+      // board sorts them: ranked lanes first, then wholly held lanes showing '—'.
+      const expectedOrder = expectedRankRows(expectedLanes, axes).map((row) => row.lane.name);
       result.rankOrderPreserved = isDeepStrictEqual(await page.locator('#rank-body .lane a').allTextContents(), expectedOrder);
       await page.locator('#clear-rank').click();
       const cleared = await page.locator('.chip[aria-pressed="true"]').count() === 0;
@@ -228,12 +247,9 @@ try {
         for (const button of await page.locator('[data-preset]').all()) {
           const preset = await button.getAttribute('data-preset');
           const active = preset.split(',');
-          const expected = expectedLanes.filter((lane) => active.every((axis) => lane.axis[axis].n > 0))
-            .map((lane) => ({
-              name: lane.name,
-              minimum: Math.min(...active.map((axis) => lane.axis[axis].p)),
-              sum: active.reduce((total, axis) => total + lane.axis[axis].p, 0),
-            })).sort((a, b) => b.minimum - a.minimum || b.sum - a.sum).map((lane) => lane.name);
+          // NA-aware: a wholly held axis leaves the ordering, so those lanes show '—' and sort to
+          // the end of the board; every other lane keeps the lowest-effective-pass order.
+          const expected = expectedRankRows(expectedLanes, active).map((row) => row.lane.name);
           await button.click();
           const passed = isDeepStrictEqual(await page.locator('#rank-body .lane a').allTextContents(), expected)
             && !/[\u3400-\u9fff]/u.test(await page.locator('main').innerText());
@@ -330,7 +346,7 @@ try {
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
         'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '13 result repos',
-        'Snapshot 2026-W39', 'leader swe-2-max @ Devin at 19/24 (scored in W37',
+        'Snapshot 2026-W39', "leader swe-2-max @ Devin at 19'/24 (scored in W37",
         'split into four lanes at 18/24', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
       ].map((text) => ({ text, passed: mainText.includes(text) }));

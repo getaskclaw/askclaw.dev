@@ -20,11 +20,19 @@ const faces = [
 const lanes = rawLanes.map((lane) => ({
   ...lane,
   vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
+  name: lane.id === 'gpt-luna' ? 'gpt-5.6-luna-900k (high 档)' : lane.name,
 }));
+
+// NA channel: `p` = effective passes, `n` = case slots (NA included), `na` = held/void cases,
+// which count as neither a win nor a loss. `n === 0` means the lane never sat that axis (not
+// the same as a hold). Chip full marks require every case slot to have passed, so a lane with
+// any held case is not full — and a wholly held axis contributes no full marks (package G4).
+const held = (cell) => cell.na ?? 0;
+const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
 
 const stats = faces.map(([id, label]) => {
   const available = lanes.filter((lane) => lane.axis[id].n > 0);
-  const full = available.filter((lane) => lane.axis[id].p === lane.axis[id].n);
+  const full = available.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0);
   return { id, label, full: full.length, available: available.length };
 });
 ---
@@ -44,7 +52,7 @@ const stats = faces.map(([id, label]) => {
 
     <section class="section" aria-labelledby="pick-title">
       <h2 id="pick-title">选择工作类型</h2>
-      <p class="hint">每个 chip 显示该类型里满分车道的数量。默认不选任何类型。</p>
+      <p class="hint">每个 chip 显示该类型里满分车道的数量；挂起案（NA）不计入满分统计。默认不选任何类型。</p>
       <div class="panel picker">
         <div class="chips" aria-label="工作类型筛选">
           {stats.map(({ id, label, full, available }) => (
@@ -69,7 +77,7 @@ const stats = faces.map(([id, label]) => {
 
     <section class="section" aria-labelledby="board-title">
       <h2 id="board-title">短板排序</h2>
-      <p class="hint">规则：先比最低通过数，再比所选类型的通过总数；并列会保留。</p>
+      <p class="hint">规则：先比最低通过数，再比所选类型的通过总数；并列会保留。整轴全挂起的格子不参加排序。</p>
       <div class="board-wrap">
         <table class="board">
           <caption class="sr-only">AMBER work-type ranking</caption>
@@ -80,13 +88,13 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = 1 案 contested 挂起（NA，不计胜负）：claude-opus-5-5 的 A-1fd3683a 概率性安全拒答</p>
-      <p class="note">数据来自公开成绩仓。期号和案数随原始记录保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
+      <p class="note rank-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不参加短板排序与满分统计；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。Claude 17'/24：17 胜 · 6 负 · 1 案考场(harness)基建 NA（A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议）。Luna high 16'/24：16 胜 · 4 负 · 4 挂起，UI／视觉／审查 NA，不是零。StepFun 16'/24：4 挂起格，不计负。周标签=基线考试周：luna W37（2026-09-07），stepfun W38（2026-09-20）；两者另列 W39 补测（2026-09-21）。 Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。</p>
+      <p class="note">数据来自公开成绩仓。周标签按基线考试周，补测周单独披露，案集案数保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
     </section>
   </div>
 </BaseLayout>
 
-<script>
+<script is:inline>
   const app = document.querySelector('#rank-app');
   const lanes = JSON.parse(app.dataset.lanes);
   const faces = JSON.parse(app.dataset.faces);
@@ -97,9 +105,14 @@ const stats = faces.map(([id, label]) => {
   const verdict = app.querySelector('#rank-verdict');
   const saturation = app.querySelector('#rank-saturation');
 
+  // NA channel: p = effective passes, n = case slots (NA included), na = held/void cases.
+  // An all-held axis (n > 0, na === n) leaves the math; n === 0 means the lane never sat it.
+  const held = (cell) => cell.na ?? 0;
+  const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
+  const isAllHeld = (cell) => cell.n > 0 && usable(cell) === 0;
   const faceLabel = (id) => faces.find(([face]) => face === id)?.[1] ?? id;
   const laneCount = (id) => lanes.filter((lane) => lane.axis[id].n > 0).length;
-  const fullCount = (id) => lanes.filter((lane) => lane.axis[id].n > 0 && lane.axis[id].p === lane.axis[id].n).length;
+  const fullCount = (id) => lanes.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0).length;
 
   function setSelection(values) {
     selected.clear();
@@ -152,17 +165,23 @@ const stats = faces.map(([id, label]) => {
       head.append(cell);
     });
 
+    // A lane stays on the board when every selected axis has case slots, even if some axes
+    // are wholly held. All-held axes leave the min/sum math (a hold is not a zero); a lane
+    // whose selected axes are all held cannot be ordered and shows '—' outside the ranking.
     const rows = lanes
       .filter((lane) => active.every((id) => lane.axis[id].n > 0))
       .map((lane) => {
-        const values = active.map((id) => lane.axis[id].p);
+        const values = active.filter((id) => usable(lane.axis[id]) > 0).map((id) => lane.axis[id].p);
         return {
           lane,
-          min: Math.min(...values),
-          sum: values.reduce((total, value) => total + value, 0),
+          min: values.length ? Math.min(...values) : null,
+          sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
         };
       })
-      .sort((a, b) => b.min - a.min || b.sum - a.sum);
+      .sort((a, b) => {
+        if (a.min === null || b.min === null) return (a.min === null) - (b.min === null);
+        return b.min - a.min || b.sum - a.sum;
+      });
 
     if (rows.length === 0) {
       const row = document.createElement('tr');
@@ -190,43 +209,65 @@ const stats = faces.map(([id, label]) => {
       vendor.textContent = lane.vendor;
       laneCell.append(vendor);
       row.append(laneCell);
-      appendCell(row, `${lane.total}/${lane.n}`, 'num total');
+      // Every lane carrying an NA cell takes the apostrophe, frozen display rows included.
+      const heldLane = Object.values(lane.axis).some((cell) => held(cell) > 0)
+        || ["devin", "gpt-luna", "doubao", "claude", "stepfun", "gpt-sol"].includes(lane.id);
+      const displayTotal = heldLane ? String(lane.total).replace(/'$/, '') + "'" : String(lane.total);
+      appendCell(row, `${displayTotal}/${lane.n}`, 'num total');
 
       active.forEach((id) => {
         const value = lane.axis[id];
         const cell = document.createElement('td');
         cell.className = 'num';
         const span = document.createElement('span');
-        span.className = `cell ${value.p === value.n ? 'pass' : value.p === 0 ? 'fail' : ''}`;
-        span.textContent = `${value.p}/${value.n}`;
+        if (isAllHeld(value)) {
+          // Whole axis held: NA, and no part of the min/sum math.
+          span.className = 'cell na';
+          span.textContent = 'NA';
+        } else {
+          // Mixed axis: show the effective-case result (holds are not losses), then the
+          // held count beside it.
+          const eff = usable(value);
+          span.className = `cell ${value.p === eff ? 'pass' : value.p === 0 ? 'fail' : ''}`;
+          span.textContent = `${value.p}/${eff}`;
+        }
         cell.append(span);
+        if (held(value) > 0 && usable(value) > 0) {
+          const note = document.createElement('span');
+          note.className = 'na-note';
+          note.textContent = `NA ${held(value)}`;
+          cell.append(note);
+        }
         row.append(cell);
       });
 
-      appendCell(row, String(min), `num min ${min === 0 ? 'bad' : 'good'}`);
-      appendCell(row, String(sum), 'num');
-      appendCell(row, `${lane.wk} · ${lane.n}`, 'num total');
+      appendCell(row, min === null ? '—' : String(min), min === null ? 'num min' : `num min ${min === 0 ? 'bad' : 'good'}`);
+      appendCell(row, sum === null ? '—' : String(sum), 'num');
+      const baselineWeek = lane.id === 'gpt-luna' ? 'W37' : lane.id === 'stepfun' ? 'W38' : lane.wk;
+      appendCell(row, `${baselineWeek} · ${lane.n}`, 'num total');
       body.append(row);
     });
 
-    const best = rows[0];
-    const winners = rows.filter((row) => row.min === best.min);
+    const ranked = rows.filter((row) => row.min !== null);
+    const best = ranked[0];
+    const winners = best ? ranked.filter((row) => row.min === best.min) : [];
     const chosen = active.map(faceLabel).join(' + ');
     verdict.replaceChildren();
-    const prefix = document.createTextNode(`已选：${chosen}。最低通过数 `);
-    verdict.append(prefix);
+    verdict.append(document.createTextNode(`已选：${chosen}。最低通过数 `));
     const strong = document.createElement('strong');
-    strong.textContent = String(best.min);
+    strong.textContent = best ? String(best.min) : '—';
     verdict.append(strong);
-    verdict.append(document.createTextNode(`。`));
+    verdict.append(document.createTextNode('。'));
     const names = winners.slice(0, 4).map((row) => row.lane.name).join(' / ');
     verdict.append(document.createTextNode(`领先车道：${names}${winners.length > 4 ? ` 等 ${winners.length} 家` : ''}。`));
     if (winners.length > 1) verdict.append(document.createTextNode(`共 ${winners.length} 家并列。`));
+    const unranked = rows.length - ranked.length;
+    if (unranked > 0) verdict.append(document.createTextNode(`另有 ${unranked} 条道所选轴全为挂起，未参加排序。`));
 
-    const saturated = active.filter((id) => fullCount(id) === laneCount(id));
+    const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
     if (saturated.length > 0) {
       saturation.hidden = false;
-      saturation.textContent = `提示：${saturated.map(faceLabel).join('、')} 当前所有车道均满分，不改变排序。`;
+      saturation.textContent = `提示：${saturated.map(faceLabel).join('、')} 当前所有车道均满分（挂起案不计），不改变排序。`;
     }
   }
 
