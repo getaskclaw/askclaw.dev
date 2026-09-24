@@ -63,18 +63,18 @@ const frozenLanes = [
 // commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
 const repos = [
   ['amber', 'spec', 'Method spec + public hash index + cross-repo weekly board'],
-  ['amber-devin', '19/24', 'swe-2-max @ Devin — current leader'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin — current leader'],
   ['amber-kimi', '18/24', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
   ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
   ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode — frozen at the owner\'s call'],
   ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP'],
-  ['amber-gpt', '16/24', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex'],
+  ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ @ OpenAI Codex"],
   ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
   ['amber-deepseek', '17/24', 'deepseek-flash @ DeepSeek official'],
   ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go'],
-  ['amber-doubao', '17/24', 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
-  ['amber-stepfun', '16/24', 'step-5-preview @ stepfun plan endpoint — new in W39'],
-  ['amber-claude', '17/24', 'Anthropic Claude subscription-lane model results'],
+  ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
+  ['amber-stepfun', "16'/24", 'step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up'],
+  ['amber-claude', "17'/24", 'Anthropic Claude subscription-lane model results'],
   ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
@@ -154,7 +154,8 @@ const repos = [
               <h3 id="champion-title">swe-2-max @ Devin</h3>
               <p>Scored in W37 · convergence case folded in on W39</p>
             </div>
-            <strong class="champion-score">19/24</strong>
+            <strong class="champion-score">19'/24</strong>
+              <small>1 NA; not a win or a loss.</small>
           </div>
           <p class="champion-detail">Leader's score · 24-case library</p>
           <div class="progress-block">
@@ -251,7 +252,7 @@ const repos = [
           <img src={asset('top5-2026-w39.en.webp')} width="1400" height="1117" loading="lazy" alt="AMBER board: five rank tiers (2026-W39)" />
         </a>
         <figcaption>
-          Snapshot 2026-W39 · leader swe-2-max @ Devin at 19/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24.{' '}
+          Snapshot 2026-W39 · leader swe-2-max @ Devin at 19'/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
           the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low —
@@ -324,6 +325,7 @@ const repos = [
         earlier records. The axis picker retains its own older W36 records for two lanes.{' '}
         <a href={route('/method/')}>Read the method and score-period notes</a>.
       </p>
+      <p class="note score-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
       <div class="repo-grid">
         {repos.map(([repo, score, description]) => (
           <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>

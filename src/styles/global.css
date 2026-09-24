@@ -473,6 +473,19 @@ table.board tbody tr:hover {
   color: #c0392b;
 }
 
+/* NA channel: a wholly held axis is not a zero and stays out of the ranking math. */
+.cell.na {
+  color: var(--sub);
+  font-weight: 700;
+}
+
+.na-note {
+  margin-left: 5px;
+  color: var(--sub);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
 .min.good {
   color: var(--teal-dark);
 }

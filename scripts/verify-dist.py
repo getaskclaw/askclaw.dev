@@ -125,7 +125,7 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (max 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5'}
+convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5'}
 assert len(lanes) == 14 and len({lane['id'] for lane in lanes}) == 14
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
 assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
@@ -133,6 +133,11 @@ assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
     value = 1 if lane['name'] in convergence_names else 0
     assert lane['axis']['convergence'] == {'p': value, 'n': value}, lane['name']
+# NA channel: p = effective passes, n = case slots (NA included), na = held/void cases, which
+# count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
+# axis slot count never shrinks to hide a hold.
+assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
+assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 16
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -186,8 +191,8 @@ for relative in sorted(expected_routes):
     if relative == 'method/index.html':
         assert len(parsed.cards) == 13
         # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
-        # the new claude lane carries its own W39 public score.
-        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', '17/24')]:
+        # the new claude lane carries its own W39 public score. Apostrophes follow the NA channel.
+        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', "17'/24")]:
             card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
             assert score in card['text'], (repo, card['text'])
         # The historical /21 composite note is fact and stays on the page.

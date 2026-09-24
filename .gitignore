@@ -3,3 +3,4 @@ node_modules/
 dist/
 .DS_Store
 evidence/r2/local-screens/
+__pycache__/

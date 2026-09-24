@@ -3,18 +3,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { route } from '../../utils/route';
 
 const resultRepos = [
-  ['amber-devin', '19/24', 'swe-2-max @ Devin', 'W37'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin', 'W37'],
   ['amber-kimi', '18/24', 'k3 @ Kimi 官方 coding', 'W38'],
   ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
   ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode · owner 令冻结', 'W37'],
   ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP', 'W37'],
-  ['amber-gpt', '16/24', 'gpt-6-astra / gpt-5.6 family @ OpenAI Codex', 'W38'],
+  ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ @ OpenAI Codex", 'W38'],
   ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI · 道停用冻结', 'W37'],
   ['amber-deepseek', '17/24', 'deepseek-flash @ DeepSeek official', 'W37'],
   ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go', 'W37'],
-  ['amber-doubao', '17/24', 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
-  ['amber-stepfun', '16/24', 'step-5-preview @ stepfun plan 端点', 'W39'],
-  ['amber-claude', '17/24', 'claude-opus-5-5 @ Anthropic 订阅道 · Anthropic Claude 订阅道模型实测', 'W39'],
+  ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
+  ['amber-stepfun', "16'/24", 'step-5-preview @ stepfun plan 端点（W38 基线；W39 收敛补测）', 'W38'],
+  ['amber-claude', "17'/24", 'claude-opus-5-5 @ Anthropic 订阅道 · Anthropic Claude 订阅道模型实测', 'W39'],
   ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted', 'W38'],
 ];
 ---
@@ -60,6 +60,7 @@ const resultRepos = [
         口径更正见{' '}
         <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-21.md">2026-09-21 更正</a>。
       </p>
+      <p class="note score-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。</p>
       <div class="repo-grid">
         {resultRepos.map(([repo, score, model, week]) => (
           <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>
