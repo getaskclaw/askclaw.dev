@@ -125,19 +125,25 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5'}
-assert len(lanes) == 14 and len({lane['id'] for lane in lanes}) == 14
+convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro'}
+# Lanes that sat the convergence case and lost it keep n=1 with p=0 (a real negative, not a hold):
+# space-bunny-alpha, the W39 CommandCode newcomer.
+convergence_failed = {'space-bunny-alpha'}
+assert len(lanes) == 19 and len({lane['id'] for lane in lanes}) == 19
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
 assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
 assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
-    value = 1 if lane['name'] in convergence_names else 0
-    assert lane['axis']['convergence'] == {'p': value, 'n': value}, lane['name']
+    if lane['name'] in convergence_failed:
+        assert lane['axis']['convergence'] == {'p': 0, 'n': 1}, lane['name']
+    else:
+        value = 1 if lane['name'] in convergence_names else 0
+        assert lane['axis']['convergence'] == {'p': value, 'n': value}, lane['name']
 # NA channel: p = effective passes, n = case slots (NA included), na = held/void cases, which
 # count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
 # axis slot count never shrinks to hide a hold.
 assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
-assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 16
+assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 17
 
 class Page(HTMLParser):
     def __init__(self, text):

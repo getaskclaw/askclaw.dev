@@ -43,7 +43,7 @@ const stats = faces.map(([id, label]) => {
 ---
 <BaseLayout
   title="Rank models by work — AMBER benchmark"
-  description="Choose models across eight work types with AMBER: 14 lanes, public scores, weakest-axis ordering and native browser filters."
+  description="Choose models across eight work types with AMBER: 19 lanes, public scores, weakest-axis ordering and native browser filters."
   lang="en"
   canonicalPath="/en/rank/"
   keywords="AMBER, AI benchmark, model ranking, work types, axis matrix, AskClaw"
@@ -54,7 +54,7 @@ const stats = faces.map(([id, label]) => {
     <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
       Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
-      This makes the differences between the 14 public lanes easier to check.
+      This makes the differences between the 19 public lanes easier to check.
     </p>
     <noscript>Enable JavaScript to use the filters on this page.</noscript>
 
@@ -96,7 +96,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and stays out of the weakest-axis ranking and the full-marks count; a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. Claude 17'/24: 17 wins · 6 losses · 1 test-harness infrastructure NA (A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner). Luna high 16'/24: 16 wins · 4 losses · 4 held; UI / Vision / Review NA, not zero. StepFun 16'/24: 4 held cells, not losses. Week labels mean the baseline test week: Luna W37 (2026-09-07), StepFun W38 (2026-09-20); both add a separate W39 make-up (2026-09-21). Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+      <p class="note rank-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and stays out of the weakest-axis ranking and the full-marks count; a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. Claude 17'/24: 17 wins · 6 losses · 1 test-harness infrastructure NA (A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner). Luna high 16'/24: 16 wins · 4 losses · 4 held; UI / Vision / Review NA, not zero. StepFun 16'/24: 4 held cells, not losses. Week labels mean the baseline test week: Luna W37 (2026-09-07), StepFun W38 (2026-09-20); both add a separate W39 make-up (2026-09-21). Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24. W39 newcomers: gpt-6-astra 16/24, gpt-6-sol 17/24, gpt-6-luna 15/24 (OpenAI Codex, all with no holds); mimo-v2.6-pro 17'/24 (1 scoring-environment invalid case held pending re-scoring, not a loss); space-bunny-alpha 15/24 (no NA).</p>
       <p class="note">Data comes from the public result repositories. Week labels follow the baseline test week; make-up weeks are disclosed separately. Case-set sizes stay on record. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
