@@ -696,5 +696,251 @@
     "n": 1
    }
   }
+ },
+ {
+  "id": "astra",
+  "name": "gpt-6-astra-900k",
+  "vendor": "OpenAI Codex",
+  "wk": "W39",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W39.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 2,
+    "n": 3
+   },
+   "verify": {
+    "p": 0,
+    "n": 3
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   }
+  }
+ },
+ {
+  "id": "gpt6-sol",
+  "name": "gpt-6-sol-900k",
+  "vendor": "OpenAI Codex",
+  "wk": "W39",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W39.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "verify": {
+    "p": 0,
+    "n": 3
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   }
+  }
+ },
+ {
+  "id": "gpt6-luna",
+  "name": "gpt-6-luna-900k",
+  "vendor": "OpenAI Codex",
+  "wk": "W39",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W39.md",
+  "total": 15,
+  "n": 24,
+  "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "verify": {
+    "p": 0,
+    "n": 3
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 0,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   }
+  }
+ },
+ {
+  "id": "cc-m26p",
+  "name": "mimo-v2.6-pro",
+  "vendor": "CommandCode",
+  "wk": "W39",
+  "cases": 24,
+  "repo": "amber-commandcode",
+  "file": "amber-commandcode/results/2026-W39.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "verify": {
+    "p": 0,
+    "n": 3,
+    "na": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   }
+  }
+ },
+ {
+  "id": "cc-sb",
+  "name": "space-bunny-alpha",
+  "vendor": "CommandCode",
+  "wk": "W39",
+  "cases": 24,
+  "repo": "amber-commandcode",
+  "file": "amber-commandcode/results/2026-W39.md",
+  "total": 15,
+  "n": 24,
+  "axis": {
+   "convergence": {
+    "p": 0,
+    "n": 1
+   },
+   "build": {
+    "p": 4,
+    "n": 6
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "text": {
+    "p": 2,
+    "n": 3
+   },
+   "verify": {
+    "p": 1,
+    "n": 3
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   },
+   "req-drift": {
+    "p": 0,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   }
+  }
  }
 ]

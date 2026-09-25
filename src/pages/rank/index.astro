@@ -38,7 +38,7 @@ const stats = faces.map(([id, label]) => {
 ---
 <BaseLayout
   title="按轴挑模型 — AMBER 琥珀评测"
-  description="AMBER 按八类工作筛选模型：14 条车道、公开成绩、短板排序和原生浏览器交互。"
+  description="AMBER 按八类工作筛选模型：19 条车道、公开成绩、短板排序和原生浏览器交互。"
   canonicalPath="/rank/"
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
@@ -46,7 +46,7 @@ const stats = faces.map(([id, label]) => {
     <h1>按轴挑模型 — <em>别只看总分</em></h1>
     <p class="lead">
       选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 14 条公开车道的差异更容易核对。
+      这让 19 条公开车道的差异更容易核对。
     </p>
     <noscript>本页的筛选需要启用 JavaScript。</noscript>
 
@@ -88,7 +88,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不参加短板排序与满分统计；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。Claude 17'/24：17 胜 · 6 负 · 1 案考场(harness)基建 NA（A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议）。Luna high 16'/24：16 胜 · 4 负 · 4 挂起，UI／视觉／审查 NA，不是零。StepFun 16'/24：4 挂起格，不计负。周标签=基线考试周：luna W37（2026-09-07），stepfun W38（2026-09-20）；两者另列 W39 补测（2026-09-21）。 Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。</p>
+      <p class="note rank-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不参加短板排序与满分统计；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。Claude 17'/24：17 胜 · 6 负 · 1 案考场(harness)基建 NA（A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议）。Luna high 16'/24：16 胜 · 4 负 · 4 挂起，UI／视觉／审查 NA，不是零。StepFun 16'/24：4 挂起格，不计负。周标签=基线考试周：luna W37（2026-09-07），stepfun W38（2026-09-20）；两者另列 W39 补测（2026-09-21）。 Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。W39 新入榜 5 道：gpt-6-astra 16/24、gpt-6-sol 17/24、gpt-6-luna 15/24（OpenAI Codex，均无挂起）；mimo-v2.6-pro 17'/24（1 案判分环境 invalid 挂起待重评，不计负）；space-bunny-alpha 15/24（零 NA）。</p>
       <p class="note">数据来自公开成绩仓。周标签按基线考试周，补测周单独披露，案集案数保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
     </section>
   </div>

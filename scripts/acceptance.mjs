@@ -210,7 +210,7 @@ try {
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
-      if (result.chipCount !== 9 || result.presetRowCount !== 14) failed = true;
+      if (result.chipCount !== 9 || result.presetRowCount !== 19) failed = true;
       const sourceLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
@@ -240,7 +240,7 @@ try {
         result.everydayRows = await page.locator('#rank-body tr').count();
         result.englishVerdict = await page.locator('#rank-verdict').innerText();
         result.englishHeadings = await page.locator('#rank-head th').allTextContents();
-        if (result.everydayRows !== 14
+        if (result.everydayRows !== 19
           || !result.englishVerdict.startsWith('Selected: Engineering + Operations. Lowest pass count: 5.')
           || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', 'Engineering', 'Operations', 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
         result.englishPresets = [];
@@ -275,11 +275,13 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp'];
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence11/11 full marks' : '收敛11/11 满分')
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'cc-sb'];
+      // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
+      const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' ? '0/1' : '1/1'));
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence15/16 full marks' : '收敛15/16 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
-        && isDeepStrictEqual(result.convergenceScores, Array(11).fill('1/1'));
+        && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
       if (!result.convergencePassed) failed = true;
       await page.locator('#clear-rank').click();
     }
