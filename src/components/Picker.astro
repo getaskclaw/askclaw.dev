@@ -1,88 +1,88 @@
 ---
-// The model picker (questions, tiers, cards, compare, detail). Used by the home page.
+// The model picker (questions, tiers, cards, compare, detail). Used by the home pages (zh and en).
 import '../styles/picker.css';
 import rawAxes from '../data/axes.json';
 import siteData from '../data/site-data.json';
 import {
-  FACES, LABEL, joinLanes, axisN, tiers, splitters, tierTitle, verdictText,
+  AXIS_IDS, tr, labels, joinLanes, axisN, tiers, splitters, tierTitle, tierName, verdictText,
   held, displayTotal, fmtSec, fmtTok,
 } from '../utils/picker-core.js';
+import { I18N } from '../utils/picker-i18n.js';
 import coreSource from '../utils/picker-core.js?raw';
 import appSource from '../scripts/pick-app.js?raw';
 
+interface Props { lang?: 'zh' | 'en' }
+const { lang = 'zh' } = Astro.props;
+const T = I18N[lang];
+const LABEL = labels(T);
+
 // Both data files are generated from amber.db (amber-run sync_site.py) and checked against
 // axes.provenance.json on every build. Nothing on this page is typed in by hand.
-const lanes = joinLanes(rawAxes, siteData);
+const lanes = joinLanes(rawAxes, siteData, T);
 const AXIS_N = axisN(lanes);
 const small = (id: string) => AXIS_N[id] <= 2;
+const caseTag = (id: string) => tr(T, 'cases', { n: AXIS_N[id] });
 const slots = Math.max(...Object.values(AXIS_N));
 const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 
 // Default view (nothing selected): the same grouping the script computes, rendered at build time,
 // so the page is complete without JavaScript. The script re-renders it in place on load.
 const initial = tiers(lanes, [], 'time');
-const facesAll = FACES.map(([id]) => id);
 const pipList = (c) => [
   ...Array(c.p).fill('pip p'),
   ...Array(Math.max(0, c.n - c.p - held(c))).fill('pip'),
   ...Array(held(c)).fill('pip h'),
 ];
-// One page script: the shared core (exports stripped) followed by the page app, in its own scope.
-const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`;
+// One page script, in its own scope: this page's dictionary only, the shared core (exports
+// stripped), then the page app.
+const clientSource = `(() => {\nconst T = ${JSON.stringify(T)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`;
+const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], ['name', T.sortName, 'false']];
 ---
 <canvas id="caustics" aria-hidden="true"></canvas>
 
-  <div class="ctx glass" id="ctx" aria-label="当前条件">
+  <div class="ctx glass" id="ctx" aria-label={T.ctxAria}>
     <button class="ctx-sum" type="button" id="ctx-sum" aria-expanded="false" aria-controls="ctx-full"></button>
     <div class="ctx-full" id="ctx-full">
       <div class="ctx-sel" id="ctx-sel"></div>
-      <div class="ctx-tiers" id="ctx-tiers" aria-label="跳到梯队"></div>
-      <div class="seg" role="group" aria-label="梯队内排序">
-        <button type="button" data-tb="time" aria-pressed="true">用时短</button>
-        <button type="button" data-tb="tok" aria-pressed="false">token 少</button>
-        <button type="button" data-tb="name" aria-pressed="false">名称</button>
+      <div class="ctx-tiers" id="ctx-tiers" aria-label={T.tiersAria}></div>
+      <div class="seg" role="group" aria-label={T.sortAria}>
+        {sortButtons.map(([tb, label, pressed]) => <button type="button" data-tb={tb} aria-pressed={pressed}>{label}</button>)}
       </div>
     </div>
   </div>
 
-  <div class="page" id="pick-app" data-axes={JSON.stringify(rawAxes)} data-site={JSON.stringify(siteData)} style={`--slots: ${slots}`}>
+  <div class="page" id="pick-app" lang={lang === 'en' ? 'en' : 'zh-CN'} data-axes={JSON.stringify(rawAxes)} data-site={JSON.stringify(siteData)} style={`--slots: ${slots}`}>
     <section class="ask glass" aria-labelledby="ask-title">
       <div class="ask-main">
-      <h1 id="ask-title">你要它<em>做什么</em>？</h1>
-      <p class="sub">点选你要交给模型的工作，可多选。成绩完全一样的模型归进同一梯队，梯队之间才有高下；同一梯队里，再看谁更快、用的 token 更少。</p>
-      <div class="pk-chips" aria-label="工作类型">
-        {FACES.map(([id, label, hint]) => (
+      <h1 id="ask-title">{T.h1a}<em>{lang === 'en' ? ' ' : ''}{T.h1em}</em>{T.h1b}</h1>
+      <p class="sub">{T.sub}</p>
+      <div class="pk-chips" aria-label={T.chipsAria}>
+        {T.faces.map(([id, label, hint]) => (
           <button type="button" class="pk-chip" data-face={id} aria-pressed="false">
-            <b>{label}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</b><span>{hint}</span>
+            <b>{label}{small(id) && <span class="tiny">{caseTag(id)}</span>}</b><span>{hint}</span>
           </button>
         ))}
       </div>
-      <div class="presets"><span>常用组合</span>
-        <button class="pk-preset" type="button" data-preset="build,ops">后端交付</button>
-        <button class="pk-preset" type="button" data-preset="build,ops,ui-build">交付全才</button>
-        <button class="pk-preset" type="button" data-preset="ui-build,vision">前端与审图</button>
-        <button class="pk-preset" type="button" data-preset="text,verify,review">写与查</button>
-        <button class="pk-preset" type="button" data-preset="">清空</button>
+      <div class="presets"><span>{T.presetsLabel}</span>
+        {T.presets.map(([preset, label]) => <button class="pk-preset" type="button" data-preset={preset}>{label}</button>)}
       </div>
       <label class="search" for="q">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-        <input id="q" type="search" placeholder="找模型或厂商" autocomplete="off" />
+        <input id="q" type="search" aria-label={T.search} autocomplete="off" required /><span class="q-hint" aria-hidden="true">{T.search}</span>
       </label>
-      <noscript><p class="sub">筛选、对比和详情需要启用 JavaScript；下面是按总分的完整分档。</p></noscript>
+      <noscript><p class="sub">{T.noscript}</p></noscript>
       </div>
       <slot name="beside" />
     </section>
 
     <div class="pk-verdict" id="leaderboard">
-      <h2 id="verdict" aria-live="polite">{verdictText(initial, [])}</h2>
-      <div class="legend" aria-label="图例"><span><i class="lg-pass"></i>通过</span><span><i class="lg-fail"></i>未过</span><span><i class="lg-held"></i>挂起（不计输赢）</span><span><span class="tiny">1 题</span> 题少，偶然性大</span></div>
+      <h2 id="verdict" aria-live="polite">{verdictText(initial, [], T)}</h2>
+      <div class="legend" aria-label={T.legendAria}><span><i class="lg-pass"></i>{T.lgPass}</span><span><i class="lg-fail"></i>{T.lgFail}</span><span><i class="lg-held"></i>{T.lgHeld}</span><span><span class="tiny">{T.lgFewTag}</span> {T.lgFew}</span></div>
     </div>
     <div class="caveat" id="caveat" hidden></div>
-    <div class="tiebreak"><span>同一梯队里先看</span>
-      <div class="seg" role="group" aria-label="梯队内排序">
-        <button type="button" data-tb="time" aria-pressed="true">用时短</button>
-        <button type="button" data-tb="tok" aria-pressed="false">token 少</button>
-        <button type="button" data-tb="name" aria-pressed="false">名称</button>
+    <div class="tiebreak"><span>{T.tbLabel}</span>
+      <div class="seg" role="group" aria-label={T.sortAria}>
+        {sortButtons.map(([tb, label, pressed]) => <button type="button" data-tb={tb} aria-pressed={pressed}>{label}</button>)}
       </div>
     </div>
 
@@ -91,28 +91,28 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
         const sp = splitters(t.rows, []);
         return [
           <div class="tier" data-tier={i + 1} id={`tier-${i + 1}`}>
-            <div class="tier-line"><span class="tier-no">{['第一梯队', '第二梯队', '第三梯队', '第四梯队', '第五梯队', '第六梯队', '第七梯队', '第八梯队', '第九梯队', '第十梯队'][i] ?? `第 ${i + 1} 梯队`}</span><span class="tier-title">{tierTitle(t, [])}</span></div>
-            {sp.length > 0 && <div class="tier-sub"><span>它们的成绩在这些工作上才分得开：</span>{sp.map((id) => <span class="split">+ {LABEL[id]}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</span>)}</div>}
+            <div class="tier-line"><span class="tier-no">{tierName(i, T)}</span><span class="tier-title">{tierTitle(t, [], T)}</span></div>
+            {sp.length > 0 && <div class="tier-sub"><span>{T.splitHint}</span>{sp.map((id) => <span class="split">+ {LABEL[id]}{small(id) && <span class="tiny">{caseTag(id)}</span>}</span>)}</div>}
           </div>,
           ...t.rows.map(({ lane: l }) => (
             <article class="card glass" data-id={l.id}>
-              <div class="card-head"><div class="who"><b>{l.name}</b><small>{l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>总分</small></div></div>
+              <div class="card-head"><div class="who"><b>{l.name}</b><small>{l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
               <div class="rows">
-                {facesAll.map((id) => {
+                {AXIS_IDS.map((id) => {
                   const c = l.axis[id];
                   return (
                     <div class="axis-row">
-                      <span class="lbl">{LABEL[id]}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</span>
-                      {c.n === 0 ? <span class="none">未考</span> : <div class="pips">{pipList(c).map((cls) => <i class={cls}></i>)}</div>}
+                      <span class="lbl">{LABEL[id]}{small(id) && <span class="tiny">{caseTag(id)}</span>}</span>
+                      {c.n === 0 ? <span class="none">{T.notSat}</span> : <div class="pips">{pipList(c).map((cls) => <i class={cls}></i>)}</div>}
                       <span class="frac">{c.n === 0 ? '—' : `${c.p}/${c.n}`}</span>
                     </div>
                   );
                 })}
               </div>
               {l.e && (
-                <div class="effort"><span class="k">每题用时</span><span class="v"><b class="tm">中位 {fmtSec(l.e.t_med)}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">合计</span><span class="v"><small class="tt">{fmtSec(l.e.t_total)}（{l.e.t_n} 题） · {fmtTok(l.e.tok)} token</small></span></div>
+                <div class="effort"><span class="k">{T.perCase}</span><span class="v"><b class="tm">{tr(T, 'median', { t: fmtSec(l.e.t_med, T) })}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">{T.total}</span><span class="v"><small class="tt">{tr(T, 'totalLine', { t: fmtSec(l.e.t_total, T), n: l.e.t_n, tok: fmtTok(l.e.tok, T) })}</small></span></div>
               )}
-              <div class="card-foot"><span class="wk">{l.wk} 测 · {l.cases} 案</span><a class="cmp-toggle" href={`https://github.com/getaskclaw/${l.repo}`}>成绩仓</a></div>
+              <div class="card-foot"><span class="wk">{tr(T, 'week', { wk: l.wk, n: l.cases })}</span><a class="cmp-toggle" href={`https://github.com/getaskclaw/${l.repo}`}>{T.repoLink}</a></div>
             </article>
           )),
         ];
@@ -124,11 +124,11 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
 
   <div class="dock glass" id="dock" aria-live="polite">
     <div class="picked" id="picked"></div>
-    <button class="btn ghost" type="button" id="clear-cmp">清除</button>
-    <button class="btn" type="button" id="open-cmp">对比</button>
+    <button class="btn ghost" type="button" id="clear-cmp">{T.clear}</button>
+    <button class="btn" type="button" id="open-cmp">{T.compare}</button>
   </div>
 
-  <button class="totop glass" type="button" id="totop" aria-label="回到顶部"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></button>
+  <button class="totop glass" type="button" id="totop" aria-label={T.totop}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></button>
 
   <dialog class="sheet" id="sheet" aria-labelledby="sheet-title"><div class="sheet-body glass" id="sheet-body"></div></dialog>
 

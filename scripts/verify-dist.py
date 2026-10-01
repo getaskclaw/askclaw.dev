@@ -184,8 +184,8 @@ for relative in sorted(expected_routes):
     forbidden_terms = FORBIDDEN_INTERNAL_TERMS.findall(unescape(text))
     assert not forbidden_terms, f'{relative}: forbidden internal term {forbidden_terms}'
     scripts = re.findall(r'<script\b(?![^>]*\btype=["\']application/ld\+json["\'])[^>]*>(.*?)</script>', text, re.S | re.I)
-    # the home page carries the model picker's single inline script
-    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html', 'index.html'} else 0), relative
+    # the home pages carry the model picker's single inline script
+    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html', 'index.html', 'en/index.html'} else 0), relative
     parsed = Page(text)
     for ref in parsed.refs:
         url = urlparse(ref)
@@ -207,6 +207,8 @@ for relative in sorted(expected_routes):
         # The historical /21 composite note is fact and stays on the page.
         assert '15/21' in text and '14/21' in text
     if relative == 'en/index.html':
+        # the English page ships only the English picker dictionary
+        assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese text in the English picker script'
         assert len(parsed.cards) == 14
         assert sum('/amber-' in c['href'] for c in parsed.cards) == 13
         assert any(c['href'].endswith('/amber-claude') for c in parsed.cards)
@@ -219,7 +221,7 @@ for relative in sorted(expected_routes):
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
-    if relative == 'index.html':
+    if relative in {'index.html', 'en/index.html'}:
         picker_axes = re.search(r'data-axes="([^"]*)"', text)
         picker_site = re.search(r'data-site="([^"]*)"', text)
         assert picker_axes and json.loads(unescape(picker_axes.group(1))) == lanes
