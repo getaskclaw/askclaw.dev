@@ -1,14 +1,14 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import '../../styles/picker.css';
-import rawAxes from '../../data/axes.json';
-import siteData from '../../data/site-data.json';
+// The model picker (questions, tiers, cards, compare, detail). Used by the home page.
+import '../styles/picker.css';
+import rawAxes from '../data/axes.json';
+import siteData from '../data/site-data.json';
 import {
   FACES, LABEL, joinLanes, axisN, tiers, splitters, tierTitle, verdictText,
   held, displayTotal, fmtSec, fmtTok,
-} from '../../utils/picker-core.js';
-import coreSource from '../../utils/picker-core.js?raw';
-import appSource from '../../scripts/pick-app.js?raw';
+} from '../utils/picker-core.js';
+import coreSource from '../utils/picker-core.js?raw';
+import appSource from '../scripts/pick-app.js?raw';
 
 // Both data files are generated from amber.db (amber-run sync_site.py) and checked against
 // axes.provenance.json on every build. Nothing on this page is typed in by hand.
@@ -30,14 +30,7 @@ const pipList = (c) => [
 // One page script: the shared core (exports stripped) followed by the page app, in its own scope.
 const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`;
 ---
-<BaseLayout
-  title="AMBER 琥珀评测 — 你要它做什么？"
-  description="按你要交给模型的工作挑模型：成绩相同的模型归入同一梯队，再看每题用时和 token。数据由 amber.db 生成。"
-  canonicalPath="/pick/"
-  pageClass="picker-page"
-  noindex
->
-  <canvas id="caustics" aria-hidden="true"></canvas>
+<canvas id="caustics" aria-hidden="true"></canvas>
 
   <div class="ctx glass" id="ctx" aria-label="当前条件">
     <button class="ctx-sum" type="button" id="ctx-sum" aria-expanded="false" aria-controls="ctx-full"></button>
@@ -54,6 +47,7 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
 
   <div class="page" id="pick-app" data-axes={JSON.stringify(rawAxes)} data-site={JSON.stringify(siteData)} style={`--slots: ${slots}`}>
     <section class="ask glass" aria-labelledby="ask-title">
+      <div class="ask-main">
       <h1 id="ask-title">你要它<em>做什么</em>？</h1>
       <p class="sub">点选你要交给模型的工作，可多选。成绩完全一样的模型归进同一梯队，梯队之间才有高下；同一梯队里，再看谁更快、用的 token 更少。</p>
       <div class="pk-chips" aria-label="工作类型">
@@ -75,9 +69,11 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
         <input id="q" type="search" placeholder="找模型或厂商" autocomplete="off" />
       </label>
       <noscript><p class="sub">筛选、对比和详情需要启用 JavaScript；下面是按总分的完整分档。</p></noscript>
+      </div>
+      <slot name="beside" />
     </section>
 
-    <div class="pk-verdict">
+    <div class="pk-verdict" id="leaderboard">
       <h2 id="verdict" aria-live="polite">{verdictText(initial, [])}</h2>
       <div class="legend" aria-label="图例"><span><i class="lg-pass"></i>通过</span><span><i class="lg-fail"></i>未过</span><span><i class="lg-held"></i>挂起（不计输赢）</span><span><span class="tiny">1 题</span> 题少，偶然性大</span></div>
     </div>
@@ -123,6 +119,7 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
       })}
     </div>
     <p class="out" id="out" hidden></p>
+    <slot />
   </div>
 
   <div class="dock glass" id="dock" aria-live="polite">
@@ -136,4 +133,3 @@ const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSo
   <dialog class="sheet" id="sheet" aria-labelledby="sheet-title"><div class="sheet-body glass" id="sheet-body"></div></dialog>
 
   <script is:inline set:html={clientSource}></script>
-</BaseLayout>
