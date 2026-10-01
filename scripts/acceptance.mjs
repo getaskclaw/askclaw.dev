@@ -218,6 +218,8 @@ try {
       // Counts come from the published data, not from constants: one chip per axis (amber.db axes.sql),
       // one row per lane that sat every selected axis.
       const siteAxes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/site-data.json'), 'utf8')).axes;
+      // English axis names come from the published data too (amber.db axes.sql).
+      const axisName = (id) => siteAxes.find((a) => a.id === id).name_en;
       if (result.chipCount !== siteAxes.length
         || result.presetRowCount !== expectedRankRows(sourceLanes, ['build', 'ops', 'ui-build']).length) failed = true;
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
@@ -249,8 +251,8 @@ try {
         result.englishVerdict = await page.locator('#rank-verdict').innerText();
         result.englishHeadings = await page.locator('#rank-head th').allTextContents();
         if (result.everydayRows !== 19
-          || !result.englishVerdict.startsWith('Selected: Engineering + Operations. Lowest pass count: 5.')
-          || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', 'Engineering', 'Operations', 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
+          || !result.englishVerdict.startsWith(`Selected: ${axisName('build')} + ${axisName('ops')}. Lowest pass count: 5.`)
+          || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', axisName('build'), axisName('ops'), 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
         result.englishPresets = [];
         for (const button of await page.locator('[data-preset]').all()) {
           const preset = await button.getAttribute('data-preset');

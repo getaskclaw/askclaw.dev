@@ -2,80 +2,80 @@
  "axes": [
   {
    "grp": "build",
-   "hint_en": "Write code, ship features",
-   "hint_zh": "写代码、交付功能",
+   "hint_en": "Implement the spec correctly",
+   "hint_zh": "照着需求把功能写对",
    "id": "build",
-   "name_en": "Engineering",
-   "name_zh": "施工"
+   "name_en": "Coding",
+   "name_zh": "编码"
   },
   {
    "grp": "build",
-   "hint_en": "Debug, configure, release",
-   "hint_zh": "排障、配置、上线",
+   "hint_en": "Done means handed in",
+   "hint_zh": "做完还得交得出东西",
+   "id": "text",
+   "name_en": "Delivery",
+   "name_zh": "交付"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Follow the runbook",
+   "hint_zh": "照规程干脏活",
    "id": "ops",
-   "name_en": "Operations",
+   "name_en": "Ops",
    "name_zh": "运维"
   },
   {
    "grp": "build",
-   "hint_en": "Docs and reports",
-   "hint_zh": "文档与报告",
-   "id": "text",
-   "name_en": "Text",
-   "name_zh": "文本"
-  },
-  {
-   "grp": "build",
-   "hint_en": "Specs change midway",
-   "hint_zh": "需求中途改了",
+   "hint_en": "Ship A when A was asked",
+   "hint_zh": "客户要 A 不要 B",
    "id": "req-drift",
-   "name_en": "Requirement drift",
-   "name_zh": "需求漂移"
+   "name_en": "Requirements",
+   "name_zh": "需求"
   },
   {
    "grp": "build",
-   "hint_en": "Build a frontend",
-   "hint_zh": "做前端界面",
-   "id": "ui-build",
-   "name_en": "UI building",
-   "name_zh": "UI 搭建"
-  },
-  {
-   "grp": "build",
-   "hint_en": "Wrap up long sessions on time",
-   "hint_zh": "长对话按时收尾",
+   "hint_en": "Finish, don't spin",
+   "hint_zh": "真干完，不绕圈装忙",
    "id": "convergence",
    "name_en": "Convergence",
    "name_zh": "收敛"
   },
   {
    "grp": "judge",
-   "hint_en": "Spot issues in screenshots",
-   "hint_zh": "看截图找问题",
-   "id": "vision",
-   "name_en": "Visual review",
-   "name_zh": "视觉审图"
+   "hint_en": "Build the page to the mock",
+   "hint_zh": "照设计稿做页面",
+   "id": "ui-build",
+   "name_en": "UI",
+   "name_zh": "UI"
   },
   {
    "grp": "judge",
-   "hint_en": "Make gates hold under bad input",
-   "hint_zh": "让门禁守得住",
+   "hint_en": "Spot defects in screenshots",
+   "hint_zh": "给真截图挑毛病",
+   "id": "vision",
+   "name_en": "Vision",
+   "name_zh": "视觉"
+  },
+  {
+   "grp": "judge",
+   "hint_en": "Plug every hole in the validator",
+   "hint_zh": "堵死校验器的漏网口",
    "id": "defense",
    "name_en": "Defense",
    "name_zh": "防御"
   },
   {
    "grp": "judge",
-   "hint_en": "Find the real root cause",
-   "hint_zh": "查出真正的病根",
+   "hint_en": "Pin defects to their root cause",
+   "hint_zh": "毛病对到正确根因",
    "id": "attribution",
    "name_en": "Attribution",
    "name_zh": "归因"
   },
   {
    "grp": "judge",
-   "hint_en": "Code review",
-   "hint_zh": "代码审查",
+   "hint_en": "Inspect someone else's work",
+   "hint_zh": "给别人的交付物挑错",
    "id": "review",
    "name_en": "Review",
    "name_zh": "审查"
@@ -94,7 +94,7 @@
    "hint_zh": "看出问题、守住标准",
    "id": "judge",
    "name_en": "Judging",
-   "name_zh": "判官面"
+   "name_zh": "判断面"
   }
  ],
  "lanes": {
