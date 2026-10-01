@@ -58,7 +58,8 @@ const questions = [
 // commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
 const repos = [
   ['amber', 'spec', 'Method spec + public hash index + cross-repo weekly board'],
-  ['amber-devin', "19'/24", 'swe-2-max @ Devin — current leader'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin — joint leader (1 NA)'],
+  ['amber-claude', '19/24', "claude-sonnet-5-5 19/24 (W40, joint leader, no NA) · claude-opus-5-5 17'/24 @ Anthropic subscription lane"],
   ['amber-kimi', '18/24', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
   ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
   ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode — frozen at the owner\'s call'],
@@ -69,7 +70,6 @@ const repos = [
   ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go'],
   ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
   ['amber-stepfun', "16'/24", 'step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up'],
-  ['amber-claude', "17'/24", 'Anthropic Claude subscription-lane model results'],
   ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
@@ -169,6 +169,7 @@ const repos = [
           <img src={asset('top5-2026-w39.en.webp')} width="1400" height="1117" loading="lazy" alt="AMBER board: five rank tiers (2026-W39)" />
         </a>
         <figcaption>
+          W40 update · claude-sonnet-5-5 @ Anthropic subscription lane joins at 19/24 with no NA, level with swe-2-max @ Devin (19'/24, 1 NA); the chart is still the W39 artwork.<br />
           Snapshot 2026-W39 · leader swe-2-max @ Devin at 19'/24 (scored in W37, convergence folded in); the former five-way tie at 17/23 split into four lanes at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
