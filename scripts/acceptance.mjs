@@ -110,7 +110,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/pick/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/'];
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
@@ -141,7 +141,8 @@ let failed = false;
 try {
   for (const route of routes) {
     const isRankRoute = route === '/rank/' || route === '/en/rank/';
-    const isPickRoute = route === '/pick/';
+    // The home page is the model picker.
+    const isPickRoute = route === '/';
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     const consoleErrors = [];
     const consoleMessages = [];
@@ -433,7 +434,8 @@ try {
 
     if (route === '/' || route === '/en/') {
       await page.setViewportSize({ width: 375, height: 844 });
-      result.mobileLanes = await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
+      // English home keeps the legacy board (5 lane names); the Chinese home is the picker (one card per lane).
+      result.mobileLanes = route === '/' ? null : await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
         text: element.textContent, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth,
         whiteSpace: getComputedStyle(element).whiteSpace, textOverflow: getComputedStyle(element).textOverflow,
       })));
@@ -449,7 +451,9 @@ try {
       result.bannerNonInteractive = isDeepStrictEqual(await bannerStyle(), result.bannerStyle)
         && result.bannerStyle.cursor === 'default' && result.bannerStyle.background === 'rgba(0, 0, 0, 0)'
         && result.bannerStyle.shadow === 'none';
-      if (result.mobileLanes.length !== 5 || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
+      if (route === '/') result.mobileLanes = [];
+      result.homeCardsFit = await page.locator('#grid .card').evaluateAll((cards) => cards.every((card) => card.scrollWidth <= card.clientWidth + 1));
+      if ((route === '/en/' && result.mobileLanes.length !== 5) || (route === '/' && !result.homeCardsFit) || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
         || lane.whiteSpace !== 'normal' || lane.textOverflow === 'ellipsis')
         || !result.fourCardsIntact || result.homeMobileOverflow || !result.bannerNonInteractive) failed = true;
       await page.setViewportSize({ width: 1440, height: 900 });
@@ -501,6 +505,10 @@ try {
       await page.setViewportSize({ width: 320, height: 640 });
       result.pickNarrowOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       await page.setViewportSize({ width: 1440, height: 900 });
+      // Back to the top so the refresh check below compares the page, not the floating context bar
+      // that appears once the question panel has scrolled away (browsers restore scroll on reload).
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(300);
       if (!result.pickDataPreserved || result.pickCards !== axesFile.length || !isDeepStrictEqual(result.pickHeldGroup, expectedHeld)
         || !result.pickTiersUniform || !result.pickTiersOrdered || !result.pickDetailOpens || !result.pickDetailCloses || result.pickCompareColumns !== 3
         || result.pickNarrowOverflow) failed = true;

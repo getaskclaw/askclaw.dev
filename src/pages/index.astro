@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Picker from '../components/Picker.astro';
+import rawAxes from '../data/axes.json';
 import { route } from '../utils/route';
 
 const crabAsset = route('/assets/crab-hero.webp');
+
+// Facts beside the crab come from the generated board, not typed in.
+const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
+const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
+const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
 
 const questions = [
   {
@@ -18,19 +25,19 @@ const questions = [
     code: 'B',
     tone: 'amber',
     question: '新出的模型能不能打？',
-    preview: '同一套 24 案，进榜即见。',
-    cue: '看 W39',
+    preview: `同一套 ${caseCount} 案，进榜即见。`,
+    cue: `看 ${latestWeek}`,
     href: route('/#leaderboard'),
-    ariaLabel: '新出的模型能不能打？同一套 24 案，进榜即见。查看 2026-W39 总榜。',
+    ariaLabel: `新出的模型能不能打？同一套 ${caseCount} 案，进榜即见。查看本页的分档总榜。`,
   },
   {
     code: 'C',
     tone: 'cobalt',
-    question: '我干这个活该用谁？',
-    preview: '按活挑轴，不看总分。',
+    question: '想逐格看矩阵？',
+    preview: '十轴矩阵，按轴排序。',
     cue: '按轴排',
     href: route('/rank/'),
-    ariaLabel: '我干这个活该用谁？按活挑轴，不看总分。按工作类型查看十轴排行。',
+    ariaLabel: '想逐格看矩阵？十轴矩阵，按轴排序。查看十轴排行。',
   },
   {
     code: 'D',
@@ -42,165 +49,74 @@ const questions = [
     ariaLabel: '这榜自己可信吗？封存、净室、hash 可查。查看规范和证据链。',
   },
 ] as const;
-
-const tiedLanes = [
-  ['glm-5.3-flash @ Ollama Cloud', 'teal', '18/24'],
-  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky', '18/24'],
-  ['k3 @ Kimi 官方 coding', 'coral', '18/24'],
-  ['hy4-preview-f @ WorkBuddy', 'mint', '18/24'],
-] as const;
-const frozenLanes = [
-  ['deepseek-v4.1-flash @ CommandCode', 'cobalt', '17/23 ∅'],
-] as const;
 ---
 <BaseLayout
   title="AskClaw — 琥珀评测 AMBER：封存回放式 AI 基准测试"
-  description="琥珀评测 AMBER：把真实历史事件封进琥珀，让 AI 只用当时可得的信息重做一次。私有题库、公开成绩、人人可核对的模型评测与排行榜。"
+  description="琥珀评测 AMBER：把真实历史事件封进琥珀，让 AI 只用当时可得的信息重做一次。按你要做的工作挑模型，成绩相同的归入同一梯队，并给出每题用时与 token。"
   canonicalPath="/"
   keywords="琥珀评测, 琥珀, AMBER, AI评测, 大模型评测, LLM评测, 模型排行榜, AI基准测试, AskClaw"
   schemaType="WebSite"
   schemaName="AskClaw"
   schemaAlternateName={['琥珀评测', 'AMBER Benchmark', 'AMBER 琥珀评测']}
   schemaInLanguage={['zh-CN', 'en']}
-  pageClass="home-document"
+  pageClass="picker-page"
 >
-  <div class="home-page">
-    <div class="wrap home-wrap">
-      <section class="question-hero" aria-labelledby="question-heading">
-        <div class="question-panel">
-          <p class="eyebrow">AMBER / PUBLIC BENCHMARK</p>
-          <div class="eyebrow-rule" aria-hidden="true"></div>
-          <h1 id="question-heading">你想先问哪一句？</h1>
-          <div class="question-grid" aria-label="四个公开数据入口">
-            {questions.map((entry) => (
-              <a
-                class={`question-entry question-entry-${entry.tone}`}
-                href={entry.href}
-                aria-label={entry.ariaLabel}
-              >
-                <span class="question-meta">
-                  <span class="question-dot" aria-hidden="true"></span>
-                  <span>{entry.code}</span>
-                </span>
-                <span class="question-copy">
-                  <span class="question">{entry.question}</span>
-                  <span class="preview">{entry.preview}</span>
-                </span>
-                <span class="edge-cue">
-                  <span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>
-                  {entry.cue}
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
+  <Picker>
+    <aside class="crab-guide" aria-label="首屏导览" slot="beside">
+      <div class="crab-frame">
+        <img
+          src={crabAsset}
+          width="1200"
+          height="400"
+          alt="珊瑚色蟹托着珍珠，邀请访客按工作挑模型"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+      <p class="crab-bubble">先说要做什么，我把路递给你。</p>
+      <div class="fact-rail" aria-label="AMBER 当前事实">
+        <span class="fact-dot" aria-hidden="true"></span>
+        <span>{caseCount} 案 · {repoCount} 个成绩仓 · 2026-{latestWeek}</span>
+      </div>
+    </aside>
 
-        <aside class="crab-guide" aria-label="首屏导览">
-          <div class="crab-frame">
-            <img
-              src={crabAsset}
-              width="1200"
-              height="400"
-              alt="珊瑚色蟹托着珍珠，邀请访客查看 AMBER W39 总榜"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </div>
-          <p class="crab-bubble">先问一句，我把路递给你。</p>
-          <div class="fact-rail" aria-label="AMBER 当前事实">
-            <span class="fact-dot" aria-hidden="true"></span>
-            <span>24 案 · 13 个成绩仓 · 2026-W39</span>
-          </div>
-        </aside>
-      </section>
+    <section class="home-more glass" aria-labelledby="more-title">
+      <h2 id="more-title">也可以先问这些</h2>
+      <div class="question-grid" aria-label="四个公开数据入口">
+        {questions.map((entry) => (
+          <a class={`question-entry question-entry-${entry.tone}`} href={entry.href} aria-label={entry.ariaLabel}>
+            <span class="question-meta"><span class="question-dot" aria-hidden="true"></span><span>{entry.code}</span></span>
+            <span class="question-copy"><span class="question">{entry.question}</span><span class="preview">{entry.preview}</span></span>
+            <span class="edge-cue"><span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>{entry.cue}</span>
+          </a>
+        ))}
+      </div>
+    </section>
 
-      <section class="leaderboard" id="leaderboard" aria-labelledby="leaderboard-title">
-        <header class="leaderboard-header">
+    <section class="pending-section glass" aria-labelledby="pending-title">
+      <header class="pending-header">
+        <h2 id="pending-title">在补什么</h2>
+        <p>先补齐证据，再回到首屏。</p>
+      </header>
+      <div class="pending-list">
+        <div class="pending-row pending-row-e">
+          <span class="pending-letter" aria-hidden="true">E</span>
           <div>
-            <h2 id="leaderboard-title">当前总榜</h2>
-            <p>真实公开成绩 · 2026-W39</p>
+            <h3>AI 模型降智了吗？</h3>
+            <p>跨家复测还未齐，暂不声称能力回退。</p>
           </div>
-          <span class="leaderboard-badge">24 案 · 13 个成绩仓</span>
-        </header>
-
-        <div class="leaderboard-body">
-          <article class="champion-card" aria-labelledby="champion-title">
-            <div class="rank-label"><span class="rank-dot" aria-hidden="true"></span>#1 · 当前榜首</div>
-            <div class="champion-main">
-              <div>
-                <h3 id="champion-title">swe-2-max @ Devin</h3>
-                <p>考于 W37 · W39 收敛轴首案并入记分</p>
-              </div>
-              <strong class="champion-score">19'/24</strong>
-              <small>含 1 NA，不计胜负。</small>
-            </div>
-            <p class="champion-detail">榜首成绩 · 24 案题库</p>
-            <div class="progress-block">
-              <div class="progress-track" role="img" aria-label="榜首通过 19 案，共 24 案">
-                <span style="width: 79.17%"></span>
-              </div>
-              <span>通过案数 / 题库总案数</span>
-            </div>
-          </article>
-
-          <article class="tied-card" aria-labelledby="tied-title">
-            <h3 id="tied-title">#2 · 四席并列 · 均为 18/24</h3>
-            <ol class="tied-list">
-              {tiedLanes.map(([name, tone, score]) => (
-                <li>
-                  <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
-                  <span class="lane-name" title={name}>{name}</span>
-                  <strong>{score}</strong>
-                </li>
-              ))}
-            </ol>
-            <p class="leaderboard-footnote">
-              原 17/23 五席在收敛补测后分流：k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 四家 18/24；
-              CommandCode 道 owner 令冻结 ∅，成绩保留旧口径 17/23。
-            </p>
-            <ol class="tied-list tied-list-frozen">
-              {frozenLanes.map(([name, tone, score]) => (
-                <li>
-                  <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
-                  <span class="lane-name" title={name}>{name}</span>
-                  <strong>{score}</strong>
-                </li>
-              ))}
-            </ol>
-          </article>
+          <span class="pending-status">数据待发布</span>
         </div>
-
-        <footer class="leaderboard-footer">
-          <strong>同分 ≠ 同款</strong>
-          <span>榜单先给结果，详情页保留证据</span>
-        </footer>
-      </section>
-
-      <section class="pending-section" aria-labelledby="pending-title">
-        <header class="pending-header">
-          <h2 id="pending-title">在补什么</h2>
-          <p>先补齐证据，再回到首屏。</p>
-        </header>
-        <div class="pending-list">
-          <div class="pending-row pending-row-e">
-            <span class="pending-letter" aria-hidden="true">E</span>
-            <div>
-              <h3>AI 模型降智了吗？</h3>
-              <p>跨家复测还未齐，暂不声称能力回退。</p>
-            </div>
-            <span class="pending-status">数据待发布</span>
+        <div class="pending-row pending-row-f">
+          <span class="pending-letter" aria-hidden="true">F</span>
+          <div>
+            <h3>在我关注的方面，有更好的平替吗？</h3>
+            <p>便宜候选需要成体系的价格 / 成本源；用时和 token 已在卡片上。</p>
           </div>
-          <div class="pending-row pending-row-f">
-            <span class="pending-letter" aria-hidden="true">F</span>
-            <div>
-              <h3>在我关注的方面，有更好的平替吗？</h3>
-              <p>便宜候选需要成体系的价格 / 成本源。</p>
-            </div>
-            <span class="pending-status">价格待发布</span>
-          </div>
+          <span class="pending-status">价格待发布</span>
         </div>
-        <p class="pending-note">次级区只记缺口，不替数据提前下结论。</p>
-      </section>
-    </div>
-  </div>
+      </div>
+      <p class="pending-note">次级区只记缺口，不替数据提前下结论。</p>
+    </section>
+  </Picker>
 </BaseLayout>

@@ -116,9 +116,9 @@ def detect_dist_base_path():
 # the build process; infer the already-built base from its canonical URL for the second process.
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
-expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html', 'pick/index.html'}
+expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
 # Built and reachable, but not launched: noindex on every base and absent from the sitemap.
-unlisted_routes = {'pick/index.html'}
+unlisted_routes = set()
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
 public_routes = {'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
 for retired in ('axes.html', 'axes.json'):
@@ -184,7 +184,8 @@ for relative in sorted(expected_routes):
     forbidden_terms = FORBIDDEN_INTERNAL_TERMS.findall(unescape(text))
     assert not forbidden_terms, f'{relative}: forbidden internal term {forbidden_terms}'
     scripts = re.findall(r'<script\b(?![^>]*\btype=["\']application/ld\+json["\'])[^>]*>(.*?)</script>', text, re.S | re.I)
-    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html', 'pick/index.html'} else 0), relative
+    # the home page carries the model picker's single inline script
+    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html', 'index.html'} else 0), relative
     parsed = Page(text)
     for ref in parsed.refs:
         url = urlparse(ref)
@@ -218,8 +219,7 @@ for relative in sorted(expected_routes):
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
-    if relative == 'pick/index.html':
-        assert '<meta name="robots" content="noindex,nofollow"' in text
+    if relative == 'index.html':
         picker_axes = re.search(r'data-axes="([^"]*)"', text)
         picker_site = re.search(r'data-site="([^"]*)"', text)
         assert picker_axes and json.loads(unescape(picker_axes.group(1))) == lanes

@@ -19,7 +19,7 @@ for (const [file, key] of [['axes.json', 'axes_sha256'], ['site-data.json', 'sit
   }
 }
 // Pages that are built and reachable but not launched yet: kept out of the sitemap (and noindex).
-const UNLISTED = ['/pick/'];
+const UNLISTED = [];
 
 // Production root is the default: `npm run build` with no SITE_BASE builds the real site.
 // The preview deployment sets SITE_BASE=/astro-preview/ and must stay out of search engines,
