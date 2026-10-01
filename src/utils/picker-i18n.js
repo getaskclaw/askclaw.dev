@@ -63,6 +63,7 @@ export const I18N = {
       gp: { vendor: 'Community self-hosted 3×V100' },
       stepfun: { vendor: 'stepfun plan endpoint' },
       claude: { vendor: 'Anthropic subscription lane' },
+      'claude-sonnet': { vendor: 'Anthropic subscription lane' },
     },
     tierNames: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4', 'Tier 5', 'Tier 6', 'Tier 7', 'Tier 8', 'Tier 9', 'Tier 10'],
     tierN: 'Tier {n}',

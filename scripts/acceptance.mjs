@@ -210,6 +210,7 @@ try {
         gp: { vendor: 'Community self-hosted 3×V100' },
         stepfun: { vendor: 'stepfun plan endpoint' },
         claude: { vendor: 'Anthropic subscription lane' },
+        'claude-sonnet': { vendor: 'Anthropic subscription lane' },
       };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
@@ -250,8 +251,10 @@ try {
         result.everydayRows = await page.locator('#rank-body tr').count();
         result.englishVerdict = await page.locator('#rank-verdict').innerText();
         result.englishHeadings = await page.locator('#rank-head th').allTextContents();
-        if (result.everydayRows !== 19
-          || !result.englishVerdict.startsWith(`Selected: ${axisName('build')} + ${axisName('ops')}. Lowest pass count: 5.`)
+        // W40: claude-sonnet-5-5 is the first lane at 6/6 on both coding and ops, so the
+        // everyday preset's leading lowest-pass count moved from 5 to 6.
+        if (result.everydayRows !== expectedLanes.length
+          || !result.englishVerdict.startsWith(`Selected: ${axisName('build')} + ${axisName('ops')}. Lowest pass count: 6.`)
           || !isDeepStrictEqual(result.englishHeadings, ['#', 'Lane (model × endpoint)', 'Total score', axisName('build'), axisName('ops'), 'Weakest axis', 'Combined', 'Week / cases'])) failed = true;
         result.englishPresets = [];
         for (const button of await page.locator('[data-preset]').all()) {
@@ -285,10 +288,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'cc-sb'];
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'cc-sb'];
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence15/16 full marks' : '收敛15/16 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence16/17 full marks' : '收敛16/17 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
