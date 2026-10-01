@@ -8,6 +8,7 @@ import {
   held, displayTotal, fmtSec, fmtTok,
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
+import { transform } from 'esbuild';
 import coreSource from '../utils/picker-core.js?raw';
 import appSource from '../scripts/pick-app.js?raw';
 
@@ -35,7 +36,11 @@ const pipList = (c) => [
 ];
 // One page script, in its own scope: this page's dictionary only, the shared core (exports
 // stripped), then the page app.
-const clientSource = `(() => {\nconst T = ${JSON.stringify(T)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`;
+// Minified at build time: Astro does not minify inline scripts, and the home page has a size budget.
+const clientSource = (await transform(
+  `(() => {\nconst T = ${JSON.stringify(T)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
+  { minify: true, target: 'es2020', charset: 'utf8' },
+)).code;
 const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], ['name', T.sortName, 'false']];
 ---
 <canvas id="caustics" aria-hidden="true"></canvas>
