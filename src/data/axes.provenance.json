@@ -1,0 +1,8 @@
+{
+ "amber_db_blob": "bc7a430cdbb85414c9d667224363c99faf890208",
+ "amber_run_commit": "28ef5b06e97fb6f7f3b0afdfbe344547f70f5753",
+ "axes_sha256": "df473cc29ac95056d1d27f88ee52cccb32289f06f42cfe182192b8a459c8f011",
+ "generator": "amber-run tools/amberdb/publish.py via sync_site.py",
+ "note": "do not edit axes.json by hand; regenerate with sync_site.py --write",
+ "rule_version": "headline_v1"
+}
