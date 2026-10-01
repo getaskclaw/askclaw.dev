@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picker from '../../components/Picker.astro';
+import rawAxes from '../../data/axes.json';
 import { route } from '../../utils/route';
 
 const asset = (file: string) => route(`/assets/${file}`);
@@ -8,6 +10,10 @@ const asset = (file: string) => route(`/assets/${file}`);
 // question-* / crab-* / leaderboard-* classes. A follows the Chinese page's repos anchor;
 // D keeps the requested method-page entry path.
 const crabAsset = asset('crab-hero.webp');
+// Facts beside the crab come from the generated board, not typed in.
+const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
+const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
+const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
 
 const questions = [
   {
@@ -23,19 +29,19 @@ const questions = [
     code: 'B',
     tone: 'amber',
     question: 'Can the newly released models actually hold up?',
-    preview: 'Same 24 cases; enter the board and see.',
-    cue: 'See W39',
-    href: route('/#leaderboard'),
-    ariaLabel: 'Can the newly released models actually hold up? Same 24 cases; enter the board and see. See the 2026-W39 board.',
+    preview: `Same ${caseCount} cases; enter the board and see.`,
+    cue: `See ${latestWeek}`,
+    href: route('/en/#leaderboard'),
+    ariaLabel: `Can the newly released models actually hold up? Same ${caseCount} cases; enter the board and see. See the tiered board on this page.`,
   },
   {
     code: 'C',
     tone: 'cobalt',
-    question: 'Which model should I use for this kind of work?',
-    preview: 'Pick the axis by work, not the total.',
+    question: 'Want to read the matrix cell by cell?',
+    preview: 'The axis matrix, ranked by axis.',
     cue: 'Rank by axis',
     href: route('/en/rank/'),
-    ariaLabel: 'Which model should I use for this kind of work? Pick the axis by work, not the total. Rank by work type.',
+    ariaLabel: 'Want to read the matrix cell by cell? The axis matrix, ranked by axis. Rank by work type.',
   },
   {
     code: 'D',
@@ -48,17 +54,6 @@ const questions = [
   },
 ] as const;
 
-// #2 tie: the four lanes that sit at 18/24 after the convergence make-up. The CommandCode lane
-// was frozen at the owner's call and is rendered separately below with its sealed 17/23 basis.
-const tiedLanes = [
-  ['glm-5.3-flash @ Ollama Cloud', 'teal', '18/24'],
-  ['deepseek-v4.1-flash @ Ollama Cloud', 'sky', '18/24'],
-  ['k3 @ Kimi official coding', 'coral', '18/24'],
-  ['hy4-preview-f @ WorkBuddy', 'mint', '18/24'],
-] as const;
-const frozenLanes = [
-  ['deepseek-v4.1-flash @ CommandCode', 'cobalt', '17/23 ∅'],
-] as const;
 // Published repository summaries, now on the /24 basis (amber README headline scores,
 // commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
 const repos = [
@@ -87,120 +82,42 @@ const repos = [
   schemaType="WebSite"
   schemaName="AskClaw — AMBER: sealed-in-amber replay evaluation"
   schemaInLanguage="en"
+  pageClass="picker-page"
 >
-  <div class="wrap english-mirror">
-    <section class="question-hero" aria-labelledby="question-heading">
-      <div class="question-panel">
-        <p class="eyebrow">AMBER / PUBLIC BENCHMARK</p>
-        <div class="eyebrow-rule" aria-hidden="true"></div>
-        <h1 id="question-heading">Which question do you want to start with?</h1>
-        <div class="question-grid" aria-label="Four public data entry points">
-          {questions.map((entry) => (
-            <a
-              class={`question-entry question-entry-${entry.tone}`}
-              href={entry.href}
-              aria-label={entry.ariaLabel}
-            >
-              <span class="question-meta">
-                <span class="question-dot" aria-hidden="true"></span>
-                <span>{entry.code}</span>
-              </span>
-              <span class="question-copy">
-                <span class="question">{entry.question}</span>
-                <span class="preview">{entry.preview}</span>
-              </span>
-              <span class="edge-cue">
-                <span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>
-                {entry.cue}
-              </span>
-            </a>
-          ))}
-        </div>
+  <Picker lang="en">
+    <aside class="crab-guide" aria-label="Hero guide" slot="beside">
+      <div class="crab-frame">
+        <img
+          src={crabAsset}
+          width="1200"
+          height="400"
+          alt="A coral crab holding a pearl, inviting visitors to pick models by the work they need"
+          fetchpriority="high"
+          decoding="async"
+        />
       </div>
+      <p class="crab-bubble">Tell me the work; I'll hand you the path.</p>
+      <div class="fact-rail" aria-label="AMBER current facts">
+        <span class="fact-dot" aria-hidden="true"></span>
+        <span>{caseCount} cases · {repoCount} result repos · 2026-{latestWeek}</span>
+      </div>
+    </aside>
 
-      <aside class="crab-guide" aria-label="Hero guide">
-        <div class="crab-frame">
-          <img
-            src={crabAsset}
-            width="1200"
-            height="400"
-            alt="A coral crab holding a pearl, inviting visitors to view the AMBER 2026-W39 board"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-        <p class="crab-bubble">Ask one question; I'll hand you the path.</p>
-        <div class="fact-rail" aria-label="AMBER current facts">
-          <span class="fact-dot" aria-hidden="true"></span>
-          <span>24 cases · 13 result repos · 2026-W39</span>
-        </div>
-      </aside>
+  <div class="english-mirror">
+    <section class="home-more glass" aria-labelledby="more-title">
+      <h2 id="more-title">Or start with one of these</h2>
+      <div class="question-grid" aria-label="Four public data entry points">
+        {questions.map((entry) => (
+          <a class={`question-entry question-entry-${entry.tone}`} href={entry.href} aria-label={entry.ariaLabel}>
+            <span class="question-meta"><span class="question-dot" aria-hidden="true"></span><span>{entry.code}</span></span>
+            <span class="question-copy"><span class="question">{entry.question}</span><span class="preview">{entry.preview}</span></span>
+            <span class="edge-cue"><span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>{entry.cue}</span>
+          </a>
+        ))}
+      </div>
     </section>
 
-    <section class="leaderboard" id="leaderboard" aria-labelledby="leaderboard-title">
-      <header class="leaderboard-header">
-        <div>
-          <h2 id="leaderboard-title">Current board</h2>
-          <p>Real published scores · 2026-W39</p>
-        </div>
-        <span class="leaderboard-badge">24 cases · 13 result repos</span>
-      </header>
-
-      <div class="leaderboard-body">
-        <article class="champion-card" aria-labelledby="champion-title">
-          <div class="rank-label"><span class="rank-dot" aria-hidden="true"></span>#1 · Current leader</div>
-          <div class="champion-main">
-            <div>
-              <h3 id="champion-title">swe-2-max @ Devin</h3>
-              <p>Scored in W37 · convergence case folded in on W39</p>
-            </div>
-            <strong class="champion-score">19'/24</strong>
-              <small>1 NA; not a win or a loss.</small>
-          </div>
-          <p class="champion-detail">Leader's score · 24-case library</p>
-          <div class="progress-block">
-            <div class="progress-track" role="img" aria-label="Leader passed 19 of 24 cases">
-              <span style="width: 79.17%"></span>
-            </div>
-            <span>Cases passed / total cases in the library</span>
-          </div>
-        </article>
-
-        <article class="tied-card" aria-labelledby="tied-title">
-          <h3 id="tied-title">#2 · four-way tie · all 18/24</h3>
-          <ol class="tied-list">
-            {tiedLanes.map(([name, tone, score]) => (
-              <li>
-                <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
-                <span class="lane-name" title={name}>{name}</span>
-                <strong>{score}</strong>
-              </li>
-            ))}
-          </ol>
-          <p class="leaderboard-footnote">
-            The former five-way 17/23 tie broke up in the convergence make-ups: k3 / glm-5.3-flash /
-            v4.1-flash @ Ollama / hy4 now sit at 18/24, while the CommandCode lane was frozen at ∅
-            at the owner's call and keeps its sealed 17/23 record.
-          </p>
-          <ol class="tied-list tied-list-frozen">
-            {frozenLanes.map(([name, tone, score]) => (
-              <li>
-                <span class={`lane-marker lane-marker-${tone}`} aria-hidden="true"></span>
-                <span class="lane-name" title={name}>{name}</span>
-                <strong>{score}</strong>
-              </li>
-            ))}
-          </ol>
-        </article>
-      </div>
-
-      <footer class="leaderboard-footer">
-        <strong>Same score ≠ same shape</strong>
-        <span>The board gives the result first; the detail pages keep the evidence</span>
-      </footer>
-    </section>
-
-    <section class="pending-section" aria-labelledby="pending-title">
+    <section class="pending-section glass" aria-labelledby="pending-title">
       <header class="pending-header">
         <h2 id="pending-title">Still being filled in</h2>
         <p>Evidence first, then it comes back to the hero.</p>
@@ -218,7 +135,7 @@ const repos = [
           <span class="pending-letter" aria-hidden="true">F</span>
           <div>
             <h3>A cheaper alternative for my workload?</h3>
-            <p>Cheaper candidates need a systematic price / cost source.</p>
+            <p>Cheaper candidates need a systematic price / cost source; time and tokens are already on the cards.</p>
           </div>
           <span class="pending-status">pricing pending</span>
         </div>
@@ -351,6 +268,7 @@ const repos = [
       </p>
     </section>
   </div>
+  </Picker>
 </BaseLayout>
 
 <style>

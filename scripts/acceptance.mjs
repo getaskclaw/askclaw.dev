@@ -141,8 +141,8 @@ let failed = false;
 try {
   for (const route of routes) {
     const isRankRoute = route === '/rank/' || route === '/en/rank/';
-    // The home page is the model picker.
-    const isPickRoute = route === '/';
+    // The home pages (zh and en) are the model picker.
+    const isPickRoute = route === '/' || route === '/en/';
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     const consoleErrors = [];
     const consoleMessages = [];
@@ -434,8 +434,8 @@ try {
 
     if (route === '/' || route === '/en/') {
       await page.setViewportSize({ width: 375, height: 844 });
-      // English home keeps the legacy board (5 lane names); the Chinese home is the picker (one card per lane).
-      result.mobileLanes = route === '/' ? null : await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
+      // Both home pages are the picker now (one card per lane); the legacy hand-typed board is gone.
+      result.mobileLanes = isPickRoute ? null : await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
         text: element.textContent, scrollWidth: element.scrollWidth, clientWidth: element.clientWidth,
         whiteSpace: getComputedStyle(element).whiteSpace, textOverflow: getComputedStyle(element).textOverflow,
       })));
@@ -451,9 +451,9 @@ try {
       result.bannerNonInteractive = isDeepStrictEqual(await bannerStyle(), result.bannerStyle)
         && result.bannerStyle.cursor === 'default' && result.bannerStyle.background === 'rgba(0, 0, 0, 0)'
         && result.bannerStyle.shadow === 'none';
-      if (route === '/') result.mobileLanes = [];
+      if (isPickRoute) result.mobileLanes = [];
       result.homeCardsFit = await page.locator('#grid .card').evaluateAll((cards) => cards.every((card) => card.scrollWidth <= card.clientWidth + 1));
-      if ((route === '/en/' && result.mobileLanes.length !== 5) || (route === '/' && !result.homeCardsFit) || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
+      if ((isPickRoute && !result.homeCardsFit) || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
         || lane.whiteSpace !== 'normal' || lane.textOverflow === 'ellipsis')
         || !result.fourCardsIntact || result.homeMobileOverflow || !result.bannerNonInteractive) failed = true;
       await page.setViewportSize({ width: 1440, height: 900 });

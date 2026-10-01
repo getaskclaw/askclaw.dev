@@ -354,3 +354,20 @@ html { transition: background-color .4s; }
   .pending-row { grid-template-columns: auto minmax(0, 1fr); }
   .pending-status { grid-column: 2; justify-self: start; }
 }
+
+/* English labels are longer than Chinese ones: a wider label column that may wrap */
+:root:lang(en) .axis-row { grid-template-columns: minmax(0, 10.5em) minmax(0, 1fr) 2.8em; }
+:root:lang(en) .axis-row .lbl { white-space: normal; line-height: 1.25; }
+:root:lang(en) .drow { grid-template-columns: 11.5em minmax(0, 1fr) minmax(0, 1fr); }
+:root:lang(en) .drow .d-lbl { white-space: normal; line-height: 1.25; }
+:root:lang(en) .drow .d-time { grid-template-columns: minmax(0, 1fr) 10.5em; }
+@media (max-width: 640px) {
+  :root:lang(en) .drow { grid-template-columns: 9.5em minmax(0, 1fr); }
+  :root:lang(en) .drow .d-time { grid-template-columns: minmax(0, 1fr) 9em; }
+}
+
+/* search hint: a plain span shown while the box is empty and unfocused (empty + required = :invalid) */
+.search { position: relative; }
+.search .q-hint { position: absolute; left: 32px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-size: 14px; pointer-events: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 44px); }
+.search input:focus + .q-hint, .search input:valid + .q-hint { display: none; }
+.search input:invalid { box-shadow: none; }
