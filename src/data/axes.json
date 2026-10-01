@@ -1019,5 +1019,58 @@
     "n": 2
    }
   }
+ },
+ {
+  "id": "claude-sonnet",
+  "name": "claude-sonnet-5-5",
+  "vendor": "Anthropic 订阅道",
+  "wk": "W40",
+  "cases": 24,
+  "repo": "amber-claude",
+  "file": "amber-claude/results/2026-W40.md",
+  "total": 19,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 6,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 0,
+    "n": 2
+   }
+  }
  }
 ]
