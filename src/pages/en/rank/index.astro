@@ -96,7 +96,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and stays out of the weakest-axis ranking and the full-marks count; a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. Claude 17'/24: 17 wins · 6 losses · 1 test-harness infrastructure NA (A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner). Luna high 16'/24: 16 wins · 4 losses · 4 held; UI / Vision / Review NA, not zero. StepFun 16'/24: 4 held cells, not losses. Week labels mean the baseline test week: Luna W37 (2026-09-07), StepFun W38 (2026-09-20); both add a separate W39 make-up (2026-09-21). Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24. W39 newcomers: gpt-6-astra 16/24, gpt-6-sol 17/24, gpt-6-luna 15/24 (OpenAI Codex, all with no holds); mimo-v2.6-pro 17'/24 (1 scoring-environment invalid case held pending re-scoring, not a loss); space-bunny-alpha 15/24 (no NA).</p>
+      <p class="note rank-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and earns no full marks; a lane with a wholly held axis among the selected types has no comparable result and stays outside the ranking (shown as —); a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. Claude 17'/24: 17 wins · 6 losses · 1 test-harness infrastructure NA (A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner). Luna high 16'/24: 16 wins · 4 losses · 4 held; UI / Vision / Review NA, not zero. StepFun 16'/24: 4 held cells, not losses. Week labels mean the baseline test week: Luna W37 (2026-09-07), StepFun W38 (2026-09-20); both add a separate W39 make-up (2026-09-21). Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24. W39 newcomers: gpt-6-astra 16/24, gpt-6-sol 17/24, gpt-6-luna 15/24 (OpenAI Codex, all with no holds); mimo-v2.6-pro 17'/24 (1 scoring-environment invalid case held pending re-scoring, not a loss); space-bunny-alpha 15/24 (no NA).</p>
       <p class="note">Data comes from the public result repositories. Week labels follow the baseline test week; make-up weeks are disclosed separately. Case-set sizes stay on record. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
@@ -172,16 +172,20 @@ const stats = faces.map(([id, label]) => {
     });
 
     // A lane stays on the board when every selected axis has case slots, even if some axes are
-    // wholly held. All-held axes leave the min/sum math (a hold is not a zero); a lane whose
-    // selected axes are all held cannot be ordered and shows '—' outside the ranking.
+    // wholly held. A hold is not a zero, and it is not a pass either: a lane with any wholly held
+    // selected axis cannot be ordered and shows '—' outside the ranking.
     const rows = lanes
       .filter((lane) => active.every((id) => lane.axis[id].n > 0))
       .map((lane) => {
-        const values = active.filter((id) => usable(lane.axis[id]) > 0).map((id) => lane.axis[id].p);
+        // A wholly held selected axis has no result to compare, so the lane cannot be placed
+        // against lanes that did sit it: it stays outside the ranking ('—') instead of being
+        // ordered on the remaining axes, which would let a hold outrank a real pass.
+        if (active.some((id) => usable(lane.axis[id]) === 0)) return { lane, min: null, sum: null };
+        const values = active.map((id) => lane.axis[id].p);
         return {
           lane,
-          min: values.length ? Math.min(...values) : null,
-          sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
+          min: Math.min(...values),
+          sum: values.reduce((total, value) => total + value, 0),
         };
       })
       .sort((a, b) => {
@@ -202,7 +206,7 @@ const stats = faces.map(([id, label]) => {
 
     rows.forEach(({ lane, min, sum }, index) => {
       const row = document.createElement('tr');
-      appendCell(row, String(index + 1), 'rank-number');
+      appendCell(row, min === null ? '—' : String(index + 1), 'rank-number');
       const laneCell = document.createElement('td');
       laneCell.className = 'lane';
       const link = document.createElement('a');
@@ -268,7 +272,7 @@ const stats = faces.map(([id, label]) => {
     verdict.append(document.createTextNode(`Leading lanes: ${names}${winners.length > 4 ? ` (among ${winners.length} lanes)` : ''}.`));
     if (winners.length > 1) verdict.append(document.createTextNode(` ${winners.length} lanes tied.`));
     const unranked = rows.length - ranked.length;
-    if (unranked > 0) verdict.append(document.createTextNode(` ${unranked} lane(s) are wholly held on the selected types and stay outside the ranking.`));
+    if (unranked > 0) verdict.append(document.createTextNode(` ${unranked} lane(s) have a wholly held type among the selected ones, so there is no result to compare and they stay outside the ranking.`));
 
     const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
     if (saturated.length > 0) {

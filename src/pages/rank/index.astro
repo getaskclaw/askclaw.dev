@@ -88,7 +88,7 @@ const stats = faces.map(([id, label]) => {
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不参加短板排序与满分统计；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。Claude 17'/24：17 胜 · 6 负 · 1 案考场(harness)基建 NA（A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议）。Luna high 16'/24：16 胜 · 4 负 · 4 挂起，UI／视觉／审查 NA，不是零。StepFun 16'/24：4 挂起格，不计负。周标签=基线考试周：luna W37（2026-09-07），stepfun W38（2026-09-20）；两者另列 W39 补测（2026-09-21）。 Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。W39 新入榜 5 道：gpt-6-astra 16/24、gpt-6-sol 17/24、gpt-6-luna 15/24（OpenAI Codex，均无挂起）；mimo-v2.6-pro 17'/24（1 案判分环境 invalid 挂起待重评，不计负）；space-bunny-alpha 15/24（零 NA）。</p>
+      <p class="note rank-legend">' = contested（安全拒答挂起）或 invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不计满分；所选轴里有整轴挂起的车道没有可比成绩，不参加排序（显示 —）；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。Claude 17'/24：17 胜 · 6 负 · 1 案考场(harness)基建 NA（A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议）。Luna high 16'/24：16 胜 · 4 负 · 4 挂起，UI／视觉／审查 NA，不是零。StepFun 16'/24：4 挂起格，不计负。周标签=基线考试周：luna W37（2026-09-07），stepfun W38（2026-09-20）；两者另列 W39 补测（2026-09-21）。 Devin 19'/24（1 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（3 NA），不改成 /24。W39 新入榜 5 道：gpt-6-astra 16/24、gpt-6-sol 17/24、gpt-6-luna 15/24（OpenAI Codex，均无挂起）；mimo-v2.6-pro 17'/24（1 案判分环境 invalid 挂起待重评，不计负）；space-bunny-alpha 15/24（零 NA）。</p>
       <p class="note">数据来自公开成绩仓。周标签按基线考试周，补测周单独披露，案集案数保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
     </section>
   </div>
@@ -166,16 +166,20 @@ const stats = faces.map(([id, label]) => {
     });
 
     // A lane stays on the board when every selected axis has case slots, even if some axes
-    // are wholly held. All-held axes leave the min/sum math (a hold is not a zero); a lane
-    // whose selected axes are all held cannot be ordered and shows '—' outside the ranking.
+    // are wholly held. A hold is not a zero, and it is not a pass either: a lane with any
+    // wholly held selected axis cannot be ordered and shows '—' outside the ranking.
     const rows = lanes
       .filter((lane) => active.every((id) => lane.axis[id].n > 0))
       .map((lane) => {
-        const values = active.filter((id) => usable(lane.axis[id]) > 0).map((id) => lane.axis[id].p);
+        // A wholly held selected axis has no result to compare, so the lane cannot be placed
+        // against lanes that did sit it: it stays outside the ranking ('—') instead of being
+        // ordered on the remaining axes, which would let a hold outrank a real pass.
+        if (active.some((id) => usable(lane.axis[id]) === 0)) return { lane, min: null, sum: null };
+        const values = active.map((id) => lane.axis[id].p);
         return {
           lane,
-          min: values.length ? Math.min(...values) : null,
-          sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
+          min: Math.min(...values),
+          sum: values.reduce((total, value) => total + value, 0),
         };
       })
       .sort((a, b) => {
@@ -196,7 +200,7 @@ const stats = faces.map(([id, label]) => {
 
     rows.forEach(({ lane, min, sum }, index) => {
       const row = document.createElement('tr');
-      appendCell(row, String(index + 1), 'rank-number');
+      appendCell(row, min === null ? '—' : String(index + 1), 'rank-number');
       const laneCell = document.createElement('td');
       laneCell.className = 'lane';
       const link = document.createElement('a');
@@ -262,7 +266,7 @@ const stats = faces.map(([id, label]) => {
     verdict.append(document.createTextNode(`领先车道：${names}${winners.length > 4 ? ` 等 ${winners.length} 家` : ''}。`));
     if (winners.length > 1) verdict.append(document.createTextNode(`共 ${winners.length} 家并列。`));
     const unranked = rows.length - ranked.length;
-    if (unranked > 0) verdict.append(document.createTextNode(`另有 ${unranked} 条道所选轴全为挂起，未参加排序。`));
+    if (unranked > 0) verdict.append(document.createTextNode(`另有 ${unranked} 条道在所选轴里有整轴挂起，没有可比成绩，未参加排序。`));
 
     const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
     if (saturated.length > 0) {
