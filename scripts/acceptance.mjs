@@ -110,7 +110,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/pick/'];
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
@@ -141,6 +141,7 @@ let failed = false;
 try {
   for (const route of routes) {
     const isRankRoute = route === '/rank/' || route === '/en/rank/';
+    const isPickRoute = route === '/pick/';
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     const consoleErrors = [];
     const consoleMessages = [];
@@ -454,6 +455,57 @@ try {
       await page.setViewportSize({ width: 1440, height: 900 });
     }
 
+    if (isPickRoute) {
+      // Data shipped on the page must be the generated files, byte-for-byte as parsed JSON.
+      const axesFile = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
+      const siteFile = JSON.parse(await readFile(resolve(projectRoot, 'src/data/site-data.json'), 'utf8'));
+      result.pickDataPreserved = isDeepStrictEqual(JSON.parse(await page.locator('#pick-app').getAttribute('data-axes')), axesFile)
+        && isDeepStrictEqual(JSON.parse(await page.locator('#pick-app').getAttribute('data-site')), siteFile);
+      result.pickCards = await page.locator('#grid .card').count();
+      // Held-axis rule, computed here independently of the page: with build + ops + ui-build selected,
+      // exactly the lanes with a wholly held selected axis sit in the unranked group, and every tier
+      // holds lanes with identical (weakest, sum) scores.
+      const sel = ['build', 'ops', 'ui-build'];
+      const heldOut = (lane) => sel.some((axis) => lane.axis[axis].n > 0 && lane.axis[axis].n - (lane.axis[axis].na ?? 0) === 0);
+      const expectedHeld = axesFile.filter((lane) => sel.every((axis) => lane.axis[axis].n > 0) && heldOut(lane)).map((lane) => lane.id).sort();
+      await page.locator('[data-preset="build,ops,ui-build"]').click();
+      await page.waitForTimeout(900);
+      const groups = await page.locator('#grid').evaluate((grid) => {
+        const out = []; let cur = null;
+        for (const el of grid.children) {
+          if (el.classList.contains('tier')) { cur = { tier: el.dataset.tier, ids: [] }; out.push(cur); } else if (cur) cur.ids.push(el.dataset.id);
+        }
+        return out;
+      });
+      const byId = Object.fromEntries(axesFile.map((lane) => [lane.id, lane]));
+      const keyOf = (id) => { const v = sel.map((axis) => byId[id].axis[axis].p); return `${Math.min(...v)}/${v.reduce((a, b) => a + b, 0)}`; };
+      result.pickHeldGroup = (groups.find((g) => g.tier === 'held')?.ids ?? []).sort();
+      result.pickTiersUniform = groups.filter((g) => g.tier !== 'held').every((g) => new Set(g.ids.map(keyOf)).size === 1);
+      result.pickTiersOrdered = groups.filter((g) => g.tier !== 'held').map((g) => keyOf(g.ids[0]))
+        .every((k, i, all) => i === 0 || k.split('/').map(Number).join() !== all[i - 1].split('/').map(Number).join());
+      await page.locator('#grid .card').first().click();
+      await page.waitForFunction(() => document.getElementById('sheet').open, null, { timeout: 3000 }).catch(() => {});
+      result.pickDetailOpens = await page.locator('#sheet').evaluate((d) => d.open);
+      await page.waitForTimeout(500);
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(300);
+      result.pickDetailCloses = !(await page.locator('#sheet').evaluate((d) => d.open));
+      await page.locator('#grid .card .cmp-toggle').nth(0).click();
+      await page.locator('#grid .card .cmp-toggle').nth(1).click();
+      await page.locator('#open-cmp').click();
+      await page.waitForFunction(() => document.getElementById('sheet').open, null, { timeout: 3000 }).catch(() => {});
+      result.pickCompareColumns = await page.locator('#sheet .cmp-table thead th').count();
+      await page.waitForTimeout(500);
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(300);
+      await page.setViewportSize({ width: 320, height: 640 });
+      result.pickNarrowOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
+      await page.setViewportSize({ width: 1440, height: 900 });
+      if (!result.pickDataPreserved || result.pickCards !== axesFile.length || !isDeepStrictEqual(result.pickHeldGroup, expectedHeld)
+        || !result.pickTiersUniform || !result.pickTiersOrdered || !result.pickDetailOpens || !result.pickDetailCloses || result.pickCompareColumns !== 3
+        || result.pickNarrowOverflow) failed = true;
+    }
+
     result.scriptTags = await page.locator('script:not([type="application/ld+json"])').count();
     result.structuredDataTags = await page.locator('script[type="application/ld+json"]').count();
     result.fontRequests = requests.filter((request) => request.type === 'font');
@@ -461,7 +513,7 @@ try {
     result.forbiddenTerms = (await page.content()).match(/点线面|图结构|节点|出边|点→跳转/g) ?? [];
     result.canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
     result.expectedCanonical = new URL(`${basePrefix}${route}`, astroConfig.site).href;
-    if (result.scriptTags !== (isRankRoute ? 1 : 0) || result.fontRequests.length
+    if (result.scriptTags !== (isRankRoute || isPickRoute ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     if (route === '/' && initialTransfer.totalBytes >= 200_000) failed = true;
 
