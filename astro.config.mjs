@@ -3,18 +3,23 @@ import sitemap from '@astrojs/sitemap';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
-// The /rank/ board data is generated from amber.db, never edited by hand: amber-run's
-// tools/amberdb/sync_site.py writes src/data/axes.json together with axes.provenance.json.
-// Every build checks the pair, so a hand edit (or a stale provenance) fails the build.
-const axesSha = createHash('sha256').update(readFileSync(new URL('./src/data/axes.json', import.meta.url))).digest('hex');
+// Board and picker data are generated from amber.db, never edited by hand: amber-run's
+// tools/amberdb/sync_site.py writes src/data/axes.json and src/data/site-data.json together with
+// axes.provenance.json. Every build checks both against it, so a hand edit (or a stale provenance)
+// fails the build.
 const provenance = JSON.parse(readFileSync(new URL('./src/data/axes.provenance.json', import.meta.url), 'utf8'));
-if (provenance.axes_sha256 !== axesSha) {
-  throw new Error(
-    `src/data/axes.json (sha256 ${axesSha.slice(0, 12)}) does not match axes.provenance.json ` +
-    `(${String(provenance.axes_sha256).slice(0, 12)}). Do not edit axes.json by hand; regenerate it ` +
-    'from amber.db with amber-run tools/amberdb/sync_site.py --site <this checkout> --write.'
-  );
+for (const [file, key] of [['axes.json', 'axes_sha256'], ['site-data.json', 'site_data_sha256']]) {
+  const sha = createHash('sha256').update(readFileSync(new URL(`./src/data/${file}`, import.meta.url))).digest('hex');
+  if (provenance[key] !== sha) {
+    throw new Error(
+      `src/data/${file} (sha256 ${sha.slice(0, 12)}) does not match axes.provenance.json ${key} ` +
+      `(${String(provenance[key]).slice(0, 12)}). Do not edit it by hand; regenerate it from amber.db ` +
+      'with amber-run tools/amberdb/sync_site.py --site <this checkout> --write.'
+    );
+  }
 }
+// Pages that are built and reachable but not launched yet: kept out of the sitemap (and noindex).
+const UNLISTED = ['/pick/'];
 
 // Production root is the default: `npm run build` with no SITE_BASE builds the real site.
 // The preview deployment sets SITE_BASE=/astro-preview/ and must stay out of search engines,
@@ -28,6 +33,7 @@ export default defineConfig({
   output: 'static',
   integrations: base === '/' ? [
     sitemap({
+      filter: (page) => !UNLISTED.some((path) => new URL(page).pathname === path),
       i18n: {
         defaultLocale: 'zh-CN',
         locales: {

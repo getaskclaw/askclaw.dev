@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/picker.css';
+import rawAxes from '../../data/axes.json';
+import siteData from '../../data/site-data.json';
+import {
+  FACES, LABEL, joinLanes, axisN, tiers, splitters, tierTitle, verdictText,
+  held, displayTotal, fmtSec, fmtTok,
+} from '../../utils/picker-core.js';
+import coreSource from '../../utils/picker-core.js?raw';
+import appSource from '../../scripts/pick-app.js?raw';
+
+// Both data files are generated from amber.db (amber-run sync_site.py) and checked against
+// axes.provenance.json on every build. Nothing on this page is typed in by hand.
+const lanes = joinLanes(rawAxes, siteData);
+const AXIS_N = axisN(lanes);
+const small = (id: string) => AXIS_N[id] <= 2;
+const slots = Math.max(...Object.values(AXIS_N));
+const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
+
+// Default view (nothing selected): the same grouping the script computes, rendered at build time,
+// so the page is complete without JavaScript. The script re-renders it in place on load.
+const initial = tiers(lanes, [], 'time');
+const facesAll = FACES.map(([id]) => id);
+const pipList = (c) => [
+  ...Array(c.p).fill('pip p'),
+  ...Array(Math.max(0, c.n - c.p - held(c))).fill('pip'),
+  ...Array(held(c)).fill('pip h'),
+];
+// One page script: the shared core (exports stripped) followed by the page app, in its own scope.
+const clientSource = `(() => {\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`;
+---
+<BaseLayout
+  title="AMBER 琥珀评测 — 你要它做什么？"
+  description="按你要交给模型的工作挑模型：成绩相同的模型归入同一梯队，再看每题用时和 token。数据由 amber.db 生成。"
+  canonicalPath="/pick/"
+  pageClass="picker-page"
+  noindex
+>
+  <canvas id="caustics" aria-hidden="true"></canvas>
+
+  <div class="ctx glass" id="ctx" aria-label="当前条件">
+    <button class="ctx-sum" type="button" id="ctx-sum" aria-expanded="false" aria-controls="ctx-full"></button>
+    <div class="ctx-full" id="ctx-full">
+      <div class="ctx-sel" id="ctx-sel"></div>
+      <div class="ctx-tiers" id="ctx-tiers" aria-label="跳到梯队"></div>
+      <div class="seg" role="group" aria-label="梯队内排序">
+        <button type="button" data-tb="time" aria-pressed="true">用时短</button>
+        <button type="button" data-tb="tok" aria-pressed="false">token 少</button>
+        <button type="button" data-tb="name" aria-pressed="false">名称</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="pick-app" data-axes={JSON.stringify(rawAxes)} data-site={JSON.stringify(siteData)} style={`--slots: ${slots}`}>
+    <section class="ask glass" aria-labelledby="ask-title">
+      <h1 id="ask-title">你要它<em>做什么</em>？</h1>
+      <p class="sub">点选你要交给模型的工作，可多选。成绩完全一样的模型归进同一梯队，梯队之间才有高下；同一梯队里，再看谁更快、用的 token 更少。</p>
+      <div class="pk-chips" aria-label="工作类型">
+        {FACES.map(([id, label, hint]) => (
+          <button type="button" class="pk-chip" data-face={id} aria-pressed="false">
+            <b>{label}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</b><span>{hint}</span>
+          </button>
+        ))}
+      </div>
+      <div class="presets"><span>常用组合</span>
+        <button class="pk-preset" type="button" data-preset="build,ops">后端交付</button>
+        <button class="pk-preset" type="button" data-preset="build,ops,ui-build">交付全才</button>
+        <button class="pk-preset" type="button" data-preset="ui-build,vision">前端与审图</button>
+        <button class="pk-preset" type="button" data-preset="text,verify,review">写与查</button>
+        <button class="pk-preset" type="button" data-preset="">清空</button>
+      </div>
+      <label class="search" for="q">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="q" type="search" placeholder="找模型或厂商" autocomplete="off" />
+      </label>
+      <noscript><p class="sub">筛选、对比和详情需要启用 JavaScript；下面是按总分的完整分档。</p></noscript>
+    </section>
+
+    <div class="pk-verdict">
+      <h2 id="verdict" aria-live="polite">{verdictText(initial, [])}</h2>
+      <div class="legend" aria-label="图例"><span><i class="lg-pass"></i>通过</span><span><i class="lg-fail"></i>未过</span><span><i class="lg-held"></i>挂起（不计输赢）</span><span><span class="tiny">1 题</span> 题少，偶然性大</span></div>
+    </div>
+    <div class="caveat" id="caveat" hidden></div>
+    <div class="tiebreak"><span>同一梯队里先看</span>
+      <div class="seg" role="group" aria-label="梯队内排序">
+        <button type="button" data-tb="time" aria-pressed="true">用时短</button>
+        <button type="button" data-tb="tok" aria-pressed="false">token 少</button>
+        <button type="button" data-tb="name" aria-pressed="false">名称</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid">
+      {initial.tiers.map((t, i) => {
+        const sp = splitters(t.rows, []);
+        return [
+          <div class="tier" data-tier={i + 1} id={`tier-${i + 1}`}>
+            <div class="tier-line"><span class="tier-no">{['第一梯队', '第二梯队', '第三梯队', '第四梯队', '第五梯队', '第六梯队', '第七梯队', '第八梯队', '第九梯队', '第十梯队'][i] ?? `第 ${i + 1} 梯队`}</span><span class="tier-title">{tierTitle(t, [])}</span></div>
+            {sp.length > 0 && <div class="tier-sub"><span>它们的成绩在这些工作上才分得开：</span>{sp.map((id) => <span class="split">+ {LABEL[id]}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</span>)}</div>}
+          </div>,
+          ...t.rows.map(({ lane: l }) => (
+            <article class="card glass" data-id={l.id}>
+              <div class="card-head"><div class="who"><b>{l.name}</b><small>{l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>总分</small></div></div>
+              <div class="rows">
+                {facesAll.map((id) => {
+                  const c = l.axis[id];
+                  return (
+                    <div class="axis-row">
+                      <span class="lbl">{LABEL[id]}{small(id) && <span class="tiny">{AXIS_N[id]} 题</span>}</span>
+                      {c.n === 0 ? <span class="none">未考</span> : <div class="pips">{pipList(c).map((cls) => <i class={cls}></i>)}</div>}
+                      <span class="frac">{c.n === 0 ? '—' : `${c.p}/${c.n}`}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              {l.e && (
+                <div class="effort"><span class="k">每题用时</span><span class="v"><b class="tm">中位 {fmtSec(l.e.t_med)}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">合计</span><span class="v"><small class="tt">{fmtSec(l.e.t_total)}（{l.e.t_n} 题） · {fmtTok(l.e.tok)} token</small></span></div>
+              )}
+              <div class="card-foot"><span class="wk">{l.wk} 测 · {l.cases} 案</span><a class="cmp-toggle" href={`https://github.com/getaskclaw/${l.repo}`}>成绩仓</a></div>
+            </article>
+          )),
+        ];
+      })}
+    </div>
+    <p class="out" id="out" hidden></p>
+  </div>
+
+  <div class="dock glass" id="dock" aria-live="polite">
+    <div class="picked" id="picked"></div>
+    <button class="btn ghost" type="button" id="clear-cmp">清除</button>
+    <button class="btn" type="button" id="open-cmp">对比</button>
+  </div>
+
+  <button class="totop glass" type="button" id="totop" aria-label="回到顶部"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></button>
+
+  <dialog class="sheet" id="sheet" aria-labelledby="sheet-title"><div class="sheet-body glass" id="sheet-body"></div></dialog>
+
+  <script is:inline set:html={clientSource}></script>
+</BaseLayout>

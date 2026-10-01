@@ -17,6 +17,8 @@ interface Props {
   schemaName?: string;
   schemaAlternateName?: string[];
   schemaInLanguage?: string | string[];
+  /** Keep this page out of search engines even on the production root (pages awaiting launch). */
+  noindex?: boolean;
 }
 
 const {
@@ -32,6 +34,7 @@ const {
   schemaName = title,
   schemaAlternateName = [],
   schemaInLanguage = lang,
+  noindex = false,
 } = Astro.props;
 
 const site = Astro.site!;
@@ -68,7 +71,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    {isPreviewBase && <meta name="robots" content="noindex,nofollow" />}
+    {(isPreviewBase || noindex) && <meta name="robots" content="noindex,nofollow" />}
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={favicon} type="image/svg+xml" />
