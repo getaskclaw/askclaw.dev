@@ -214,8 +214,12 @@ try {
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
       result.presetRowCount = await page.locator('#rank-body tr').count();
-      if (result.chipCount !== 9 || result.presetRowCount !== 19) failed = true;
       const sourceLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
+      // Counts come from the published data, not from constants: one chip per axis (amber.db axes.sql),
+      // one row per lane that sat every selected axis.
+      const siteAxes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/site-data.json'), 'utf8')).axes;
+      if (result.chipCount !== siteAxes.length
+        || result.presetRowCount !== expectedRankRows(sourceLanes, ['build', 'ops', 'ui-build']).length) failed = true;
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
       const expectedLanes = sourceLanes.map((lane) => ({
         ...lane,
@@ -400,7 +404,7 @@ try {
       result.englishRankEntries = {
         card: await page.locator('.question-entry-cobalt').getAttribute('href'),
         textLink: await page.getByRole('link', { name: 'Rank by work', exact: true }).getAttribute('href'),
-        navigation: await page.getByRole('link', { name: 'Axis matrix', exact: true }).getAttribute('href'),
+        navigation: await page.getByRole('link', { name: 'Rank by axis', exact: true }).getAttribute('href'),
       };
       if (Object.values(result.englishRankEntries).some((href) => href !== `${basePrefix}/en/rank/`)) failed = true;
     }

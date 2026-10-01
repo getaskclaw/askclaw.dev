@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { route } from '../../utils/route';
+import siteData from '../../data/site-data.json';
+
+// Axes and groups as published (amber.db axes.sql): the text below never hard-codes their number.
+const groupsText = siteData.groups.map((g) => `${g.name_zh}：${siteData.axes.filter((a) => a.grp === g.id).map((a) => a.name_zh).join('、')}`);
 
 const resultRepos = [
   ['amber-devin', "19'/24", 'swe-2-max @ Devin', 'W37'],
@@ -70,6 +74,16 @@ const resultRepos = [
             <small>{week} · {score.endsWith('∅') ? '23' : '24'} cases</small>
           </a>
         ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="axes-title">
+      <h2 id="axes-title">按轴看成绩</h2>
+      <p class="hint">每道题归入一个轴，轴再分成两个大类。轴的定义随成绩库一起发布，整站按同一份定义显示。</p>
+      <div class="panel">
+        {groupsText.map((line) => <p>{line}</p>)}
+        <p>2026-10-01 起，原「核验」拆成「防御」（让门禁在坏输入下守得住）和「归因」（查出真正的病根）两个轴。各模型总分不变，只是这三题分开记。</p>
+        <p><a href={route('/rank/')}>查看按轴排行</a></p>
       </div>
     </section>
 
