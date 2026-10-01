@@ -13,6 +13,14 @@ The askclaw.dev site source (Astro). The homepage IS the AMBER site (sealed-repl
 
 老站（纯静态 `index.html` / `en.html` / `assets/`）不再放在本仓，真源在相邻 checkout（用 `LEGACY_SITE_ROOT` 指定）；图的原图在 [getaskclaw/amber](https://github.com/getaskclaw/amber) 的 `docs/images/`。
 
+## 榜单数据（/rank/）只从 amber.db 生成
+
+- `src/data/axes.json` 由 amber-run 的 `tools/amberdb/sync_site.py --site <本仓> --write` 从 amber.db 生成，同时写 `src/data/axes.provenance.json`（`axes_sha256`、生成它的 `amber_run_commit`）。**不要手改 axes.json。**
+- 每次 `npm run build` 都会核对 axes.json 的 sha256 和凭据一致，不一致就构建失败。
+- 发布前在 amber-run 侧跑 `sync_site.py --site <本仓>`（不带 `--write`），核对官网数据和 amber.db 当前生成结果逐字节相同。
+
+The `/rank/` data is generated from amber.db by amber-run `tools/amberdb/sync_site.py`; never edit `src/data/axes.json` by hand. The build fails if its sha256 differs from `src/data/axes.provenance.json`.
+
 ## 构建与两种 base
 
 `site` 固定为 `https://askclaw.dev`；`base` 由 `SITE_BASE` 环境变量决定，默认 `/`（生产根）。两种 base 都要跑机检：
