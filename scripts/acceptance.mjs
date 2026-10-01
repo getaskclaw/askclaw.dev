@@ -114,17 +114,19 @@ const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
-// shows NA and leaves the min/sum math; n === 0 means the lane never sat that axis.
+// shows NA; a lane with any all-held selected axis is unranked ('—', sorted last), because a
+// hold must not outrank a real pass. n === 0 means the lane never sat that axis.
 const heldOf = (cell) => cell.na ?? 0;
 const usableOf = (cell) => (cell.n > 0 ? cell.n - heldOf(cell) : 0);
 const expectedRankRows = (lanes, active) => lanes
   .filter((lane) => active.every((axis) => lane.axis[axis].n > 0))
   .map((lane) => {
-    const values = active.filter((axis) => usableOf(lane.axis[axis]) > 0).map((axis) => lane.axis[axis].p);
+    if (active.some((axis) => usableOf(lane.axis[axis]) === 0)) return { lane, min: null, sum: null };
+    const values = active.map((axis) => lane.axis[axis].p);
     return {
       lane,
-      min: values.length ? Math.min(...values) : null,
-      sum: values.length ? values.reduce((total, value) => total + value, 0) : null,
+      min: Math.min(...values),
+      sum: values.reduce((total, value) => total + value, 0),
     };
   })
   .sort((a, b) => {
@@ -247,8 +249,8 @@ try {
         for (const button of await page.locator('[data-preset]').all()) {
           const preset = await button.getAttribute('data-preset');
           const active = preset.split(',');
-          // NA-aware: a wholly held axis leaves the ordering, so those lanes show '—' and sort to
-          // the end of the board; every other lane keeps the lowest-effective-pass order.
+          // NA-aware: a lane with a wholly held selected axis leaves the ordering, shows '—' and
+          // sorts to the end of the board; every other lane keeps the lowest-pass order.
           const expected = expectedRankRows(expectedLanes, active).map((row) => row.lane.name);
           await button.click();
           const passed = isDeepStrictEqual(await page.locator('#rank-body .lane a').allTextContents(), expected)
