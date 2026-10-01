@@ -18,6 +18,7 @@ const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   gp: { vendor: 'Community self-hosted 3×V100' },
   stepfun: { vendor: 'stepfun plan endpoint' },
   claude: { vendor: 'Anthropic subscription lane' },
+  'claude-sonnet': { vendor: 'Anthropic subscription lane' },
 };
 const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 

@@ -127,13 +127,14 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro'}
+convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro', 'claude-sonnet-5-5'}
 # Lanes that sat the convergence case and lost it keep n=1 with p=0 (a real negative, not a hold):
 # space-bunny-alpha, the W39 CommandCode newcomer.
 convergence_failed = {'space-bunny-alpha'}
-assert len(lanes) == 19 and len({lane['id'] for lane in lanes}) == 19
+assert len(lanes) == 20 and len({lane['id'] for lane in lanes}) == 20   # W40: + claude-sonnet-5-5
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
 assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
+assert 'claude-sonnet-5-5' in {lane['name'] for lane in lanes}
 assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
     if lane['name'] in convergence_failed:
