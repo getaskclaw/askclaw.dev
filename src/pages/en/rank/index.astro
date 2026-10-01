@@ -1,19 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import rawLanes from '../../../data/axes.json';
+import siteData from '../../../data/site-data.json';
 import { route } from '../../../utils/route';
 
-const faces = [
-  ['build', 'Engineering'],
-  ['ops', 'Operations'],
-  ['text', 'Text'],
-  ['verify', 'Verification'],
-  ['review', 'Review'],
-  ['req-drift', 'Requirement drift'],
-  ['ui-build', 'UI building'],
-  ['vision', 'Visual review'],
-  ['convergence', 'Convergence'],
-] as const;
+// Axes are data (amber.db axes.sql -> site-data.json): adding or splitting an axis needs no change here.
+const faces = siteData.axes.map((a) => [a.id, a.name_en]);
+const allAxes = siteData.axes.map((a) => a.id).join(',');
 
 // Translate display labels only. Scores, periods, IDs and source records stay intact.
 const laneLabels: Record<string, { name?: string; vendor?: string }> = {
@@ -73,9 +66,9 @@ const stats = faces.map(([id, label]) => {
           <div class="preset-list" aria-label="Presets">
             <button class="preset" type="button" data-preset="build,ops">Everyday engineering</button>
             <button class="preset" type="button" data-preset="build,ops,ui-build">All-round delivery</button>
-            <button class="preset" type="button" data-preset="review,verify">Adversarial review</button>
+            <button class="preset" type="button" data-preset="review,defense,attribution">Adversarial review</button>
             <button class="preset" type="button" data-preset="build,ops,text,req-drift">Budget work</button>
-            <button class="preset" type="button" data-preset="build,ops,text,verify,review,req-drift,ui-build,vision">Select all</button>
+            <button class="preset" type="button" data-preset={allAxes}>Select all</button>
           </div>
           <button class="clear-button" id="clear-rank" type="button">Clear</button>
         </div>

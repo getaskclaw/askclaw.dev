@@ -7,7 +7,7 @@ const LABEL = labels(T);
 const fS = (s) => fmtSec(s, T);
 const fT = (x) => fmtTok(x, T);
 const lanes = joinLanes(JSON.parse(root.dataset.axes), JSON.parse(root.dataset.site), T);
-const AXIS_N = axisN(lanes);
+const AXIS_N = axisN(lanes, T);
 // An axis is "small" when the most case slots any lane has on it is 2 or fewer.
 const small = (id) => AXIS_N[id] <= 2;
 document.body.style.setProperty('--slots', String(Math.max(...Object.values(AXIS_N))));
@@ -115,7 +115,7 @@ function tierEl(i, t, total) {
   const title = Object.assign(document.createElement('span'), { className: 'tier-title', textContent: tierTitle(t, active, T) });
   line.append(no, title);
   el.append(line);
-  const sp = splitters(t.rows, active);
+  const sp = splitters(t.rows, active, T);
   if (sp.length) {
     const sub = document.createElement('div'); sub.className = 'tier-sub';
     sub.append(Object.assign(document.createElement('span'), { textContent: T.splitHint }));

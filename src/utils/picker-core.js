@@ -3,7 +3,8 @@
 // in-browser grouping can never disagree. Text comes from a dictionary T (picker-i18n.js);
 // the scoring logic is language-independent. Keep it dependency-free and ES2019-safe.
 
-export const AXIS_IDS = ['build', 'ops', 'text', 'verify', 'review', 'req-drift', 'ui-build', 'vision', 'convergence'];
+// The axis list is data: T.faces is filled at build time from site-data.json (amber.db axes.sql).
+export const axisIds = (T) => T.faces.map(([id]) => id);
 // Lanes whose public total carries an apostrophe even where no cell holds an NA (frozen display rows).
 export const FROZEN_HELD = ['devin', 'gpt-luna', 'doubao', 'claude', 'stepfun', 'gpt-sol'];
 
@@ -38,8 +39,8 @@ export function joinLanes(axes, siteData, T) {
   return axes.map((l) => ({ ...l, ...(T.laneLabels[l.id] || {}), e: siteData.lanes[l.id] || null }));
 }
 // Case slots of the largest axis on the board; every bar track has this many equal slots.
-export function axisN(lanes) {
-  return Object.fromEntries(AXIS_IDS.map((id) => [id, Math.max(...lanes.map((l) => l.axis[id].n))]));
+export function axisN(lanes, T) {
+  return Object.fromEntries(axisIds(T).map((id) => [id, Math.max(...lanes.map((l) => l.axis[id].n))]));
 }
 
 // Ranking basis. No selection: total score. With a selection: weakest selected axis, then the sum.
@@ -76,9 +77,9 @@ export function tiers(lanes, active, tb) {
   return { tiers: out, unranked: rows.filter((r) => !r.key).sort(cmp), eligible: rows.length };
 }
 // Axes outside the selection on which members of a tier actually differ, most even split first.
-export function splitters(rows, active) {
+export function splitters(rows, active, T) {
   if (rows.length < 2) return [];
-  return AXIS_IDS.filter((id) => !active.includes(id)).map((id) => {
+  return axisIds(T).filter((id) => !active.includes(id)).map((id) => {
     const rates = rows.map((r) => r.lane.axis[id]).filter((c) => usable(c) > 0).map((c) => c.p / usable(c));
     if (rates.length < 2) return null;
     const best = Math.max(...rates), top = rates.filter((x) => x === best).length;

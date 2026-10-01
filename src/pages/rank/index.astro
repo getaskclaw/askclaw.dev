@@ -1,19 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import rawLanes from '../../data/axes.json';
+import siteData from '../../data/site-data.json';
 import { route } from '../../utils/route';
 
-const faces = [
-  ['build', '施工'],
-  ['ops', '运维'],
-  ['text', '文本'],
-  ['verify', '核验'],
-  ['review', '审查'],
-  ['req-drift', '需求漂移'],
-  ['ui-build', 'UI 搭建'],
-  ['vision', '视觉审图'],
-  ['convergence', '收敛'],
-] as const;
+// Axes are data (amber.db axes.sql -> site-data.json): adding or splitting an axis needs no change here.
+const faces = siteData.axes.map((a) => [a.id, a.name_zh]);
+const allAxes = siteData.axes.map((a) => a.id).join(',');
 
 // Keep the canonical records byte-for-byte. Only this lane's public vendor
 // label is mapped; never substring-replace ordinary domain terminology.
@@ -65,9 +58,9 @@ const stats = faces.map(([id, label]) => {
           <div class="preset-list" aria-label="预设">
             <button class="preset" type="button" data-preset="build,ops">日常施工</button>
             <button class="preset" type="button" data-preset="build,ops,ui-build">交付全才</button>
-            <button class="preset" type="button" data-preset="review,verify">对抗审查</button>
+            <button class="preset" type="button" data-preset="review,defense,attribution">对抗审查</button>
             <button class="preset" type="button" data-preset="build,ops,text,req-drift">省钱干活</button>
-            <button class="preset" type="button" data-preset="build,ops,text,verify,review,req-drift,ui-build,vision">全选</button>
+            <button class="preset" type="button" data-preset={allAxes}>全选</button>
           </div>
           <button class="clear-button" id="clear-rank" type="button">清空</button>
         </div>

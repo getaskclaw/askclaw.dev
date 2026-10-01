@@ -4,7 +4,7 @@ import '../styles/picker.css';
 import rawAxes from '../data/axes.json';
 import siteData from '../data/site-data.json';
 import {
-  AXIS_IDS, tr, labels, joinLanes, axisN, tiers, splitters, tierTitle, tierName, verdictText,
+  axisIds, tr, labels, joinLanes, axisN, tiers, splitters, tierTitle, tierName, verdictText,
   held, displayTotal, fmtSec, fmtTok,
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
@@ -14,13 +14,21 @@ import appSource from '../scripts/pick-app.js?raw';
 
 interface Props { lang?: 'zh' | 'en' }
 const { lang = 'zh' } = Astro.props;
-const T = I18N[lang];
+// Axes and groups are data (amber.db axes.sql -> site-data.json); presets per group are generated,
+// so adding an axis or a group needs no change here.
+const zh = lang === 'zh';
+const faces = siteData.axes.map((a) => [a.id, zh ? a.name_zh : a.name_en, zh ? a.hint_zh : a.hint_en]);
+const groupPresets = siteData.groups.map((g) => [
+  siteData.axes.filter((a) => a.grp === g.id).map((a) => a.id).join(','),
+  tr(I18N[lang], 'groupPreset', { name: zh ? g.name_zh : g.name_en }),
+]);
+const T = { ...I18N[lang], faces, presets: [...I18N[lang].presets, ...groupPresets, ['', I18N[lang].clearPreset]] };
 const LABEL = labels(T);
 
 // Both data files are generated from amber.db (amber-run sync_site.py) and checked against
 // axes.provenance.json on every build. Nothing on this page is typed in by hand.
 const lanes = joinLanes(rawAxes, siteData, T);
-const AXIS_N = axisN(lanes);
+const AXIS_N = axisN(lanes, T);
 const small = (id: string) => AXIS_N[id] <= 2;
 const caseTag = (id: string) => tr(T, 'cases', { n: AXIS_N[id] });
 const slots = Math.max(...Object.values(AXIS_N));
@@ -93,7 +101,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
 
     <div class="grid" id="grid">
       {initial.tiers.map((t, i) => {
-        const sp = splitters(t.rows, []);
+        const sp = splitters(t.rows, [], T);
         return [
           <div class="tier" data-tier={i + 1} id={`tier-${i + 1}`}>
             <div class="tier-line"><span class="tier-no">{tierName(i, T)}</span><span class="tier-title">{tierTitle(t, [], T)}</span></div>
@@ -103,7 +111,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
             <article class="card glass" data-id={l.id}>
               <div class="card-head"><div class="who"><b>{l.name}</b><small>{l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
               <div class="rows">
-                {AXIS_IDS.map((id) => {
+                {axisIds(T).map((id) => {
                   const c = l.axis[id];
                   return (
                     <div class="axis-row">

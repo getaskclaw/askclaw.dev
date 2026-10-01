@@ -1,4 +1,5 @@
-// UI text for the model picker, per language. Values are plain strings with {name} slots
+// UI text for the model picker, per language. Axis names and hints are NOT here: they come from
+// amber.db (axes.sql) via site-data.json, so adding an axis needs no site change. Values are plain strings with {name} slots
 // (filled by tr() in picker-core.js), so one dictionary can be inlined into a page as JSON and
 // a page only ships its own language. Work-type names and lane display labels follow /rank/ and
 // /en/rank/ exactly.
@@ -6,17 +7,6 @@
 export const I18N = {
   zh: {
     lang: 'zh',
-    faces: [
-      ['build', '施工', '写代码、交付功能'],
-      ['ops', '运维', '排障、配置、上线'],
-      ['text', '文本', '文档与报告'],
-      ['verify', '核验', '查证结论'],
-      ['review', '审查', '代码审查'],
-      ['req-drift', '需求漂移', '需求中途改了'],
-      ['ui-build', 'UI 搭建', '做前端界面'],
-      ['vision', '视觉审图', '看截图找问题'],
-      ['convergence', '收敛', '长对话按时收尾'],
-    ],
     laneLabels: { kimi: { vendor: 'Kimi 官方 coding' } },
     tierNames: ['第一梯队', '第二梯队', '第三梯队', '第四梯队', '第五梯队', '第六梯队', '第七梯队', '第八梯队', '第九梯队', '第十梯队'],
     tierN: '第 {n} 梯队',
@@ -57,24 +47,13 @@ export const I18N = {
     h1a: '你要它', h1em: '做什么', h1b: '？',
     sub: '点选你要交给模型的工作，可多选。成绩完全一样的模型归进同一梯队，梯队之间才有高下；同一梯队里，再看谁更快、用的 token 更少。',
     chipsAria: '工作类型', presetsLabel: '常用组合',
-    presets: [['build,ops', '后端交付'], ['build,ops,ui-build', '交付全才'], ['ui-build,vision', '前端与审图'], ['text,verify,review', '写与查'], ['', '清空']],
+    presets: [['build,ops', '后端交付'], ['build,ops,ui-build', '交付全才'], ['ui-build,vision', '前端与审图']], clearPreset: '清空', groupPreset: '{name}全选',
     search: '找模型或厂商', noscript: '筛选、对比和详情需要启用 JavaScript；下面是按总分的完整分档。',
     legendAria: '图例', lgPass: '通过', lgFail: '未过', lgHeld: '挂起（不计输赢）', lgFew: '题少，偶然性大', lgFewTag: '1 题',
     tbLabel: '同一梯队里先看', repoLink: '成绩仓', clear: '清除', compare: '对比', totop: '回到顶部',
   },
   en: {
     lang: 'en',
-    faces: [
-      ['build', 'Engineering', 'Write code, ship features'],
-      ['ops', 'Operations', 'Debug, configure, release'],
-      ['text', 'Text', 'Docs and reports'],
-      ['verify', 'Verification', 'Check claims'],
-      ['review', 'Review', 'Code review'],
-      ['req-drift', 'Requirement drift', 'Specs change midway'],
-      ['ui-build', 'UI building', 'Build a frontend'],
-      ['vision', 'Visual review', 'Spot issues in screenshots'],
-      ['convergence', 'Convergence', 'Wrap up long sessions on time'],
-    ],
     laneLabels: {
       kimi: { vendor: 'Kimi official coding' },
       'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
@@ -123,7 +102,7 @@ export const I18N = {
     h1a: 'What do you need it', h1em: 'to do', h1b: '?',
     sub: 'Pick the work you would hand to a model; choose several if you like. Models with identical results share a tier, and only tiers are ranked; inside a tier, compare speed and token use.',
     chipsAria: 'Work types', presetsLabel: 'Common mixes',
-    presets: [['build,ops', 'Backend delivery'], ['build,ops,ui-build', 'All-round delivery'], ['ui-build,vision', 'Frontend and visuals'], ['text,verify,review', 'Write and check'], ['', 'Clear']],
+    presets: [['build,ops', 'Backend delivery'], ['build,ops,ui-build', 'All-round delivery'], ['ui-build,vision', 'Frontend and visuals']], clearPreset: 'Clear', groupPreset: 'All {name}',
     search: 'Find a model or vendor', noscript: 'Filters, compare and details need JavaScript; below are the full tiers by total score.',
     legendAria: 'Legend', lgPass: 'Pass', lgFail: 'Fail', lgHeld: 'Held (no win, no loss)', lgFew: 'few cases, high chance', lgFewTag: '1 case',
     tbLabel: 'Within a tier, order by', repoLink: 'Results repo', clear: 'Clear', compare: 'Compare', totop: 'Back to top',

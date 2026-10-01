@@ -1,7 +1,109 @@
 {
+ "axes": [
+  {
+   "grp": "build",
+   "hint_en": "Write code, ship features",
+   "hint_zh": "写代码、交付功能",
+   "id": "build",
+   "name_en": "Engineering",
+   "name_zh": "施工"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Debug, configure, release",
+   "hint_zh": "排障、配置、上线",
+   "id": "ops",
+   "name_en": "Operations",
+   "name_zh": "运维"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Docs and reports",
+   "hint_zh": "文档与报告",
+   "id": "text",
+   "name_en": "Text",
+   "name_zh": "文本"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Specs change midway",
+   "hint_zh": "需求中途改了",
+   "id": "req-drift",
+   "name_en": "Requirement drift",
+   "name_zh": "需求漂移"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Build a frontend",
+   "hint_zh": "做前端界面",
+   "id": "ui-build",
+   "name_en": "UI building",
+   "name_zh": "UI 搭建"
+  },
+  {
+   "grp": "build",
+   "hint_en": "Wrap up long sessions on time",
+   "hint_zh": "长对话按时收尾",
+   "id": "convergence",
+   "name_en": "Convergence",
+   "name_zh": "收敛"
+  },
+  {
+   "grp": "judge",
+   "hint_en": "Spot issues in screenshots",
+   "hint_zh": "看截图找问题",
+   "id": "vision",
+   "name_en": "Visual review",
+   "name_zh": "视觉审图"
+  },
+  {
+   "grp": "judge",
+   "hint_en": "Make gates hold under bad input",
+   "hint_zh": "让门禁守得住",
+   "id": "defense",
+   "name_en": "Defense",
+   "name_zh": "防御"
+  },
+  {
+   "grp": "judge",
+   "hint_en": "Find the real root cause",
+   "hint_zh": "查出真正的病根",
+   "id": "attribution",
+   "name_en": "Attribution",
+   "name_zh": "归因"
+  },
+  {
+   "grp": "judge",
+   "hint_en": "Code review",
+   "hint_zh": "代码审查",
+   "id": "review",
+   "name_en": "Review",
+   "name_zh": "审查"
+  }
+ ],
+ "groups": [
+  {
+   "hint_en": "Making things work",
+   "hint_zh": "动手把东西做出来",
+   "id": "build",
+   "name_en": "Building",
+   "name_zh": "施工面"
+  },
+  {
+   "hint_en": "Spotting problems, holding the line",
+   "hint_zh": "看出问题、守住标准",
+   "id": "judge",
+   "name_en": "Judging",
+   "name_zh": "判官面"
+  }
+ ],
  "lanes": {
   "astra": {
    "ax": {
+    "attribution": [
+     980,
+     1
+    ],
     "build": [
      916,
      6
@@ -9,6 +111,10 @@
     "convergence": [
      114,
      1
+    ],
+    "defense": [
+     997,
+     2
     ],
     "ops": [
      1088,
@@ -30,10 +136,6 @@
      221,
      1
     ],
-    "verify": [
-     1977,
-     3
-    ],
     "vision": [
      54,
      1
@@ -48,9 +150,17 @@
   },
   "cc": {
    "ax": {
+    "attribution": [
+     710,
+     1
+    ],
     "build": [
      1040,
      6
+    ],
+    "defense": [
+     1248,
+     2
     ],
     "ops": [
      591,
@@ -72,10 +182,6 @@
      143,
      1
     ],
-    "verify": [
-     1959,
-     3
-    ],
     "vision": [
      44,
      1
@@ -90,6 +196,10 @@
   },
   "cc-m26p": {
    "ax": {
+    "attribution": [
+     3166,
+     1
+    ],
     "build": [
      3545,
      6
@@ -97,6 +207,10 @@
     "convergence": [
      75,
      1
+    ],
+    "defense": [
+     3494,
+     2
     ],
     "ops": [
      2042,
@@ -118,10 +232,6 @@
      474,
      1
     ],
-    "verify": [
-     6660,
-     3
-    ],
     "vision": [
      318,
      1
@@ -136,6 +246,10 @@
   },
   "cc-sb": {
    "ax": {
+    "attribution": [
+     2295,
+     1
+    ],
     "build": [
      4488,
      6
@@ -143,6 +257,10 @@
     "convergence": [
      27,
      1
+    ],
+    "defense": [
+     5376,
+     2
     ],
     "ops": [
      1556,
@@ -164,10 +282,6 @@
      127,
      1
     ],
-    "verify": [
-     7671,
-     3
-    ],
     "vision": [
      127,
      1
@@ -182,6 +296,10 @@
   },
   "claude": {
    "ax": {
+    "attribution": [
+     1277,
+     1
+    ],
     "build": [
      1319,
      6
@@ -189,6 +307,10 @@
     "convergence": [
      38,
      1
+    ],
+    "defense": [
+     773,
+     2
     ],
     "ops": [
      677,
@@ -210,10 +332,6 @@
      117,
      1
     ],
-    "verify": [
-     2050,
-     3
-    ],
     "vision": [
      85,
      1
@@ -228,9 +346,17 @@
   },
   "crof": {
    "ax": {
+    "attribution": [
+     996,
+     1
+    ],
     "build": [
      1658,
      6
+    ],
+    "defense": [
+     2022,
+     2
     ],
     "ops": [
      633,
@@ -252,10 +378,6 @@
      636,
      1
     ],
-    "verify": [
-     3018,
-     3
-    ],
     "vision": [
      6,
      1
@@ -270,6 +392,10 @@
   },
   "devin": {
    "ax": {
+    "attribution": [
+     1800,
+     1
+    ],
     "build": [
      2491,
      6
@@ -277,6 +403,10 @@
     "convergence": [
      37,
      1
+    ],
+    "defense": [
+     2585,
+     2
     ],
     "ops": [
      3905,
@@ -298,10 +428,6 @@
      280,
      1
     ],
-    "verify": [
-     4385,
-     3
-    ],
     "vision": [
      166,
      1
@@ -316,6 +442,10 @@
   },
   "doubao": {
    "ax": {
+    "attribution": [
+     3600,
+     1
+    ],
     "build": [
      3133,
      6
@@ -323,6 +453,10 @@
     "convergence": [
      77,
      1
+    ],
+    "defense": [
+     3600,
+     2
     ],
     "ops": [
      2215,
@@ -344,10 +478,6 @@
      62,
      1
     ],
-    "verify": [
-     7200,
-     3
-    ],
     "vision": [
      111,
      1
@@ -362,6 +492,10 @@
   },
   "ds": {
    "ax": {
+    "attribution": [
+     741,
+     1
+    ],
     "build": [
      1332,
      6
@@ -369,6 +503,10 @@
     "convergence": [
      16,
      1
+    ],
+    "defense": [
+     1594,
+     2
     ],
     "ops": [
      503,
@@ -390,10 +528,6 @@
      23,
      1
     ],
-    "verify": [
-     2335,
-     3
-    ],
     "vision": [
      20,
      1
@@ -408,6 +542,10 @@
   },
   "gp": {
    "ax": {
+    "attribution": [
+     2330,
+     1
+    ],
     "build": [
      11660,
      6
@@ -415,6 +553,10 @@
     "convergence": [
      196,
      1
+    ],
+    "defense": [
+     6741,
+     2
     ],
     "ops": [
      1139,
@@ -436,10 +578,6 @@
      103,
      1
     ],
-    "verify": [
-     9071,
-     3
-    ],
     "vision": [
      213,
      1
@@ -454,6 +592,10 @@
   },
   "gpt-luna": {
    "ax": {
+    "attribution": [
+     1166,
+     1
+    ],
     "build": [
      1402,
      6
@@ -461,6 +603,10 @@
     "convergence": [
      46,
      1
+    ],
+    "defense": [
+     1318,
+     2
     ],
     "ops": [
      1176,
@@ -482,10 +628,6 @@
      280,
      1
     ],
-    "verify": [
-     2485,
-     3
-    ],
     "vision": [
      18,
      1
@@ -500,9 +642,17 @@
   },
   "gpt-sol": {
    "ax": {
+    "attribution": [
+     1192,
+     1
+    ],
     "build": [
      1591,
      6
+    ],
+    "defense": [
+     1818,
+     2
     ],
     "ops": [
      1494,
@@ -524,10 +674,6 @@
      178,
      1
     ],
-    "verify": [
-     3010,
-     3
-    ],
     "vision": [
      365,
      1
@@ -542,6 +688,10 @@
   },
   "gpt6-luna": {
    "ax": {
+    "attribution": [
+     694,
+     1
+    ],
     "build": [
      786,
      6
@@ -549,6 +699,10 @@
     "convergence": [
      74,
      1
+    ],
+    "defense": [
+     597,
+     2
     ],
     "ops": [
      601,
@@ -570,10 +724,6 @@
      146,
      1
     ],
-    "verify": [
-     1291,
-     3
-    ],
     "vision": [
      38,
      1
@@ -588,6 +738,10 @@
   },
   "gpt6-sol": {
    "ax": {
+    "attribution": [
+     560,
+     1
+    ],
     "build": [
      882,
      6
@@ -595,6 +749,10 @@
     "convergence": [
      118,
      1
+    ],
+    "defense": [
+     876,
+     2
     ],
     "ops": [
      829,
@@ -616,10 +774,6 @@
      147,
      1
     ],
-    "verify": [
-     1436,
-     3
-    ],
     "vision": [
      13,
      1
@@ -634,6 +788,10 @@
   },
   "kimi": {
    "ax": {
+    "attribution": [
+     2221,
+     1
+    ],
     "build": [
      2362,
      6
@@ -641,6 +799,10 @@
     "convergence": [
      123,
      1
+    ],
+    "defense": [
+     2850,
+     2
     ],
     "ops": [
      1058,
@@ -662,10 +824,6 @@
      142,
      1
     ],
-    "verify": [
-     5071,
-     3
-    ],
     "vision": [
      127,
      1
@@ -680,6 +838,10 @@
   },
   "ocgo": {
    "ax": {
+    "attribution": [
+     1800,
+     1
+    ],
     "build": [
      1107,
      6
@@ -687,6 +849,10 @@
     "convergence": [
      58,
      1
+    ],
+    "defense": [
+     1602,
+     2
     ],
     "ops": [
      608,
@@ -708,10 +874,6 @@
      24,
      1
     ],
-    "verify": [
-     3402,
-     3
-    ],
     "vision": [
      6,
      1
@@ -726,6 +888,10 @@
   },
   "ollama": {
    "ax": {
+    "attribution": [
+     1401,
+     1
+    ],
     "build": [
      542,
      6
@@ -733,6 +899,10 @@
     "convergence": [
      219,
      1
+    ],
+    "defense": [
+     3400,
+     2
     ],
     "ops": [
      568,
@@ -754,10 +924,6 @@
      115,
      1
     ],
-    "verify": [
-     4801,
-     3
-    ],
     "vision": [
      41,
      1
@@ -772,6 +938,10 @@
   },
   "stepfun": {
    "ax": {
+    "attribution": [
+     3600,
+     1
+    ],
     "build": [
      4343,
      6
@@ -779,6 +949,10 @@
     "convergence": [
      119,
      1
+    ],
+    "defense": [
+     3600,
+     2
     ],
     "ops": [
      2363,
@@ -800,10 +974,6 @@
      124,
      1
     ],
-    "verify": [
-     7200,
-     3
-    ],
     "vision": [
      50,
      1
@@ -818,6 +988,10 @@
   },
   "wb": {
    "ax": {
+    "attribution": [
+     1800,
+     1
+    ],
     "build": [
      2653,
      6
@@ -825,6 +999,10 @@
     "convergence": [
      51,
      1
+    ],
+    "defense": [
+     2277,
+     2
     ],
     "ops": [
      1161,
@@ -846,10 +1024,6 @@
      740,
      1
     ],
-    "verify": [
-     4077,
-     3
-    ],
     "vision": [
      1207,
      1
@@ -864,5 +1038,5 @@
   }
  },
  "rule_version": "headline_v1",
- "schema": "site-data-v1"
+ "schema": "site-data-v2"
 }
