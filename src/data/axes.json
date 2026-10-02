@@ -114,20 +114,22 @@
   "cases": 23,
   "repo": "amber-commandcode",
   "file": "amber-commandcode/results/2026-W37.md",
-  "total": 17,
+  "total": 15,
   "n": 23,
   "axis": {
    "build": {
-    "p": 5,
-    "n": 6
+    "p": 4,
+    "n": 6,
+    "na": 1
    },
    "text": {
     "p": 3,
     "n": 3
    },
    "ops": {
-    "p": 6,
-    "n": 6
+    "p": 5,
+    "n": 6,
+    "na": 1
    },
    "req-drift": {
     "p": 1,
@@ -276,7 +278,7 @@
   "cases": 24,
   "repo": "amber-deepseek",
   "file": "amber-deepseek/results/2026-W37.md",
-  "total": 17,
+  "total": 16,
   "n": 24,
   "axis": {
    "build": {
@@ -288,8 +290,9 @@
     "n": 3
    },
    "ops": {
-    "p": 6,
-    "n": 6
+    "p": 5,
+    "n": 6,
+    "na": 1
    },
    "req-drift": {
     "p": 1,
@@ -329,7 +332,7 @@
   "cases": 24,
   "repo": "amber-opencode",
   "file": "amber-opencode/results/2026-W37.md",
-  "total": 17,
+  "total": 15,
   "n": 24,
   "axis": {
    "build": {
@@ -341,8 +344,9 @@
     "n": 3
    },
    "ops": {
-    "p": 6,
-    "n": 6
+    "p": 4,
+    "n": 6,
+    "na": 2
    },
    "req-drift": {
     "p": 1,
@@ -491,12 +495,13 @@
   "cases": 24,
   "repo": "amber-stepfun",
   "file": "amber-stepfun/results/2026-W38.md",
-  "total": 16,
+  "total": 15,
   "n": 24,
   "axis": {
    "build": {
-    "p": 5,
-    "n": 6
+    "p": 4,
+    "n": 6,
+    "na": 1
    },
    "text": {
     "p": 2,
@@ -921,7 +926,7 @@
   "cases": 24,
   "repo": "amber-commandcode",
   "file": "amber-commandcode/results/2026-W39.md",
-  "total": 17,
+  "total": 16,
   "n": 24,
   "axis": {
    "build": {
@@ -933,8 +938,9 @@
     "n": 3
    },
    "ops": {
-    "p": 6,
-    "n": 6
+    "p": 5,
+    "n": 6,
+    "na": 1
    },
    "req-drift": {
     "p": 1,
@@ -975,7 +981,7 @@
   "cases": 24,
   "repo": "amber-commandcode",
   "file": "amber-commandcode/results/2026-W39.md",
-  "total": 15,
+  "total": 13,
   "n": 24,
   "axis": {
    "build": {
@@ -987,8 +993,9 @@
     "n": 3
    },
    "ops": {
-    "p": 6,
-    "n": 6
+    "p": 5,
+    "n": 6,
+    "na": 1
    },
    "req-drift": {
     "p": 0,
@@ -1007,8 +1014,9 @@
     "n": 1
    },
    "defense": {
-    "p": 1,
-    "n": 2
+    "p": 0,
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
