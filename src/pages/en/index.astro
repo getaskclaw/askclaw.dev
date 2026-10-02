@@ -62,14 +62,14 @@ const repos = [
   ['amber-claude', '19/24', "claude-sonnet-5-5 19/24 (W40, joint leader, no NA) · claude-opus-5-5 17'/24 @ Anthropic subscription lane"],
   ['amber-kimi', '18/24', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
   ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
-  ['amber-commandcode', '17/23 ∅', 'd41f @ CommandCode — frozen at the owner\'s call'],
+  ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode — frozen at the owner\'s call'],
   ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP'],
   ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ @ OpenAI Codex"],
   ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
-  ['amber-deepseek', '17/24', 'deepseek-flash @ DeepSeek official'],
-  ['amber-opencode', '17/24', 'deepseek-flash @ OpenCode Go'],
+  ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official'],
+  ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go'],
   ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
-  ['amber-stepfun', "16'/24", 'step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up'],
+  ['amber-stepfun', "15'/24", 'step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up'],
   ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
@@ -239,11 +239,11 @@ const repos = [
       <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
       <p class="note">
         Scores are on the 24-case basis (convergence case folded in 2026-09-21). Two lanes are frozen
-        at ∅ at the owner's call — CommandCode 17/23 and CrofAI 16/23 — so they keep their sealed
+        at ∅ at the owner's call — CommandCode 17/23 (corrected to 15'/23 on 2026-10-02) and CrofAI 16/23 — so they keep their sealed
         earlier records. The axis picker retains its own older W36 records for two lanes.{' '}
         <a href={route('/method/')}>Read the method and score-period notes</a>.
       </p>
-      <p class="note score-legend">' = contested (held for safety refusal) or invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring); neither counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+      <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
       <div class="repo-grid">
         {repos.map(([repo, score, description]) => (
           <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>

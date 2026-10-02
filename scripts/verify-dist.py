@@ -217,7 +217,7 @@ for relative in sorted(expected_routes):
         for phrase in ['24 cases / 27 papers', 'Snapshot 2026-W39', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase
         # Frozen lanes must keep the sealed /23 basis on the English mirror too.
-        for score in ['17/23 ∅', '16/23 ∅']:
+        for score in ['15&#39;/23 ∅', '16/23 ∅']:  # CommandCode 17/23 → 15'/23 per 2026-10-02 correction
             assert score in text, score
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
