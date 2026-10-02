@@ -361,8 +361,8 @@ try {
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
         'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '13 result repos',
-        'Snapshot 2026-W39', "leader swe-2-max @ Devin at 19'/24 (scored in W37",
-        'split into four lanes at 18/24', 'Think longer ≠ score better', 'output-token bills span 17×',
+        'Snapshot 2026-W40', 'swe-2-max was scored in W37',
+        'three lanes now sit at 18/24', '2026-10-02 correction', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
       ].map((text) => ({ text, passed: mainText.includes(text) }));
       result.englishImages = [];
