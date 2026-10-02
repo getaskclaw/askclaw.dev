@@ -129,14 +129,16 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro', 'claude-sonnet-5-5'}
+convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro', 'claude-sonnet-5-5', 'claude-fable-5-1', 'gpt-6.1-sol'}
 # Lanes that sat the convergence case and lost it keep n=1 with p=0 (a real negative, not a hold):
 # space-bunny-alpha, the W39 CommandCode newcomer.
 convergence_failed = {'space-bunny-alpha'}
-assert len(lanes) == 20 and len({lane['id'] for lane in lanes}) == 20   # W40: + claude-sonnet-5-5
+assert len(lanes) == 22 and len({lane['id'] for lane in lanes}) == 22   # W40: + claude-sonnet-5-5; 2026-10-02 sittings: + claude-fable-5-1, gpt-6.1-sol
 assert 'step-5-preview' in {lane['name'] for lane in lanes}
 assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
 assert 'claude-sonnet-5-5' in {lane['name'] for lane in lanes}
+assert 'claude-fable-5-1' in {lane['name'] for lane in lanes}
+assert 'gpt-6.1-sol' in {lane['name'] for lane in lanes}
 assert convergence_names <= {lane['name'] for lane in lanes}
 for lane in lanes:
     if lane['name'] in convergence_failed:
@@ -148,7 +150,7 @@ for lane in lanes:
 # count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
 # axis slot count never shrinks to hide a hold.
 assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
-assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 26  # 17 + ADJ-20261002-integrity 9 卷
+assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 29  # 17 + ADJ-20261002-integrity 9 卷 = 26; 10-02 sittings: claude W39 1 NA -> W40 2 NA (+1), claude-fable 2 NA (+2)
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -204,7 +206,7 @@ for relative in sorted(expected_routes):
         assert len(parsed.cards) == 13
         # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
         # the new claude lane carries its own W39 public score. Apostrophes follow the NA channel.
-        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', "17'/24")]:
+        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', "19'/24")]:  # claude-opus-5-5 W40 re-sit (W39 17'/24 stays in the card text)
             card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
             assert score in card['text'], (repo, card['text'])
         # The historical /21 composite note is fact and stays on the page.
