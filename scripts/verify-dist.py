@@ -146,7 +146,7 @@ for lane in lanes:
 # count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
 # axis slot count never shrinks to hide a hold.
 assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
-assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 17
+assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 26  # 17 + ADJ-20261002-integrity 9 卷
 
 class Page(HTMLParser):
     def __init__(self, text):
