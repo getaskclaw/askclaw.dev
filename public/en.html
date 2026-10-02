@@ -46,6 +46,8 @@
   footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 26px 0 40px; color: var(--sub); font-size: 13.5px; }
   @media (max-width: 720px) { .hero h1 { font-size: 30px; } }
   .chart { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 6px; }
+  /* vega-embed turns the box into inline-block, which grows to the chart's width; keep it a block so wide charts scroll inside it */
+  .chart.vega-embed { display: block; max-width: 100%; box-sizing: border-box; }
 </style>
 </head>
 <body>
