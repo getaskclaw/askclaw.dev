@@ -1,0 +1,130 @@
+---
+// Dot matrix of every lane: one row per lane, one dot per case, grouped by axis.
+// Static markup built from the same records as the picker (axes.json + site-data.json);
+// no script. NA channel as on the board: `na` cases are neither wins nor losses, and
+// `n === 0` means the lane's library had no case on that axis.
+import siteData from '../data/site-data.json';
+
+interface Props {
+  lanes: any[];
+  lang?: 'zh' | 'en';
+}
+const { lanes, lang = 'zh' } = Astro.props;
+const zh = lang === 'zh';
+const axes = siteData.axes;
+const groups = siteData.groups.map((g) => ({
+  label: zh ? g.name_zh : g.name_en,
+  span: axes.filter((a) => a.grp === g.id).length,
+}));
+const firstOfGroup = new Set(siteData.groups.map((g) => axes.find((a) => a.grp === g.id)?.id));
+
+const held = (cell) => cell.na ?? 0;
+const rows = lanes
+  .map((lane, index) => ({ lane, index }))
+  .sort((a, b) => b.lane.total - a.lane.total || a.index - b.index)
+  .map(({ lane }) => {
+    const anyHeld = Object.values(lane.axis).some((cell: any) => held(cell) > 0);
+    return {
+      lane,
+      total: `${lane.total}${anyHeld ? "'" : ''}/${lane.n}`,
+      cells: axes.map((a) => {
+        const cell = lane.axis[a.id];
+        const axis = zh ? a.name_zh : a.name_en;
+        if (!cell || cell.n === 0) return { id: a.id, axis, dots: null, label: zh ? '未考' : 'not sat' };
+        const fail = cell.n - cell.p - held(cell);
+        const dots = [
+          ...Array(cell.p).fill('pass'),
+          ...Array(fail).fill('fail'),
+          ...Array(held(cell)).fill('na'),
+        ];
+        const name = zh ? a.name_zh : a.name_en;
+        const na = held(cell) > 0 ? (zh ? `，NA ${held(cell)}` : `, NA ${held(cell)}`) : '';
+        return { id: a.id, axis, dots, label: zh ? `${name} ${cell.p}/${cell.n}${na}` : `${name} ${cell.p}/${cell.n}${na}` };
+      }),
+    };
+  });
+
+const count = (state) => rows.reduce((sum, row) => sum + row.cells.reduce((s, c) => s + (c.dots?.filter((d) => d === state).length ?? 0), 0), 0);
+const t = zh
+  ? {
+      lane: '车道（模型 × 交付位置）', total: '总分', caption: 'AMBER 全部车道逐轴点阵',
+      legend: [['pass', `通过 ${count('pass')}`], ['fail', `未过 ${count('fail')}`], ['na', `NA ${count('na')}（不计胜负）`]],
+      none: '— 该车道的题库里没有这一轴',
+    }
+  : {
+      lane: 'Lane (model × endpoint)', total: 'Total', caption: 'AMBER dot matrix of all lanes by axis',
+      legend: [['pass', `passed ${count('pass')}`], ['fail', `failed ${count('fail')}`], ['na', `NA ${count('na')} (not counted)`]],
+      none: '— no case on this axis in the lane’s library',
+    };
+---
+<div class="board-wrap dotboard-wrap">
+  <table class="board dotboard">
+    <caption class="sr-only">{t.caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col" rowspan="2">{t.lane}</th>
+        <th scope="col" rowspan="2" class="num">{t.total}</th>
+        {groups.map((g) => <th scope="colgroup" colspan={g.span} class="dot-group">{g.label}</th>)}
+      </tr>
+      <tr>
+        {axes.map((a) => <th scope="col" class:list={['dot-axis', { 'dot-first': firstOfGroup.has(a.id) }]}>{zh ? a.name_zh : a.name_en}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(({ lane, total, cells }) => (
+        <tr>
+          <td class="lane">
+            <a href={`https://github.com/getaskclaw/${lane.repo}`} target="_blank" rel="noopener">{lane.name}</a>
+            <small>{lane.vendor}</small>
+          </td>
+          <td class="num total">{total}</td>
+          {cells.map((c) => (
+            <td class:list={['dot-cell', { 'dot-first': firstOfGroup.has(c.id) }]} data-axis={c.axis}>
+              {c.dots
+                ? <span class="dots" role="img" aria-label={c.label} title={c.label}>{c.dots.map((d) => <i class={`dot ${d}`}></i>)}</span>
+                : <span class="dot-none" title={c.label}>—</span>}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="note dot-legend">
+  {t.legend.map(([state, label]) => <span class="dot-key"><i class={`dot ${state}`}></i>{label}</span>)}
+  <span class="dot-key">{t.none}</span>
+</p>
+
+<style>
+  .dotboard th.dot-group { text-align: left; border-left: 1px solid var(--line); }
+  .dotboard th.dot-axis { font-weight: 600; font-size: 0.72rem; }
+  .dotboard th.dot-axis, .dotboard td.dot-cell { padding-left: 6px; padding-right: 4px; }
+  .dotboard .dot-first { border-left: 1px solid var(--line); padding-left: 10px; }
+  .dotboard td.lane { white-space: normal; min-width: 150px; max-width: 200px; }
+  .dots { display: inline-flex; gap: 2px; vertical-align: middle; }
+  .dot {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid var(--amber-deep, #a85a00);
+    background: var(--amber, #e08a12);
+  }
+  .dot.fail { background: transparent; border-color: rgba(23, 32, 43, .38); }
+  .dot.na { background: #aeb6bf; border-color: #aeb6bf; }
+  .dot-none { color: var(--sub); }
+  /* Narrow screens: each lane becomes a card — name and total on top, then every axis as
+     "label + dots", wrapping. Nothing scrolls sideways. */
+  @media (max-width: 640px) {
+    .dotboard, .dotboard tbody { display: block; }
+    .dotboard thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .dotboard tr { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 11px 12px; border-bottom: 1px solid var(--line); }
+    .dotboard tbody tr:last-child { border-bottom: 0; }
+    .dotboard td, .dotboard td.dot-cell, .dotboard .dot-first { padding: 0; border: 0; }
+    .dotboard td.lane { flex: 1 1 calc(100% - 84px); min-width: 0; max-width: none; }
+    .dotboard td.total { flex: 0 0 auto; margin-left: auto; font-weight: 700; }
+    .dotboard td.dot-cell { display: inline-flex; align-items: center; gap: 5px; }
+    .dotboard td.dot-cell::before { content: attr(data-axis); color: var(--sub); font-size: 0.72rem; }
+  }
+</style>
