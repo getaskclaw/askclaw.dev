@@ -114,6 +114,8 @@ const t = zh
   .dot.fail { background: transparent; border-color: rgba(23, 32, 43, .38); }
   .dot.na { background: #aeb6bf; border-color: #aeb6bf; }
   .dot-none { color: var(--sub); }
+  .dot-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+  .dot-key { display: inline-flex; align-items: center; gap: 6px; }
   /* Narrow screens: each lane becomes a card — name and total on top, then every axis as
      "label + dots", wrapping. Nothing scrolls sideways. */
   @media (max-width: 640px) {
