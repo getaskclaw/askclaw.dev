@@ -57,6 +57,7 @@ LEGACY_CHART_ASSETS = {
 REFRESHED_CHART_ASSETS = {
     'top5-2026-w39.en.webp': 'top5-2026-w39.en.png',
     'top5-2026-w40.en.webp': 'top5-2026-w40.en.png',
+    'top5-2026-w40b.en.webp': 'top5-2026-w40b.en.png',  # 2026-10-02 tests: Opus re-test, Fable, gpt-6.1-sol (amber spec repo @83f08d7)
     'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
 }
 CHART_ASSETS = {**LEGACY_CHART_ASSETS, **REFRESHED_CHART_ASSETS}
@@ -66,6 +67,7 @@ CRAB_ASSET = 'crab-hero.webp'
 LEGACY_ASSETS = {
     'top5-2026-w39.png', 'top5-2026-w39.en.png', 'top5-card.png', 'top5-card.en.png',
     'top5-2026-w40.png', 'top5-2026-w40.en.png', 'top5-card-w40.en.png',
+    'top5-2026-w40b.png', 'top5-2026-w40b.en.png', 'top5-card-w40b.en.png',
     'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
     'trust-chain.png', 'trust-chain.en.png',
     'effort-curves-20260911.png', 'effort-curves-20260911.en.png',
@@ -241,7 +243,7 @@ assets = sorted((dist / 'assets').glob('*'))
 top_level = {p.name for p in assets}
 assert top_level == {*CHART_ASSETS, CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
 # specs/ and vendor/ are vega chart specs + libs for the hand-written pages; verify they exist and are non-empty.
-assert len(list((dist / 'assets/specs').glob('*.json'))) == 10
+assert len(list((dist / 'assets/specs').glob('*.json'))) == 12  # + top5-2026-w40b zh/en
 assert {p.name for p in (dist / 'assets/vendor').glob('*.js')} == {'vega.min.js', 'vega-lite.min.js', 'vega-embed.min.js'}
 for path in assets:
     if path.name in LEGACY_ASSETS or path.is_dir():

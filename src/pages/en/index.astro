@@ -63,7 +63,7 @@ const repos = [
   ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
   ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode — frozen at the owner\'s call'],
   ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP'],
-  ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ @ OpenAI Codex"],
+  ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16/24 @ OpenAI Codex"],
   ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
   ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official'],
   ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go'],
@@ -153,11 +153,11 @@ const repos = [
         These are static chart snapshots: open an image at full size, or follow its source details.
       </p>
       <figure>
-        <a href={asset('top5-2026-w40.en.webp')} aria-label="Open full-size AMBER board">
-          <img src={asset('top5-2026-w40.en.webp')} width="1400" height="1004" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction)" />
+        <a href={asset('top5-2026-w40b.en.webp')} aria-label="Open full-size AMBER board">
+          <img src={asset('top5-2026-w40b.en.webp')} width="1400" height="1027" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction and the 2026-10-02 tests)" />
         </a>
         <figcaption>
-          Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · claude-sonnet-5-5 @ Anthropic subscription lane (19/24, no NA) is level with swe-2-max @ Devin (19'/24, 1 NA). ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
+          Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 1 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19/24, no NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 2 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16/24) joined the board on 2026-10-02. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
           swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
