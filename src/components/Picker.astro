@@ -67,8 +67,10 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
   <div class="page" id="pick-app" lang={lang === 'en' ? 'en' : 'zh-CN'} data-axes={JSON.stringify(rawAxes)} data-site={JSON.stringify(siteData)} style={`--slots: ${slots}`}>
     <section class="ask glass" aria-labelledby="ask-title">
       <div class="ask-main">
-      <h1 id="ask-title">{T.h1a}<em>{lang === 'en' ? ' ' : ''}{T.h1em}</em>{T.h1b}</h1>
-      <p class="sub">{T.sub}</p>
+      <div class="ask-head">
+        <h1 id="ask-title">{T.h1a}<em>{lang === 'en' ? ' ' : ''}{T.h1em}</em>{T.h1b}</h1>
+        <p class="sub">{T.sub}</p>
+      </div>
       <div class="pk-chips" aria-label={T.chipsAria}>
         {T.faces.map(([id, label, hint]) => (
           <button type="button" class="pk-chip" data-face={id} aria-pressed="false">

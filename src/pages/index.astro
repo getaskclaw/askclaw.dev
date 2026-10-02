@@ -4,9 +4,8 @@ import Picker from '../components/Picker.astro';
 import rawAxes from '../data/axes.json';
 import { route } from '../utils/route';
 
-const crabAsset = route('/assets/crab-hero.webp');
 
-// Facts beside the crab come from the generated board, not typed in.
+// Facts in the ask card come from the generated board, not typed in.
 const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
 const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
 const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
@@ -63,17 +62,6 @@ const questions = [
 >
   <Picker>
     <aside class="crab-guide" aria-label="首屏导览" slot="beside">
-      <div class="crab-frame">
-        <img
-          src={crabAsset}
-          width="1200"
-          height="400"
-          alt="珊瑚色蟹托着珍珠，邀请访客按工作挑模型"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </div>
-      <p class="crab-bubble">先说要做什么，我把路递给你。</p>
       <div class="fact-rail" aria-label="AMBER 当前事实">
         <span class="fact-dot" aria-hidden="true"></span>
         <span>{caseCount} 案 · {repoCount} 个成绩仓 · 2026-{latestWeek}</span>

@@ -450,21 +450,11 @@ try {
       })));
       result.fourCardsIntact = await page.locator('.question-entry').count() === 4;
       result.homeMobileOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
-      const bannerStyle = () => page.locator('.crab-bubble').evaluate((element) => {
-        const style = getComputedStyle(element);
-        return { cursor: style.cursor, background: style.backgroundColor, shadow: style.boxShadow, transform: style.transform, color: style.color };
-      });
-      await page.mouse.move(0, 0);
-      result.bannerStyle = await bannerStyle();
-      await page.locator('.crab-bubble').hover();
-      result.bannerNonInteractive = isDeepStrictEqual(await bannerStyle(), result.bannerStyle)
-        && result.bannerStyle.cursor === 'default' && result.bannerStyle.background === 'rgba(0, 0, 0, 0)'
-        && result.bannerStyle.shadow === 'none';
       if (isPickRoute) result.mobileLanes = [];
       result.homeCardsFit = await page.locator('#grid .card').evaluateAll((cards) => cards.every((card) => card.scrollWidth <= card.clientWidth + 1));
       if ((isPickRoute && !result.homeCardsFit) || result.mobileLanes.some((lane) => lane.scrollWidth > lane.clientWidth
         || lane.whiteSpace !== 'normal' || lane.textOverflow === 'ellipsis')
-        || !result.fourCardsIntact || result.homeMobileOverflow || !result.bannerNonInteractive) failed = true;
+        || !result.fourCardsIntact || result.homeMobileOverflow) failed = true;
       await page.setViewportSize({ width: 1440, height: 900 });
     }
 

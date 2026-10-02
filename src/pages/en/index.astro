@@ -9,8 +9,7 @@ const asset = (file: string) => route(`/assets/${file}`);
 // Four-card hero, translated from the Chinese home (/src/pages/index.astro) and sharing its
 // question-* / crab-* / leaderboard-* classes. A follows the Chinese page's repos anchor;
 // D keeps the requested method-page entry path.
-const crabAsset = asset('crab-hero.webp');
-// Facts beside the crab come from the generated board, not typed in.
+// Facts in the ask card come from the generated board, not typed in.
 const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
 const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
 const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
@@ -86,17 +85,6 @@ const repos = [
 >
   <Picker lang="en">
     <aside class="crab-guide" aria-label="Hero guide" slot="beside">
-      <div class="crab-frame">
-        <img
-          src={crabAsset}
-          width="1200"
-          height="400"
-          alt="A coral crab holding a pearl, inviting visitors to pick models by the work they need"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </div>
-      <p class="crab-bubble">Tell me the work; I'll hand you the path.</p>
       <div class="fact-rail" aria-label="AMBER current facts">
         <span class="fact-dot" aria-hidden="true"></span>
         <span>{caseCount} cases · {repoCount} result repos · 2026-{latestWeek}</span>
