@@ -57,19 +57,19 @@ const questions = [
 // commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
 const repos = [
   ['amber', 'spec', 'Method spec + public hash index + cross-repo weekly board'],
-  ['amber-devin', "19'/24", 'swe-2-max @ Devin — joint leader (1 NA)'],
-  ['amber-claude', '19/24', "claude-sonnet-5-5 19/24 (W40, joint leader, no NA) · claude-opus-5-5 19'/24 (W40 re-test, W39 17'/24) · claude-fable-5-1 16'/24 @ Anthropic subscription lane"],
-  ['amber-kimi', '18/24', 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
-  ['amber-ollama', '18/24', 'glm-5.3-flash / d41f @ Ollama Cloud'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin — joint leader (2 NA)'],
+  ['amber-claude', "19'/24", "claude-sonnet-5-5 19'/24 (W40, joint leader, no NA apart from A-d511f9e8) · claude-opus-5-5 19'/24 (W40 re-test, W39 17'/24) · claude-fable-5-1 16'/24 @ Anthropic subscription lane"],
+  ['amber-kimi', "18'/24", 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
+  ['amber-ollama', "18'/24", 'glm-5.3-flash / d41f @ Ollama Cloud'],
   ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode — frozen at the owner\'s call'],
-  ['amber-workbuddy', '18/24', 'hy4-preview-f @ WorkBuddy ACP'],
-  ['amber-gpt', '16/24', "gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16/24 @ OpenAI Codex"],
-  ['amber-crof', '16/23 ∅', 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
+  ['amber-workbuddy', "18'/24", 'hy4-preview-f @ WorkBuddy ACP'],
+  ['amber-gpt', "16'/24", "gpt-6-astra 16'/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16'/24 @ OpenAI Codex"],
+  ['amber-crof', "16'/23 ∅", 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
   ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official'],
   ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go'],
   ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
   ['amber-stepfun', "15'/24", 'step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up'],
-  ['amber-goldenpotato', '15/24', 'Qwen3.8-27B @ community self-hosted (3× V100)'],
+  ['amber-goldenpotato', "15'/24", 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
 <BaseLayout
@@ -153,11 +153,11 @@ const repos = [
         These are static chart snapshots: open an image at full size, or follow its source details.
       </p>
       <figure>
-        <a href={asset('top5-2026-w40b.en.webp')} aria-label="Open full-size AMBER board">
-          <img src={asset('top5-2026-w40b.en.webp')} width="1400" height="1027" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction and the 2026-10-02 tests)" />
+        <a href={asset('top5-2026-w40c.en.webp')} aria-label="Open full-size AMBER board">
+          <img src={asset('top5-2026-w40c.en.webp')} width="1400" height="898" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction, the 2026-10-02 tests and A-d511f9e8 on hold for every lane)" />
         </a>
         <figcaption>
-          Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 1 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19/24, no NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 2 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16/24) joined the board on 2026-10-02. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
+          Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
           swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
@@ -229,7 +229,7 @@ const repos = [
         earlier records. The axis picker retains its own older W36 records for two lanes.{' '}
         <a href={route('/method/')}>Read the method and score-period notes</a>.
       </p>
-      <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+      <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. From 2026-10-02 defense case A-d511f9e8 is NA on every lane (<a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>): every total carries an apostrophe and pass counts do not change. Devin 19'/24 (2 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (4 NA), not /24.</p>
       <div class="repo-grid">
         {repos.map(([repo, score, description]) => (
           <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>

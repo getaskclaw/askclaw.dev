@@ -5,7 +5,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%2300a5b5'/%3E%3Ctext x='50' y='68' font-size='52' font-family='system-ui' font-weight='bold' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="canonical" href="https://askclaw.dev/en.html">
 <meta property="og:title" content="AskClaw — AMBER: sealed-in-amber replay evaluation">
-<meta property="og:image" content="https://askclaw.dev/assets/top5-card-w40b.en.png">
+<meta property="og:image" content="https://askclaw.dev/assets/top5-card-w40c.en.png">
 <meta property="og:type" content="website">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AskClaw — AMBER: sealed-in-amber replay evaluation</title>
@@ -77,8 +77,8 @@
   <h2>The board right now</h2>
   <p class="hint">Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/top5-2026-w40b.en.vega-lite.json"><img src="assets/top5-2026-w40b.en.png" width="3138" height="2301" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction and the 2026-10-02 tests)"></div>
-    <figcaption>Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 1 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19/24, no NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 2 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16/24) joined the board on 2026-10-02. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br>swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.</figcaption>
+    <div class="chart" data-spec="assets/specs/top5-2026-w40c.en.vega-lite.json"><img src="assets/top5-2026-w40c.en.png" width="3648" height="2340" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction, the 2026-10-02 tests and A-d511f9e8 on hold for every lane)"></div>
+    <figcaption>Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br>swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.</figcaption>
   </figure>
 </section>
 
@@ -121,22 +121,22 @@
 <section>
   <h2>Result repos</h2>
   <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
-  <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Devin 19'/24 (1 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (3 NA), not /24.</p>
+  <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. From 2026-10-02 defense case A-d511f9e8 is NA on every lane (<a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>): every total carries an apostrophe and pass counts do not change. Devin 19'/24 (2 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (4 NA), not /24.</p>
       <div class="repos">
     <a class="repo" href="https://github.com/getaskclaw/amber"><b>amber</b><span class="score">spec</span><p>Method spec + public hash index + cross-repo weekly board</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">19'/24</span><p>swe-2-max @ Devin — joint leader (1 NA)</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-claude"><b>amber-claude</b><span class="score">19/24</span><p>claude-sonnet-5-5 19/24 (W40, joint leader, no NA) · claude-opus-5-5 19'/24 (W40 re-test, W39 17'/24) · claude-fable-5-1 16'/24 @ Anthropic subscription lane</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-kimi"><b>amber-kimi</b><span class="score">18/24</span><p>k3 @ Kimi official coding endpoint + the K2.8 duel</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-ollama"><b>amber-ollama</b><span class="score">18/24</span><p>glm-5.3-flash / d41f @ Ollama Cloud</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-devin"><b>amber-devin</b><span class="score">19'/24</span><p>swe-2-max @ Devin — joint leader (2 NA)</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-claude"><b>amber-claude</b><span class="score">19'/24</span><p>claude-sonnet-5-5 19'/24 (W40, joint leader, no NA apart from A-d511f9e8) · claude-opus-5-5 19'/24 (W40 re-test, W39 17'/24) · claude-fable-5-1 16'/24 @ Anthropic subscription lane</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-kimi"><b>amber-kimi</b><span class="score">18'/24</span><p>k3 @ Kimi official coding endpoint + the K2.8 duel</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-ollama"><b>amber-ollama</b><span class="score">18'/24</span><p>glm-5.3-flash / d41f @ Ollama Cloud</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-commandcode"><b>amber-commandcode</b><span class="score">15'/23 ∅</span><p>d41f @ CommandCode — frozen at the owner's call</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-workbuddy"><b>amber-workbuddy</b><span class="score">18/24</span><p>hy4-preview-f @ WorkBuddy ACP</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16/24</span><p>gpt-6-astra 16/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16/24 @ OpenAI Codex</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-crof"><b>amber-crof</b><span class="score">16/23 ∅</span><p>qwen3.8-27b @ CrofAI — the $1.15 value king</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-workbuddy"><b>amber-workbuddy</b><span class="score">18'/24</span><p>hy4-preview-f @ WorkBuddy ACP</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-gpt"><b>amber-gpt</b><span class="score">16'/24</span><p>gpt-6-astra 16'/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16'/24 @ OpenAI Codex</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-crof"><b>amber-crof</b><span class="score">16'/23 ∅</span><p>qwen3.8-27b @ CrofAI — the $1.15 value king</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-deepseek"><b>amber-deepseek</b><span class="score">16'/24</span><p>deepseek-flash @ DeepSeek official</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-opencode"><b>amber-opencode</b><span class="score">15'/24</span><p>deepseek-flash @ OpenCode Go</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-doubao"><b>amber-doubao</b><span class="score">17'/24</span><p>doubao-seed-evolving @ Volcengine Ark Agent Plan</p></a>
     <a class="repo" href="https://github.com/getaskclaw/amber-stepfun"><b>amber-stepfun</b><span class="score">15'/24</span><p>step-5-preview @ stepfun plan endpoint — W38 base + W39 convergence make-up</p></a>
-    <a class="repo" href="https://github.com/getaskclaw/amber-goldenpotato"><b>amber-goldenpotato</b><span class="score">15/24</span><p>Qwen3.8-27B @ community self-hosted (3× V100)</p></a>
+    <a class="repo" href="https://github.com/getaskclaw/amber-goldenpotato"><b>amber-goldenpotato</b><span class="score">15'/24</span><p>Qwen3.8-27B @ community self-hosted (3× V100)</p></a>
   </div>
 </section>
 
