@@ -303,7 +303,7 @@ try {
     if (route === '/method/') {
       result.scorePeriods = [];
       // Ollama moved to the /24 basis; CrofAI is frozen and keeps its sealed /23 record.
-      for (const [repo, score] of [['amber-ollama', '18/24'], ['amber-crof', '16/23 ∅']]) {
+      for (const [repo, score] of [['amber-ollama', "18'/24"], ['amber-crof', "16'/23 ∅"]]) {
         const text = await page.locator(`.repo-card[href="https://github.com/getaskclaw/${repo}"]`).innerText();
         const passed = text.includes(score) && text.includes('W37');
         result.scorePeriods.push({ repo, text, passed });

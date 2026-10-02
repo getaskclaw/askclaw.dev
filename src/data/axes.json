@@ -40,7 +40,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -94,7 +95,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -149,7 +151,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -202,7 +205,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -257,7 +261,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -312,7 +317,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -366,7 +372,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -475,7 +482,7 @@
    "defense": {
     "p": 0,
     "n": 2,
-    "na": 1
+    "na": 2
    },
    "attribution": {
     "p": 0,
@@ -533,7 +540,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -588,7 +596,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -642,7 +651,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -695,7 +705,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -748,7 +759,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 1,
@@ -801,7 +813,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -854,7 +867,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -907,7 +921,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -1017,7 +1032,7 @@
    "defense": {
     "p": 0,
     "n": 2,
-    "na": 1
+    "na": 2
    },
    "attribution": {
     "p": 0,
@@ -1070,7 +1085,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,
@@ -1125,7 +1141,7 @@
    "defense": {
     "p": 0,
     "n": 2,
-    "na": 1
+    "na": 2
    },
    "attribution": {
     "p": 0,
@@ -1178,7 +1194,8 @@
    },
    "defense": {
     "p": 0,
-    "n": 2
+    "n": 2,
+    "na": 1
    },
    "attribution": {
     "p": 0,

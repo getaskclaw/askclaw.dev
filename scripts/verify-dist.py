@@ -57,7 +57,8 @@ LEGACY_CHART_ASSETS = {
 REFRESHED_CHART_ASSETS = {
     'top5-2026-w39.en.webp': 'top5-2026-w39.en.png',
     'top5-2026-w40.en.webp': 'top5-2026-w40.en.png',
-    'top5-2026-w40b.en.webp': 'top5-2026-w40b.en.png',  # 2026-10-02 tests: Opus re-test, Fable, gpt-6.1-sol (amber spec repo @83f08d7)
+    'top5-2026-w40b.en.webp': 'top5-2026-w40b.en.png',
+    'top5-2026-w40c.en.webp': 'top5-2026-w40c.en.png',  # A-d511f9e8 on hold for every lane: apostrophe on every total (amber spec repo)  # 2026-10-02 tests: Opus re-test, Fable, gpt-6.1-sol (amber spec repo @83f08d7)
     'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
 }
 CHART_ASSETS = {**LEGACY_CHART_ASSETS, **REFRESHED_CHART_ASSETS}
@@ -68,6 +69,7 @@ LEGACY_ASSETS = {
     'top5-2026-w39.png', 'top5-2026-w39.en.png', 'top5-card.png', 'top5-card.en.png',
     'top5-2026-w40.png', 'top5-2026-w40.en.png', 'top5-card-w40.en.png',
     'top5-2026-w40b.png', 'top5-2026-w40b.en.png', 'top5-card-w40b.en.png',
+    'top5-2026-w40c.png', 'top5-2026-w40c.en.png', 'top5-card-w40c.en.png',
     'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
     'trust-chain.png', 'trust-chain.en.png',
     'effort-curves-20260911.png', 'effort-curves-20260911.en.png',
@@ -152,7 +154,7 @@ for lane in lanes:
 # count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
 # axis slot count never shrinks to hide a hold.
 assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
-assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 29  # 17 + ADJ-20261002-integrity 9 卷 = 26; 10-02 sittings: claude W39 1 NA -> W40 2 NA (+1), claude-fable 2 NA (+2)
+assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 49  # 29 before the 2026-10-02 A-d511f9e8 hold (17 + ADJ-20261002-integrity 9 = 26, + 10-02 sittings +3); the hold adds one NA on 20 lanes (cc-m26p and doubao already had it as NA)
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -208,7 +210,7 @@ for relative in sorted(expected_routes):
         assert len(parsed.cards) == 13
         # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
         # the new claude lane carries its own W39 public score. Apostrophes follow the NA channel.
-        for repo, score in [('amber-ollama', '18/24'), ('amber-crof', '16/23 ∅'), ('amber-claude', "19'/24")]:  # claude-opus-5-5 W40 re-sit (W39 17'/24 stays in the card text)
+        for repo, score in [('amber-ollama', "18'/24"), ('amber-crof', "16'/23 ∅"), ('amber-claude', "19'/24")]:  # claude-opus-5-5 W40 re-sit (W39 17'/24 stays in the card text)
             card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
             assert score in card['text'], (repo, card['text'])
         # The historical /21 composite note is fact and stays on the page.
@@ -223,7 +225,7 @@ for relative in sorted(expected_routes):
         for phrase in ['24 cases / 27 papers', 'Snapshot 2026-W40', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
             assert phrase in text, phrase
         # Frozen lanes must keep the sealed /23 basis on the English mirror too.
-        for score in ['15&#39;/23 ∅', '16/23 ∅']:  # CommandCode 17/23 → 15'/23 per 2026-10-02 correction
+        for score in ['15&#39;/23 ∅', '16&#39;/23 ∅']:  # CommandCode 17/23 → 15'/23 per 2026-10-02 correction; every total carries ' after the A-d511f9e8 hold
             assert score in text, score
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
@@ -243,7 +245,7 @@ assets = sorted((dist / 'assets').glob('*'))
 top_level = {p.name for p in assets}
 assert top_level == {*CHART_ASSETS, CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
 # specs/ and vendor/ are vega chart specs + libs for the hand-written pages; verify they exist and are non-empty.
-assert len(list((dist / 'assets/specs').glob('*.json'))) == 12  # + top5-2026-w40b zh/en
+assert len(list((dist / 'assets/specs').glob('*.json'))) == 14  # + top5-2026-w40b zh/en, top5-2026-w40c zh/en
 assert {p.name for p in (dist / 'assets/vendor').glob('*.js')} == {'vega.min.js', 'vega-lite.min.js', 'vega-embed.min.js'}
 for path in assets:
     if path.name in LEGACY_ASSETS or path.is_dir():
