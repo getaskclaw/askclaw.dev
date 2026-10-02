@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import DotBoard from '../../components/DotBoard.astro';
 import rawLanes from '../../data/axes.json';
 import siteData from '../../data/site-data.json';
 import { route } from '../../utils/route';
@@ -42,6 +43,12 @@ const stats = faces.map(([id, label]) => {
       这让 {lanes.length} 条公开车道的差异更容易核对。
     </p>
     <noscript>本页的筛选需要启用 JavaScript。</noscript>
+
+    <section class="section" aria-labelledby="dots-title">
+      <h2 id="dots-title">全部车道一览</h2>
+      <p class="hint">一点 = 一案（一道计分任务）。实心 = 通过，空心 = 未过，灰点 = NA（作废或挂起，不计胜负）。按总分排序，同分不分先后。多数轴只有 1–2 案，一案就能改变该轴读数。</p>
+      <DotBoard lanes={lanes} lang="zh" />
+    </section>
 
     <section class="section" aria-labelledby="pick-title">
       <h2 id="pick-title">选择工作类型</h2>

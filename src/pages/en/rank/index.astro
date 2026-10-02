@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DotBoard from '../../../components/DotBoard.astro';
 import rawLanes from '../../../data/axes.json';
 import siteData from '../../../data/site-data.json';
 import { route } from '../../../utils/route';
@@ -51,6 +52,12 @@ const stats = faces.map(([id, label]) => {
       This makes the differences between the {lanes.length} public lanes easier to check.
     </p>
     <noscript>Enable JavaScript to use the filters on this page.</noscript>
+
+    <section class="section" aria-labelledby="dots-title">
+      <h2 id="dots-title">All lanes at a glance</h2>
+      <p class="hint">One dot = one case (one scored task). Filled = passed, hollow = failed, grey = NA (void or held; neither a win nor a loss). Sorted by total; equal totals are in no particular order. Most axes hold only 1–2 cases, so one case can change an axis reading.</p>
+      <DotBoard lanes={lanes} lang="en" />
+    </section>
 
     <section class="section" aria-labelledby="pick-title">
       <h2 id="pick-title">Choose work types</h2>
