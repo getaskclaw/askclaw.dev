@@ -211,6 +211,7 @@ try {
         stepfun: { vendor: 'stepfun plan endpoint' },
         claude: { vendor: 'Anthropic subscription lane' },
         'claude-sonnet': { vendor: 'Anthropic subscription lane' },
+        'claude-fable': { vendor: 'Anthropic subscription lane' },
       };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
@@ -288,10 +289,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'cc-sb'];
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'cc-sb'];  // 2026-10-02 sittings: + claude-fable, gpt61-sol (both passed the convergence case)
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence16/17 full marks' : '收敛16/17 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence18/19 full marks' : '收敛18/19 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
