@@ -4,6 +4,7 @@
 // no script. NA channel as on the board: `na` cases are neither wins nor losses, and
 // `n === 0` means the lane's library had no case on that axis.
 import siteData from '../data/site-data.json';
+import { route } from '../utils/route';
 
 interface Props {
   lanes: any[];
@@ -74,7 +75,7 @@ const t = zh
       {rows.map(({ lane, total, cells }) => (
         <tr>
           <td class="lane">
-            <a href={`https://github.com/getaskclaw/${lane.repo}`} target="_blank" rel="noopener">{lane.name}</a>
+            <a href={route(`/${zh ? '' : 'en/'}model/${lane.id}/`)}>{lane.name}</a>
             <small>{lane.vendor}</small>
           </td>
           <td class="num total">{total}</td>

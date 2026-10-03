@@ -1,0 +1,5422 @@
+{
+ "lanes": {
+  "astra": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 2
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2434,
+     "wall_s": 17
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2530,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "fail",
+     "tokens": 4280,
+     "wall_s": 56
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 108125,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 403916,
+     "wall_s": 188
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 326338,
+     "wall_s": 129
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 250333,
+     "wall_s": 181
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 366867,
+     "wall_s": 175
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 183279,
+     "wall_s": 103
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 2430309,
+     "wall_s": 615
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 2847811,
+     "wall_s": 980
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 694371,
+     "wall_s": 382
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 9022,
+     "wall_s": 87
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 11904,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 5677,
+     "wall_s": 54
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 498366,
+     "wall_s": 228
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 481538,
+     "wall_s": 249
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 208696,
+     "wall_s": 159
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 551723,
+     "wall_s": 241
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 204098,
+     "wall_s": 106
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 14972,
+     "wall_s": 221
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 224524,
+     "wall_s": 78
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 267650,
+     "wall_s": 132
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 142676,
+     "wall_s": 114
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 16,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": false,
+   "id": "astra",
+   "model": "gpt-6-astra-900k",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-6-astra-900k",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W39"
+  },
+  "cc": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 1,
+     "p": 4
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 1,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4846,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4122,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4970,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 377536,
+     "wall_s": 82
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 2071108,
+     "wall_s": 231
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 1388552,
+     "wall_s": 152
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 466182,
+     "wall_s": 98
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 868615,
+     "wall_s": 136
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "na",
+     "tokens": 2723328,
+     "wall_s": 340
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 10608642,
+     "wall_s": 621
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 11378407,
+     "wall_s": 710
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 6348066,
+     "wall_s": 628
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 16825,
+     "wall_s": 55
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 29997,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 9490,
+     "wall_s": 44
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 961073,
+     "wall_s": 165
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 476575,
+     "wall_s": 98
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 523255,
+     "wall_s": 105
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1060424,
+     "wall_s": 169
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 235471,
+     "wall_s": 46
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 43391,
+     "wall_s": 143
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 62561,
+     "wall_s": 20
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 139926,
+     "wall_s": 34
+    }
+   ],
+   "composed": false,
+   "frozen_week": "2026-W37",
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 3,
+     "total": 15,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": false,
+   "id": "cc",
+   "model": "deepseek/deepseek-v4.1-flash",
+   "n": 23,
+   "na": 3,
+   "name": "deepseek-v4.1-flash",
+   "repo": "amber-commandcode",
+   "same_model": [],
+   "total": 15,
+   "vendor": "CommandCode",
+   "week": "2026-W37"
+  },
+  "cc-m26p": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 1,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3085,
+     "wall_s": 16
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3796,
+     "wall_s": 26
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5198,
+     "wall_s": 28
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 638110,
+     "wall_s": 293
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1058934,
+     "wall_s": 343
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 1318148,
+     "wall_s": 1114
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 336258,
+     "wall_s": 389
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 956890,
+     "wall_s": 419
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 2370056,
+     "wall_s": 988
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 4889886,
+     "wall_s": 3166
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 534769,
+     "wall_s": 1693
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 36874,
+     "wall_s": 129
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 17268,
+     "wall_s": 196
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 23909,
+     "wall_s": 318
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 934394,
+     "wall_s": 1077
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 534907,
+     "wall_s": 296
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 241263,
+     "wall_s": 138
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 454656,
+     "wall_s": 441
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 146967,
+     "wall_s": 166
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 57787,
+     "wall_s": 474
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 47801,
+     "wall_s": 38
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 82926,
+     "wall_s": 51
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 147349,
+     "wall_s": 75
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 16,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": false,
+   "id": "cc-m26p",
+   "model": "mimo-v2.6-pro",
+   "n": 24,
+   "na": 2,
+   "name": "mimo-v2.6-pro",
+   "repo": "amber-commandcode",
+   "same_model": [],
+   "total": 16,
+   "vendor": "CommandCode",
+   "week": "2026-W39"
+  },
+  "cc-sb": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 4
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "defense": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 1,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 2
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3893,
+     "wall_s": 16
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "fail",
+     "tokens": 7771,
+     "wall_s": 75
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 7414,
+     "wall_s": 42
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 408382,
+     "wall_s": 245
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 960841,
+     "wall_s": 349
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 2164034,
+     "wall_s": 596
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 437311,
+     "wall_s": 277
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1197481,
+     "wall_s": 1222
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 31561431,
+     "wall_s": 2295
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 29310007,
+     "wall_s": 1776
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 18730,
+     "wall_s": 148
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 23490,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 1207,
+     "wall_s": 127
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 1450994,
+     "wall_s": 290
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 427279,
+     "wall_s": 135
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 340936,
+     "wall_s": 193
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 9478085,
+     "wall_s": 812
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "fail",
+     "tokens": 93690,
+     "wall_s": 37
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 23256,
+     "wall_s": 127
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 46601,
+     "wall_s": 27
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 450629,
+     "wall_s": 100
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "fail",
+     "tokens": 62831,
+     "wall_s": 27
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 3,
+     "total": 13,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": false,
+   "id": "cc-sb",
+   "model": "space-bunny-alpha",
+   "n": 24,
+   "na": 3,
+   "name": "space-bunny-alpha",
+   "repo": "amber-commandcode",
+   "same_model": [],
+   "total": 13,
+   "vendor": "CommandCode",
+   "week": "2026-W39"
+  },
+  "claude": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3332,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2875,
+     "wall_s": 17
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5740,
+     "wall_s": 30
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 166592,
+     "wall_s": 85
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 162070,
+     "wall_s": 87
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 365637,
+     "wall_s": 178
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 158406,
+     "wall_s": 116
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 156752,
+     "wall_s": 76
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 321650,
+     "wall_s": 266
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 6143367,
+     "wall_s": 1055
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 14583,
+     "wall_s": 78
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 23970,
+     "wall_s": 90
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 8297,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 185502,
+     "wall_s": 63
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 162768,
+     "wall_s": 83
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 89881,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 284260,
+     "wall_s": 175
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 65728,
+     "wall_s": 33
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 30271,
+     "wall_s": 177
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 47200,
+     "wall_s": 29
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 49860,
+     "wall_s": 37
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 65237,
+     "wall_s": 37
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": false,
+     "n": 24,
+     "na": 2,
+     "total": 17,
+     "week": "2026-W39"
+    },
+    {
+     "current": true,
+     "n": 24,
+     "na": 3,
+     "total": 19,
+     "week": "2026-W40"
+    }
+   ],
+   "history_withheld": false,
+   "id": "claude",
+   "model": "claude-opus-5-5",
+   "n": 24,
+   "na": 3,
+   "name": "claude-opus-5-5",
+   "repo": "amber-claude",
+   "same_model": [],
+   "total": 19,
+   "vendor": "Anthropic 订阅道",
+   "week": "2026-W40"
+  },
+  "claude-fable": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 0
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3102,
+     "wall_s": 17
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4567,
+     "wall_s": 36
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5973,
+     "wall_s": 39
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 123817,
+     "wall_s": 99
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 183686,
+     "wall_s": 113
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 343997,
+     "wall_s": 166
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 123079,
+     "wall_s": 96
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 209689,
+     "wall_s": 92
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 265709,
+     "wall_s": 234
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 4381585,
+     "wall_s": 1334
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 4149328,
+     "wall_s": 2150
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 8269,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 19025,
+     "wall_s": 70
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 37630,
+     "wall_s": 424
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 191061,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 149516,
+     "wall_s": 80
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 87328,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 343614,
+     "wall_s": 114
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 105888,
+     "wall_s": 39
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "na",
+     "tokens": 39624,
+     "wall_s": 279
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 34216,
+     "wall_s": 32
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 49920,
+     "wall_s": 48
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 80208,
+     "wall_s": 44
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 3,
+     "total": 16,
+     "week": "2026-W40"
+    }
+   ],
+   "history_withheld": false,
+   "id": "claude-fable",
+   "model": "claude-fable-5-1",
+   "n": 24,
+   "na": 3,
+   "name": "claude-fable-5-1",
+   "repo": "amber-claude",
+   "same_model": [],
+   "total": 16,
+   "vendor": "Anthropic 订阅道",
+   "week": "2026-W40"
+  },
+  "claude-sonnet": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 0
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3302,
+     "wall_s": 16
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3089,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5744,
+     "wall_s": 24
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 243655,
+     "wall_s": 73
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 305987,
+     "wall_s": 98
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 107679,
+     "wall_s": 53
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 363427,
+     "wall_s": 143
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 235182,
+     "wall_s": 66
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 223468,
+     "wall_s": 116
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 3578332,
+     "wall_s": 1119
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 875338,
+     "wall_s": 1278
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 1156663,
+     "wall_s": 704
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 15259,
+     "wall_s": 69
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 18803,
+     "wall_s": 41
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 7803,
+     "wall_s": 69
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 159453,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 132807,
+     "wall_s": 57
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 99809,
+     "wall_s": 46
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 273345,
+     "wall_s": 76
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 85344,
+     "wall_s": 31
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 24458,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 37829,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 67746,
+     "wall_s": 36
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 39610,
+     "wall_s": 28
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 19,
+     "week": "2026-W40"
+    }
+   ],
+   "history_withheld": false,
+   "id": "claude-sonnet",
+   "model": "claude-sonnet-5-5",
+   "n": 24,
+   "na": 1,
+   "name": "claude-sonnet-5-5",
+   "repo": "amber-claude",
+   "same_model": [],
+   "total": 19,
+   "vendor": "Anthropic 订阅道",
+   "week": "2026-W40"
+  },
+  "crof": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 4,
+     "na": 0,
+     "p": 3
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4748,
+     "wall_s": 15
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 14471,
+     "wall_s": 74
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3983,
+     "wall_s": 504
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 942143,
+     "wall_s": 216
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1033005,
+     "wall_s": 305
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 2831786,
+     "wall_s": 578
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 389324,
+     "wall_s": 181
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 642196,
+     "wall_s": 254
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 368393,
+     "wall_s": 124
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 21367922,
+     "wall_s": 1261
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "pass",
+     "tokens": 16287673,
+     "wall_s": 996
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 9741534,
+     "wall_s": 761
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 6760,
+     "wall_s": 6
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 46494,
+     "wall_s": 182
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 1187,
+     "wall_s": 6
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 586177,
+     "wall_s": 159
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1110756,
+     "wall_s": 174
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 303032,
+     "wall_s": 73
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1812550,
+     "wall_s": 227
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 176214,
+     "wall_s": 52
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 15546,
+     "wall_s": 636
+    }
+   ],
+   "composed": false,
+   "frozen_week": "2026-W36",
+   "history": [
+    {
+     "current": true,
+     "n": 21,
+     "na": 1,
+     "total": 14,
+     "week": "2026-W36"
+    }
+   ],
+   "history_withheld": false,
+   "id": "crof",
+   "model": "qwen3.8-27b",
+   "n": 21,
+   "na": 1,
+   "name": "qwen3.8-27b",
+   "repo": "amber-crof",
+   "same_model": [],
+   "total": 14,
+   "vendor": "CrofAI",
+   "week": "2026-W36"
+  },
+  "devin": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 49
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 38
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 81
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 248
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 155
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 392
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 933
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 498
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 265
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 785
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 469
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 491
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 166
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 863
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 1088
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 818
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 922
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 84
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 280
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 164
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 49
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 37
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 2,
+     "total": 18,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": false,
+   "id": "devin",
+   "model": "swe-2-max",
+   "n": 24,
+   "na": 2,
+   "name": "swe-2-max",
+   "repo": "amber-devin",
+   "same_model": [],
+   "total": 19,
+   "vendor": "Devin",
+   "week": "2026-W37"
+  },
+  "doubao": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2896,
+     "wall_s": 30
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3489,
+     "wall_s": 49
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 8373,
+     "wall_s": 141
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 380011,
+     "wall_s": 357
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 390078,
+     "wall_s": 283
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 705820,
+     "wall_s": 958
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 282813,
+     "wall_s": 359
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 568697,
+     "wall_s": 516
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 413489,
+     "wall_s": 660
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 26162,
+     "wall_s": 621
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 24434,
+     "wall_s": 286
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 4320,
+     "wall_s": 111
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 569539,
+     "wall_s": 429
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 909625,
+     "wall_s": 833
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 106287,
+     "wall_s": 101
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 767959,
+     "wall_s": 703
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 247485,
+     "wall_s": 144
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 10118,
+     "wall_s": 62
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 48900,
+     "wall_s": 49
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 102263,
+     "wall_s": 101
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 131503,
+     "wall_s": 77
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 3,
+     "total": 16,
+     "week": "2026-W38"
+    }
+   ],
+   "history_withheld": false,
+   "id": "doubao",
+   "model": "doubao-seed-evolving",
+   "n": 24,
+   "na": 3,
+   "name": "doubao-seed-evolving",
+   "repo": "amber-doubao",
+   "same_model": [],
+   "total": 17,
+   "vendor": "火山方舟 Agent Plan",
+   "week": "2026-W38"
+  },
+  "ds": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 1,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3266,
+     "wall_s": 8
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3745,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 9121,
+     "wall_s": 27
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 564112,
+     "wall_s": 111
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 877221,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 1925278,
+     "wall_s": 205
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 4172027,
+     "wall_s": 435
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 585706,
+     "wall_s": 123
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 3330849,
+     "wall_s": 319
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 14601254,
+     "wall_s": 756
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 8470260,
+     "wall_s": 741
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 7860139,
+     "wall_s": 838
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 23068,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 58274,
+     "wall_s": 201
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 2998,
+     "wall_s": 20
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 705152,
+     "wall_s": 77
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1038288,
+     "wall_s": 151
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 465164,
+     "wall_s": 102
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1107907,
+     "wall_s": 118
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 383272,
+     "wall_s": 51
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 12729,
+     "wall_s": 23
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 156550,
+     "wall_s": 32
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 139205,
+     "wall_s": 23
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 174564,
+     "wall_s": 16
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 2,
+     "total": 15,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": false,
+   "id": "ds",
+   "model": "deepseek-flash",
+   "n": 24,
+   "na": 2,
+   "name": "deepseek-flash (GA)",
+   "repo": "amber-deepseek",
+   "same_model": [
+    "ocgo"
+   ],
+   "total": 16,
+   "vendor": "DeepSeek 官方",
+   "week": "2026-W37"
+  },
+  "gp": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 0
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 6700,
+     "wall_s": 91
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 8339,
+     "wall_s": 150
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 15862,
+     "wall_s": 388
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 554321,
+     "wall_s": 2681
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1313743,
+     "wall_s": 1338
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 936932,
+     "wall_s": 1774
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 721725,
+     "wall_s": 2068
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1340739,
+     "wall_s": 1778
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 916639,
+     "wall_s": 2020
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 8271359,
+     "wall_s": 3547
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 9818411,
+     "wall_s": 2330
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 8653458,
+     "wall_s": 3194
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 22040,
+     "wall_s": 114
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 95761,
+     "wall_s": 395
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 27004,
+     "wall_s": 213
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 359073,
+     "wall_s": 158
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 620885,
+     "wall_s": 278
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 168927,
+     "wall_s": 158
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1586373,
+     "wall_s": 425
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 337017,
+     "wall_s": 126
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 25043,
+     "wall_s": 103
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 125000,
+     "wall_s": 57
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 147569,
+     "wall_s": 62
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 238965,
+     "wall_s": 196
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 1,
+     "total": 14,
+     "week": "2026-W38"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gp",
+   "model": "Qwen3.8-27B",
+   "n": 24,
+   "na": 1,
+   "name": "Qwen3.8-27B",
+   "repo": "amber-goldenpotato",
+   "same_model": [],
+   "total": 15,
+   "vendor": "社区自部署 3×V100",
+   "week": "2026-W38"
+  },
+  "gpt-luna": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    }
+   },
+   "band": "max",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2645,
+     "wall_s": 28
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3234,
+     "wall_s": 37
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 6611,
+     "wall_s": 174
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 449298,
+     "wall_s": 193
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 912289,
+     "wall_s": 307
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 489627,
+     "wall_s": 213
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 571647,
+     "wall_s": 242
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 403146,
+     "wall_s": 157
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 755100,
+     "wall_s": 290
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 6842002,
+     "wall_s": 699
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 11282086,
+     "wall_s": 1166
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 2492144,
+     "wall_s": 619
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "na",
+     "tokens": 904,
+     "wall_s": 282
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "na",
+     "tokens": 748,
+     "wall_s": 280
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "na",
+     "tokens": 2011,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 435418,
+     "wall_s": 227
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 930316,
+     "wall_s": 261
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 226870,
+     "wall_s": 165
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 2089192,
+     "wall_s": 424
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 150059,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "na",
+     "tokens": 833,
+     "wall_s": 280
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 69147,
+     "wall_s": 54
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 67519,
+     "wall_s": 45
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 138549,
+     "wall_s": 46
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": false,
+     "n": 23,
+     "na": 1,
+     "total": 16,
+     "week": "2026-W38"
+    }
+   ],
+   "history_withheld": true,
+   "id": "gpt-luna",
+   "model": "gpt-5.6-luna-900k",
+   "n": 24,
+   "na": 5,
+   "name": "gpt-5.6-luna-900k (high 档)",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W37"
+  },
+  "gpt-sol": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 2,
+     "p": 0
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3719,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4037,
+     "wall_s": 29
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 6890,
+     "wall_s": 74
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 356042,
+     "wall_s": 368
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 310266,
+     "wall_s": 185
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 309358,
+     "wall_s": 212
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 276370,
+     "wall_s": 245
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 491729,
+     "wall_s": 367
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 249224,
+     "wall_s": 214
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 5163186,
+     "wall_s": 994
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 5506372,
+     "wall_s": 1192
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 2002854,
+     "wall_s": 824
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "na",
+     "tokens": 891,
+     "wall_s": 282
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "na",
+     "tokens": 741,
+     "wall_s": 281
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "na",
+     "tokens": 557,
+     "wall_s": 365
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 681909,
+     "wall_s": 287
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1609245,
+     "wall_s": 506
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 324296,
+     "wall_s": 166
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 2079229,
+     "wall_s": 394
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 284196,
+     "wall_s": 172
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 18552,
+     "wall_s": 178
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 53126,
+     "wall_s": 32
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 194788,
+     "wall_s": 110
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": false,
+     "n": 23,
+     "na": 3,
+     "total": 13,
+     "week": "2026-W37"
+    },
+    {
+     "current": true,
+     "n": 23,
+     "na": 4,
+     "total": 15,
+     "week": "2026-W38"
+    },
+    {
+     "current": false,
+     "n": 24,
+     "na": 5,
+     "total": 13,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": true,
+   "id": "gpt-sol",
+   "model": "gpt-5.6-sol-900k",
+   "n": 23,
+   "na": 4,
+   "name": "gpt-5.6-sol-900k (high 档)",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 15,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W38"
+  },
+  "gpt6-luna": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2394,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2308,
+     "wall_s": 12
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4287,
+     "wall_s": 43
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 246759,
+     "wall_s": 132
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 365209,
+     "wall_s": 123
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 279135,
+     "wall_s": 137
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 459406,
+     "wall_s": 143
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 303929,
+     "wall_s": 131
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 263645,
+     "wall_s": 119
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 525156,
+     "wall_s": 222
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 4937945,
+     "wall_s": 694
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 1333877,
+     "wall_s": 376
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 8436,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 11395,
+     "wall_s": 32
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 5550,
+     "wall_s": 38
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 459922,
+     "wall_s": 125
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 255781,
+     "wall_s": 114
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 126870,
+     "wall_s": 81
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1166894,
+     "wall_s": 174
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "fail",
+     "tokens": 124002,
+     "wall_s": 61
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 15594,
+     "wall_s": 146
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 150333,
+     "wall_s": 54
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 75555,
+     "wall_s": 53
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 95420,
+     "wall_s": 74
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 15,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt6-luna",
+   "model": "gpt-6-luna-900k",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-6-luna-900k",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 15,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W39"
+  },
+  "gpt6-sol": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2356,
+     "wall_s": 10
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2841,
+     "wall_s": 25
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4187,
+     "wall_s": 35
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 192564,
+     "wall_s": 108
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 583833,
+     "wall_s": 218
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 452176,
+     "wall_s": 139
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 270900,
+     "wall_s": 158
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 356549,
+     "wall_s": 128
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 153459,
+     "wall_s": 131
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 3304804,
+     "wall_s": 483
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 3094699,
+     "wall_s": 560
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 948382,
+     "wall_s": 393
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 9763,
+     "wall_s": 110
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 10376,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 4286,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 508667,
+     "wall_s": 185
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 602388,
+     "wall_s": 162
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 314902,
+     "wall_s": 98
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 949872,
+     "wall_s": 199
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 186335,
+     "wall_s": 71
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 15509,
+     "wall_s": 147
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 333838,
+     "wall_s": 98
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 296792,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 149173,
+     "wall_s": 118
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 17,
+     "week": "2026-W39"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt6-sol",
+   "model": "gpt-6-sol-900k",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-6-sol-900k",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 17,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W39"
+  },
+  "gpt61-sol": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 4
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2492,
+     "wall_s": 26
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2470,
+     "wall_s": 35
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4206,
+     "wall_s": 68
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 86962,
+     "wall_s": 181
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 128205,
+     "wall_s": 216
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 122584,
+     "wall_s": 133
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 91609,
+     "wall_s": 288
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 100571,
+     "wall_s": 160
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 106285,
+     "wall_s": 192
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 2996365,
+     "wall_s": 1392
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 4494075,
+     "wall_s": 1805
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 694826,
+     "wall_s": 793
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 9120,
+     "wall_s": 146
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 13417,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 6879,
+     "wall_s": 176
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 159560,
+     "wall_s": 263
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 180020,
+     "wall_s": 292
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 134931,
+     "wall_s": 195
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 670850,
+     "wall_s": 379
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 148305,
+     "wall_s": 108
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 14165,
+     "wall_s": 241
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 58098,
+     "wall_s": 81
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 74094,
+     "wall_s": 125
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 68044,
+     "wall_s": 123
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 16,
+     "week": "2026-W40"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt61-sol",
+   "model": "gpt-6.1-sol",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-6.1-sol",
+   "repo": "amber-gpt",
+   "same_model": [],
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W40"
+  },
+  "kimi": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3385,
+     "wall_s": 21
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3471,
+     "wall_s": 26
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5917,
+     "wall_s": 68
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 342093,
+     "wall_s": 244
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 274177,
+     "wall_s": 266
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 916775,
+     "wall_s": 644
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 173917,
+     "wall_s": 180
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 507687,
+     "wall_s": 426
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 682444,
+     "wall_s": 601
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 5029421,
+     "wall_s": 1833
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 3406213,
+     "wall_s": 2221
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 1004940,
+     "wall_s": 1017
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 8210,
+     "wall_s": 70
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 27182,
+     "wall_s": 489
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 9937,
+     "wall_s": 127
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 218927,
+     "wall_s": 199
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 310644,
+     "wall_s": 208
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 171540,
+     "wall_s": 100
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 649922,
+     "wall_s": 391
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 146907,
+     "wall_s": 110
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 13477,
+     "wall_s": 142
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 108395,
+     "wall_s": 80
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 91440,
+     "wall_s": 79
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 233003,
+     "wall_s": 123
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 1,
+     "total": 17,
+     "week": "2026-W38"
+    }
+   ],
+   "history_withheld": false,
+   "id": "kimi",
+   "model": "k3",
+   "n": 24,
+   "na": 1,
+   "name": "k3",
+   "repo": "amber-kimi",
+   "same_model": [],
+   "total": 18,
+   "vendor": "Kimi 官方 coding 端点",
+   "week": "2026-W38"
+  },
+  "ocgo": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 2,
+     "p": 4
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 7927,
+     "wall_s": 25
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4237,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 8316,
+     "wall_s": 27
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 500467,
+     "wall_s": 103
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 845452,
+     "wall_s": 157
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 822348,
+     "wall_s": 165
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1471969,
+     "wall_s": 210
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1449699,
+     "wall_s": 194
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1359766,
+     "wall_s": 278
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 11808913,
+     "wall_s": 746
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 8166142,
+     "wall_s": 855
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 6168,
+     "wall_s": 4
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 52951,
+     "wall_s": 169
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 1079,
+     "wall_s": 6
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 640921,
+     "wall_s": 118
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 556902,
+     "wall_s": 96
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 637301,
+     "wall_s": 107
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "na",
+     "tokens": 1901364,
+     "wall_s": 213
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 455933,
+     "wall_s": 57
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 12471,
+     "wall_s": 24
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 167741,
+     "wall_s": 32
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 173740,
+     "wall_s": 42
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 180654,
+     "wall_s": 58
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 3,
+     "total": 14,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": false,
+   "id": "ocgo",
+   "model": "deepseek-flash",
+   "n": 24,
+   "na": 3,
+   "name": "deepseek-flash",
+   "repo": "amber-opencode",
+   "same_model": [
+    "ds"
+   ],
+   "total": 15,
+   "vendor": "OpenCode Go",
+   "week": "2026-W37"
+  },
+  "ollama": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3054,
+     "wall_s": 6
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 1864,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4540,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 166073,
+     "wall_s": 49
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 280168,
+     "wall_s": 59
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 780933,
+     "wall_s": 129
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 140742,
+     "wall_s": 45
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 387809,
+     "wall_s": 76
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 317037,
+     "wall_s": 183
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 21418268,
+     "wall_s": 1688
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 14529209,
+     "wall_s": 1401
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 25595965,
+     "wall_s": 1712
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 12987,
+     "wall_s": 74
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 15522,
+     "wall_s": 25
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 9583,
+     "wall_s": 41
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 431936,
+     "wall_s": 110
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 289215,
+     "wall_s": 123
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 141536,
+     "wall_s": 75
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1141619,
+     "wall_s": 260
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 177991,
+     "wall_s": 89
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 20108,
+     "wall_s": 115
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": null
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": null
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 309411,
+     "wall_s": 219
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": false,
+     "n": 21,
+     "na": 1,
+     "total": 15,
+     "week": "2026-W36"
+    },
+    {
+     "current": false,
+     "n": 23,
+     "na": 1,
+     "total": 15,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": true,
+   "id": "ollama",
+   "model": "glm-5.3-flash",
+   "n": 24,
+   "na": 1,
+   "name": "glm-5.3-flash",
+   "repo": "amber-ollama",
+   "same_model": [],
+   "total": 18,
+   "vendor": "Ollama Cloud",
+   "week": "2026-W37"
+  },
+  "stepfun": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 1,
+     "p": 4
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 1,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 1,
+     "p": 2
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    },
+    "vision": {
+     "n": 1,
+     "na": 1,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5495,
+     "wall_s": 31
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "na",
+     "tokens": 3975,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 13753,
+     "wall_s": 90
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 354805,
+     "wall_s": 204
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 930682,
+     "wall_s": 398
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 861811,
+     "wall_s": 547
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 4314853,
+     "wall_s": 831
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 741245,
+     "wall_s": 626
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "na",
+     "tokens": 10163466,
+     "wall_s": 1737
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "na",
+     "tokens": 5544,
+     "wall_s": 12
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 58487,
+     "wall_s": 578
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "na",
+     "tokens": 2708,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1045126,
+     "wall_s": 558
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 1002470,
+     "wall_s": 487
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 369848,
+     "wall_s": 196
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 3349406,
+     "wall_s": 797
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 269162,
+     "wall_s": 168
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "na",
+     "tokens": 15645,
+     "wall_s": 124
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 270074,
+     "wall_s": 232
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 132993,
+     "wall_s": 94
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 215933,
+     "wall_s": 119
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 6,
+     "total": 14,
+     "week": "2026-W38"
+    }
+   ],
+   "history_withheld": false,
+   "id": "stepfun",
+   "model": "step-5-preview",
+   "n": 24,
+   "na": 6,
+   "name": "step-5-preview",
+   "repo": "amber-stepfun",
+   "same_model": [],
+   "total": 15,
+   "vendor": "stepfun plan 端点",
+   "week": "2026-W38"
+  },
+  "wb": {
+   "axis": {
+    "attribution": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    },
+    "build": {
+     "n": 6,
+     "na": 0,
+     "p": 5
+    },
+    "convergence": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "defense": {
+     "n": 2,
+     "na": 1,
+     "p": 0
+    },
+    "ops": {
+     "n": 6,
+     "na": 0,
+     "p": 6
+    },
+    "req-drift": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "review": {
+     "n": 2,
+     "na": 0,
+     "p": 1
+    },
+    "text": {
+     "n": 3,
+     "na": 0,
+     "p": 3
+    },
+    "ui-build": {
+     "n": 1,
+     "na": 0,
+     "p": 1
+    },
+    "vision": {
+     "n": 1,
+     "na": 0,
+     "p": 0
+    }
+   },
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 54
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 60
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 204
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 220
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 422
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 507
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 331
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 644
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 529
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1215
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 1062
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 486
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 289
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": null,
+     "wall_s": 1207
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 225
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 263
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 176
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 293
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 107
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 740
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 93
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": null,
+     "wall_s": 111
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 157327,
+     "wall_s": 51
+    }
+   ],
+   "composed": true,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 23,
+     "na": 1,
+     "total": 17,
+     "week": "2026-W37"
+    }
+   ],
+   "history_withheld": false,
+   "id": "wb",
+   "model": "hy4-preview-f",
+   "n": 24,
+   "na": 1,
+   "name": "hy4-preview-f",
+   "repo": "amber-workbuddy",
+   "same_model": [],
+   "total": 18,
+   "vendor": "WorkBuddy ACP",
+   "week": "2026-W37"
+  }
+ },
+ "rule_version": "headline_v1",
+ "schema": "lane-pages-preview-v1"
+}
