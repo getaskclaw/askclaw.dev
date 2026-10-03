@@ -1,0 +1,74 @@
+---
+import { route } from '../utils/route';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'zh-CN' } = Astro.props;
+const en = lang === 'en';
+const T = en
+  ? {
+      open: 'Ask the crab',
+      title: 'Ask the crab',
+      sub: 'Preview · sample chat, not connected to a model yet',
+      close: 'Close',
+      placeholder: 'Ask about the scores…',
+      send: 'Send',
+      src: 'Source',
+      q1: 'Who leads right now?',
+      a1: 'Three models tie in the top tier with 19\'/24: claude-sonnet-5-5, claude-opus-5-5 and swe-2-max.',
+      s1: ['Overall board', '/en/'],
+      q2: 'Can I see the cases?',
+      a2: 'No. Cases stay private. Each one is published only as an alias (A-xxxxxxxx) and a hash, so anyone can check that the case set was not swapped.',
+      s2: ['Method (in Chinese)', '/method/'],
+    }
+  : {
+      open: '问问螃蟹',
+      title: '问问螃蟹',
+      sub: '预览 · 示范对话，尚未接入模型',
+      close: '关闭',
+      placeholder: '问问成绩…',
+      send: '发送',
+      src: '来源',
+      q1: '现在谁领先？',
+      a1: '3 个模型并列第一梯队，总分 19\'/24：claude-sonnet-5-5、claude-opus-5-5、swe-2-max。',
+      s1: ['总榜', '/'],
+      q2: '题目能看吗？',
+      a2: '不公开。每道题只发别名（A-xxxxxxxx）和哈希，谁都能核对题没被换。',
+      s2: ['方法', '/method/'],
+    };
+---
+<div class="chat-widget">
+  <input type="checkbox" id="chat-toggle" class="chat-toggle-input" aria-label={T.open} />
+  <label class="chat-fab" for="chat-toggle" title={T.open}>
+    <img src={route('/assets/crab-chat.webp')} width="56" height="43" alt="" />
+    <span class="sr-only">{T.open}</span>
+  </label>
+  <label class="chat-backdrop" for="chat-toggle" aria-hidden="true"></label>
+  <aside class="chat-drawer" role="dialog" aria-label={T.title}>
+    <header class="chat-head">
+      <img src={route('/assets/crab-chat.webp')} width="48" height="36" alt="" />
+      <div class="chat-title"><b>{T.title}</b><small>{T.sub}</small></div>
+      <label class="chat-close" for="chat-toggle" title={T.close} aria-label={T.close}>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </label>
+    </header>
+    <div class="chat-body">
+      <p class="msg me">{T.q1}</p>
+      <div class="msg bot">
+        <p>{T.a1}</p>
+        <a class="chat-src" href={route(T.s1[1])}>{T.src} · {T.s1[0]}</a>
+      </div>
+      <p class="msg me">{T.q2}</p>
+      <div class="msg bot">
+        <p>{T.a2}</p>
+        <a class="chat-src" href={route(T.s2[1])}>{T.src} · {T.s2[0]}</a>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" disabled placeholder={T.placeholder} aria-label={T.placeholder} />
+      <button type="button" disabled>{T.send}</button>
+    </div>
+  </aside>
+</div>
