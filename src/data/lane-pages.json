@@ -1,58 +1,6 @@
 {
  "lanes": {
   "astra": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 2
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -249,53 +197,6 @@
    "week": "2026-W39"
   },
   "cc": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 1,
-     "p": 4
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 1,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -485,58 +386,6 @@
    "week": "2026-W37"
   },
   "cc-m26p": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 1,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -733,58 +582,6 @@
    "week": "2026-W39"
   },
   "cc-sb": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 4
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "defense": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 1,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 2
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -981,58 +778,6 @@
    "week": "2026-W39"
   },
   "claude": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -1236,58 +981,6 @@
    "week": "2026-W40"
   },
   "claude-fable": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 0
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -1484,58 +1177,6 @@
    "week": "2026-W40"
   },
   "claude-sonnet": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 0
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -1732,58 +1373,6 @@
    "week": "2026-W40"
   },
   "devin": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -1980,58 +1569,6 @@
    "week": "2026-W37"
   },
   "doubao": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -2228,58 +1765,6 @@
    "week": "2026-W38"
   },
   "ds": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 1,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -2476,58 +1961,6 @@
    "week": "2026-W37"
   },
   "gp": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 0
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -2724,58 +2157,6 @@
    "week": "2026-W38"
   },
   "gpt-luna": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    }
-   },
    "band": "max",
    "cases": [
     {
@@ -2972,53 +2353,6 @@
    "week": "2026-W37"
   },
   "gpt-sol": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 2,
-     "p": 0
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -3222,58 +2556,6 @@
    "week": "2026-W38"
   },
   "gpt6-luna": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -3470,58 +2752,6 @@
    "week": "2026-W39"
   },
   "gpt6-sol": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -3718,58 +2948,6 @@
    "week": "2026-W39"
   },
   "gpt61-sol": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 4
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -3966,58 +3144,6 @@
    "week": "2026-W40"
   },
   "kimi": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -4214,58 +3340,6 @@
    "week": "2026-W38"
   },
   "ocgo": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 2,
-     "p": 4
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -4462,58 +3536,6 @@
    "week": "2026-W37"
   },
   "ollama": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -4717,58 +3739,6 @@
    "week": "2026-W37"
   },
   "stepfun": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 1,
-     "p": 4
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 1,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 1,
-     "p": 2
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 1,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -4965,58 +3935,6 @@
    "week": "2026-W38"
   },
   "wb": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "convergence": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 6,
-     "na": 0,
-     "p": 6
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
    "band": "high",
    "cases": [
     {
@@ -5214,5 +4132,12 @@
   }
  },
  "rule_version": "headline_v1",
- "schema": "lane-pages-preview-v1"
+ "schema": "lane-pages-v1",
+ "source": {
+  "amber_db_blob": "2e335539651e9212a6325be73cf9b6f49f9a44e0",
+  "amber_db_home_commit": "bfa02d4d026d782d2a9b3005e623fd90b420a4a1",
+  "amber_db_sha256": "37afcce521286149455e9eeda6487942ef2ce8ef40e705d57fed2bd8203800ce",
+  "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
+  "tools_or_db_uncommitted": false
+ }
 }

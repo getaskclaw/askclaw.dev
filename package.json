@@ -6,7 +6,9 @@
   "scripts": {
     "build": "astro build",
     "preview": "astro preview",
-    "acceptance": "node scripts/acceptance.mjs"
+    "acceptance": "node scripts/acceptance.mjs",
+    "lane-pages": "python3 scripts/gen-lane-pages.py",
+    "lane-pages:check": "python3 scripts/gen-lane-pages.py --check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
