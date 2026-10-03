@@ -54,7 +54,9 @@ const languagePair = canonicalPath === '/claim/' || canonicalPath === '/en/claim
 const hasLanguagePair = Boolean(languagePair);
 const zhHome = languagePair ? new URL(route(languagePair.zh), site).href : undefined;
 const enHome = languagePair ? new URL(route(languagePair.en), site).href : undefined;
-const favicon = route('/favicon.svg');
+const faviconIco = route('/favicon.ico');
+const favicon32 = route('/favicon-32.png');
+const appleTouchIcon = route('/apple-touch-icon.png');
 const ogImage = new URL(route(ogImagePath), site).href;
 const structuredData = {
   '@context': 'https://schema.org',
@@ -76,7 +78,9 @@ const structuredData = {
     {(isPreviewBase || noindex) && <meta name="robots" content="noindex,nofollow" />}
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href={favicon} type="image/svg+xml" />
+    <link rel="icon" href={faviconIco} sizes="16x16 32x32 48x48" />
+    <link rel="icon" href={favicon32} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={appleTouchIcon} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
