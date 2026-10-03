@@ -1,0 +1,125 @@
+{
+ "_note": "Owner-approved registry for scripts/check-claims.py. Editing it is part of a release the owner approves; see the docstring there.",
+ "cards": {
+  "amber-claude": {
+   "historical_scores": [
+    "17/24"
+   ],
+   "historical_weeks": [
+    "W39"
+   ]
+  },
+  "amber-crof": {
+   "frozen_scores": [
+    "16/23"
+   ],
+   "historical_scores": [],
+   "historical_weeks": [
+    "W37"
+   ]
+  },
+  "amber-stepfun": {
+   "historical_scores": [],
+   "historical_weeks": [
+    "W39"
+   ]
+  }
+ },
+ "figures": {
+  "data_fingerprint": "9de1a5dee1c37c5004545c56c475b8c34c648da7619f4d51b626f1fef58245ff",
+  "og_image": "/assets/top5-2026-w40c.en.webp",
+  "og_overrides": {
+   "amber/en.html": null,
+   "amber/index.html": null,
+   "en.html": "/assets/top5-card-w40c.en.png",
+   "notes/agent-is-new-software/index.html": "/assets/traditional-vs-agent.png"
+  },
+  "snapshot": "W40",
+  "top5_files": {
+   "en.html": [
+    "top5-2026-w40c.en.png",
+    "top5-2026-w40c.en.vega-lite.json",
+    "top5-card-w40c.en.png"
+   ],
+   "en/index.html": [
+    "top5-2026-w40c.en.webp"
+   ]
+  }
+ },
+ "pages": {
+  "en.html": {
+   "historical_scores": [
+    "14/23",
+    "16/23",
+    "17/23"
+   ],
+   "historical_weeks": [
+    "W37",
+    "W39"
+   ]
+  },
+  "en/index.html": {
+   "historical_scores": [
+    "14/23",
+    "16/23",
+    "17/23"
+   ],
+   "historical_weeks": [
+    "W36",
+    "W37",
+    "W38",
+    "W39"
+   ]
+  },
+  "method/index.html": {
+   "historical_scores": [
+    "15/21",
+    "16/23",
+    "17/23"
+   ],
+   "historical_weeks": [
+    "W36",
+    "W37",
+    "W38",
+    "W39"
+   ]
+  }
+ },
+ "week_patterns": [
+  {
+   "page": "method/index.html",
+   "regex": "(W\\d\\d)\\s+保留的最新快照",
+   "rule": "current"
+  },
+  {
+   "page": "en/index.html",
+   "regex": "Snapshot (2026-W\\d\\d)",
+   "rule": "current"
+  },
+  {
+   "page": "en/index.html",
+   "regex": "scored in (W\\d\\d)",
+   "rule": "historical:W37"
+  },
+  {
+   "page": "en/index.html",
+   "regex": "its (W\\d\\d) first test",
+   "rule": "historical:W39"
+  },
+  {
+   "page": "en.html",
+   "regex": "Snapshot (2026-W\\d\\d)",
+   "rule": "current"
+  },
+  {
+   "page": "en.html",
+   "regex": "scored in (W\\d\\d)",
+   "rule": "historical:W37"
+  },
+  {
+   "page": "en.html",
+   "regex": "its (W\\d\\d) first test",
+   "rule": "historical:W39"
+  }
+ ]
+}

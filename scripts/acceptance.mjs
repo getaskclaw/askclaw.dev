@@ -37,6 +37,11 @@ const basePrefix = previewPrefix === '/' ? '' : previewPrefix.replace(/\/$/, '')
 // repo card, heading, rule and figure from it. That page is repo-owned (public/en.html, folded into
 // public/ as the single source of truth); the older ~/2609/askclaw.dev checkout is a historical
 // archive and keeps the superseded W38 copy, so it is no longer the mirror source.
+// Facts the page copy must agree with come from the published data, not from typed-in values
+// (scripts/check-claims.py is the strict gate; these browser-side checks read the same files).
+const axesLanes = JSON.parse(await readFile(resolve(projectRoot, 'src/data/axes.json'), 'utf8'));
+const claimsRegistry = JSON.parse(await readFile(resolve(projectRoot, 'scripts/figures.json'), 'utf8'));
+const currentWeek = axesLanes.map((lane) => lane.wk).sort().at(-1);
 const mirrorSource = resolve(process.env.MIRROR_EN_SOURCE ?? resolve(projectRoot, 'public', 'en.html'));
 if (!existsSync(mirrorSource)) {
   throw new Error(
@@ -302,10 +307,15 @@ try {
 
     if (route === '/method/') {
       result.scorePeriods = [];
-      // Ollama moved to the /24 basis; CrofAI is frozen and keeps its sealed /23 record.
-      for (const [repo, score] of [['amber-ollama', "18'/24"], ['amber-crof', "16'/23 ∅"]]) {
+      // Ollama shows its current lane score; CrofAI is frozen and keeps its sealed record (an owner-pinned value in the registry).
+      for (const repo of ['amber-ollama', 'amber-crof']) {
+        const repoLanes = axesLanes.filter((lane) => lane.repo === repo);
+        const pinned = claimsRegistry.cards?.[repo] ?? {};
+        const scores = [...repoLanes.map((lane) => `${lane.total}/${lane.n}`), ...(pinned.frozen_scores ?? [])];
+        const weeks = [...repoLanes.map((lane) => lane.wk), ...(pinned.historical_weeks ?? [])];
         const text = await page.locator(`.repo-card[href="https://github.com/getaskclaw/${repo}"]`).innerText();
-        const passed = text.includes(score) && text.includes('W37');
+        const plain = text.replace(/['\u2019]/g, '');
+        const passed = scores.some((score) => plain.includes(score)) && weeks.some((week) => text.includes(week));
         result.scorePeriods.push({ repo, text, passed });
         if (!passed) failed = true;
       }
@@ -362,7 +372,7 @@ try {
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
         'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '13 result repos',
-        'Snapshot 2026-W40', 'swe-2-max was scored in W37',
+        `Snapshot 2026-${currentWeek}`, 'swe-2-max was scored in W37',
         'three lanes now sit at 18/24', '2026-10-02 correction', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
       ].map((text) => ({ text, passed: mainText.includes(text) }));
