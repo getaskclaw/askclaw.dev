@@ -1,0 +1,9 @@
+---
+import ProviderPage from '../../../../components/ProviderPage.astro';
+import { providerSlugs } from '../../../../utils/lane-pages';
+export function getStaticPaths() {
+  return providerSlugs().map((slug) => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+---
+<ProviderPage lang="en" slug={slug} />

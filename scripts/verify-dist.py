@@ -124,10 +124,13 @@ def detect_dist_base_path():
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
-# One result page per lane, both languages (src/data/lane-pages.json is the lane list).
-lane_page_ids = sorted(json.loads((root / 'src/data/lane-pages.json').read_text())['lanes'])
-model_routes = {f'{prefix}model/{lane_id}/index.html' for lane_id in lane_page_ids for prefix in ('', 'en/')}
-expected_routes |= model_routes
+# One page per model and one per provider (result repo), both languages. src/data/lane-pages.json lists the lanes.
+lane_pages = json.loads((root / 'src/data/lane-pages.json').read_text())['lanes']
+model_slugs = sorted({l['model_slug'] for l in lane_pages.values()})
+provider_slugs = sorted({l['provider_slug'] for l in lane_pages.values()})
+model_routes = {f'{prefix}model/{slug}/index.html' for slug in model_slugs for prefix in ('', 'en/')}
+provider_routes = {f'{prefix}provider/{slug}/index.html' for slug in provider_slugs for prefix in ('', 'en/')}
+expected_routes |= model_routes | provider_routes
 lanes_published = json.loads((root / 'src/data/axes.json').read_text())
 # Built and reachable, but not launched: noindex on every base and absent from the sitemap.
 unlisted_routes = set()
@@ -212,15 +215,25 @@ for relative in sorted(expected_routes):
             target /= 'index.html'
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
-    if relative in model_routes:
-        # a lane page repeats the published record: same total, one A- alias per case, no script
-        lane_id = relative.removesuffix('/index.html').rsplit('/', 1)[1]
-        record = next(l for l in lanes_published if l['id'] == lane_id)
-        assert len(set(re.findall(r'<code[^>]*>(A-[0-9a-f]{8})</code>', text))) == record['n'], (relative, 'alias count')
-        assert f"/{record['n']}</span>" in text, (relative, 'denominator')
+    if relative in model_routes | provider_routes:
+        kind = 'model' if relative in model_routes else 'provider'
+        slug = relative.removesuffix('/index.html').rsplit('/', 1)[1]
+        key = 'model_slug' if kind == 'model' else 'provider_slug'
+        members = {k: v for k, v in lane_pages.items() if v[key] == slug}
+        record_by_id = {l['id']: l for l in lanes_published}
+        if kind == 'model':
+            # a model page repeats each lane's published record: same denominator, one A- alias per case
+            assert len(re.findall(r'<code[^>]*>A-[0-9a-f]{8}</code>', text)) == sum(v['n'] for v in members.values()), (relative, 'alias count')
+            for lane_id in members:
+                assert f"/{record_by_id[lane_id]['n']}</span>" in text and f'id="lane-{lane_id}"' in text, (relative, lane_id)
+        else:
+            # a provider page links every one of its lanes' model pages
+            prefix = 'en/' if relative.startswith('en/') else ''
+            for v in members.values():
+                assert f'model/{v["model_slug"]}/' in text, (relative, v['model_slug'])
         if relative.startswith('en/'):
             main_text = re.sub(r'<script.*?</script>|<[^>]+>', '', re.search(r'<main.*?</main>', text, re.S).group(0), flags=re.S)
-            assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English lane page')
+            assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English page')
     if relative == 'method/index.html':
         assert len(parsed.cards) == 13
         # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
@@ -307,7 +320,7 @@ if base_path == '/':
     sitemap = ET.parse(dist / 'sitemap-0.xml')
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-    model_locations = {expected_base + route.removesuffix('index.html') for route in model_routes}
+    model_locations = {expected_base + route.removesuffix('index.html') for route in model_routes | provider_routes}
     base_locations = {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'claim/', expected_base + 'en/claim/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
     assert len(locations) == len(base_locations) + len(model_locations) and set(locations) == base_locations | model_locations
     for url in urls:
@@ -321,8 +334,8 @@ if base_path == '/':
         elif location in {expected_base + 'claim/', expected_base + 'en/claim/'}:
             expected_alternates = {'zh-CN': expected_base + 'claim/', 'en': expected_base + 'en/claim/'}
         if location in model_locations:
-            lane_id = location.rstrip('/').rsplit('/', 1)[1]
-            expected_alternates = {'zh-CN': f'{expected_base}model/{lane_id}/', 'en': f'{expected_base}en/model/{lane_id}/'}
+            kind, slug = location.removeprefix(expected_base).removeprefix('en/').rstrip('/').split('/')
+            expected_alternates = {'zh-CN': f'{expected_base}{kind}/{slug}/', 'en': f'{expected_base}en/{kind}/{slug}/'}
         assert alternates == expected_alternates
     assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
     assert expected_base + 'sitemap-index.xml' in robots_text
