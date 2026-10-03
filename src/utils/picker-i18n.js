@@ -50,7 +50,7 @@ export const I18N = {
     presets: [['build,ops', '后端开发'], ['build,ops,ui-build', '全栈开发'], ['ui-build,vision', '前端与视觉']], clearPreset: '清空', groupPreset: '{name}全选',
     search: '找模型或厂商', noscript: '筛选、对比和详情需要启用 JavaScript；下面是按总分的完整分档。',
     legendAria: '图例', lgPass: '通过', lgFail: '未过', lgHeld: '挂起（不计输赢）', lgFew: '题少，偶然性大', lgFewTag: '1 题',
-    tbLabel: '同一梯队里先看', repoLink: '成绩仓', clear: '清除', compare: '对比', totop: '回到顶部',
+    tbLabel: '同一梯队里先看', repoLink: '成绩仓', pageLink: '每题结果 →', pageLinkLong: '每题结果与历史 →', providerLink: '同一提供方的全部车道 →', clear: '清除', compare: '对比', totop: '回到顶部',
   },
   en: {
     lang: 'en',
@@ -107,6 +107,6 @@ export const I18N = {
     presets: [['build,ops', 'Backend work'], ['build,ops,ui-build', 'Full-stack work'], ['ui-build,vision', 'Frontend and visuals']], clearPreset: 'Clear', groupPreset: '{name} (all)',
     search: 'Find a model or vendor', noscript: 'Filters, compare and details need JavaScript; below are the full tiers by total score.',
     legendAria: 'Legend', lgPass: 'Pass', lgFail: 'Fail', lgHeld: 'Held (no win, no loss)', lgFew: 'few cases, high chance', lgFewTag: '1 case',
-    tbLabel: 'Within a tier, order by', repoLink: 'Results repo', clear: 'Clear', compare: 'Compare', totop: 'Back to top',
+    tbLabel: 'Within a tier, order by', repoLink: 'Results repo', pageLink: 'Every case →', pageLinkLong: 'Every case and history →', providerLink: 'All lanes of this provider →', clear: 'Clear', compare: 'Compare', totop: 'Back to top',
   },
 };

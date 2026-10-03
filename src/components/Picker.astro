@@ -8,6 +8,9 @@ import {
   held, displayTotal, fmtSec, fmtTok,
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
+import { route } from '../utils/route';
+import { modelPath, providerPath, modelSlugOf, lanesOfModel, providerSlugs } from '../utils/lane-pages';
+import pageData from '../data/lane-pages.json';
 import { transform } from 'esbuild';
 import coreSource from '../utils/picker-core.js?raw';
 import appSource from '../scripts/pick-app.js?raw';
@@ -32,6 +35,15 @@ const AXIS_N = axisN(lanes, T);
 const small = (id: string) => AXIS_N[id] <= 2;
 const caseTag = (id: string) => tr(T, 'cases', { n: AXIS_N[id] });
 const slots = Math.max(...Object.values(AXIS_N));
+// Lane id -> [model page, provider page]. A lane with no page (frozen, skipped lanes) is absent and keeps
+// the plain results-repo link. Several lanes on one model page: the link lands on this lane's block.
+const PAGES: Record<string, [string, string]> = {};
+for (const l of lanes) {
+  const m = modelSlugOf(l.id);
+  if (!m) continue;
+  const anchor = lanesOfModel(m).length > 1 ? `#lane-${l.id}` : '';
+  PAGES[l.id] = [route(modelPath(lang, m)) + anchor, route(providerPath(lang, (pageData as any).lanes[l.id].provider_slug))];
+}
 const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 
 // Default view (nothing selected): the same grouping the script computes, rendered at build time,
@@ -46,7 +58,7 @@ const pipList = (c) => [
 // stripped), then the page app.
 // Minified at build time: Astro does not minify inline scripts, and the home page has a size budget.
 const clientSource = (await transform(
-  `(() => {\nconst T = ${JSON.stringify(T)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
+  `(() => {\nconst T = ${JSON.stringify(T)};\nconst PAGES = ${JSON.stringify(PAGES)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
   { minify: true, target: 'es2020', charset: 'utf8' },
 )).code;
 const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], ['name', T.sortName, 'false']];
@@ -113,7 +125,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
           </div>,
           ...t.rows.map(({ lane: l }) => (
             <article class="card glass" data-id={l.id}>
-              <div class="card-head"><div class="who"><b>{l.name}</b><small>{l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
+              <div class="card-head"><div class="who"><b>{l.name}</b><small>{PAGES[l.id] ? <a href={PAGES[l.id][1]}>{l.vendor}</a> : l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
               <div class="rows">
                 {axisIds(T).map((id) => {
                   const c = l.axis[id];
@@ -129,7 +141,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
               {l.e && (
                 <div class="effort"><span class="k">{T.perCase}</span><span class="v"><b class="tm">{tr(T, 'median', { t: fmtSec(l.e.t_med, T) })}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">{T.total}</span><span class="v"><small class="tt">{tr(T, 'totalLine', { t: fmtSec(l.e.t_total, T), n: l.e.t_n, tok: fmtTok(l.e.tok, T) })}</small></span></div>
               )}
-              <div class="card-foot"><span class="wk">{tr(T, 'week', { wk: l.wk, n: l.cases })}</span><a class="cmp-toggle" href={`https://github.com/getaskclaw/${l.repo}`}>{T.repoLink}</a></div>
+              <div class="card-foot"><span class="wk">{tr(T, 'week', { wk: l.wk, n: l.cases })}</span><a class="card-page" href={PAGES[l.id] ? PAGES[l.id][0] : `https://github.com/getaskclaw/${l.repo}`}>{PAGES[l.id] ? T.pageLink : T.repoLink}</a></div>
             </article>
           )),
         ];

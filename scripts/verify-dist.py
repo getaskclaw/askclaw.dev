@@ -259,6 +259,18 @@ for relative in sorted(expected_routes):
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
     if relative in {'index.html', 'en/index.html'}:
+        # every lane card links to its model page (this lane's block when the model has several lanes) and its
+        # provider page; the picker script carries the same paths for the cards it re-renders
+        prefix = 'en/' if relative.startswith('en/') else ''
+        for lane_id, v in lane_pages.items():
+            n_lanes = sum(1 for w in lane_pages.values() if w['model_slug'] == v['model_slug'])
+            model_href = f"{base_path}{prefix}model/{v['model_slug']}/" + (f'#lane-{lane_id}' if n_lanes > 1 else '')
+            provider_href = f"{base_path}{prefix}provider/{v['provider_slug']}/"
+            assert f'href="{model_href}"' in text, (relative, lane_id, 'card link to model page')
+            assert f'href="{provider_href}"' in text, (relative, lane_id, 'card link to provider page')
+            # the minifier drops quotes around keys that are plain identifiers
+            assert re.search(rf'(?:"{re.escape(lane_id)}"|\b{re.escape(lane_id)}):\["{re.escape(model_href)}","{re.escape(provider_href)}"\]', text), (relative, lane_id, 'picker script paths')
+    if relative in {'index.html', 'en/index.html'}:
         picker_axes = re.search(r'data-axes="([^"]*)"', text)
         picker_site = re.search(r'data-site="([^"]*)"', text)
         assert picker_axes and json.loads(unescape(picker_axes.group(1))) == lanes
