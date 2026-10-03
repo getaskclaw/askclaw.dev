@@ -126,7 +126,7 @@ expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
 # One page per model and one per provider (result repo), both languages. src/data/lane-pages.json lists the lanes.
 lane_pages_doc = json.loads((root / 'src/data/lane-pages.json').read_text())
-assert lane_pages_doc['schema'] == 'lane-pages-v1' and lane_pages_doc['source']['amber_db_home_commit'], 'lane-pages.json must come from scripts/gen-lane-pages.py'
+assert lane_pages_doc['schema'] == 'lane-pages-v1' and lane_pages_doc['source']['amber_run_commit'], 'lane-pages.json must come from scripts/gen-lane-pages.py'
 lane_pages = lane_pages_doc['lanes']
 model_slugs = sorted({l['model_slug'] for l in lane_pages.values()})
 provider_slugs = sorted({l['provider_slug'] for l in lane_pages.values()})
