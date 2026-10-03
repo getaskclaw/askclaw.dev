@@ -19,7 +19,9 @@
 .rail-button { display: none; }
 .rail-backdrop { display: none; }
 
-@media (min-width: 900px) {
+/* The rail needs a wide window AND a mouse/trackpad: it opens on hover, which a touch screen does not have.
+   Everything else (phones, tablets of any size, touch laptops in tablet mode) gets the top bar + drawer. */
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
   body { padding-inline: 56px; } /* symmetric: the rail floats in the left margin, so content stays centred on the window */
   /* footer: cancel the side padding so its band runs edge to edge. Its text column is the page-content width, but keeps
      at least 96px clear on both sides so the right-hand link never sits under the chat button (84px from the edge) */
@@ -56,7 +58,7 @@
   .site-header .header-nav a.language-toggle:hover { background: rgba(255, 255, 255, .6); }
 }
 
-@media (max-width: 899px) {
+@media not all and (min-width: 900px) and (hover: hover) and (pointer: fine) {
   body .site-header.site-header {
     position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; padding: 0;
     -webkit-backdrop-filter: none; backdrop-filter: none; background: transparent; border-bottom: 0; box-shadow: none;
@@ -153,3 +155,19 @@ body .totop.lift { bottom: calc(170px + env(safe-area-inset-bottom, 0px)); }
 @media (prefers-reduced-motion: reduce) { .chat-fab, .chat-drawer, .chat-backdrop { transition: none; } }
 
 @media (max-width: 380px) { body.picker-page .site-footer .wrap { width: calc(100% - 32px); } }
+
+/* bar mode on a wide touch screen (e.g. iPad landscape): same column widths as the page content, no rail margins */
+@media not all and (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  @media (min-width: 900px) {
+    .site-footer .wrap { flex-direction: column; align-items: flex-start; } /* stacked like on phones: nothing under the chat button */
+    .site-footer p { max-width: calc(100% - 96px); }
+    body.picker-page .site-footer .wrap { width: min(1040px, calc(100% - 40px)); }
+    @media (min-width: 1600px) { body.picker-page .site-footer .wrap { width: min(1440px, calc(100% - 40px)); } }
+  }
+}
+
+/* 4K / 5K: the home page scales as a whole (picker.css zooms body.picker-page). Do the same on the other pages, otherwise the rail
+   and the chat button jump in size (56px vs 95px at 3840) when you move between pages. */
+@media (min-width: 2400px) { body:not(.picker-page) { zoom: 1.3; } }
+@media (min-width: 3200px) { body:not(.picker-page) { zoom: 1.7; } }
+@media (min-width: 4400px) { body:not(.picker-page) { zoom: 2.25; } }

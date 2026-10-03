@@ -299,7 +299,8 @@ html { transition: background-color .4s; }
   .sheet-body { max-height: calc(100vh - 16px); padding: 16px 18px; }
 }
 /* wide desktop: four cards per row */
-@media (min-width: 1600px) {
+/* 1500, not 1600: a 1920 screen at 125% OS scaling is a 1536px window, and with the 56px side margins of the rail four 320px cards (1322px) need about 1390px of page */
+@media (min-width: 1500px) {
   .page { max-width: 1480px; }
   .ctx { width: min(1480px, calc(100% - 24px)); }
 }
