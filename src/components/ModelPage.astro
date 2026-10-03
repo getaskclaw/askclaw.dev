@@ -28,6 +28,8 @@ const blocks = infos.map((i) => {
   return {
     ...i, eff, total: displayTotal(i.lane), others,
     cases: [...i.page.cases].sort((a: any, b: any) => axisIndex[a.axis] - axisIndex[b.axis]),
+    fails: i.page.cases.filter((c: any) => c.status === 'fail').length,
+    nas: i.page.cases.filter((c: any) => c.status === 'na').length,
     showHistory: !i.page.history_withheld && i.page.history.length > 1,
   };
 });
@@ -48,6 +50,8 @@ const t = zh ? {
   histNote: '每场考试各考一次；场与场之间的差别不据此判断模型变强或变弱。榜上只展示标记的一场。',
   cmpH: '各端点并排', cmpNote: '同名模型换个端点可能是另一个脑，所以成绩一律按「端点 × 名字」记。下面分别列出，不合并、不比高低；测试周次不同时不可直接比较。',
   cmpWeek: '测试周次', cmpTotal: '总分', cmpMed: '每题用时（中位）',
+  tally: (f: number, n: number) => [f ? `未过 ${f}` : '', n ? `NA ${n}` : ''].filter(Boolean).join(' · ') + '（表中浅底色的行）',
+  cardLabel: '十轴', statsLabel: '用时与 token',
   repo: '成绩仓', secret: '题目永不公开，每案只给 A- 别名。NA = 作废或挂起，不计输赢。',
 } : {
   title: multi ? `${modelName} results by endpoint — AMBER` : `${modelName} results — AMBER`,
@@ -65,12 +69,15 @@ const t = zh ? {
   histNote: 'Each sitting was taken once; a difference between sittings is not evidence that the model got stronger or weaker. The board shows the marked sitting only.',
   cmpH: 'Endpoints side by side', cmpNote: 'The same model name on a different endpoint can be a different brain, so scores are recorded per endpoint × name. Listed separately below: not merged, not ranked against each other, and not comparable when the tested weeks differ.',
   cmpWeek: 'Tested', cmpTotal: 'Total', cmpMed: 'Median time per case',
+  tally: (f: number, n: number) => [f ? `${f} failed` : '', n ? `${n} NA` : ''].filter(Boolean).join(' · ') + ' (shaded rows below)',
+  cardLabel: 'By axis', statsLabel: 'Time and tokens',
   repo: 'Result repo', secret: 'Cases are never published; each case is shown by its A- alias. NA = voided or held; neither a win nor a loss.',
 };
 const here = modelPath(lang, slug);
 const there = modelPath(zh ? 'en' : 'zh', slug);
 const rankPath = zh ? '/rank/' : '/en/rank/';
 const H = multi ? 'h3' : 'h2';
+const groups = siteData.groups.map((g: any) => ({ id: g.id, label: zh ? g.name_zh : g.name_en, axes: axes.filter((a: any) => a.grp === g.id) }));
 const dots = (cell: any) => cell && cell.n > 0 ? [
   ...Array(cell.p).fill('pass'),
   ...Array(cell.n - cell.p - (cell.na ?? 0)).fill('fail'),
@@ -110,95 +117,137 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
         <p class="lead">
           {t.provider}: <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> · {t.sub(b)}
         </p>
-        <p class="lane-total"><span class="lane-total-label">{t.totalLabel}</span> <strong>{b.total}</strong><span class="lane-total-n">/{b.lane.n}</span></p>
-        <p class="note">{t.prime}</p>
         {b.others.length > 0 && (
           <p class="note">{t.moreHere}: {b.others.map((o: any, i: number) => (<Fragment>{i > 0 ? ' · ' : ''}<a href={route(modelPath(lang, o.page.model_slug))}>{o.name}</a></Fragment>))}</p>
         )}
 
-        <section class="section" aria-labelledby={`axis-${b.id}`}>
-          <H id={`axis-${b.id}`}>{t.axisH}</H>
-          <ul class="axis-list">
-            {axes.map((a) => {
-              const cell = b.lane.axis[a.id]; const d = dots(cell);
-              return (
-                <li>
-                  <span class="axis-name">{zh ? a.name_zh : a.name_en}</span>
-                  {d ? <span class="dots" role="img" aria-label={`${cell.p}/${cell.n}`}>{d.map((st) => <i class={`dot ${st}`}></i>)}</span> : <span class="dot-none">—</span>}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
+        <div class="lane-grid">
+          <aside class="summary" aria-label={t.cardLabel}>
+            <p class="lane-total"><span class="lane-total-label">{t.totalLabel}</span> <strong>{b.total}</strong><span class="lane-total-n">/{b.lane.n}</span></p>
+            <p class="card-note">{t.prime}</p>
+            <div class="axes-wrap">
+            {groups.map((g: any) => (
+              <div class="agroup">
+                <p class="card-label">{g.label}</p>
+                <ul class="axis-list">
+                  {g.axes.map((a: any) => {
+                    const cell = b.lane.axis[a.id]; const d = dots(cell);
+                    return (
+                      <li>
+                        <span class="axis-name">{zh ? a.name_zh : a.name_en}</span>
+                        {d ? <span class="dots" role="img" aria-label={`${cell.p}/${cell.n}`}>{d.map((st) => <i class={`dot ${st}`}></i>)}</span> : <span class="dot-none">—</span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+            </div>
+            <div class="agroup">
+              <p class="card-label">{t.statsLabel}</p>
+              {b.eff ? (
+                <dl class="stats">
+                  <div><dt>{t.med}</dt><dd>{fmtSec(b.eff.t_med, T)}</dd></div>
+                  <div><dt>{t.p90}</dt><dd>{fmtSec(b.eff.t_p90, T)}</dd></div>
+                  <div><dt>{t.tokTotal}</dt><dd>{b.eff.tok ? fmtTok(b.eff.tok, T) : T.tokNone}</dd></div>
+                </dl>
+              ) : <p class="card-note">—</p>}
+            </div>
+          </aside>
 
-        <section class="section" aria-labelledby={`eff-${b.id}`}>
-          <H id={`eff-${b.id}`}>{t.effH}</H>
-          {b.eff ? (
-            <p>{t.med} <strong>{fmtSec(b.eff.t_med, T)}</strong> · {t.p90} <strong>{fmtSec(b.eff.t_p90, T)}</strong> · {t.tokTotal} <strong>{b.eff.tok ? fmtTok(b.eff.tok, T) : T.tokNone}</strong></p>
-          ) : <p>—</p>}
-        </section>
-
-        <section class="section" aria-labelledby={`cases-${b.id}`}>
-          <H id={`cases-${b.id}`}>{t.casesH}</H>
-          <p class="hint">{t.secret}</p>
-          <div class="board-wrap">
-            <table class="board">
-              <thead><tr><th>{t.cAlias}</th><th class="axis-col">{t.cAxis}</th><th>{t.cResult}</th><th class="num">{t.cTime}</th><th class="num">{t.cTok}</th></tr></thead>
-              <tbody>
-                {b.cases.map((c: any) => (
-                  <tr>
-                    <td><code>{c.alias}</code><small class="axis-sub">{axisName(c.axis)}</small></td>
-                    <td class="axis-col">{axisName(c.axis)}</td>
-                    <td><span class="res"><i class={`dot ${c.status}`}></i>{t[c.status]}</span></td>
-                    <td class="num">{c.wall_s == null ? '—' : fmtSec(c.wall_s, T)}</td>
-                    <td class="num">{tokText(c.tokens)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {b.showHistory && (
-          <section class="section" aria-labelledby={`hist-${b.id}`}>
-            <H id={`hist-${b.id}`}>{t.histH}</H>
-            <p class="hint">{t.histNote}</p>
+          <div class="evidence">
+            <H class="ev-title" id={`cases-${b.id}`}>{t.casesH}</H>
+            <p class="hint">{t.secret}</p>
+            {(b.fails > 0 || b.nas > 0) && <p class="tally">{t.tally(b.fails, b.nas)}</p>}
             <div class="board-wrap">
               <table class="board">
-                <thead><tr><th>{t.hWeek}</th><th class="num">{t.hTotal}</th><th>{t.hShown}</th></tr></thead>
+                <thead><tr><th>{t.cAlias}</th><th class="axis-col">{t.cAxis}</th><th>{t.cResult}</th><th class="num">{t.cTime}</th><th class="num">{t.cTok}</th></tr></thead>
                 <tbody>
-                  {b.page.history.map((h: any) => (
-                    <tr>
-                      <td>{h.week}</td>
-                      <td class="num">{h.total}{h.na > 0 ? "\u2032" : ''}/{h.n}</td>
-                      <td>{h.current ? t.yes : ''}</td>
+                  {b.cases.map((c: any) => (
+                    <tr class={`row-${c.status}`}>
+                      <td><code>{c.alias}</code><small class="axis-sub">{axisName(c.axis)}</small></td>
+                      <td class="axis-col">{axisName(c.axis)}</td>
+                      <td><span class="res"><i class={`dot ${c.status}`}></i>{t[c.status]}</span></td>
+                      <td class="num">{c.wall_s == null ? '—' : fmtSec(c.wall_s, T)}</td>
+                      <td class="num">{tokText(c.tokens)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </section>
-        )}
-        <p class="note"><a href={`https://github.com/getaskclaw/${b.page.repo}`} target="_blank" rel="noopener">{t.repo}: {b.page.repo}</a></p>
+
+            {b.showHistory && (
+              <div class="history">
+                <H class="ev-title" id={`hist-${b.id}`}>{t.histH}</H>
+                <p class="hint">{t.histNote}</p>
+                <div class="board-wrap">
+                  <table class="board">
+                    <thead><tr><th>{t.hWeek}</th><th class="num">{t.hTotal}</th><th>{t.hShown}</th></tr></thead>
+                    <tbody>
+                      {b.page.history.map((h: any) => (
+                        <tr>
+                          <td>{h.week}</td>
+                          <td class="num">{h.total}{h.na > 0 ? "\u2032" : ''}/{h.n}</td>
+                          <td>{h.current ? t.yes : ''}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+            <p class="note"><a href={`https://github.com/getaskclaw/${b.page.repo}`} target="_blank" rel="noopener">{t.repo}: {b.page.repo}</a></p>
+          </div>
+        </div>
       </div>
     ))}
   </div>
 </BaseLayout>
 
 <style>
-  .lane-total { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 2px; }
-  .lane-total strong { font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .lane-page { padding-top: 22px; }
+  .lane-page h1 { margin-bottom: 14px; }
+  .lane-page .section { padding: 22px 0 0; }
+  .lane-block + .lane-block { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .lane-block .lead { margin: 0 0 6px; }
+  .lane-block > .note { margin: 0 0 14px; }
+  .lane-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 18px; }
+  .summary {
+    position: sticky; top: 24px;
+    padding: 18px 18px 16px; border: 1px solid var(--line); border-radius: 18px;
+    background: rgba(255, 255, 255, .55);
+  }
+  .lane-total { display: flex; align-items: baseline; gap: 8px; margin: 0; }
+  .lane-total strong { font-size: 2.8rem; line-height: 1; font-variant-numeric: tabular-nums; }
   .lane-total-label, .lane-total-n { color: var(--sub); }
-  .lane-block + .lane-block { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
-  .axis-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 8px 24px; }
-  .axis-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .card-note { margin: 4px 0 0; font-size: 0.8rem; color: var(--sub); }
+  .agroup { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .card-label { margin: 0 0 6px; font-size: 0.74rem; letter-spacing: .06em; color: var(--sub); }
+  .axis-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+  .axis-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 4px 0; font-size: 0.92rem; }
+  .stats { margin: 0; display: grid; gap: 6px; }
+  .stats div { display: flex; justify-content: space-between; gap: 12px; font-size: 0.88rem; }
+  .stats dt { color: var(--sub); }
+  .stats dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+  .evidence { min-width: 0; }
+  .ev-title { margin: 0 0 6px; font-size: 1.25rem; }
+  .history { margin-top: 28px; }
+  .tally { margin: 0 0 10px; font-weight: 600; font-size: 0.92rem; }
+  .row-fail td { background: rgba(214, 72, 40, .09); }
+  .row-na td { background: rgba(120, 132, 146, .13); }
   .dots { display: inline-flex; gap: 2px; }
   .dot { display: inline-block; box-sizing: border-box; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--amber-deep, #a85a00); background: var(--amber, #e08a12); }
-  .dot.fail { background: transparent; border-color: rgba(23, 32, 43, .38); }
+  .dot.fail { background: transparent; border-color: rgba(23, 32, 43, .5); }
   .dot.na { background: #aeb6bf; border-color: #aeb6bf; }
   .dot-none { color: var(--sub); }
   .res { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
   .axis-sub { display: none; color: var(--sub); font-size: 0.78rem; }
+  @media (max-height: 760px) { .summary { position: static; } }
+  @media (max-width: 1000px) {
+    .lane-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .summary { position: static; }
+    .axes-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+  }
   @media (max-width: 600px) {
     .axis-col { display: none; }
     .axis-sub { display: block; }
