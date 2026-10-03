@@ -124,6 +124,11 @@ def detect_dist_base_path():
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
 expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
+# One result page per lane, both languages (src/data/lane-pages.json is the lane list).
+lane_page_ids = sorted(json.loads((root / 'src/data/lane-pages.json').read_text())['lanes'])
+model_routes = {f'{prefix}model/{lane_id}/index.html' for lane_id in lane_page_ids for prefix in ('', 'en/')}
+expected_routes |= model_routes
+lanes_published = json.loads((root / 'src/data/axes.json').read_text())
 # Built and reachable, but not launched: noindex on every base and absent from the sitemap.
 unlisted_routes = set()
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
@@ -207,6 +212,15 @@ for relative in sorted(expected_routes):
             target /= 'index.html'
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
+    if relative in model_routes:
+        # a lane page repeats the published record: same total, one A- alias per case, no script
+        lane_id = relative.removesuffix('/index.html').rsplit('/', 1)[1]
+        record = next(l for l in lanes_published if l['id'] == lane_id)
+        assert len(set(re.findall(r'<code[^>]*>(A-[0-9a-f]{8})</code>', text))) == record['n'], (relative, 'alias count')
+        assert f"/{record['n']}</span>" in text, (relative, 'denominator')
+        if relative.startswith('en/'):
+            main_text = re.sub(r'<script.*?</script>|<[^>]+>', '', re.search(r'<main.*?</main>', text, re.S).group(0), flags=re.S)
+            assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English lane page')
     if relative == 'method/index.html':
         assert len(parsed.cards) == 13
         # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
@@ -293,7 +307,9 @@ if base_path == '/':
     sitemap = ET.parse(dist / 'sitemap-0.xml')
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
-    assert len(locations) == 9 and set(locations) == {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'claim/', expected_base + 'en/claim/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
+    model_locations = {expected_base + route.removesuffix('index.html') for route in model_routes}
+    base_locations = {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'claim/', expected_base + 'en/claim/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
+    assert len(locations) == len(base_locations) + len(model_locations) and set(locations) == base_locations | model_locations
     for url in urls:
         location = url.findtext('s:loc', namespaces=ns)
         alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
@@ -304,6 +320,9 @@ if base_path == '/':
             expected_alternates = {'zh-CN': expected_base + 'rank/', 'en': expected_base + 'en/rank/'}
         elif location in {expected_base + 'claim/', expected_base + 'en/claim/'}:
             expected_alternates = {'zh-CN': expected_base + 'claim/', 'en': expected_base + 'en/claim/'}
+        if location in model_locations:
+            lane_id = location.rstrip('/').rsplit('/', 1)[1]
+            expected_alternates = {'zh-CN': f'{expected_base}model/{lane_id}/', 'en': f'{expected_base}en/model/{lane_id}/'}
         assert alternates == expected_alternates
     assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
     assert expected_base + 'sitemap-index.xml' in robots_text

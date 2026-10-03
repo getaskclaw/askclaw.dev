@@ -1,0 +1,180 @@
+---
+// One lane's result page: current figure (published axes.json), per-case alias table (lane-pages.json),
+// and the sitting history. Totals and axis cells always come from axes.json; lane-pages.json must agree
+// with it or the build fails, so the two can never drift apart.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { I18N } from '../utils/picker-i18n.js';
+import { displayTotal, fmtSec, fmtTok } from '../utils/picker-core.js';
+import { route } from '../utils/route';
+import siteData from '../data/site-data.json';
+import axesLanes from '../data/axes.json';
+import pages from '../data/lane-pages.json';
+
+interface Props { lang: 'zh' | 'en'; id: string }
+const { lang, id } = Astro.props;
+const zh = lang === 'zh';
+const T = I18N[lang];
+
+const lane = (axesLanes as any[]).find((l) => l.id === id);
+const page = (pages as any).lanes[id];
+if (!lane || !page || lane.total !== page.total || lane.n !== page.n) {
+  throw new Error(`lane-pages.json disagrees with axes.json for ${id}`);
+}
+const label = T.laneLabels?.[id] ?? {};
+const name = label.name ?? lane.name;
+const vendor = label.vendor ?? lane.vendor;
+const total = displayTotal(lane);
+const eff = (siteData as any).lanes[id];
+const axes = siteData.axes;
+const axisIndex = Object.fromEntries(axes.map((a, i) => [a.id, i]));
+const axisName = (a: string) => { const x = axes.find((y) => y.id === a); return x ? (zh ? x.name_zh : x.name_en) : a; };
+const cases = [...page.cases].sort((a, b) => axisIndex[a.axis] - axisIndex[b.axis]);
+const same = page.same_model.map((o: string) => {
+  const l = (axesLanes as any[]).find((x) => x.id === o);
+  const lb = T.laneLabels?.[o] ?? {};
+  return { id: o, name: lb.name ?? l.name, vendor: lb.vendor ?? l.vendor };
+});
+const showHistory = !page.history_withheld && page.history.length > 1;
+const tokText = (n: number | null) => n == null ? '—' : n < (zh ? 1e4 : 1e5) ? (zh ? '<1 万' : '<0.1M') : fmtTok(n, T);
+const wk = (w: string) => w.replace(/^\d{4}-/, '');
+
+const t = zh ? {
+  title: `${name} 成绩 — AMBER 琥珀评测`,
+  desc: `${name}（${vendor}）在 AMBER 的成绩：总分 ${total}/${lane.n}，逐轴点阵、24 案的别名与结果、用时和 token。`,
+  back: '← 全部车道', other: 'English version →',
+  sub: `${vendor} · 测于 ${wk(page.week)} · ${lane.n} 案`,
+  totalLabel: '总分',
+  prime: `′ = 其中有案暂不计分（NA），不算输。`,
+  axisH: '逐轴', casesH: '逐案', cAlias: '案别名', cAxis: '轴', cResult: '结果', cTime: '用时', cTok: 'token',
+  pass: '通过', fail: '未过', na: 'NA',
+  effH: '用时与 token', med: '每题用时（中位）', p90: '最慢 10% 不短于', tokTotal: 'token 合计',
+  histH: '考试记录', hWeek: '周次', hTotal: '总分', hShown: '榜上展示', yes: '展示中',
+  histNote: '每场考试各考一次；场与场之间的差别不据此判断模型变强或变弱。榜上只展示标记的一场。',
+  sameH: '同名模型在其他端点', sameNote: '同名模型换个端点可能是另一个脑，所以成绩一律按「端点 × 名字」记。这里只给链接，不比高低。',
+  repo: '本车道的成绩仓', secret: '题目永不公开，每案只给 A- 别名。NA = 作废或挂起，不计输赢。',
+} : {
+  title: `${name} results — AMBER`,
+  desc: `AMBER results for ${name} (${vendor}): total ${total}/${lane.n}, axis-by-axis dots, per-case aliases and outcomes, time and tokens.`,
+  back: '← All lanes', other: 'Chinese version →',
+  sub: `${vendor} · tested ${wk(page.week)} · ${lane.n} cases`,
+  totalLabel: 'Total',
+  prime: `′ = at least one case is NA (not scored; it does not count as a loss).`,
+  axisH: 'By axis', casesH: 'Case by case', cAlias: 'Case alias', cAxis: 'Axis', cResult: 'Result', cTime: 'Time', cTok: 'Tokens',
+  pass: 'Pass', fail: 'Fail', na: 'NA',
+  effH: 'Time and tokens', med: 'Median time per case', p90: 'Slowest 10% at least', tokTotal: 'Tokens in all',
+  histH: 'Sittings', hWeek: 'Week', hTotal: 'Total', hShown: 'On the board', yes: 'shown',
+  histNote: 'Each sitting was taken once; a difference between sittings is not evidence that the model got stronger or weaker. The board shows the marked sitting only.',
+  sameH: 'Same model name on other endpoints', sameNote: 'The same model name on a different endpoint can be a different brain, so scores are recorded per endpoint × name. Links only; no ranking between them.',
+  repo: 'Result repo for this lane', secret: 'Cases are never published; each case is shown by its A- alias. NA = voided or held; neither a win nor a loss.',
+};
+const here = `/${zh ? '' : 'en/'}model/${id}/`;
+const there = `/${zh ? 'en/' : ''}model/${id}/`;
+const rankPath = zh ? '/rank/' : '/en/rank/';
+const dots = (cell: any) => cell && cell.n > 0 ? [
+  ...Array(cell.p).fill('pass'),
+  ...Array(cell.n - cell.p - (cell.na ?? 0)).fill('fail'),
+  ...Array(cell.na ?? 0).fill('na'),
+] : null;
+---
+<BaseLayout title={t.title} description={t.desc} lang={zh ? 'zh-CN' : 'en'} canonicalPath={here} schemaInLanguage={zh ? 'zh-CN' : 'en'}>
+  <div class="wrap lane-page">
+    <p class="note"><a href={route(rankPath)}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
+    <h1>{name}</h1>
+    <p class="lead">{t.sub}</p>
+    <p class="lane-total"><span class="lane-total-label">{t.totalLabel}</span> <strong>{total}</strong><span class="lane-total-n">/{lane.n}</span></p>
+    <p class="note">{t.prime}</p>
+
+    <section class="section" aria-labelledby="axis-h">
+      <h2 id="axis-h">{t.axisH}</h2>
+      <ul class="axis-list">
+        {axes.map((a) => {
+          const cell = lane.axis[a.id]; const d = dots(cell);
+          return (
+            <li>
+              <span class="axis-name">{zh ? a.name_zh : a.name_en}</span>
+              {d ? <span class="dots" role="img" aria-label={`${cell.p}/${cell.n}`}>{d.map((s) => <i class={`dot ${s}`}></i>)}</span> : <span class="dot-none">—</span>}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="eff-h">
+      <h2 id="eff-h">{t.effH}</h2>
+      {eff ? (
+        <p>{t.med} <strong>{fmtSec(eff.t_med, T)}</strong> · {t.p90} <strong>{fmtSec(eff.t_p90, T)}</strong> · {t.tokTotal} <strong>{eff.tok ? fmtTok(eff.tok, T) : T.tokNone}</strong></p>
+      ) : <p>—</p>}
+    </section>
+
+    <section class="section" aria-labelledby="cases-h">
+      <h2 id="cases-h">{t.casesH}</h2>
+      <p class="hint">{t.secret}</p>
+      <div class="board-wrap">
+        <table class="board">
+          <thead><tr><th>{t.cAlias}</th><th class="axis-col">{t.cAxis}</th><th>{t.cResult}</th><th class="num">{t.cTime}</th><th class="num">{t.cTok}</th></tr></thead>
+          <tbody>
+            {cases.map((c) => (
+              <tr>
+                <td><code>{c.alias}</code><small class="axis-sub">{axisName(c.axis)}</small></td>
+                <td class="axis-col">{axisName(c.axis)}</td>
+                <td><span class="res"><i class={`dot ${c.status}`}></i>{t[c.status]}</span></td>
+                <td class="num">{c.wall_s == null ? '—' : fmtSec(c.wall_s, T)}</td>
+                <td class="num">{tokText(c.tokens)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {showHistory && (
+      <section class="section" aria-labelledby="hist-h">
+        <h2 id="hist-h">{t.histH}</h2>
+        <p class="hint">{t.histNote}</p>
+        <div class="board-wrap">
+          <table class="board">
+            <thead><tr><th>{t.hWeek}</th><th class="num">{t.hTotal}</th><th>{t.hShown}</th></tr></thead>
+            <tbody>
+              {page.history.map((h: any) => (
+                <tr>
+                  <td>{h.week}</td>
+                  <td class="num">{h.total}{h.na > 0 ? "′" : ''}/{h.n}</td>
+                  <td>{h.current ? t.yes : ''}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {same.length > 0 && (
+      <section class="section" aria-labelledby="same-h">
+        <h2 id="same-h">{t.sameH}</h2>
+        <p class="hint">{t.sameNote}</p>
+        <ul>{same.map((s) => <li><a href={route(`/${zh ? '' : 'en/'}model/${s.id}/`)}>{s.name}</a> · {s.vendor}</li>)}</ul>
+      </section>
+    )}
+
+    <p class="note"><a href={`https://github.com/getaskclaw/${page.repo}`} target="_blank" rel="noopener">{t.repo}: {page.repo}</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .lane-total { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 2px; }
+  .lane-total strong { font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .lane-total-label, .lane-total-n { color: var(--sub); }
+  .axis-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 8px 24px; }
+  .axis-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); padding: 6px 0; }
+  .dots { display: inline-flex; gap: 2px; }
+  .dot { display: inline-block; box-sizing: border-box; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--amber-deep, #a85a00); background: var(--amber, #e08a12); }
+  .dot.fail { background: transparent; border-color: rgba(23, 32, 43, .38); }
+  .dot.na { background: #aeb6bf; border-color: #aeb6bf; }
+  .dot-none { color: var(--sub); }
+  .res { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .axis-sub { display: none; color: var(--sub); font-size: 0.78rem; }
+  @media (max-width: 600px) {
+    .axis-col { display: none; }
+    .axis-sub { display: block; }
+  }
+</style>
