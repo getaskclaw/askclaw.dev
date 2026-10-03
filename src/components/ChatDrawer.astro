@@ -13,7 +13,7 @@ const T = en
       title: 'Ask the crab',
       sub: 'Preview · sample chat, not connected to a model yet',
       close: 'Close',
-      placeholder: 'Ask about the scores…',
+      hint: 'Ask about the scores…',
       send: 'Send',
       src: 'Source',
       q1: 'Who leads right now?',
@@ -28,7 +28,7 @@ const T = en
       title: '问问螃蟹',
       sub: '预览 · 示范对话，尚未接入模型',
       close: '关闭',
-      placeholder: '问问成绩…',
+      hint: '问问成绩…',
       send: '发送',
       src: '来源',
       q1: '现在谁领先？',
@@ -67,7 +67,7 @@ const T = en
       </div>
     </div>
     <div class="chat-input">
-      <input type="text" disabled placeholder={T.placeholder} aria-label={T.placeholder} />
+      <input type="text" disabled value={T.hint} aria-label={T.hint} />
       <button type="button" disabled>{T.send}</button>
     </div>
   </aside>
