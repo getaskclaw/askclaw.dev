@@ -100,6 +100,6 @@ export function verdictText(result, active, T) {
   const t0 = ts[0];
   const scope = active.length ? tr(T, 'scopeSel', { axes: active.map((id) => L[id]).join(T.axesJoin) }) : T.scopeAll;
   const head = t0.rows.length > 1 ? tr(T, 'headTied', { n: t0.rows.length }) : tr(T, 'headAlone', { name: t0.rows[0].lane.name });
-  const fast = t0.rows.length > 1 ? [...t0.rows].filter((r) => r.lane.e).sort((a, b) => a.lane.e.t_med - b.lane.e.t_med)[0] : null;
-  return tr(T, 'verdict', { scope, head, n: ts.length }) + (fast ? tr(T, 'fastest', { name: fast.lane.name, t: fmtSec(fast.lane.e.t_med, T) }) : '');
+  // no 'fastest of the tie' here: the tied lanes sat in different weeks and endpoints, so a speed ranking in the headline would compare unlike runs
+  return tr(T, 'verdict', { scope, head, n: ts.length });
 }

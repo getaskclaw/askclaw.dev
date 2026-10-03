@@ -92,14 +92,16 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
 
     <div class="pk-verdict" id="leaderboard">
       <h2 id="verdict" aria-live="polite">{verdictText(initial, [], T)}</h2>
-      <div class="legend" aria-label={T.legendAria}><span><i class="lg-pass"></i>{T.lgPass}</span><span><i class="lg-fail"></i>{T.lgFail}</span><span><i class="lg-held"></i>{T.lgHeld}</span><span><span class="tiny">{T.lgFewTag}</span> {T.lgFew}</span></div>
-    </div>
-    <div class="caveat" id="caveat" hidden></div>
-    <div class="tiebreak"><span>{T.tbLabel}</span>
-      <div class="seg" role="group" aria-label={T.sortAria}>
-        {sortButtons.map(([tb, label, pressed]) => <button type="button" data-tb={tb} aria-pressed={pressed}>{label}</button>)}
+      <div class="pk-tools">
+        <div class="legend" aria-label={T.legendAria}><span><i class="lg-pass"></i>{T.lgPass}</span><span><i class="lg-fail"></i>{T.lgFail}</span><span><i class="lg-held"></i>{T.lgHeld}</span><span><span class="tiny">{T.lgFewTag}</span> {T.lgFew}</span></div>
+      <div class="tiebreak"><span>{T.tbLabel}</span>
+        <div class="seg" role="group" aria-label={T.sortAria}>
+          {sortButtons.map(([tb, label, pressed]) => <button type="button" data-tb={tb} aria-pressed={pressed}>{label}</button>)}
+        </div>
+      </div>
       </div>
     </div>
+    <div class="caveat" id="caveat" hidden></div>
 
     <div class="grid" id="grid">
       {initial.tiers.map((t, i) => {
