@@ -59,9 +59,14 @@ function buildCard(l) {
   el.className = 'card glass'; el.tabIndex = 0; el.dataset.id = l.id;
   el.innerHTML = `<div class="card-head"><div class="who"><b></b><small></small></div><div class="pk-score"><big></big><small></small></div></div><div class="rows"></div>
     <div class="effort"><span class="k"></span><span class="v"><b class="tm"></b><span class="tbar"><i></i></span></span><span class="k"></span><span class="v"><small class="tt"></small></span></div>
-    <div class="card-foot"><span class="wk"></span><button type="button" class="cmp-toggle" aria-pressed="false"></button></div>`;
+    <div class="card-foot"><span class="wk"></span><a class="card-page"></a><button type="button" class="cmp-toggle" aria-pressed="false"></button></div>`;
   el.querySelector('.who b').textContent = l.name;
-  el.querySelector('.who small').textContent = l.vendor;
+  const pg = PAGES[l.id];
+  const vend = el.querySelector('.who small');
+  if (pg) vend.append(Object.assign(document.createElement('a'), { href: pg[1], textContent: l.vendor })); else vend.textContent = l.vendor;
+  const cp = el.querySelector('.card-page');
+  cp.href = pg ? pg[0] : `https://github.com/getaskclaw/${l.repo}`; cp.textContent = pg ? T.pageLink : T.repoLink;
+  el.querySelectorAll('a').forEach((a) => a.addEventListener('click', (e) => e.stopPropagation()));
   const ks = el.querySelectorAll('.effort .k'); ks[0].textContent = T.perCase; ks[1].textContent = T.total;
   el.querySelector('.wk').textContent = t('week', { wk: l.wk, n: l.cases });
   el.querySelector('.tm').textContent = t('median', { t: fS(l.e.t_med) });
@@ -69,7 +74,7 @@ function buildCard(l) {
   el.querySelector('.tt').textContent = t('totalLine', { t: fS(l.e.t_total), n: l.e.t_n, tok: fT(l.e.tok) });
   el.querySelector('.cmp-toggle').addEventListener('click', (e) => { e.stopPropagation(); toggleCompare(l.id); });
   el.addEventListener('click', () => openDetail(l.id, el));
-  el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(l.id, el); } });
+  el.addEventListener('keydown', (e) => { if (e.target === el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(l.id, el); } });
   glassify(el);
   return el;
 }
@@ -338,6 +343,11 @@ function openDetail(id, from) {
     const note = document.createElement('p'); note.className = 'fine';
     note.textContent = T.timeNote + MONEY_NOTE;
     body.append(note);
+    if (PAGES[id]) {
+      const pl = document.createElement('p'); pl.className = 'sheet-links';
+      pl.append(Object.assign(document.createElement('a'), { href: PAGES[id][0], textContent: T.pageLinkLong }), Object.assign(document.createElement('a'), { href: PAGES[id][1], textContent: T.providerLink }));
+      body.append(pl);
+    }
     const src = document.createElement('p'); src.className = 'fine';
     src.textContent = T.srcNote;
     src.append(Object.assign(document.createElement('a'), { target: '_blank', rel: 'noopener' }));
