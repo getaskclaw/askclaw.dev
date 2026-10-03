@@ -27,7 +27,7 @@ const items = isEnglish
   <input type="checkbox" id="rail-toggle" class="rail-toggle-input" aria-label={isEnglish ? 'Menu' : '菜单'} />
   <div class="rail-bar">
     <a class="logo" href={route(homePath)} aria-label="AskClaw home" aria-current={currentPath === homePath ? 'page' : undefined}>
-      <span class="logo-mark" aria-hidden="true">A</span><span class="logo-text">Ask<span>Claw</span></span>
+      <img class="logo-mark" src={route('/assets/logo-mark.png')} width="40" height="40" alt="" /><span class="logo-text">Ask<span>Claw</span></span>
     </a>
     <label class="rail-button" for="rail-toggle" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
