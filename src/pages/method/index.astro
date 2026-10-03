@@ -2,6 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { route } from '../../utils/route';
 import siteData from '../../data/site-data.json';
+import axesLanes from '../../data/axes.json';
+
+// The newest tested week on the board (was typed in by hand and went stale: it still said W39 after W40).
+const latestWeek = axesLanes.map((lane) => lane.wk).sort().at(-1);
 
 // Axes and groups as published (amber.db axes.sql): the text below never hard-codes their number.
 const axisById = Object.fromEntries(siteData.axes.map((a) => [a.id, a]));
@@ -39,7 +43,7 @@ const resultRepos = [
       <div class="stat-grid" aria-label="AMBER facts">
         <div class="stat-card"><strong>24 / 27</strong><span>案 / 卷，私有题库</span></div>
         <div class="stat-card"><strong>13</strong><span>公开成绩仓</span></div>
-        <div class="stat-card"><strong>W39</strong><span>保留的最新快照</span></div>
+        <div class="stat-card"><strong>{latestWeek}</strong><span>保留的最新快照</span></div>
       </div>
     </section>
 

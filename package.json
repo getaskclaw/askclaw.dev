@@ -8,7 +8,9 @@
     "preview": "astro preview",
     "acceptance": "node scripts/acceptance.mjs",
     "lane-pages": "python3 scripts/gen-lane-pages.py",
-    "lane-pages:check": "python3 scripts/gen-lane-pages.py --check"
+    "lane-pages:check": "python3 scripts/gen-lane-pages.py --check",
+    "check-claims": "python3 scripts/check-claims.py",
+    "test:claims": "python3 scripts/test_check_claims.py"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

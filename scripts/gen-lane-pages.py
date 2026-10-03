@@ -137,7 +137,7 @@ def build(con):
     for lane in lanes.values():
         slugs.setdefault(lane["model_slug"], set()).add(lane["model"].split("/")[-1].lower())
     assert all(len(names) == 1 for names in slugs.values()), f"two model names share a slug: {slugs}"
-    return {"schema": SCHEMA, "rule_version": A.RULE_VERSION, "lanes": lanes}
+    return {"schema": SCHEMA, "rule_version": A.RULE_VERSION, "skipped_lanes": sorted(SKIP_LANES), "lanes": lanes}
 
 
 def against_site_axes(doc):

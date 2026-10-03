@@ -1,5 +1,6 @@
 """Verify static output and source preservation without changing either tree."""
 import hashlib
+import importlib.util
 from html import unescape
 from html.parser import HTMLParser
 import json
@@ -7,6 +8,7 @@ import os
 from pathlib import Path
 import re
 import struct
+import sys
 import subprocess
 from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
@@ -81,6 +83,8 @@ LEGACY_ASSETS = {
 }
 
 root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from claims_lib import Facts  # noqa: E402
 dist = root / 'dist'
 # The legacy checkout (~/2609/askclaw.dev) is the ground truth for the chart PNGs. It is NOT part
 # of this repo, so the dependency is checked up front and reported readably instead of blowing up
@@ -144,28 +148,29 @@ for retired in ('axes.html', 'axes.json'):
 assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
-convergence_names = {'k3', 'gpt-5.6-luna-900k (high 档)', 'deepseek-flash', 'deepseek-flash (GA)', 'doubao-seed-evolving', 'glm-5.3-flash', 'swe-2-max', 'hy4-preview-f', 'step-5-preview', 'Qwen3.8-27B', 'claude-opus-5-5', 'gpt-6-astra-900k', 'gpt-6-sol-900k', 'gpt-6-luna-900k', 'mimo-v2.6-pro', 'claude-sonnet-5-5', 'claude-fable-5-1', 'gpt-6.1-sol'}
-# Lanes that sat the convergence case and lost it keep n=1 with p=0 (a real negative, not a hold):
-# space-bunny-alpha, the W39 CommandCode newcomer.
-convergence_failed = {'space-bunny-alpha'}
-assert len(lanes) == 22 and len({lane['id'] for lane in lanes}) == 22   # W40: + claude-sonnet-5-5; 2026-10-02 sittings: + claude-fable-5-1, gpt-6.1-sol
-assert 'step-5-preview' in {lane['name'] for lane in lanes}
-assert 'claude-opus-5-5' in {lane['name'] for lane in lanes}
-assert 'claude-sonnet-5-5' in {lane['name'] for lane in lanes}
-assert 'claude-fable-5-1' in {lane['name'] for lane in lanes}
-assert 'gpt-6.1-sol' in {lane['name'] for lane in lanes}
-assert convergence_names <= {lane['name'] for lane in lanes}
+# Relational checks (no typed-in lane counts, names or NA totals): the published axes.json is compared with
+# lane-pages.json, which scripts/gen-lane-pages.py derives from amber.db by a different code path (per-case
+# results instead of axis cells), and with site-data.json. A change in the data therefore needs no edit here;
+# a disagreement between the two derivations fails.
+site_data = json.loads((root / 'src/data/site-data.json').read_text())
+assert len({lane['id'] for lane in lanes}) == len(lanes) and len(lanes) > 0
+assert {lane['id'] for lane in lanes} == set(site_data['lanes']), 'axes.json and site-data.json list different lanes'
+skipped = set(lane_pages_doc['skipped_lanes'])
+assert {lane['id'] for lane in lanes} == set(lane_pages) | skipped, 'axes.json lanes != lane-pages lanes + skipped lanes'
 for lane in lanes:
-    if lane['name'] in convergence_failed:
-        assert lane['axis']['convergence'] == {'p': 0, 'n': 1}, lane['name']
-    else:
-        value = 1 if lane['name'] in convergence_names else 0
-        assert lane['axis']['convergence'] == {'p': value, 'n': value}, lane['name']
-# NA channel: p = effective passes, n = case slots (NA included), na = held/void cases, which
-# count as neither a win nor a loss. Every held case must sit inside its own case slots, and an
-# axis slot count never shrinks to hide a hold.
+    if lane['id'] in skipped:
+        continue
+    cases = lane_pages[lane['id']]['cases']
+    assert lane['n'] == len(cases), (lane['id'], 'case count')
+    assert lane['total'] == sum(c['status'] == 'pass' for c in cases), (lane['id'], 'total vs per-case passes')
+    for axis_id, cell in lane['axis'].items():
+        mine = [c for c in cases if c['axis'] == axis_id]
+        assert (cell['p'], cell['n'], cell.get('na', 0)) == (sum(c['status'] == 'pass' for c in mine), len(mine), sum(c['status'] == 'na' for c in mine)), (lane['id'], axis_id)
+    assert set(lane['axis']) >= {c['axis'] for c in cases}, (lane['id'], 'case on an axis with no cell')
+# NA channel: every held case sits inside its own case slots, and an axis slot count never shrinks to hide a hold.
 assert all(cell.get('na', 0) <= cell['n'] for lane in lanes for cell in lane['axis'].values())
-assert sum(cell.get('na', 0) for lane in lanes for cell in lane['axis'].values()) == 49  # 29 before the 2026-10-02 A-d511f9e8 hold (17 + ADJ-20261002-integrity 9 = 26, + 10-02 sittings +3); the hold adds one NA on 20 lanes (cc-m26p and doubao already had it as NA)
+facts = Facts(root)
+assert 'W' + max(page['week'] for page in lane_pages.values()).split('-W')[-1] == facts.current_week, 'newest week differs between axes.json and lane-pages.json'
 
 class Page(HTMLParser):
     def __init__(self, text):
@@ -195,8 +200,8 @@ class Page(HTMLParser):
 report = {'pages': {}, 'assets': {}, 'data_sha256': hashlib.sha256((root / 'src/data/axes.json').read_bytes()).hexdigest()}
 report['convergence'] = {
     'lanes': len(lanes),
-    'scored': [lane['name'] for lane in lanes if lane['axis']['convergence']['n'] > 0],
-    'no_data': [lane['name'] for lane in lanes if lane['axis']['convergence']['n'] == 0],
+    'scored': [lane['name'] for lane in lanes if lane['axis'].get('convergence', {}).get('n', 0) > 0],
+    'no_data': [lane['name'] for lane in lanes if lane['axis'].get('convergence', {}).get('n', 0) == 0],
     'legacy_artifacts_absent': True,
 }
 for relative in sorted(expected_routes):
@@ -238,11 +243,7 @@ for relative in sorted(expected_routes):
             assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English page')
     if relative == 'method/index.html':
         assert len(parsed.cards) == 13
-        # Frozen lanes keep their sealed /23 basis + the ∅ marker (owner order 2026-09-21);
-        # the new claude lane carries its own W39 public score. Apostrophes follow the NA channel.
-        for repo, score in [('amber-ollama', "18'/24"), ('amber-crof', "16'/23 ∅"), ('amber-claude', "19'/24")]:  # claude-opus-5-5 W40 re-sit (W39 17'/24 stays in the card text)
-            card = next(c for c in parsed.cards if c['href'].endswith('/' + repo))
-            assert score in card['text'], (repo, card['text'])
+        # Card scores, weeks and frozen values are checked against the data by check-claims (run below).
         # The historical /21 composite note is fact and stays on the page.
         assert '15/21' in text and '14/21' in text
     if relative == 'en/index.html':
@@ -252,11 +253,8 @@ for relative in sorted(expected_routes):
         assert sum('/amber-' in c['href'] for c in parsed.cards) == 13
         assert any(c['href'].endswith('/amber-claude') for c in parsed.cards)
         assert 'placeholder' not in text
-        for phrase in ['24 cases / 27 papers', 'Snapshot 2026-W40', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:
+        for phrase in ['24 cases / 27 papers', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:   # 'Snapshot 2026-Wxx' is pinned to the data by check-claims
             assert phrase in text, phrase
-        # Frozen lanes must keep the sealed /23 basis on the English mirror too.
-        for score in ['15&#39;/23 ∅', '16&#39;/23 ∅']:  # CommandCode 17/23 → 15'/23 per 2026-10-02 correction; every total carries ' after the A-d511f9e8 hold
-            assert score in text, score
     if relative == 'rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
@@ -271,11 +269,20 @@ for relative in sorted(expected_routes):
         assert 'data-face="convergence"' in text and 'Convergence' in text
         assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese rank script copy'
 
+# Hand-written places must agree with the data (cards, scores, weeks, figure names, share image).
+_spec = importlib.util.spec_from_file_location('check_claims', Path(__file__).resolve().parent / 'check-claims.py')
+_check_claims = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_check_claims)
+_registry = json.loads((Path(__file__).resolve().parent / 'figures.json').read_text())
+_violations, _counts, _ = _check_claims.run(root, dist, _registry)
+assert not _violations, 'check-claims: ' + '; '.join(_violations)
+report['claims'] = _counts
+
 assets = sorted((dist / 'assets').glob('*'))
 top_level = {p.name for p in assets}
 assert top_level == {*CHART_ASSETS, CRAB_ASSET, CHAT_CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
 # specs/ and vendor/ are vega chart specs + libs for the hand-written pages; verify they exist and are non-empty.
-assert len(list((dist / 'assets/specs').glob('*.json'))) == 14  # + top5-2026-w40b zh/en, top5-2026-w40c zh/en
+assert len(list((dist / 'assets/specs').glob('*.json'))) == len(list((root / 'public/assets/specs').glob('*.json'))) > 0
 assert {p.name for p in (dist / 'assets/vendor').glob('*.js')} == {'vega.min.js', 'vega-lite.min.js', 'vega-embed.min.js'}
 for path in assets:
     if path.name in LEGACY_ASSETS or path.is_dir():
