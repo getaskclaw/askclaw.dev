@@ -63,6 +63,7 @@ REFRESHED_CHART_ASSETS = {
 }
 CHART_ASSETS = {**LEGACY_CHART_ASSETS, **REFRESHED_CHART_ASSETS}
 CRAB_ASSET = 'crab-hero.webp'
+CHAT_CRAB_ASSET = 'crab-chat.webp'  # logo mark + chat button, 112x85 cut-out of the watercolor crab
 # Legacy verbatim assets rescued into public/assets/ (referenced by hand-written pages:
 # en.html charts + notes article figures + vega specs/vendor libs). Dirs checked recursively.
 LEGACY_ASSETS = {
@@ -243,7 +244,7 @@ for relative in sorted(expected_routes):
 
 assets = sorted((dist / 'assets').glob('*'))
 top_level = {p.name for p in assets}
-assert top_level == {*CHART_ASSETS, CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
+assert top_level == {*CHART_ASSETS, CRAB_ASSET, CHAT_CRAB_ASSET, *LEGACY_ASSETS, 'specs', 'vendor'}, sorted(top_level)
 # specs/ and vendor/ are vega chart specs + libs for the hand-written pages; verify they exist and are non-empty.
 assert len(list((dist / 'assets/specs').glob('*.json'))) == 14  # + top5-2026-w40b zh/en, top5-2026-w40c zh/en
 assert {p.name for p in (dist / 'assets/vendor').glob('*.js')} == {'vega.min.js', 'vega-lite.min.js', 'vega-embed.min.js'}
@@ -258,6 +259,9 @@ for path in assets:
     if path.name == CRAB_ASSET:
         dimensions = webp_dimensions(data)
         assert dimensions == (1200, 400), (path.name, dimensions)
+    elif path.name == CHAT_CRAB_ASSET:
+        dimensions = webp_dimensions(data)
+        assert dimensions == (112, 85), (path.name, dimensions)
     else:
         legacy_name = CHART_ASSETS[path.name]
         if path.name in REFRESHED_CHART_ASSETS:
