@@ -21,6 +21,12 @@
 
 @media (min-width: 900px) {
   body { padding-inline: 56px; } /* symmetric: the rail floats in the left margin, so content stays centred on the window */
+  /* footer: cancel the side padding so its band runs edge to edge, and size its text column like the page content
+     (page content = min(max, viewport - 56*2 - 20*2)) so the footer text lines up with the cards above it */
+  body .site-footer { margin-inline: -56px; }
+  body .site-footer .wrap { width: min(980px, calc(100% - 152px)); }
+  body.picker-page .site-footer .wrap { width: min(1040px, calc(100% - 152px)); }
+  @media (min-width: 1600px) { body.picker-page .site-footer .wrap { width: min(1440px, calc(100% - 152px)); } }
   body .site-header.site-header {
     position: fixed; z-index: 30; inset: 0 auto 0 0; width: 56px; padding: 0; overflow: hidden;
     display: flex; flex-direction: column;
@@ -133,12 +139,18 @@
 .chat-input input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(23, 32, 43, .14); background: rgba(255, 255, 255, .7); color: var(--ink); }
 .chat-input button { font: inherit; font-size: 14px; font-weight: 600; padding: 0 16px; border-radius: 12px; border: 0; background: var(--soft-btn, #e7dfcf); color: var(--sub); }
 .chat-input input:disabled, .chat-input button:disabled { cursor: not-allowed; opacity: .75; }
+/* room under the footer text so the chat button never sits on it */
+body .site-footer { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 /* keep the existing back-to-top button clear of the chat button */
 body .totop { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
 body .totop.lift { bottom: calc(170px + env(safe-area-inset-bottom, 0px)); }
 @media (max-width: 760px) { body .totop.lift { bottom: calc(224px + env(safe-area-inset-bottom, 0px)); } }
 @media (max-width: 899px) {
+  /* the home cards sit 20px (16px under 380px) from the edge; line the footer text up with them */
+  body.picker-page .site-footer .wrap { width: calc(100% - 40px); }
   .chat-drawer { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; height: min(78vh, 640px); transform: translateY(calc(100% + 16px)); }
   body:has(.dock.show) .chat-fab { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) { .chat-fab, .chat-drawer, .chat-backdrop { transition: none; } }
+
+@media (max-width: 380px) { body.picker-page .site-footer .wrap { width: calc(100% - 32px); } }
