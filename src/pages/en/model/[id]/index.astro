@@ -1,9 +1,0 @@
----
-import LanePage from '../../../../components/LanePage.astro';
-import pages from '../../../../data/lane-pages.json';
-export function getStaticPaths() {
-  return Object.keys((pages as any).lanes).map((id) => ({ params: { id } }));
-}
-const { id } = Astro.params;
----
-<LanePage lang="en" id={id} />

@@ -5,6 +5,7 @@
 // `n === 0` means the lane's library had no case on that axis.
 import siteData from '../data/site-data.json';
 import { route } from '../utils/route';
+import { modelPath, modelSlugOf } from '../utils/lane-pages';
 
 interface Props {
   lanes: any[];
@@ -75,7 +76,9 @@ const t = zh
       {rows.map(({ lane, total, cells }) => (
         <tr>
           <td class="lane">
-            <a href={route(`/${zh ? '' : 'en/'}model/${lane.id}/`)}>{lane.name}</a>
+            {modelSlugOf(lane.id)
+              ? <a href={route(modelPath(lang, modelSlugOf(lane.id)))}>{lane.name}</a>
+              : <a href={`https://github.com/getaskclaw/${lane.repo}`} target="_blank" rel="noopener">{lane.name}</a>}
             <small>{lane.vendor}</small>
           </td>
           <td class="num total">{total}</td>

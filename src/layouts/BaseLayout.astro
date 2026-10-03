@@ -46,9 +46,9 @@ const base = import.meta.env.BASE_URL;
 // noindex,nofollow. The production root build emits no robots meta at all.
 const isPreviewBase = base !== '/';
 const canonical = new URL(route(canonicalPath), site).href;
-const modelPath = canonicalPath.match(/^(?:\/en)?\/model\/([a-z0-9-]+)\/$/);
-const languagePair = modelPath
-  ? { zh: `/model/${modelPath[1]}/`, en: `/en/model/${modelPath[1]}/` }
+const entityPath = canonicalPath.match(/^(?:\/en)?\/(model|provider)\/([a-z0-9.-]+)\/$/);
+const languagePair = entityPath
+  ? { zh: `/${entityPath[1]}/${entityPath[2]}/`, en: `/en/${entityPath[1]}/${entityPath[2]}/` }
   : canonicalPath === '/claim/' || canonicalPath === '/en/claim/'
   ? { zh: '/claim/', en: '/en/claim/' }
   : canonicalPath === '/' || canonicalPath === '/en/'

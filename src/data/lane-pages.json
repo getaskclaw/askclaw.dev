@@ -238,11 +238,12 @@
    "history_withheld": false,
    "id": "astra",
    "model": "gpt-6-astra-900k",
+   "model_slug": "gpt-6-astra-900k",
    "n": 24,
    "na": 1,
    "name": "gpt-6-astra-900k",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 16,
    "vendor": "OpenAI Codex",
    "week": "2026-W39"
@@ -473,11 +474,12 @@
    "history_withheld": false,
    "id": "cc",
    "model": "deepseek/deepseek-v4.1-flash",
+   "model_slug": "deepseek-v4.1-flash",
    "n": 23,
    "na": 3,
    "name": "deepseek-v4.1-flash",
+   "provider_slug": "commandcode",
    "repo": "amber-commandcode",
-   "same_model": [],
    "total": 15,
    "vendor": "CommandCode",
    "week": "2026-W37"
@@ -720,11 +722,12 @@
    "history_withheld": false,
    "id": "cc-m26p",
    "model": "mimo-v2.6-pro",
+   "model_slug": "mimo-v2.6-pro",
    "n": 24,
    "na": 2,
    "name": "mimo-v2.6-pro",
+   "provider_slug": "commandcode",
    "repo": "amber-commandcode",
-   "same_model": [],
    "total": 16,
    "vendor": "CommandCode",
    "week": "2026-W39"
@@ -967,11 +970,12 @@
    "history_withheld": false,
    "id": "cc-sb",
    "model": "space-bunny-alpha",
+   "model_slug": "space-bunny-alpha",
    "n": 24,
    "na": 3,
    "name": "space-bunny-alpha",
+   "provider_slug": "commandcode",
    "repo": "amber-commandcode",
-   "same_model": [],
    "total": 13,
    "vendor": "CommandCode",
    "week": "2026-W39"
@@ -1221,11 +1225,12 @@
    "history_withheld": false,
    "id": "claude",
    "model": "claude-opus-5-5",
+   "model_slug": "claude-opus-5-5",
    "n": 24,
    "na": 3,
    "name": "claude-opus-5-5",
+   "provider_slug": "claude",
    "repo": "amber-claude",
-   "same_model": [],
    "total": 19,
    "vendor": "Anthropic 订阅道",
    "week": "2026-W40"
@@ -1468,11 +1473,12 @@
    "history_withheld": false,
    "id": "claude-fable",
    "model": "claude-fable-5-1",
+   "model_slug": "claude-fable-5-1",
    "n": 24,
    "na": 3,
    "name": "claude-fable-5-1",
+   "provider_slug": "claude",
    "repo": "amber-claude",
-   "same_model": [],
    "total": 16,
    "vendor": "Anthropic 订阅道",
    "week": "2026-W40"
@@ -1715,235 +1721,15 @@
    "history_withheld": false,
    "id": "claude-sonnet",
    "model": "claude-sonnet-5-5",
+   "model_slug": "claude-sonnet-5-5",
    "n": 24,
    "na": 1,
    "name": "claude-sonnet-5-5",
+   "provider_slug": "claude",
    "repo": "amber-claude",
-   "same_model": [],
    "total": 19,
    "vendor": "Anthropic 订阅道",
    "week": "2026-W40"
-  },
-  "crof": {
-   "axis": {
-    "attribution": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "build": {
-     "n": 6,
-     "na": 0,
-     "p": 5
-    },
-    "defense": {
-     "n": 2,
-     "na": 1,
-     "p": 0
-    },
-    "ops": {
-     "n": 4,
-     "na": 0,
-     "p": 3
-    },
-    "req-drift": {
-     "n": 1,
-     "na": 0,
-     "p": 1
-    },
-    "review": {
-     "n": 2,
-     "na": 0,
-     "p": 1
-    },
-    "text": {
-     "n": 3,
-     "na": 0,
-     "p": 3
-    },
-    "ui-build": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    },
-    "vision": {
-     "n": 1,
-     "na": 0,
-     "p": 0
-    }
-   },
-   "band": "high",
-   "cases": [
-    {
-     "alias": "A-791e90ac",
-     "axis": "text",
-     "status": "pass",
-     "tokens": 4748,
-     "wall_s": 15
-    },
-    {
-     "alias": "A-1fd3683a",
-     "axis": "text",
-     "status": "pass",
-     "tokens": 14471,
-     "wall_s": 74
-    },
-    {
-     "alias": "A-13854d9d",
-     "axis": "text",
-     "status": "pass",
-     "tokens": 3983,
-     "wall_s": 504
-    },
-    {
-     "alias": "A-77d62143",
-     "axis": "build",
-     "status": "pass",
-     "tokens": 942143,
-     "wall_s": 216
-    },
-    {
-     "alias": "A-569dbe0d",
-     "axis": "build",
-     "status": "pass",
-     "tokens": 1033005,
-     "wall_s": 305
-    },
-    {
-     "alias": "A-87c472cb",
-     "axis": "build",
-     "status": "fail",
-     "tokens": 2831786,
-     "wall_s": 578
-    },
-    {
-     "alias": "A-641195e2",
-     "axis": "build",
-     "status": "pass",
-     "tokens": 389324,
-     "wall_s": 181
-    },
-    {
-     "alias": "A-442d4aab",
-     "axis": "build",
-     "status": "pass",
-     "tokens": 642196,
-     "wall_s": 254
-    },
-    {
-     "alias": "A-61f7ad01",
-     "axis": "build",
-     "status": "pass",
-     "tokens": 368393,
-     "wall_s": 124
-    },
-    {
-     "alias": "A-d511f9e8",
-     "axis": "defense",
-     "status": "na",
-     "tokens": 21367922,
-     "wall_s": 1261
-    },
-    {
-     "alias": "A-a317e74b",
-     "axis": "attribution",
-     "status": "pass",
-     "tokens": 16287673,
-     "wall_s": 996
-    },
-    {
-     "alias": "A-be92627f",
-     "axis": "defense",
-     "status": "fail",
-     "tokens": 9741534,
-     "wall_s": 761
-    },
-    {
-     "alias": "A-cdc3d11a",
-     "axis": "review",
-     "status": "fail",
-     "tokens": 6760,
-     "wall_s": 6
-    },
-    {
-     "alias": "A-47eea242",
-     "axis": "review",
-     "status": "pass",
-     "tokens": 46494,
-     "wall_s": 182
-    },
-    {
-     "alias": "A-ea80d793",
-     "axis": "vision",
-     "status": "fail",
-     "tokens": 1187,
-     "wall_s": 6
-    },
-    {
-     "alias": "A-a5608487",
-     "axis": "ops",
-     "status": "fail",
-     "tokens": 586177,
-     "wall_s": 159
-    },
-    {
-     "alias": "A-984e80ee",
-     "axis": "ops",
-     "status": "pass",
-     "tokens": 1110756,
-     "wall_s": 174
-    },
-    {
-     "alias": "A-24bcf707",
-     "axis": "ops",
-     "status": "pass",
-     "tokens": 303032,
-     "wall_s": 73
-    },
-    {
-     "alias": "A-8d4bc770",
-     "axis": "ops",
-     "status": "pass",
-     "tokens": 1812550,
-     "wall_s": 227
-    },
-    {
-     "alias": "A-0676097b",
-     "axis": "req-drift",
-     "status": "pass",
-     "tokens": 176214,
-     "wall_s": 52
-    },
-    {
-     "alias": "A-d9b79b46",
-     "axis": "ui-build",
-     "status": "fail",
-     "tokens": 15546,
-     "wall_s": 636
-    }
-   ],
-   "composed": false,
-   "frozen_week": "2026-W36",
-   "history": [
-    {
-     "current": true,
-     "n": 21,
-     "na": 1,
-     "total": 14,
-     "week": "2026-W36"
-    }
-   ],
-   "history_withheld": false,
-   "id": "crof",
-   "model": "qwen3.8-27b",
-   "n": 21,
-   "na": 1,
-   "name": "qwen3.8-27b",
-   "repo": "amber-crof",
-   "same_model": [],
-   "total": 14,
-   "vendor": "CrofAI",
-   "week": "2026-W36"
   },
   "devin": {
    "axis": {
@@ -2183,11 +1969,12 @@
    "history_withheld": false,
    "id": "devin",
    "model": "swe-2-max",
+   "model_slug": "swe-2-max",
    "n": 24,
    "na": 2,
    "name": "swe-2-max",
+   "provider_slug": "devin",
    "repo": "amber-devin",
-   "same_model": [],
    "total": 19,
    "vendor": "Devin",
    "week": "2026-W37"
@@ -2430,11 +2217,12 @@
    "history_withheld": false,
    "id": "doubao",
    "model": "doubao-seed-evolving",
+   "model_slug": "doubao-seed-evolving",
    "n": 24,
    "na": 3,
    "name": "doubao-seed-evolving",
+   "provider_slug": "doubao",
    "repo": "amber-doubao",
-   "same_model": [],
    "total": 17,
    "vendor": "火山方舟 Agent Plan",
    "week": "2026-W38"
@@ -2677,13 +2465,12 @@
    "history_withheld": false,
    "id": "ds",
    "model": "deepseek-flash",
+   "model_slug": "deepseek-flash",
    "n": 24,
    "na": 2,
    "name": "deepseek-flash (GA)",
+   "provider_slug": "deepseek",
    "repo": "amber-deepseek",
-   "same_model": [
-    "ocgo"
-   ],
    "total": 16,
    "vendor": "DeepSeek 官方",
    "week": "2026-W37"
@@ -2926,11 +2713,12 @@
    "history_withheld": false,
    "id": "gp",
    "model": "Qwen3.8-27B",
+   "model_slug": "qwen3.8-27b",
    "n": 24,
    "na": 1,
    "name": "Qwen3.8-27B",
+   "provider_slug": "goldenpotato",
    "repo": "amber-goldenpotato",
-   "same_model": [],
    "total": 15,
    "vendor": "社区自部署 3×V100",
    "week": "2026-W38"
@@ -3173,11 +2961,12 @@
    "history_withheld": true,
    "id": "gpt-luna",
    "model": "gpt-5.6-luna-900k",
+   "model_slug": "gpt-5.6-luna-900k",
    "n": 24,
    "na": 5,
    "name": "gpt-5.6-luna-900k (high 档)",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 16,
    "vendor": "OpenAI Codex",
    "week": "2026-W37"
@@ -3422,11 +3211,12 @@
    "history_withheld": true,
    "id": "gpt-sol",
    "model": "gpt-5.6-sol-900k",
+   "model_slug": "gpt-5.6-sol-900k",
    "n": 23,
    "na": 4,
    "name": "gpt-5.6-sol-900k (high 档)",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 15,
    "vendor": "OpenAI Codex",
    "week": "2026-W38"
@@ -3669,11 +3459,12 @@
    "history_withheld": false,
    "id": "gpt6-luna",
    "model": "gpt-6-luna-900k",
+   "model_slug": "gpt-6-luna-900k",
    "n": 24,
    "na": 1,
    "name": "gpt-6-luna-900k",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 15,
    "vendor": "OpenAI Codex",
    "week": "2026-W39"
@@ -3916,11 +3707,12 @@
    "history_withheld": false,
    "id": "gpt6-sol",
    "model": "gpt-6-sol-900k",
+   "model_slug": "gpt-6-sol-900k",
    "n": 24,
    "na": 1,
    "name": "gpt-6-sol-900k",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 17,
    "vendor": "OpenAI Codex",
    "week": "2026-W39"
@@ -4163,11 +3955,12 @@
    "history_withheld": false,
    "id": "gpt61-sol",
    "model": "gpt-6.1-sol",
+   "model_slug": "gpt-6.1-sol",
    "n": 24,
    "na": 1,
    "name": "gpt-6.1-sol",
+   "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "same_model": [],
    "total": 16,
    "vendor": "OpenAI Codex",
    "week": "2026-W40"
@@ -4410,11 +4203,12 @@
    "history_withheld": false,
    "id": "kimi",
    "model": "k3",
+   "model_slug": "k3",
    "n": 24,
    "na": 1,
    "name": "k3",
+   "provider_slug": "kimi",
    "repo": "amber-kimi",
-   "same_model": [],
    "total": 18,
    "vendor": "Kimi 官方 coding 端点",
    "week": "2026-W38"
@@ -4657,13 +4451,12 @@
    "history_withheld": false,
    "id": "ocgo",
    "model": "deepseek-flash",
+   "model_slug": "deepseek-flash",
    "n": 24,
    "na": 3,
    "name": "deepseek-flash",
+   "provider_slug": "opencode",
    "repo": "amber-opencode",
-   "same_model": [
-    "ds"
-   ],
    "total": 15,
    "vendor": "OpenCode Go",
    "week": "2026-W37"
@@ -4913,11 +4706,12 @@
    "history_withheld": true,
    "id": "ollama",
    "model": "glm-5.3-flash",
+   "model_slug": "glm-5.3-flash",
    "n": 24,
    "na": 1,
    "name": "glm-5.3-flash",
+   "provider_slug": "ollama",
    "repo": "amber-ollama",
-   "same_model": [],
    "total": 18,
    "vendor": "Ollama Cloud",
    "week": "2026-W37"
@@ -5160,11 +4954,12 @@
    "history_withheld": false,
    "id": "stepfun",
    "model": "step-5-preview",
+   "model_slug": "step-5-preview",
    "n": 24,
    "na": 6,
    "name": "step-5-preview",
+   "provider_slug": "stepfun",
    "repo": "amber-stepfun",
-   "same_model": [],
    "total": 15,
    "vendor": "stepfun plan 端点",
    "week": "2026-W38"
@@ -5407,11 +5202,12 @@
    "history_withheld": false,
    "id": "wb",
    "model": "hy4-preview-f",
+   "model_slug": "hy4-preview-f",
    "n": 24,
    "na": 1,
    "name": "hy4-preview-f",
+   "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
-   "same_model": [],
    "total": 18,
    "vendor": "WorkBuddy ACP",
    "week": "2026-W37"

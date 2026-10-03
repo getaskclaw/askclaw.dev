@@ -110,7 +110,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/model/claude/', '/en/model/claude/', '/model/gpt-sol/', '/en/model/gpt-sol/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/model/claude-opus-5-5/', '/en/model/claude-opus-5-5/', '/model/gpt-5.6-sol-900k/', '/model/deepseek-flash/', '/en/model/deepseek-flash/', '/provider/claude/', '/en/provider/gpt/'];
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
