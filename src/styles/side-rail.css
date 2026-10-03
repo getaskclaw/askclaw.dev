@@ -12,6 +12,10 @@
 .site-header .logo .logo-text span { color: var(--claw-red); } /* beats the older `.logo span` amber rule */
 .nav-icon { flex: none; }
 .nav-label { white-space: nowrap; }
+/* language label: the current language is bold and dark, the other one is the plain nav colour */
+.site-header .header-nav .lang-label { display: inline-flex; align-items: baseline; gap: 5px; }
+.site-header .header-nav .language-current { color: var(--ink); font-weight: 700; }
+.site-header .header-nav .lang-sep { opacity: .55; }
 .rail-button { display: none; }
 .rail-backdrop { display: none; }
 
@@ -42,10 +46,7 @@
   .site-header .logo-text { opacity: 0; transition: opacity .12s ease; }
   .site-header:hover .nav-label, .site-header:focus-within .nav-label,
   .site-header:hover .logo-text, .site-header:focus-within .logo-text { opacity: 1; transition-delay: .06s; }
-  .site-header .header-nav a.language-toggle {
-    margin-top: auto; justify-content: flex-start; border: 0; background: transparent; gap: 2px;
-    padding: 0 8px; font-size: 12px; color: var(--sub); border-radius: 12px;
-  }
+  .site-header .header-nav a.language-toggle { margin-top: auto; border: 0; background: transparent; }
   .site-header .header-nav a.language-toggle:hover { background: rgba(255, 255, 255, .6); }
 }
 
@@ -81,9 +82,7 @@
   .site-header .header-nav a {
     display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 12px; border-radius: 12px; font-size: 15px;
   }
-  .site-header .header-nav a.language-toggle {
-    margin-top: auto; border: 0; background: transparent; padding: 0 12px; font-size: 14px; gap: 2px; color: var(--sub);
-  }
+  .site-header .header-nav a.language-toggle { margin-top: auto; border: 0; background: transparent; }
   .site-header:has(.rail-toggle-input:checked) .header-nav { transform: none; visibility: visible; }
   .site-header:has(.rail-toggle-input:checked) .rail-backdrop { opacity: 1; visibility: visible; }
 }
