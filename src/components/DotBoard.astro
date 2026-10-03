@@ -10,8 +10,10 @@ import { modelPath, modelSlugOf } from '../utils/lane-pages';
 interface Props {
   lanes: any[];
   lang?: 'zh' | 'en';
+  /** Provider page: every row has the same vendor, so the small label under the name is dropped. */
+  hideVendor?: boolean;
 }
-const { lanes, lang = 'zh' } = Astro.props;
+const { lanes, lang = 'zh', hideVendor = false } = Astro.props;
 const zh = lang === 'zh';
 const axes = siteData.axes;
 const groups = siteData.groups.map((g) => ({
@@ -79,7 +81,7 @@ const t = zh
             {modelSlugOf(lane.id)
               ? <a href={route(modelPath(lang, modelSlugOf(lane.id)))}>{lane.name}</a>
               : <a href={`https://github.com/getaskclaw/${lane.repo}`} target="_blank" rel="noopener">{lane.name}</a>}
-            <small>{lane.vendor}</small>
+            {!hideVendor && <small>{lane.vendor}</small>}
           </td>
           <td class="num total">{total}</td>
           {cells.map((c) => (

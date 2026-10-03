@@ -3,10 +3,9 @@
 // Only lanes on the board are listed; the result repo may hold earlier lanes the board does not.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { I18N } from '../utils/picker-i18n.js';
-import { displayTotal, fmtSec } from '../utils/picker-core.js';
+import DotBoard from './DotBoard.astro';
 import { route } from '../utils/route';
-import siteData from '../data/site-data.json';
-import { laneInfo, lanesOfProvider, modelPath, providerPath } from '../utils/lane-pages';
+import { laneInfo, lanesOfProvider, providerPath } from '../utils/lane-pages';
 
 interface Props { lang: 'zh' | 'en'; slug: string }
 const { lang, slug } = Astro.props;
@@ -15,26 +14,24 @@ const T = I18N[lang];
 const infos = lanesOfProvider(slug).map((id) => laneInfo(id, lang));
 const vendor = infos[0].vendor;
 const repo = infos[0].page.repo;
-const rows = infos
-  .map((i) => ({ ...i, shown: displayTotal(i.lane), eff: (siteData as any).lanes[i.id] }))
-  .sort((a, b) => b.lane.total - a.lane.total);
-const wk = (w: string) => w.replace(/^\d{4}-/, '');
+// same records and display labels as the board; DotBoard sorts by total and links each name to its model page
+const boardLanes = infos.map((i) => ({ ...i.lane, name: i.name, vendor: i.vendor }));
 const t = zh ? {
   title: `${vendor} 的成绩 — AMBER 琥珀评测`,
-  desc: `AMBER 榜单收录的 ${vendor} 车道：${rows.length} 个模型，逐个链到成绩页。`,
+  desc: `AMBER 榜单收录的 ${vendor} 车道：${infos.length} 个模型，逐轴点阵，逐个链到成绩页。`,
   back: '← 全部车道', other: 'English version →', kind: '提供方（端点）',
-  sub: `榜单收录 ${rows.length} 个模型`,
-  note: '各行的测试周次可能不同；跨周比较要带上周次。点进模型页看每案结果。′ = 其中有案暂不计分（NA），不算输。',
+  sub: `榜单收录 ${infos.length} 个模型`,
+  note: '一点 = 一案。各行的测试周次可能不同；跨周比较要带上周次。点进模型页看每案结果。',
   scope: '这里只列本站榜单收录的车道；成绩仓里可能还有更早的车道，以成绩仓为准。',
-  model: '模型', total: '总分', week: '测试周次', med: '每题用时（中位）', repo: '本提供方的成绩仓',
+  repo: '本提供方的成绩仓',
 } : {
   title: `${vendor} results — AMBER`,
-  desc: `AMBER board lanes for ${vendor}: ${rows.length} model${rows.length > 1 ? 's' : ''}, each linking to its result page.`,
+  desc: `AMBER board lanes for ${vendor}: ${infos.length} model${infos.length > 1 ? 's' : ''}, each linking to its result page.`,
   back: '← All lanes', other: 'Chinese version →', kind: 'Provider (endpoint)',
-  sub: `${rows.length} model${rows.length > 1 ? 's' : ''} on the board`,
-  note: 'Rows may be tested in different weeks; a cross-week comparison must carry the week. Open a model page for every case. ′ = at least one case is NA (not scored; it does not count as a loss).',
+  sub: `${infos.length} model${infos.length > 1 ? 's' : ''} on the board`,
+  note: 'One dot = one case. Rows may be tested in different weeks; a cross-week comparison must carry the week. Open a model page for every case.',
   scope: 'Only lanes on this board are listed; the result repo may hold earlier lanes, and the repo is the record.',
-  model: 'Model', total: 'Total', week: 'Tested', med: 'Median time per case', repo: 'Result repo for this provider',
+  repo: 'Result repo for this provider',
 };
 const here = providerPath(lang, slug);
 const there = providerPath(zh ? 'en' : 'zh', slug);
@@ -45,26 +42,13 @@ const there = providerPath(zh ? 'en' : 'zh', slug);
     <h1>{vendor}</h1>
     <p class="lead">{t.kind} · {t.sub}</p>
     <p class="hint">{t.note}</p>
-    <div class="board-wrap">
-      <table class="board">
-        <thead><tr><th>{t.model}</th><th class="num">{t.total}</th><th>{t.week}</th><th class="num med-col">{t.med}</th></tr></thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr>
-              <td class="lane"><a href={route(modelPath(lang, r.page.model_slug))}>{r.name}</a></td>
-              <td class="num">{r.shown}/{r.lane.n}</td>
-              <td>{wk(r.page.week)}</td>
-              <td class="num med-col">{r.eff ? fmtSec(r.eff.t_med, T) : '—'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <DotBoard lanes={boardLanes} lang={lang} hideVendor />
     <p class="hint">{t.scope}</p>
     <p class="note"><a href={`https://github.com/getaskclaw/${repo}`} target="_blank" rel="noopener">{t.repo}: {repo}</a></p>
   </div>
 </BaseLayout>
 
 <style>
-  @media (max-width: 520px) { .med-col { display: none; } }
+  .lane-page { padding-top: 22px; }
+  .lane-page h1 { margin-bottom: 14px; }
 </style>
