@@ -21,6 +21,10 @@ const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   claude: { vendor: 'Anthropic subscription lane' },
   'claude-sonnet': { vendor: 'Anthropic subscription lane' },
   'claude-fable': { vendor: 'Anthropic subscription lane' },
+  'wb2-hy4': { name: 'hy4-preview-f (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-d41f': { name: 'deepseek-v4.1-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-g53f': { name: 'glm-5.3-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-m3': { name: 'minimax-m3 (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
 };
 const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 

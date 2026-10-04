@@ -8,6 +8,8 @@ export const I18N = {
   zh: {
     lang: 'zh',
     laneLabels: { kimi: { vendor: 'Kimi 官方 coding' } },
+    // Provider-page heading for a result repo whose lanes carry different vendor labels (WorkBuddy ACP / WorkBuddy 直连).
+    providerLabels: { workbuddy: 'WorkBuddy' },
     tierNames: ['第一梯队', '第二梯队', '第三梯队', '第四梯队', '第五梯队', '第六梯队', '第七梯队', '第八梯队', '第九梯队', '第十梯队'],
     tierN: '第 {n} 梯队',
     tierShort: ['一档', '二档', '三档', '四档', '五档', '六档', '七档', '八档', '九档', '十档'],
@@ -54,6 +56,7 @@ export const I18N = {
   },
   en: {
     lang: 'en',
+    providerLabels: { workbuddy: 'WorkBuddy' },
     laneLabels: {
       kimi: { vendor: 'Kimi official coding' },
       'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
@@ -65,6 +68,10 @@ export const I18N = {
       claude: { vendor: 'Anthropic subscription lane' },
       'claude-sonnet': { vendor: 'Anthropic subscription lane' },
       'claude-fable': { vendor: 'Anthropic subscription lane' },
+      'wb2-hy4': { name: 'hy4-preview-f (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+      'wb2-d41f': { name: 'deepseek-v4.1-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+      'wb2-g53f': { name: 'glm-5.3-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+      'wb2-m3': { name: 'minimax-m3 (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
     },
     tierNames: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4', 'Tier 5', 'Tier 6', 'Tier 7', 'Tier 8', 'Tier 9', 'Tier 10'],
     tierN: 'Tier {n}',

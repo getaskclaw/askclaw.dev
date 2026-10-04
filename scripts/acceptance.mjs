@@ -217,6 +217,10 @@ try {
         claude: { vendor: 'Anthropic subscription lane' },
         'claude-sonnet': { vendor: 'Anthropic subscription lane' },
         'claude-fable': { vendor: 'Anthropic subscription lane' },
+        'wb2-hy4': { name: 'hy4-preview-f (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+        'wb2-d41f': { name: 'deepseek-v4.1-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+        'wb2-g53f': { name: 'glm-5.3-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+        'wb2-m3': { name: 'minimax-m3 (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
       };
       result.chipCount = await page.locator('.chip').count();
       await page.locator('[data-preset="build,ops,ui-build"]').click();
@@ -294,10 +298,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'cc-sb'];  // 2026-10-02 sittings: + claude-fable, gpt61-sol (both passed the convergence case)
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'cc-sb', 'wb2-m3'];  // 2026-10-02 sittings: + claude; 2026-10-04: four WorkBuddy direct lanes (all pass the case except minimax-m3)-fable, gpt61-sol (both passed the convergence case)
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
-      const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence18/19 full marks' : '收敛18/19 满分')
+      const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' || id === 'wb2-m3' ? '0/1' : '1/1'));
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence21/23 full marks' : '收敛21/23 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
