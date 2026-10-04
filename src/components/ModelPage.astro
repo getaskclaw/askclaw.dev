@@ -6,7 +6,7 @@ import { I18N } from '../utils/picker-i18n.js';
 import { displayTotal, fmtSec, fmtTok } from '../utils/picker-core.js';
 import { route } from '../utils/route';
 import siteData from '../data/site-data.json';
-import { laneInfo, lanesOfModel, lanesOfProvider, modelPath, providerPath } from '../utils/lane-pages';
+import { laneInfo, lanesOfModel, lanesOfProvider, modelPath, modelSlugOf, providerPath } from '../utils/lane-pages';
 
 interface Props { lang: 'zh' | 'en'; slug: string }
 const { lang, slug } = Astro.props;
@@ -24,7 +24,13 @@ const wk = (w: string) => w.replace(/^\d{4}-/, '');
 const tokText = (n: number | null) => n == null ? '—' : n < (zh ? 1e4 : 1e5) ? (zh ? '<1 万' : '<0.1M') : fmtTok(n, T);
 const blocks = infos.map((i) => {
   const eff = (siteData as any).lanes[i.id];
-  const others = lanesOfProvider(i.page.provider_slug).filter((o) => o !== i.id).map((o) => laneInfo(o, lang));
+  // the same model on another endpoint is in the side-by-side table, not an "other model"
+  // and a model with several lanes in this provider is listed once, under its plain name
+  const sameProvider = lanesOfProvider(i.page.provider_slug).filter((o) => o !== i.id && modelSlugOf(o) !== slug).map((o) => laneInfo(o, lang));
+  const others = [...new Set(sameProvider.map((o: any) => o.page.model_slug))].map((ms) => {
+    const lanes = sameProvider.filter((o: any) => o.page.model_slug === ms);
+    return lanes.length > 1 ? { ...lanes[0], name: lanes[0].page.model.split('/').pop() } : lanes[0];
+  });
   return {
     ...i, eff, total: displayTotal(i.lane), others,
     cases: [...i.page.cases].sort((a: any, b: any) => axisIndex[a.axis] - axisIndex[b.axis]),
