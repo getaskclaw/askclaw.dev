@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { route } from '../utils/route';
+---
+<BaseLayout
+  title="找不到这个页面 — AMBER 琥珀评测"
+  description="这个地址没有页面。可以回到首页、按轴排行或方法说明。"
+  canonicalPath="/404/"
+  noindex
+>
+  <div class="wrap not-found">
+    <section class="hero">
+      <h1><em>找不到</em>这个页面</h1>
+      <p class="lead">地址可能写错了，或者这个页面已经换了位置。从这里继续：</p>
+      <p class="nf-links">
+        <a href={route('/')}>首页</a>
+        <a href={route('/rank/')}>按轴排行</a>
+        <a href={route('/method/')}>方法</a>
+        <a href={route('/notes/')}>随笔</a>
+      </p>
+    </section>
+    <section class="hero" lang="en">
+      <h2>Page not found</h2>
+      <p class="lead">The address may be mistyped, or the page has moved. Continue from here:</p>
+      <p class="nf-links">
+        <a href={route('/en/')}>Home</a>
+        <a href={route('/en/rank/')}>Rank by axis</a>
+        <a href={route('/en/claim/')}>Claim consistency</a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found { display: grid; gap: 40px; padding-block: 48px; }
+  .nf-links { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 16px 0 0; font-size: 16px; }
+  .nf-links a { text-decoration: underline; text-underline-offset: 3px; }
+  h2 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+</style>
