@@ -1206,5 +1206,224 @@
     "n": 2
    }
   }
+ },
+ {
+  "id": "wb2-hy4",
+  "name": "hy4-preview-f (WorkBuddy 直连)",
+  "vendor": "WorkBuddy 直连",
+  "wk": "W40",
+  "cases": 24,
+  "repo": "amber-workbuddy",
+  "file": "amber-workbuddy/results/2026-W40.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1,
+    "na": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 2
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 0,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "wb2-d41f",
+  "name": "deepseek-v4.1-flash (WorkBuddy 直连)",
+  "vendor": "WorkBuddy 直连",
+  "wk": "W40",
+  "cases": 24,
+  "repo": "amber-workbuddy",
+  "file": "amber-workbuddy/results/2026-W40.md",
+  "total": 18,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1,
+    "na": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "wb2-g53f",
+  "name": "glm-5.3-flash (WorkBuddy 直连)",
+  "vendor": "WorkBuddy 直连",
+  "wk": "W40",
+  "cases": 24,
+  "repo": "amber-workbuddy",
+  "file": "amber-workbuddy/results/2026-W40.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1,
+    "na": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "wb2-m3",
+  "name": "minimax-m3 (WorkBuddy 直连)",
+  "vendor": "WorkBuddy 直连",
+  "wk": "W40",
+  "cases": 24,
+  "repo": "amber-workbuddy",
+  "file": "amber-workbuddy/results/2026-W40.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 0,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
  }
 ]
