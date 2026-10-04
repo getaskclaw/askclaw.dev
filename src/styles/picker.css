@@ -4,8 +4,8 @@
   --ink: #17202b;
   --ink-soft: #586473;
   --amber: #e08a12;
-  --amber-deep: #a85a00;
-  --sea: #2f8c94;           /* the cool counter-light in the caustics */
+  --amber-deep: #964f00;
+  --sea: #21717a;           /* the cool counter-light in the caustics; dark enough for text and for white text on it (4.5:1) */
   --glass: rgba(255, 255, 255, 0.42);
   --glass-strong: rgba(255, 255, 255, 0.62);
   --rim: rgba(255, 255, 255, 0.85);

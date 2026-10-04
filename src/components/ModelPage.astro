@@ -122,7 +122,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
         )}
 
         <div class="lane-grid">
-          <aside class="summary" aria-label={t.cardLabel}>
+          <aside class="summary" aria-label={multi ? `${t.cardLabel} · ${b.vendor}` : t.cardLabel}>
             <p class="lane-total"><span class="lane-total-label">{t.totalLabel}</span> <strong>{b.total}</strong><span class="lane-total-n">/{b.lane.n}</span></p>
             <p class="card-note">{t.prime}</p>
             <div class="axes-wrap">
