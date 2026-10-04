@@ -1185,6 +1185,206 @@
    "t_total": 11090,
    "tok": null,
    "tok_n": 1
+  },
+  "wb2-d41f": {
+   "ax": {
+    "attribution": [
+     871,
+     1
+    ],
+    "build": [
+     917,
+     6
+    ],
+    "convergence": [
+     37,
+     1
+    ],
+    "defense": [
+     2178,
+     2
+    ],
+    "ops": [
+     682,
+     6
+    ],
+    "req-drift": [
+     120,
+     1
+    ],
+    "review": [
+     152,
+     2
+    ],
+    "text": [
+     60,
+     3
+    ],
+    "ui-build": [
+     18,
+     1
+    ],
+    "vision": [
+     8,
+     1
+    ]
+   },
+   "t_med": 106,
+   "t_n": 24,
+   "t_p90": 871,
+   "t_total": 5042,
+   "tok": 25562546,
+   "tok_n": 24
+  },
+  "wb2-g53f": {
+   "ax": {
+    "attribution": [
+     3506,
+     1
+    ],
+    "build": [
+     3267,
+     6
+    ],
+    "convergence": [
+     64,
+     1
+    ],
+    "defense": [
+     3436,
+     2
+    ],
+    "ops": [
+     1398,
+     6
+    ],
+    "req-drift": [
+     154,
+     1
+    ],
+    "review": [
+     130,
+     2
+    ],
+    "text": [
+     89,
+     3
+    ],
+    "ui-build": [
+     131,
+     1
+    ],
+    "vision": [
+     38,
+     1
+    ]
+   },
+   "t_med": 139,
+   "t_n": 24,
+   "t_p90": 1635,
+   "t_total": 12211,
+   "tok": 41958176,
+   "tok_n": 23
+  },
+  "wb2-hy4": {
+   "ax": {
+    "attribution": [
+     2426,
+     1
+    ],
+    "build": [
+     3383,
+     6
+    ],
+    "convergence": [
+     53,
+     1
+    ],
+    "defense": [
+     3600,
+     2
+    ],
+    "ops": [
+     1912,
+     6
+    ],
+    "req-drift": [
+     382,
+     1
+    ],
+    "review": [
+     648,
+     2
+    ],
+    "text": [
+     768,
+     3
+    ],
+    "ui-build": [
+     21,
+     1
+    ],
+    "vision": [
+     29,
+     1
+    ]
+   },
+   "t_med": 357,
+   "t_n": 24,
+   "t_p90": 1800,
+   "t_total": 13224,
+   "tok": 16653128,
+   "tok_n": 22
+  },
+  "wb2-m3": {
+   "ax": {
+    "attribution": [
+     1651,
+     1
+    ],
+    "build": [
+     1958,
+     6
+    ],
+    "convergence": [
+     64,
+     1
+    ],
+    "defense": [
+     2971,
+     2
+    ],
+    "ops": [
+     1172,
+     6
+    ],
+    "req-drift": [
+     66,
+     1
+    ],
+    "review": [
+     142,
+     2
+    ],
+    "text": [
+     161,
+     3
+    ],
+    "ui-build": [
+     531,
+     1
+    ],
+    "vision": [
+     9,
+     1
+    ]
+   },
+   "t_med": 132,
+   "t_n": 24,
+   "t_p90": 1224,
+   "t_total": 8726,
+   "tok": 69783849,
+   "tok_n": 24
   }
  },
  "rule_version": "headline_v1",
