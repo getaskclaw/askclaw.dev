@@ -145,7 +145,9 @@ public_routes = {'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is
 for retired in ('axes.html', 'axes.json'):
     assert not (root / 'public' / retired).exists(), retired
     assert not (dist / retired).exists(), retired
-assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes
+# 404.html is the page the web server returns for an unknown address. It is not a route: noindex, not in the sitemap.
+error_pages = {'404.html'}
+assert {str(p.relative_to(dist)) for p in dist.rglob('*.html')} == expected_routes | public_routes | error_pages
 assert (root / 'src/data/axes.json').read_bytes() == axes_source.read_bytes()
 lanes = json.loads((root / 'src/data/axes.json').read_text())
 # Relational checks (no typed-in lane counts, names or NA totals): the published axes.json is compared with
@@ -328,6 +330,23 @@ for path in assets:
         expected_height = legacy_height * expected_width / legacy_width
         assert abs(dimensions[1] - expected_height) <= 1, (path.name, dimensions, legacy_height)
     report['assets'][path.name] = {'bytes': len(data), 'dimensions': dimensions, 'sha256': hashlib.sha256(data).hexdigest()}
+
+# The 404 page can be served under any path (/foo/bar/), so every reference must be root-absolute and resolve.
+text404 = (dist / '404.html').read_text()
+assert '<meta name="robots" content="noindex,nofollow">' in text404, '404.html must be noindex on every base'
+assert not re.search(r'<script\b(?![^>]*application/ld\+json)', text404), '404.html must not need scripts'
+assert not FORBIDDEN_INTERNAL_TERMS.findall(unescape(text404)), '404.html: forbidden internal term'
+page404 = Page(text404)
+for ref in page404.refs:
+    url = urlparse(ref)
+    if url.scheme or not url.path:
+        continue
+    assert url.path.startswith(base_path), ('404.html reference is not root-absolute', ref)
+    target404 = dist / url.path.removeprefix(base_path)
+    if url.path.endswith('/'):
+        target404 /= 'index.html'
+    assert target404.is_file(), ('404.html reference does not resolve', ref)
+assert {'/', '/en/', '/rank/'} <= {urlparse(r).path.removeprefix(base_path.rstrip('/')) for r in page404.refs}, '404.html must link home, /en/ and /rank/'
 
 ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'x': 'http://www.w3.org/1999/xhtml'}
 robots_text = (dist / 'robots.txt').read_text()
