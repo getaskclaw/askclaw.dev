@@ -35,6 +35,13 @@ a:hover {
   text-decoration: underline;
 }
 
+/* a link inside running text is not told apart by color alone (WCAG 1.4.1) */
+:where(p, li, figcaption, dd) a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 :focus-visible {
   outline: 3px solid #f4b942;
   outline-offset: 3px;

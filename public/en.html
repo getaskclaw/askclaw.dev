@@ -11,11 +11,12 @@
 <title>AskClaw — AMBER: sealed-in-amber replay evaluation</title>
 <meta name="description" content="AMBER (琥珀评测) replays real, auditable historical events — frozen the moment before the answer was revealed. Private case library, public scores, independently checkable. A sealed-in-amber AI benchmark and leaderboard, updated weekly.">
 <style>
-  :root { --ink:#17242b; --sub:#5a6b73; --teal:#00a5b5; --teal-dark:#0b7c88; --bg:#fafdfe; --card:#fff; --line:#e3ecef; }
+  :root { --ink:#17242b; --sub:#5a6b73; --teal:#0098a8; --teal-dark:#0b7c88; --bg:#fafdfe; --card:#fff; --line:#e3ecef; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
   a { color: var(--teal-dark); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  p a:not([class]), li a:not([class]), figcaption a:not([class]) { text-decoration: underline; text-underline-offset: 2px; }
   .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
   header { border-bottom: 1px solid var(--line); padding: 18px 0; }
   header .wrap { display: flex; justify-content: space-between; align-items: center; }
@@ -43,6 +44,7 @@
   .repo .score { float: right; font-weight: 700; color: var(--ink); }
   .repo p { font-size: 13.5px; color: var(--sub); margin-top: 4px; }
   .rule { border-left: 3px solid var(--teal); padding: 4px 14px; margin: 10px 0; color: var(--sub); }
+  footer a { text-decoration: underline; text-underline-offset: 2px; }
   footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 26px 0 40px; color: var(--sub); font-size: 13.5px; }
   @media (max-width: 720px) { .hero h1 { font-size: 30px; } }
   .chart { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 6px; }
@@ -60,6 +62,7 @@
     </nav>
   </div>
 </header>
+<main id="main-content">
 
 <div class="wrap">
 
@@ -77,7 +80,7 @@
   <h2>The board right now</h2>
   <p class="hint">Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties. Click the chart for details. Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/top5-2026-w40c.en.vega-lite.json"><img src="assets/top5-2026-w40c.en.png" width="3648" height="2340" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction, the 2026-10-02 tests and A-d511f9e8 on hold for every lane)"></div>
+    <div class="chart" tabindex="0" data-spec="assets/specs/top5-2026-w40c.en.vega-lite.json"><img src="assets/top5-2026-w40c.en.png" width="3648" height="2340" loading="lazy" alt="AMBER board: five rank tiers (2026-W40, with the 2026-10-02 correction, the 2026-10-02 tests and A-d511f9e8 on hold for every lane)"></div>
     <figcaption>Snapshot 2026-W40, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br>swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24. Interactive: hover for values. <a href="https://github.com/getaskclaw/amber">details →</a><br>⚠️ <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>: the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low — that model does not exist; the server silently routed to swe-2-high.</figcaption>
   </figure>
 </section>
@@ -86,7 +89,7 @@
   <h2>Same score, different shape</h2>
   <p class="hint">The ten-axis completion matrix: each cell is a face's pin-level completion. Tied totals hide completely different profiles — the matrix shows what the sum can't.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><img src="assets/completion-matrix-7way.en.png" width="2480" height="860" loading="lazy" alt="Ten-axis completion matrix"></div>
+    <div class="chart" tabindex="0" data-spec="assets/specs/completion-matrix-7way.en.vega-lite.json"><img src="assets/completion-matrix-7way.en.png" width="2480" height="860" loading="lazy" alt="Ten-axis completion matrix"></div>
     <figcaption>The former five-way 17/23 tie broke up in the convergence make-ups (k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 at 18/24; CommandCode frozen at ∅), plus doubao 16/23 and gp27b 14/23. Hover any cell. <a href="https://github.com/getaskclaw/amber">details →</a></figcaption>
   </figure>
 </section>
@@ -103,12 +106,12 @@
   <h2>Three counterintuitive findings</h2>
   <p class="hint">Each comes with named boundaries and counterexamples in the original writeups.</p>
   <figure>
-    <div class="chart" data-spec="assets/specs/effort-curves-20260911.en.vega-lite.json"><img src="assets/effort-curves-20260911.en.png" width="2343" height="1308" loading="lazy" alt="Effort curves"></div>
+    <div class="chart" tabindex="0" data-spec="assets/specs/effort-curves-20260911.en.vega-lite.json"><img src="assets/effort-curves-20260911.en.png" width="2343" height="1308" loading="lazy" alt="Effort curves"></div>
     <figcaption>"Think longer ≠ score better": most families backfire at top bands; swe-2 is monotone. Hover for points. <a href="https://github.com/getaskclaw/amber#readme">details →</a></figcaption>
   </figure>
   <div>
     <figure>
-      <div class="chart" data-spec="assets/specs/score-vs-tokens-2026-w37.en.vega-lite.json"><img src="assets/score-vs-tokens-2026-w37.en.png" width="2451" height="1488" loading="lazy" alt="Score vs thinking budget"></div>
+      <div class="chart" tabindex="0" data-spec="assets/specs/score-vs-tokens-2026-w37.en.vega-lite.json"><img src="assets/score-vs-tokens-2026-w37.en.png" width="2451" height="1488" loading="lazy" alt="Score vs thinking budget"></div>
     <figcaption>Same band, same library: output-token bills span 17× while scores differ by one case. Hover for points. <a href="https://github.com/getaskclaw/amber#readme">details →</a></figcaption>
     </figure>
     <figure>
@@ -149,6 +152,8 @@
 </section>
 
 </div>
+
+</main>
 
 <footer>
   <div class="wrap">
