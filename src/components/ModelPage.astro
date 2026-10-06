@@ -6,7 +6,7 @@ import { I18N } from '../utils/picker-i18n.js';
 import { displayTotal, fmtSec, fmtTok } from '../utils/picker-core.js';
 import { route } from '../utils/route';
 import siteData from '../data/site-data.json';
-import { laneInfo, lanesOfModel, lanesOfProvider, modelPath, modelSlugOf, providerPath } from '../utils/lane-pages';
+import { MODEL_NOTE, MODEL_TITLE, laneInfo, lanesOfModel, lanesOfProvider, modelPath, modelSlugOf, providerHasPage, providerPath } from '../utils/lane-pages';
 
 interface Props { lang: 'zh' | 'en'; slug: string }
 const { lang, slug } = Astro.props;
@@ -16,7 +16,8 @@ const T = I18N[lang];
 const ids = lanesOfModel(slug);
 const infos = ids.map((id) => laneInfo(id, lang));
 const multi = infos.length > 1;
-const modelName = multi ? infos[0].page.model.split('/').pop() : infos[0].name;
+const modelName = MODEL_TITLE[slug] ?? (multi ? infos[0].page.model.split('/').pop() : infos[0].name);
+const note = MODEL_NOTE[slug];
 const axes = siteData.axes;
 const axisIndex = Object.fromEntries(axes.map((a, i) => [a.id, i]));
 const axisName = (a: string) => { const x = axes.find((y) => y.id === a); return x ? (zh ? x.name_zh : x.name_en) : a; };
@@ -58,6 +59,7 @@ const t = zh ? {
   cmpWeek: '测试周次', cmpTotal: '总分', cmpMed: '每题用时（中位）',
   tally: (f: number, n: number) => [f ? `未过 ${f}` : '', n ? `NA ${n}` : ''].filter(Boolean).join(' · ') + '（表中浅底色的行）',
   cardLabel: '十轴', statsLabel: '用时与 token',
+  recName: '记录名', aliasNote: '官方文档现行写法：模型名 deepseek-flash 即 DeepSeek-V4.1-Flash。本页把用 deepseek-flash 和 deepseek-v4.1-flash 这两个名字考的车道放在一起；各端点的成绩仍分别记录，不合并、不互比。', aliasSrc: 'DeepSeek 官方定价页',
   repo: '成绩仓', secret: '题目永不公开，每案只给 A- 别名。NA = 作废或挂起，不计输赢。',
 } : {
   title: multi ? `${modelName} results by endpoint — AMBER` : `${modelName} results — AMBER`,
@@ -77,6 +79,7 @@ const t = zh ? {
   cmpWeek: 'Tested', cmpTotal: 'Total', cmpMed: 'Median time per case',
   tally: (f: number, n: number) => [f ? `${f} failed` : '', n ? `${n} NA` : ''].filter(Boolean).join(' · ') + ' (shaded rows below)',
   cardLabel: 'By axis', statsLabel: 'Time and tokens',
+  recName: 'Recorded as', aliasNote: 'DeepSeek\'s documentation now says the model name deepseek-flash is DeepSeek-V4.1-Flash. This page puts the lanes sat under deepseek-flash and deepseek-v4.1-flash together; each endpoint keeps its own record, not merged and not ranked against the others.', aliasSrc: 'DeepSeek pricing page',
   repo: 'Result repo', secret: 'Cases are never published; each case is shown by its A- alias. NA = voided or held; neither a win nor a loss.',
 };
 const here = modelPath(lang, slug);
@@ -92,8 +95,10 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
 ---
 <BaseLayout title={t.title} description={t.desc} lang={zh ? 'zh-CN' : 'en'} canonicalPath={here} schemaInLanguage={zh ? 'zh-CN' : 'en'}>
   <div class="wrap lane-page">
-    <p class="note"><a href={route(rankPath)}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
+    <p class="note"><a href={route(rankPath)}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'} data-lang-switch={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
     <h1>{modelName}</h1>
+
+    {note && <p class="hint alias-note">{t.aliasNote} <a href={note.href} target="_blank" rel="noopener">{t.aliasSrc}</a></p>}
 
     {multi && (
       <section class="section" aria-labelledby="cmp-h">
@@ -121,7 +126,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
       <div class="lane-block" id={`lane-${b.id}`}>
         {multi && <h2>{b.vendor}</h2>}
         <p class="lead">
-          {t.provider}: <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> · {t.sub(b)}
+          {t.provider}: {providerHasPage(b.page.provider_slug) ? <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> : b.vendor} · {t.sub(b)}{multi && b.name !== modelName && <Fragment> · {t.recName}: <code>{b.name}</code></Fragment>}
         </p>
         {b.others.length > 0 && (
           <p class="note">{t.moreHere}: {b.others.map((o: any, i: number) => (<Fragment>{i > 0 ? ' · ' : ''}<a href={route(modelPath(lang, o.page.model_slug))}>{o.name}</a></Fragment>))}</p>

@@ -1,9 +1,10 @@
 ---
-import ModelPage from '../../../../components/ModelPage.astro';
-import { modelSlugs } from '../../../../utils/lane-pages';
+// Old address of a model page: the page now lives at /<name>/ (see src/utils/lane-pages.ts).
+import Redirect from '../../../../components/Redirect.astro';
+import { rawModelSlugs, modelPath } from '../../../../utils/lane-pages';
 export function getStaticPaths() {
-  return modelSlugs().map((slug) => ({ params: { slug } }));
+  return rawModelSlugs().map((slug) => ({ params: { slug } }));
 }
 const { slug } = Astro.params;
 ---
-<ModelPage lang="en" slug={slug} />
+<Redirect to={modelPath('en', slug)} />

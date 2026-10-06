@@ -1,0 +1,22 @@
+---
+// An old address that now leads somewhere else: a static page with a meta refresh and a canonical link to
+// the new place (the site is plain static files; the same shape as public/amber/index.html). Not in the sitemap.
+import { route } from '../utils/route';
+interface Props { to: string }
+const { to } = Astro.props;
+const target = route(to);
+// the canonical address never carries the #anchor; the refresh keeps it so the visitor lands on the right block
+const canonical = new URL(target.split('#')[0], Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Moved — AskClaw</title>
+    <link rel="canonical" href={canonical} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body><a href={target}>→ {target}</a></body>
+</html>

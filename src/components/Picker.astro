@@ -9,7 +9,7 @@ import {
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
 import { route } from '../utils/route';
-import { modelPath, providerPath, modelSlugOf, lanesOfModel, providerSlugs } from '../utils/lane-pages';
+import { modelPath, providerPath, providerHasPage, modelSlugOf, lanesOfModel } from '../utils/lane-pages';
 import pageData from '../data/lane-pages.json';
 import { transform } from 'esbuild';
 import coreSource from '../utils/picker-core.js?raw';
@@ -37,12 +37,14 @@ const caseTag = (id: string) => tr(T, 'cases', { n: AXIS_N[id] });
 const slots = Math.max(...Object.values(AXIS_N));
 // Lane id -> [model page, provider page]. A lane with no page (frozen, skipped lanes) is absent and keeps
 // the plain results-repo link. Several lanes on one model page: the link lands on this lane's block.
+// A provider with a single lane has no page of its own: its entry is '' and the card shows the vendor as text.
 const PAGES: Record<string, [string, string]> = {};
 for (const l of lanes) {
   const m = modelSlugOf(l.id);
   if (!m) continue;
   const anchor = lanesOfModel(m).length > 1 ? `#lane-${l.id}` : '';
-  PAGES[l.id] = [route(modelPath(lang, m)) + anchor, route(providerPath(lang, (pageData as any).lanes[l.id].provider_slug))];
+  const prov = (pageData as any).lanes[l.id].provider_slug;
+  PAGES[l.id] = [route(modelPath(lang, m)) + anchor, providerHasPage(prov) ? route(providerPath(lang, prov)) : ''];
 }
 const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 
@@ -125,7 +127,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
           </div>,
           ...t.rows.map(({ lane: l }) => (
             <article class="card glass" data-id={l.id}>
-              <div class="card-head"><div class="who"><b>{l.name}</b><small>{PAGES[l.id] ? <a href={PAGES[l.id][1]}>{l.vendor}</a> : l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
+              <div class="card-head"><div class="who"><b>{l.name}</b><small>{PAGES[l.id]?.[1] ? <a href={PAGES[l.id][1]}>{l.vendor}</a> : l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
               <div class="rows">
                 {axisIds(T).map((id) => {
                   const c = l.axis[id];

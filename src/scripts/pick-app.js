@@ -17,6 +17,7 @@ const MAX_MED = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let active = [];
 let query = '';
+let rawQuery = '';
 let tb = 'time';
 let firstRender = true;
 const compare = [];
@@ -25,7 +26,7 @@ const compare = [];
 document.querySelectorAll('.pk-chip').forEach((b) => b.addEventListener('click', () => toggleFace(b.dataset.face)));
 function toggleFace(id) { active = active.includes(id) ? active.filter((x) => x !== id) : [...active, id]; render(); }
 document.querySelectorAll('.pk-preset').forEach((p) => p.addEventListener('click', () => { active = p.dataset.preset ? p.dataset.preset.split(',') : []; render(); }));
-document.getElementById('q').addEventListener('input', (e) => { query = e.target.value.trim().toLowerCase(); render(); });
+document.getElementById('q').addEventListener('input', (e) => { rawQuery = e.target.value.trim(); query = rawQuery.toLowerCase(); render(); });
 document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
   tb = b.dataset.tb; document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.tb === tb))); render();
 }));
@@ -63,7 +64,7 @@ function buildCard(l) {
   el.querySelector('.who b').textContent = l.name;
   const pg = PAGES[l.id];
   const vend = el.querySelector('.who small');
-  if (pg) vend.append(Object.assign(document.createElement('a'), { href: pg[1], textContent: l.vendor })); else vend.textContent = l.vendor;
+  if (pg && pg[1]) vend.append(Object.assign(document.createElement('a'), { href: pg[1], textContent: l.vendor })); else vend.textContent = l.vendor;
   const cp = el.querySelector('.card-page');
   cp.href = pg ? pg[0] : `https://github.com/getaskclaw/${l.repo}`; cp.textContent = pg ? T.pageLink : T.repoLink;
   el.querySelectorAll('a').forEach((a) => a.addEventListener('click', (e) => e.stopPropagation()));
@@ -201,6 +202,7 @@ function render() {
   out.textContent = excluded ? t('excluded', { n: excluded }) : '';
   renderDock();
   renderCtx();
+  syncUrl();
   firstRender = false;
 }
 
@@ -345,7 +347,8 @@ function openDetail(id, from) {
     body.append(note);
     if (PAGES[id]) {
       const pl = document.createElement('p'); pl.className = 'sheet-links';
-      pl.append(Object.assign(document.createElement('a'), { href: PAGES[id][0], textContent: T.pageLinkLong }), Object.assign(document.createElement('a'), { href: PAGES[id][1], textContent: T.providerLink }));
+      pl.append(Object.assign(document.createElement('a'), { href: PAGES[id][0], textContent: T.pageLinkLong }));
+      if (PAGES[id][1]) pl.append(Object.assign(document.createElement('a'), { href: PAGES[id][1], textContent: T.providerLink }));
       body.append(pl);
     }
     const src = document.createElement('p'); src.className = 'fine';
@@ -453,5 +456,22 @@ totop.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'aut
 const syncTop = () => { totop.classList.toggle('on', scrollY > innerHeight * 0.8); totop.classList.toggle('lift', compare.length > 0); };
 addEventListener('scroll', syncTop, { passive: true });
 new MutationObserver(syncTop).observe(document.getElementById('dock'), { attributes: true, attributeFilter: ['class'] });
+
+/* ---------- the address mirrors the search, the selected axes and the tie-break: /?q=gpt&axes=...&sort=tok ---------- */
+function syncUrl() {
+  const p = new URLSearchParams();
+  if (rawQuery) p.set('q', rawQuery);
+  if (active.length) p.set('axes', active.join(','));
+  if (tb !== 'time') p.set('sort', tb);
+  const s = p.toString().replace(/%2C/g, ',');
+  try { history.replaceState(history.state, '', location.pathname + (s ? '?' + s : '') + location.hash); } catch (e) { /* the address stays as it is */ }
+}
+const fromUrl = new URLSearchParams(location.search);
+if (fromUrl.has('q')) { rawQuery = fromUrl.get('q').trim().slice(0, 60); query = rawQuery.toLowerCase(); document.getElementById('q').value = rawQuery; }
+if (fromUrl.has('axes')) active = fromUrl.get('axes').split(',').filter((id) => FACES.some((f) => f[0] === id));
+if (['tok', 'name'].includes(fromUrl.get('sort'))) {
+  tb = fromUrl.get('sort');
+  document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.tb === tb)));
+}
 
 render();

@@ -166,6 +166,8 @@ def run(root, dist, registry, propose=False):
                               "the owner must re-approve the figures and re-register figures.json")
         for html_path in sorted(dist.rglob('*.html')):
             relative = str(html_path.relative_to(dist))
+            if re.match(r'(?:en/)?(?:model|provider)/', relative):
+                continue   # old addresses: redirect stubs to /<name>/, no share image of their own
             overrides = figures.get('og_overrides', {})
             want = overrides.get(relative, figures['og_image']) if relative in overrides or True else None
             match = re.search(r'<meta property="og:image" content="([^"]*)"', html_path.read_text(encoding='utf-8'))
