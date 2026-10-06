@@ -219,7 +219,13 @@ h1 em {
 }
 
 .rule-list {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: flex;
+  flex-wrap: wrap; /* the last card of an odd count stretches over the row instead of leaving a hole */
+}
+
+.rule-list > .rule {
+  flex: 1 1 260px;
+  min-width: 0;
 }
 
 .rule {
