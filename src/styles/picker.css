@@ -71,7 +71,7 @@ body.picker-page { background: transparent; color: var(--ink); font-family: var(
 /* ---------- hero: the question ---------- */
 .ask { padding: 30px 30px 26px; display: grid; gap: 18px; }
 .ask h1 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(30px, 5.4vw, 52px); line-height: 1.04; letter-spacing: -.02em; text-wrap: balance; }
-.ask h1 em { font-style: normal; background: linear-gradient(100deg, var(--amber-deep), var(--amber) 60%, var(--hi)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ask h1 em { font-style: normal; background: linear-gradient(100deg, var(--amber-deep), #c46d00); /* ends dark enough to read on the cream card (the old light --hi end left the last glyph at ~1.4:1) */ -webkit-background-clip: text; background-clip: text; color: transparent; }
 .ask p.sub { margin: 0; color: var(--ink-soft); max-width: 60ch; }
 .pk-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .pk-chip {
@@ -288,13 +288,19 @@ html { transition: background-color .4s; }
 .grid > * { min-width: 0; }
 .dock .picked { flex-wrap: nowrap; overflow: hidden; }
 .dock .picked span { overflow: hidden; text-overflow: ellipsis; max-width: 14em; }
+/* phones: the English "Clear" + "Compare" buttons took most of the tray and left the two model names ~50px each */
+@media (max-width: 480px) {
+  .dock .btn { padding: 8px 10px; font-size: 13px; }
+  .dock .picked { gap: 4px; }
+  .dock .picked span { padding: 3px 8px; }
+}
 @media (max-width: 380px) {
   .page { padding-inline: 16px; }
   .card { padding: 15px 14px 14px; }
   .axis-row { grid-template-columns: 6.6em minmax(0, 1fr) 2.6em; gap: 8px; }
   .ask h1 { font-size: 28px; }
   .dock { padding: 8px 8px 8px 12px; gap: 8px; }
-  .dock .btn { padding: 8px 12px; }
+  .dock .btn { padding: 8px 10px; }
   .dock .picked span { max-width: 6.5em; }
 }
 /* short screens (phones held sideways): keep the bars thin so the cards get the height */
