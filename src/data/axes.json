@@ -499,22 +499,20 @@
   "id": "stepfun",
   "name": "step-5-preview",
   "vendor": "stepfun plan 端点",
-  "wk": "W38",
+  "wk": "W41",
   "cases": 24,
   "repo": "amber-stepfun",
-  "file": "amber-stepfun/results/2026-W38.md",
-  "total": 15,
+  "file": "amber-stepfun/results/2026-W41.md",
+  "total": 17,
   "n": 24,
   "axis": {
    "build": {
-    "p": 4,
-    "n": 6,
-    "na": 1
+    "p": 5,
+    "n": 6
    },
    "text": {
-    "p": 2,
-    "n": 3,
-    "na": 1
+    "p": 3,
+    "n": 3
    },
    "ops": {
     "p": 6,
@@ -535,22 +533,21 @@
    },
    "vision": {
     "p": 0,
-    "n": 1,
-    "na": 1
+    "n": 1
    },
    "defense": {
     "p": 0,
     "n": 2,
-    "na": 1
+    "na": 2
    },
    "attribution": {
     "p": 0,
-    "n": 1
+    "n": 1,
+    "na": 1
    },
    "review": {
     "p": 1,
-    "n": 2,
-    "na": 1
+    "n": 2
    }
   }
  },
@@ -884,10 +881,10 @@
   "id": "gpt6-luna",
   "name": "gpt-6-luna-900k",
   "vendor": "OpenAI Codex",
-  "wk": "W39",
+  "wk": "W41",
   "cases": 24,
   "repo": "amber-gpt",
-  "file": "amber-gpt/results/2026-W39.md",
+  "file": "amber-gpt/results/2026-W41.md",
   "total": 15,
   "n": 24,
   "axis": {
@@ -1410,6 +1407,168 @@
    },
    "vision": {
     "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "luna56",
+  "name": "gpt-5.6-luna",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "luna56k",
+  "name": "gpt-5.6-luna-900k",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 0,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2
+   }
+  }
+ },
+ {
+  "id": "luna6",
+  "name": "gpt-6-luna",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 0,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
     "n": 1
    },
    "defense": {
