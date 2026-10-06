@@ -124,7 +124,7 @@ body.picker-page { background: transparent; color: var(--ink); font-family: var(
 .axis-row .lbl { color: var(--ink-soft); white-space: nowrap; }
 .axis-row .frac { font-family: var(--f-data); text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
 .axis-row.weak .lbl, .axis-row.weak .frac { color: var(--amber-deep); font-weight: 600; }
-.pips { display: grid; grid-template-columns: repeat(var(--slots, 6), minmax(0, 1fr)); gap: 4px; width: 100%; }
+.pips { display: grid; grid-template-columns: repeat(var(--slots, 6), minmax(0, 24px)); gap: 4px; width: 100%; } /* capped: in a 2-column card (1000-1100px) or a single wide column the pips stretched to 35-65px */
 .pip { height: 9px; min-width: 0; border-radius: 5px; background: var(--fail); transform-origin: left; }
 .pip.p { background: linear-gradient(180deg, var(--pass-hi), var(--pass)); box-shadow: 0 0 10px -2px var(--pass); }
 .pip.h { background: repeating-linear-gradient(135deg, var(--held) 0 2px, transparent 2px 5px); }
@@ -154,19 +154,24 @@ dialog.sheet::backdrop { background: rgba(10, 14, 20, .35); -webkit-backdrop-fil
 .sheet-body::-webkit-scrollbar { display: none; }
 .sheet-body.more { -webkit-mask: linear-gradient(#000 calc(100% - 56px), transparent); mask: linear-gradient(#000 calc(100% - 56px), transparent); }
 .detail-axes { display: grid; gap: 8px; }
-.drow { display: grid; grid-template-columns: 8.6em minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: center; font-size: 13.5px; }
-.drow .d-res { display: grid; grid-template-columns: minmax(0, 1fr) 3em; gap: 10px; align-items: center; }
+.drow { display: grid; grid-template-columns: 8.6em 15em minmax(0, 1fr); gap: 18px; align-items: center; font-size: 13.5px; }
+.drow .d-res { display: grid; grid-template-columns: auto 3em; justify-content: start; gap: 10px; align-items: center; }
+/* fixed-size pips here: stretched over the whole column a 6-case axis was 300px of bars */
+.drow .pips { grid-template-columns: repeat(var(--slots, 6), 20px); width: auto; }
 .drow .d-res .frac { font-family: var(--f-data); text-align: right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .drow .d-time { display: grid; grid-template-columns: minmax(0, 1fr) 9.5em; gap: 10px; align-items: center; }
 .drow .d-tt { font-family: var(--f-data); font-size: 12.5px; color: var(--ink-soft); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.drow .d-lbl { color: var(--ink-soft); white-space: nowrap; }
-.drow .pip { height: 12px; }
+.drow .d-lbl { color: var(--ink-soft); white-space: nowrap; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; }
+.drow .pip { height: 10px; }
+.drow .d-lbl .tiny { margin-left: 0; }
 .dhead { font-size: 12px; color: var(--ink-soft); }
 .dhead .d-time, .dhead .d-res { display: block; }
 .facts .eff { background: transparent; box-shadow: inset 0 0 0 1px var(--rim-low); }
 @media (max-width: 640px) {
   .drow { grid-template-columns: 7.4em minmax(0, 1fr); row-gap: 4px; }
   .drow .d-time { grid-column: 2; grid-template-columns: minmax(0, 1fr) 8.6em; }
+  .drow .d-res { grid-template-columns: minmax(0, 1fr) 3em; }
+  .drow .pips { grid-template-columns: repeat(var(--slots, 6), minmax(0, 20px)); width: 100%; }
   .dhead { display: none; }
 }
 .sheet-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
@@ -367,12 +372,20 @@ html { transition: background-color .4s; }
 /* English labels are longer than Chinese ones: a wider label column that may wrap */
 :root:lang(en) .axis-row { grid-template-columns: minmax(0, 10.5em) minmax(0, 1fr) 2.8em; }
 :root:lang(en) .axis-row .lbl { white-space: normal; line-height: 1.25; }
-:root:lang(en) .drow { grid-template-columns: 11.5em minmax(0, 1fr) minmax(0, 1fr); }
+:root:lang(en) .drow { grid-template-columns: 11.5em 15em minmax(0, 1fr); }
 :root:lang(en) .drow .d-lbl { white-space: normal; line-height: 1.25; }
 :root:lang(en) .drow .d-time { grid-template-columns: minmax(0, 1fr) 10.5em; }
 @media (max-width: 640px) {
   :root:lang(en) .drow { grid-template-columns: 9.5em minmax(0, 1fr); }
   :root:lang(en) .drow .d-time { grid-template-columns: minmax(0, 1fr) 9em; }
+}
+/* very narrow phones (320-380px): the time text no longer fits beside its bar, so stack them; smaller label column and tighter pips */
+@media (max-width: 380px) {
+  .drow { grid-template-columns: 6.6em minmax(0, 1fr); }
+  :root:lang(en) .drow { grid-template-columns: 8em minmax(0, 1fr); }
+  .drow .d-time, :root:lang(en) .drow .d-time { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .drow .d-tt { text-align: left; white-space: normal; }
+  .drow .pips { gap: 2px; }
 }
 
 /* search hint: a plain span shown while the box is empty and unfocused (empty + required = :invalid) */
