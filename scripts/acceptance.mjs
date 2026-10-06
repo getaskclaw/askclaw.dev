@@ -115,7 +115,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/model/claude-opus-5-5/', '/en/model/claude-opus-5-5/', '/model/gpt-5.6-sol-900k/', '/model/deepseek-flash/', '/en/model/deepseek-flash/', '/provider/claude/', '/en/provider/gpt/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/claude-opus-5-5/', '/en/claude-opus-5-5/', '/gpt-5.6-sol-900k/', '/deepseek/', '/en/deepseek/', '/claude/', '/en/gpt/'];
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
@@ -528,7 +528,7 @@ try {
         || result.pickNarrowOverflow) failed = true;
     }
 
-    result.scriptTags = await page.locator('script:not([type="application/ld+json"])').count();
+    result.scriptTags = await page.locator('script:not([type="application/ld+json"]):not(#lang-memory)').count();
     result.structuredDataTags = await page.locator('script[type="application/ld+json"]').count();
     result.fontRequests = requests.filter((request) => request.type === 'font');
     result.scriptRequests = requests.filter((request) => request.type === 'script');
@@ -542,6 +542,9 @@ try {
     if (route === '/' && initialTransfer.totalBytes >= 230_000) failed = true;
 
     // Direct load, refresh, ordinary navigation and back must remain real MPA paths.
+    // The picker keeps its search, selected axes and tie-break in the address (?q=&axes=&sort=), so on the home pages the
+    // checks above have left state in the address: start the reload check from the plain address again.
+    if (isPickRoute) await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });
     const refreshed = await page.reload({ waitUntil: 'networkidle' });
     result.refreshStatus = refreshed?.status();
     result.refreshContentPreserved = (await page.locator('main').innerText()) === mainText;
@@ -553,6 +556,24 @@ try {
     }
     if (result.refreshStatus !== 200 || !result.refreshContentPreserved
       || (result.backUrl && result.backUrl !== `${baseUrl}${route}`)) failed = true;
+
+    if (isPickRoute) {
+      // The address is the state: a link with ?q= opens the filtered, sorted view; typing writes it back; an unknown axis is ignored.
+      const linked = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+      await linked.goto(`${baseUrl}${route}?q=GPT&axes=build,nope&sort=tok`, { waitUntil: 'networkidle' });
+      const names = await linked.locator('#grid .card .who').allInnerTexts();
+      result.addressRestores = (await linked.locator('#q').inputValue()) === 'GPT'
+        && (await linked.locator('.seg button[aria-pressed="true"]').first().getAttribute('data-tb')) === 'tok'
+        && (await linked.locator('.pk-chip[aria-pressed="true"]').evaluateAll((chips) => chips.map((chip) => chip.dataset.face).join())) === 'build'
+        && names.length > 0 && names.every((text) => text.toLowerCase().includes('gpt'));
+      await linked.locator('#q').fill('claude');
+      const typed = new URL(await linked.evaluate(() => location.href));   // page.url() lags behind history.replaceState
+      result.addressWritesBack = typed.searchParams.get('q') === 'claude' && typed.searchParams.get('axes') === 'build' && typed.searchParams.get('sort') === 'tok';
+      await linked.locator('#q').fill('');
+      result.addressClears = !new URL(await linked.evaluate(() => location.href)).searchParams.has('q');
+      await linked.close();
+      if (!result.addressRestores || !result.addressWritesBack || !result.addressClears) failed = true;
+    }
 
     if (process.env.ACCEPTANCE_SCREENSHOT_DIR) {
       const directory = resolve(process.env.ACCEPTANCE_SCREENSHOT_DIR);

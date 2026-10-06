@@ -1,0 +1,11 @@
+---
+// One address per name: /<name>/ is a model page, or the page of a provider that has several lanes.
+import ModelPage from '../../components/ModelPage.astro';
+import ProviderPage from '../../components/ProviderPage.astro';
+import { entitySlugs, entityKind } from '../../utils/lane-pages';
+export function getStaticPaths() {
+  return entitySlugs().map((slug) => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+---
+{entityKind(slug) === 'model' ? <ModelPage lang="zh" slug={slug} /> : <ProviderPage lang="zh" slug={slug} />}

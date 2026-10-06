@@ -33,7 +33,9 @@ export default defineConfig({
   output: 'static',
   integrations: base === '/' ? [
     sitemap({
-      filter: (page) => !UNLISTED.some((path) => new URL(page).pathname === path),
+      // /model/<name>/ and /provider/<name>/ (both languages) are redirects to /<name>/: not listed
+      filter: (page) => !UNLISTED.some((path) => new URL(page).pathname === path)
+        && !/^\/(?:en\/)?(?:model|provider)\//.test(new URL(page).pathname),
       i18n: {
         defaultLocale: 'zh-CN',
         locales: {

@@ -36,7 +36,7 @@ const stats = faces.map(([id, label]) => {
   canonicalPath="/rank/"
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
-    <p class="note"><a href={route('/en/rank/')} lang="en">English version → /en/rank/</a></p>
+    <p class="note"><a href={route('/en/rank/')} lang="en" data-lang-switch="en">English version → /en/rank/</a></p>
     <h1>按轴挑模型 — <em>别只看总分</em></h1>
     <p class="lead">
       选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
