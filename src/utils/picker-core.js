@@ -6,7 +6,7 @@
 // The axis list is data: T.faces is filled at build time from site-data.json (amber.db axes.sql).
 export const axisIds = (T) => T.faces.map(([id]) => id);
 // Lanes whose public total carries an apostrophe even where no cell holds an NA (frozen display rows).
-export const FROZEN_HELD = ['devin', 'gpt-luna', 'doubao', 'claude', 'stepfun', 'gpt-sol'];
+export const FROZEN_HELD = ['devin', 'gpt-luna', 'doubao', 'claude', 'gpt-sol'];
 
 // Fill the {name} slots; {cases} becomes the language's word for n cases.
 export function tr(T, key, vars = {}) {

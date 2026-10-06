@@ -18,19 +18,19 @@ const resultRepos = [
   ['amber-ollama', "18'/24", 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
   ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode · owner 令冻结', 'W37'],
   ['amber-workbuddy', "18'/24", "deepseek-v4.1-flash 18'/24（W40）· glm-5.3-flash 17'/24（W40）· hy4-preview-f 16'/24（W40）· minimax-m3 16'/24（W40）@ WorkBuddy 直连 · hy4-preview-f 18'/24（W37）@ WorkBuddy ACP", 'W40'],
-  ['amber-gpt', "16'/24", "gpt-6-astra 16'/24 · 5.6-luna high 16'/24 · 5.6-sol high 15'/23 ∅ · 6.1-sol 16'/24 @ OpenAI Codex", 'W40'],
+  ['amber-gpt', "17'/24", "gpt-5.6-luna 17'/24（W41）· gpt-5.6-luna-900k 16'/24（W41）· gpt-6-luna 16'/24（W41）· gpt-6-luna-900k 15'/24（W41）· gpt-6-astra 16'/24 · 5.6-luna-900k high 16'/24（W37）· 5.6-sol high 15'/23 ∅ · 6.1-sol 16'/24 @ OpenAI Codex", 'W41'],
   ['amber-crof', "16'/23 ∅", 'qwen3.8-27b @ CrofAI · 道停用冻结', 'W37'],
   ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official', 'W37'],
   ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go', 'W37'],
   ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan', 'W38'],
-  ['amber-stepfun', "15'/24", 'step-5-preview @ stepfun plan 端点（W38 基线；W39 收敛补测）', 'W38'],
+  ['amber-stepfun', "17'/24", 'step-5-preview @ stepfun plan 端点（W41 重考，隔离考场）', 'W41'],
   ['amber-claude', "19'/24", "claude-sonnet-5-5 19'/24（W40，除 A-d511f9e8 外零 NA）· claude-opus-5-5 19'/24（W40 重考，W39 为 17'/24）· claude-fable-5-1 16'/24 @ Anthropic 订阅道", 'W40'],
   ['amber-goldenpotato', "15'/24", 'Qwen3.8-27B @ community self-hosted', 'W38'],
 ];
 ---
 <BaseLayout
   title="方法 — AMBER 琥珀评测"
-  description="AMBER 琥珀评测方法：24 案、27 卷、13 个成绩仓、W39 快照和公开哈希索引。"
+  description={`AMBER 琥珀评测方法：24 案、27 卷、13 个成绩仓、${latestWeek} 快照和公开哈希索引。`}
   canonicalPath="/method/"
 >
   <div class="wrap">
