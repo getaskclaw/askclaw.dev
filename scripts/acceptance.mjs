@@ -282,7 +282,7 @@ try {
         await page.locator('#clear-rank').click();
         await page.locator('[data-face="text"]').click();
         result.englishSaturation = await page.locator('#rank-saturation').innerText();
-        // step-5-preview (text 2/3) broke Text saturation in W39: the note must stay hidden now.
+        // gpt-6-astra-900k and space-bunny-alpha (text 2/3, W39) break Text saturation: the note must stay hidden. (step-5-preview, which did so until W38, scored 3/3 in W41.)
         if (await page.locator('#rank-saturation').isVisible()) failed = true;
         await page.locator('#clear-rank').click();
         if (await page.locator('#rank-verdict').innerText() !== 'Nothing selected yet. Choose a work type to start.'
@@ -298,10 +298,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'cc-sb', 'wb2-m3'];  // 2026-10-02 sittings: + claude; 2026-10-04: four WorkBuddy direct lanes (all pass the case except minimax-m3)-fable, gpt61-sol (both passed the convergence case)
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'cc-sb', 'wb2-m3'];  // 2026-10-02 sittings: + claude-fable, gpt61-sol (both passed the convergence case); 2026-10-04: four WorkBuddy direct lanes (all pass the case except minimax-m3); 2026-10-06: gpt-5.6-luna, gpt-5.6-luna-900k, gpt-6-luna (all passed it; step-5-preview and gpt-6-luna-900k re-sat it, both passed again)
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' || id === 'wb2-m3' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence21/23 full marks' : '收敛21/23 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence24/26 full marks' : '收敛24/26 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
