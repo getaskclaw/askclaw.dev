@@ -40,6 +40,10 @@ const blocks = infos.map((i) => {
     showHistory: !i.page.history_withheld && i.page.history.length > 1,
   };
 });
+// Two lanes of one model on the same endpoint (gpt-5.6-luna-900k: the W37 "high" lane and the W41 lane) would carry the
+// same provider label: such a lane is labelled by its lane name too, in the side-by-side table and above its block.
+const dupVendor = (v: string) => blocks.filter((o) => o.vendor === v).length > 1;
+blocks.forEach((b: any) => { b.label = dupVendor(b.vendor) ? `${b.vendor} · ${b.name}` : b.vendor; });
 const first = blocks[0];
 const t = zh ? {
   title: multi ? `${modelName} 成绩（各端点）— AMBER 琥珀评测` : `${modelName} 成绩 — AMBER 琥珀评测`,
@@ -110,7 +114,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
             <tbody>
               {blocks.map((b) => (
                 <tr>
-                  <td><a href={`#lane-${b.id}`}>{b.vendor}</a></td>
+                  <td><a href={`#lane-${b.id}`}>{b.label}</a></td>
                   <td class="num">{b.total}/{b.lane.n}</td>
                   <td>{wk(b.page.week)}</td>
                   <td class="num">{b.eff ? fmtSec(b.eff.t_med, T) : '—'}</td>
@@ -124,7 +128,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
 
     {blocks.map((b) => (
       <div class="lane-block" id={`lane-${b.id}`}>
-        {multi && <h2>{b.vendor}</h2>}
+        {multi && <h2>{b.label}</h2>}
         <p class="lead">
           {t.provider}: {providerHasPage(b.page.provider_slug) ? <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> : b.vendor} · {t.sub(b)}{multi && b.name !== modelName && <Fragment> · {t.recName}: <code>{b.name}</code></Fragment>}
         </p>
@@ -133,7 +137,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
         )}
 
         <div class="lane-grid">
-          <aside class="summary" aria-label={multi ? `${t.cardLabel} · ${b.vendor}` : t.cardLabel}>
+          <aside class="summary" aria-label={multi ? `${t.cardLabel} · ${b.label}` : t.cardLabel}>
             <p class="lane-total"><span class="lane-total-label">{t.totalLabel}</span> <strong>{b.total}</strong><span class="lane-total-n">/{b.lane.n}</span></p>
             <p class="card-note">{t.prime}</p>
             <div class="axes-wrap">
