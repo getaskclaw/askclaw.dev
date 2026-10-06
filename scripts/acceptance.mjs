@@ -538,8 +538,10 @@ try {
     if (result.scriptTags !== (isRankRoute || isPickRoute ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     // Raw (uncompressed) bytes from the test server; each lane adds about 4 KB of card markup and picker data, so the 200 KB budget
-    // (197 KB with 22 lanes) cannot hold 26 lanes. 230 KB is an owner decision flagged in the release notes; the home HTML is about 22 KB with gzip -9, and the production site block has `encode`.
-    if (route === '/' && initialTransfer.totalBytes >= 230_000) failed = true;
+    // (197 KB with 22 lanes) cannot hold 26 lanes; 213 KB with 26 and 226 KB with 29 lanes (about 4 KB per lane), so 230 KB no longer
+    // holds 30. 260 KB (room for about 8 more lanes) is an owner decision flagged in the release notes; the home HTML is about 22 KB
+    // with gzip -9, and the production site block has `encode`.
+    if (route === '/' && initialTransfer.totalBytes >= 260_000) failed = true;
 
     // Direct load, refresh, ordinary navigation and back must remain real MPA paths.
     // The picker keeps its search, selected axes and tie-break in the address (?q=&axes=&sort=), so on the home pages the
