@@ -2562,180 +2562,187 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2394,
-     "wall_s": 11
+     "tokens": 2440,
+     "wall_s": 13
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 2308,
+     "tokens": 2352,
      "wall_s": 12
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 4287,
-     "wall_s": 43
+     "tokens": 3744,
+     "wall_s": 42
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 246759,
-     "wall_s": 132
+     "tokens": 51429,
+     "wall_s": 56
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 365209,
-     "wall_s": 123
+     "tokens": 121686,
+     "wall_s": 100
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 279135,
-     "wall_s": 137
+     "tokens": 133747,
+     "wall_s": 220
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 459406,
-     "wall_s": 143
+     "tokens": 76331,
+     "wall_s": 175
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 303929,
-     "wall_s": 131
+     "tokens": 91336,
+     "wall_s": 73
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 263645,
-     "wall_s": 119
+     "tokens": 168295,
+     "wall_s": 108
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "status": "na",
-     "tokens": 525156,
-     "wall_s": 222
+     "tokens": 1363188,
+     "wall_s": 240
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 4937945,
-     "wall_s": 694
+     "tokens": 3546561,
+     "wall_s": 600
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 1333877,
-     "wall_s": 376
+     "tokens": 476137,
+     "wall_s": 216
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "status": "fail",
-     "tokens": 8436,
-     "wall_s": 50
+     "tokens": 7734,
+     "wall_s": 28
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
      "status": "pass",
-     "tokens": 11395,
-     "wall_s": 32
+     "tokens": 11184,
+     "wall_s": 24
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
      "status": "fail",
-     "tokens": 5550,
-     "wall_s": 38
+     "tokens": 5708,
+     "wall_s": 39
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 459922,
-     "wall_s": 125
+     "tokens": 174824,
+     "wall_s": 81
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 255781,
-     "wall_s": 114
+     "tokens": 118033,
+     "wall_s": 67
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "status": "fail",
-     "tokens": 126870,
-     "wall_s": 81
+     "tokens": 78772,
+     "wall_s": 62
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 1166894,
-     "wall_s": 174
+     "tokens": 354339,
+     "wall_s": 122
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "fail",
-     "tokens": 124002,
-     "wall_s": 61
+     "tokens": 116115,
+     "wall_s": 64
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "fail",
-     "tokens": 15594,
-     "wall_s": 146
+     "tokens": 11371,
+     "wall_s": 37
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 150333,
-     "wall_s": 54
+     "tokens": 40438,
+     "wall_s": 34
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 75555,
-     "wall_s": 53
+     "tokens": 52660,
+     "wall_s": 41
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 95420,
-     "wall_s": 74
+     "tokens": 97287,
+     "wall_s": 71
     }
    ],
    "composed": false,
    "frozen_week": null,
    "history": [
     {
-     "current": true,
+     "current": false,
      "n": 24,
      "na": 1,
      "total": 15,
      "week": "2026-W39"
+    },
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 15,
+     "week": "2026-W41"
     }
    ],
    "history_withheld": false,
@@ -2749,7 +2756,7 @@
    "repo": "amber-gpt",
    "total": 15,
    "vendor": "OpenAI Codex",
-   "week": "2026-W39"
+   "week": "2026-W41"
   },
   "gpt6-sol": {
    "band": "high",
@@ -3339,6 +3346,594 @@
    "vendor": "Kimi 官方 coding 端点",
    "week": "2026-W38"
   },
+  "luna56": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2560,
+     "wall_s": 12
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2471,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 6968,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 504015,
+     "wall_s": 376
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 464117,
+     "wall_s": 171
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 266300,
+     "wall_s": 150
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 214623,
+     "wall_s": 164
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 88443,
+     "wall_s": 97
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 234860,
+     "wall_s": 260
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 9746904,
+     "wall_s": 901
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 6445205,
+     "wall_s": 872
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 1956430,
+     "wall_s": 752
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 14705,
+     "wall_s": 161
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 18686,
+     "wall_s": 162
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 10059,
+     "wall_s": 119
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 321393,
+     "wall_s": 190
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 119127,
+     "wall_s": 78
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 210129,
+     "wall_s": 148
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 858980,
+     "wall_s": 534
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 156104,
+     "wall_s": 90
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 17356,
+     "wall_s": 183
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 32030,
+     "wall_s": 31
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 80212,
+     "wall_s": 85
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 77583,
+     "wall_s": 95
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 17,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "luna56",
+   "model": "gpt-5.6-luna",
+   "model_slug": "gpt-5.6-luna",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-5.6-luna",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 17,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
+  "luna56k": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2637,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3451,
+     "wall_s": 35
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 6614,
+     "wall_s": 81
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 212374,
+     "wall_s": 522
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 378622,
+     "wall_s": 223
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 334146,
+     "wall_s": 259
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 382583,
+     "wall_s": 370
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 451897,
+     "wall_s": 273
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 296607,
+     "wall_s": 341
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 8515725,
+     "wall_s": 1116
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 9657858,
+     "wall_s": 1900
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 3366843,
+     "wall_s": 977
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 14125,
+     "wall_s": 149
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 16127,
+     "wall_s": 216
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 9591,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 207213,
+     "wall_s": 151
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 238561,
+     "wall_s": 275
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 153429,
+     "wall_s": 319
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 1892795,
+     "wall_s": 292
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "fail",
+     "tokens": 178997,
+     "wall_s": 104
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 19594,
+     "wall_s": 221
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 42369,
+     "wall_s": 38
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 43017,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 190848,
+     "wall_s": 133
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 16,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "luna56k",
+   "model": "gpt-5.6-luna-900k",
+   "model_slug": "gpt-5.6-luna-900k",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-5.6-luna-900k",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
+  "luna6": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2376,
+     "wall_s": 12
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2515,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4224,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 84843,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 102854,
+     "wall_s": 107
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 65898,
+     "wall_s": 63
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 164400,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 131516,
+     "wall_s": 56
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 171933,
+     "wall_s": 115
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 1163798,
+     "wall_s": 232
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 2068643,
+     "wall_s": 562
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 442096,
+     "wall_s": 226
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 8098,
+     "wall_s": 41
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 11202,
+     "wall_s": 27
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 5419,
+     "wall_s": 26
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 211466,
+     "wall_s": 410
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 95609,
+     "wall_s": 77
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 84687,
+     "wall_s": 55
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 494077,
+     "wall_s": 133
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "fail",
+     "tokens": 142417,
+     "wall_s": 163
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 14797,
+     "wall_s": 135
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 30687,
+     "wall_s": 25
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 52244,
+     "wall_s": 43
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 73621,
+     "wall_s": 57
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 1,
+     "total": 16,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "luna6",
+   "model": "gpt-6-luna",
+   "model_slug": "gpt-6-luna",
+   "n": 24,
+   "na": 1,
+   "name": "gpt-6-luna",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
   "ocgo": {
    "band": "high",
    "cases": [
@@ -3745,180 +4340,187 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 5495,
-     "wall_s": 31
+     "tokens": 2867,
+     "wall_s": 28
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
-     "status": "na",
-     "tokens": 3975,
-     "wall_s": 22
+     "status": "pass",
+     "tokens": 11372,
+     "wall_s": 126
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 13753,
-     "wall_s": 90
+     "tokens": 11794,
+     "wall_s": 102
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 354805,
-     "wall_s": 204
+     "tokens": 2952920,
+     "wall_s": 854
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 930682,
-     "wall_s": 398
+     "tokens": 1842297,
+     "wall_s": 807
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 861811,
-     "wall_s": 547
+     "tokens": 11195902,
+     "wall_s": 1757
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 4314853,
-     "wall_s": 831
+     "tokens": 2103917,
+     "wall_s": 1008
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 741245,
-     "wall_s": 626
+     "tokens": 3610812,
+     "wall_s": 1086
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
-     "status": "na",
-     "tokens": 10163466,
-     "wall_s": 1737
+     "status": "pass",
+     "tokens": 815738,
+     "wall_s": 789
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "status": "na",
-     "tokens": null,
-     "wall_s": 1800
+     "tokens": 9253826,
+     "wall_s": 1661
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
-     "status": "fail",
+     "status": "na",
      "tokens": null,
      "wall_s": 3600
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
-     "status": "fail",
+     "status": "na",
      "tokens": null,
      "wall_s": 1800
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "na",
-     "tokens": 5544,
-     "wall_s": 12
+     "status": "fail",
+     "tokens": 13328,
+     "wall_s": 114
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
      "status": "pass",
-     "tokens": 58487,
-     "wall_s": 578
+     "tokens": 36400,
+     "wall_s": 348
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
-     "status": "na",
-     "tokens": 2708,
-     "wall_s": 50
+     "status": "fail",
+     "tokens": 2744,
+     "wall_s": 56
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 1045126,
-     "wall_s": 558
+     "tokens": 498389,
+     "wall_s": 483
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 1002470,
-     "wall_s": 487
+     "tokens": 506431,
+     "wall_s": 249
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "status": "pass",
-     "tokens": 369848,
-     "wall_s": 196
+     "tokens": 282009,
+     "wall_s": 200
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 3349406,
-     "wall_s": 797
+     "tokens": 1572346,
+     "wall_s": 678
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "pass",
-     "tokens": 269162,
-     "wall_s": 168
+     "tokens": 207769,
+     "wall_s": 131
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "na",
-     "tokens": 15645,
-     "wall_s": 124
+     "tokens": 10398,
+     "wall_s": 52
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 270074,
-     "wall_s": 232
+     "tokens": 74472,
+     "wall_s": 54
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 132993,
-     "wall_s": 94
+     "tokens": 75899,
+     "wall_s": 67
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 215933,
-     "wall_s": 119
+     "tokens": 151990,
+     "wall_s": 80
     }
    ],
-   "composed": true,
+   "composed": false,
    "frozen_week": null,
    "history": [
     {
-     "current": true,
+     "current": false,
      "n": 23,
-     "na": 6,
+     "na": 2,
      "total": 14,
      "week": "2026-W38"
+    },
+    {
+     "current": true,
+     "n": 24,
+     "na": 4,
+     "total": 17,
+     "week": "2026-W41"
     }
    ],
    "history_withheld": false,
@@ -3926,13 +4528,13 @@
    "model": "step-5-preview",
    "model_slug": "step-5-preview",
    "n": 24,
-   "na": 6,
+   "na": 4,
    "name": "step-5-preview",
    "provider_slug": "stepfun",
    "repo": "amber-stepfun",
-   "total": 15,
+   "total": 17,
    "vendor": "stepfun plan 端点",
-   "week": "2026-W38"
+   "week": "2026-W41"
   },
   "wb": {
    "band": "high",
@@ -4921,9 +5523,9 @@
   "crof"
  ],
  "source": {
-  "amber_db_blob": "1a8e74ffdd9f0e3ff822866e9e0584e6b6a06d9c",
-  "amber_db_sha256": "2e98259614783175dc3934149fe4f11071dcd6be70a8306a9681de7ce8910d17",
-  "amber_run_commit": "4c3cd459b6b49f8ee684a84beb7e231da9a59657",
+  "amber_db_blob": "caf3aa5141f53889dcb22db0fd314557083a1d9f",
+  "amber_db_sha256": "e76934c928c9982c5f45607b651b0025019dafda019f4793bdec083ca8279b12",
+  "amber_run_commit": "762fbf06cada644d042ba70df29ed37dc0b13576",
   "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
   "tools_or_db_uncommitted": false
  }
