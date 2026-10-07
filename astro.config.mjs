@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import enFirstRedirects from './scripts/en-first-redirects.mjs';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
@@ -31,19 +32,20 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   output: 'static',
-  integrations: base === '/' ? [
+  integrations: [enFirstRedirects(base), ...(base === '/' ? [
     sitemap({
       // /model/<name>/ and /provider/<name>/ (both languages) are redirects to /<name>/: not listed
       filter: (page) => !UNLISTED.some((path) => new URL(page).pathname === path)
-        && !/^\/(?:en\/)?(?:model|provider)\//.test(new URL(page).pathname),
+        && !/^\/en(?:\/|$)/.test(new URL(page).pathname)
+        && !/^\/(?:zh\/)?(?:model|provider)\//.test(new URL(page).pathname),
       i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: {
-          'zh-CN': 'zh-CN',
           en: 'en',
+          zh: 'zh-CN',
         },
       },
       namespaces: { xhtml: true },
     }),
-  ] : [],
+  ] : [])],
 });

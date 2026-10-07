@@ -135,7 +135,7 @@ def detect_dist_base_path():
 # the build process; infer the already-built base from its canonical URL for the second process.
 base_path = normalize_base_path(os.environ['SITE_BASE']) if 'SITE_BASE' in os.environ else detect_dist_base_path()
 expected_base = f'https://askclaw.dev{base_path}'
-expected_routes = {'index.html', 'method/index.html', 'claim/index.html', 'rank/index.html', 'en/index.html', 'en/claim/index.html', 'en/rank/index.html', 'notes/index.html'}
+expected_routes = {'index.html', 'zh/method/index.html', 'claim/index.html', 'rank/index.html', 'zh/index.html', 'zh/claim/index.html', 'zh/rank/index.html', 'zh/notes/index.html'}
 # One page per model and one per provider (result repo), both languages. src/data/lane-pages.json lists the lanes.
 lane_pages_doc = json.loads((root / 'src/data/lane-pages.json').read_text())
 assert lane_pages_doc['schema'] == 'lane-pages-v1' and lane_pages_doc['source']['amber_run_commit'], 'lane-pages.json must come from scripts/gen-lane-pages.py'
@@ -149,16 +149,22 @@ model_slugs = sorted({canon_model(l['model_slug']) for l in lane_pages.values()}
 provider_slugs = sorted({l['provider_slug'] for l in lane_pages.values()})
 provider_page_slugs = [p for p in provider_slugs if sum(1 for l in lane_pages.values() if l['provider_slug'] == p) > 1]
 assert not set(model_slugs) & set(provider_page_slugs)
-assert not (set(model_slugs) | set(provider_page_slugs)) & {'en', 'rank', 'method', 'notes', 'claim', 'amber', 'model', 'provider', 'assets', 'astro-preview', '404'}
-model_routes = {f'{prefix}{slug}/index.html' for slug in model_slugs for prefix in ('', 'en/')}
-provider_routes = {f'{prefix}{slug}/index.html' for slug in provider_page_slugs for prefix in ('', 'en/')}
-redirect_routes = {f'{prefix}model/{slug}/index.html' for slug in raw_model_slugs for prefix in ('', 'en/')} | {f'{prefix}provider/{slug}/index.html' for slug in provider_slugs for prefix in ('', 'en/')}
+assert not (set(model_slugs) | set(provider_page_slugs)) & {'en', 'zh', 'rank', 'method', 'notes', 'claim', 'amber', 'model', 'provider', 'assets', 'astro-preview', '404'}
+model_routes = {f'{prefix}{slug}/index.html' for slug in model_slugs for prefix in ('', 'zh/')}
+provider_routes = {f'{prefix}{slug}/index.html' for slug in provider_page_slugs for prefix in ('', 'zh/')}
+redirect_routes = {f'{prefix}model/{slug}/index.html' for slug in raw_model_slugs for prefix in ('', 'zh/')} | {f'{prefix}provider/{slug}/index.html' for slug in provider_slugs for prefix in ('', 'zh/')}
 expected_routes |= model_routes | provider_routes | redirect_routes
+# Independently derive the old English inventory; do not trust the build's manifest as its own oracle.
+english_files = {p for p in expected_routes if not p.startswith('zh/')}
+migration_redirects = {'en/' + p: '/' + p.removesuffix('index.html') for p in english_files}
+migration_redirects.update({p + '/index.html': '/zh/' + p + '/' for p in ('method', 'notes', 'notes/agent-is-new-software')})
+expected_http_redirects = {'/' + p.removesuffix('index.html'): to for p, to in migration_redirects.items()}
+expected_routes |= set(migration_redirects)
 lanes_published = json.loads((root / 'src/data/axes.json').read_text())
 # Built and reachable, but not launched: noindex on every base and absent from the sitemap.
 unlisted_routes = set()
 # public/ verbatim hand-written pages (not Astro-built): different contract, checked separately below.
-public_routes = {'en.html', 'amber/index.html', 'amber/en.html', 'notes/agent-is-new-software/index.html'}
+public_routes = {'en.html', 'amber/index.html', 'amber/en.html', 'zh/notes/agent-is-new-software/index.html'}
 for retired in ('axes.html', 'axes.json'):
     assert not (root / 'public' / retired).exists(), retired
     assert not (dist / retired).exists(), retired
@@ -235,7 +241,7 @@ for relative in sorted(expected_routes):
     assert len(memory) == (1 if 'hreflang="zh-CN"' in text else 0), (relative, 'language memory script')
     assert not memory or 'localStorage' in memory[0] and 'navigator' not in memory[0], relative
     # the home pages carry the model picker's single inline script
-    assert len(scripts) == (1 if relative in {'rank/index.html', 'en/rank/index.html', 'index.html', 'en/index.html'} else 0), relative
+    assert len(scripts) == (1 if relative in {'rank/index.html', 'zh/rank/index.html', 'index.html', 'zh/index.html'} else 0), relative
     parsed = Page(text)
     for ref in parsed.refs:
         url = urlparse(ref)
@@ -247,10 +253,16 @@ for relative in sorted(expected_routes):
             target /= 'index.html'
         assert target.is_file(), ref
     report['pages'][relative] = {'bytes': len(text.encode()), 'script_count': len(scripts), 'inline_js_bytes': sum(len(s.encode()) for s in scripts), 'forbidden_terms': [], 'repo_cards': parsed.cards}
+    if relative in migration_redirects:
+        target = migration_redirects[relative]
+        assert f'<meta http-equiv="refresh" content="0; url={base_path}{target.lstrip("/")}">' in text, relative
+        assert f'<link rel="canonical" href="{expected_base}{target.lstrip("/")}">' in text, relative
+        assert '<meta name="robots" content="noindex"' in text, relative
+        continue
     if relative in redirect_routes:
         # an old address: a refresh and a canonical link to the page that replaced it, nothing else
-        old_kind, old_slug = relative.removesuffix('/index.html').removeprefix('en/').split('/')
-        lang_prefix = 'en/' if relative.startswith('en/') else ''
+        old_kind, old_slug = relative.removesuffix('/index.html').removeprefix('zh/').split('/')
+        lang_prefix = 'zh/' if relative.startswith('zh/') else ''
         if old_kind == 'model':
             new_path = f'{lang_prefix}{canon_model(old_slug)}/'
         else:
@@ -263,10 +275,20 @@ for relative in sorted(expected_routes):
         assert f'<meta http-equiv="refresh" content="0; url={base_path}{new_path}">' in text, (relative, new_path)
         assert f'<link rel="canonical" href="{expected_base}{new_path.split("#")[0]}">' in text, (relative, 'canonical')
         assert (dist / new_path.split('#')[0] / 'index.html').is_file(), (relative, new_path)
+        expected_http_redirects['/' + relative.removesuffix('index.html')] = '/' + new_path
         continue
+    expected_lang = 'zh-CN' if relative.startswith('zh/') else 'en'
+    expected_canonical = expected_base + relative.removesuffix('index.html')
+    assert f'<html lang="{expected_lang}"' in text, relative
+    assert f'<link rel="canonical" href="{expected_canonical}"' in text, relative
+    assert f'<meta property="og:url" content="{expected_canonical}"' in text, relative
+    if memory:
+        english_path = relative.removeprefix('zh/').removesuffix('index.html')
+        for language, target in [('en', expected_base + english_path), ('zh-CN', expected_base + 'zh/' + english_path), ('x-default', expected_base + english_path)]:
+            assert f'<link rel="alternate" hreflang="{language}" href="{target}"' in text, (relative, language)
     if relative in model_routes | provider_routes:
         kind = 'model' if relative in model_routes else 'provider'
-        slug = relative.removesuffix('/index.html').removeprefix('en/')
+        slug = relative.removesuffix('/index.html').removeprefix('zh/')
         members = {k: v for k, v in lane_pages.items() if (canon_model(v['model_slug']) if kind == 'model' else v['provider_slug']) == slug}
         record_by_id = {l['id']: l for l in lanes_published}
         if kind == 'model':
@@ -276,18 +298,18 @@ for relative in sorted(expected_routes):
                 assert f"/{record_by_id[lane_id]['n']}</span>" in text and f'id="lane-{lane_id}"' in text, (relative, lane_id)
         else:
             # a provider page links every one of its lanes' model pages
-            prefix = 'en/' if relative.startswith('en/') else ''
+            prefix = 'zh/' if relative.startswith('zh/') else ''
             for v in members.values():
                 assert f'href="{base_path}{prefix}{canon_model(v["model_slug"])}/"' in text, (relative, v['model_slug'])
-        if relative.startswith('en/'):
+        if not relative.startswith('zh/'):
             main_text = re.sub(r'<script.*?</script>|<[^>]+>', '', re.search(r'<main.*?</main>', text, re.S).group(0), flags=re.S)
             assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English page')
-    if relative == 'method/index.html':
+    if relative == 'zh/method/index.html':
         assert len(parsed.cards) == 13
         # Card scores, weeks and frozen values are checked against the data by check-claims (run below).
         # The historical /21 composite note is fact and stays on the page.
         assert '15/21' in text and '14/21' in text
-    if relative == 'en/index.html':
+    if relative == 'index.html':
         # the English page ships only the English picker dictionary
         assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese text in the English picker script'
         assert len(parsed.cards) == 14
@@ -296,13 +318,13 @@ for relative in sorted(expected_routes):
         assert 'placeholder' not in text
         for phrase in ['24 cases / 27 papers', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:   # 'Snapshot 2026-Wxx' is pinned to the data by check-claims
             assert phrase in text, phrase
-    if relative == 'rank/index.html':
+    if relative == 'zh/rank/index.html':
         assert 'Kimi 官方 coding' in text and 'coding coding' not in text
         assert 'data-face="convergence"' in text and '收敛' in text
-    if relative in {'index.html', 'en/index.html'}:
+    if relative in {'index.html', 'zh/index.html'}:
         # every lane card links to its model page (this lane's block when the model has several lanes) and its
         # provider page; the picker script carries the same paths for the cards it re-renders
-        prefix = 'en/' if relative.startswith('en/') else ''
+        prefix = 'zh/' if relative.startswith('zh/') else ''
         for lane_id, v in lane_pages.items():
             n_lanes = sum(1 for w in lane_pages.values() if canon_model(w['model_slug']) == canon_model(v['model_slug']))
             model_href = f"{base_path}{prefix}{canon_model(v['model_slug'])}/" + (f'#lane-{lane_id}' if n_lanes > 1 else '')
@@ -313,13 +335,13 @@ for relative in sorted(expected_routes):
                 assert f'href="{provider_href}"' in text, (relative, lane_id, 'card link to provider page')
             # the minifier drops quotes around keys that are plain identifiers
             assert re.search(rf'(?:"{re.escape(lane_id)}"|\b{re.escape(lane_id)}):\["{re.escape(model_href)}","{re.escape(provider_href)}"\]', text), (relative, lane_id, 'picker script paths')
-    if relative in {'index.html', 'en/index.html'}:
+    if relative in {'index.html', 'zh/index.html'}:
         picker_axes = re.search(r'data-axes="([^"]*)"', text)
         picker_site = re.search(r'data-site="([^"]*)"', text)
         assert picker_axes and json.loads(unescape(picker_axes.group(1))) == lanes
         assert picker_site and json.loads(unescape(picker_site.group(1))) == json.loads((root / 'src/data/site-data.json').read_text())
         assert text.count('class="card glass"') == len(lanes)
-    if relative == 'en/rank/index.html':
+    if relative == 'rank/index.html':
         assert 'Kimi official coding' in text and 'Everyday engineering' in text
         assert 'data-face="convergence"' in text and 'Convergence' in text
         assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese rank script copy'
@@ -387,7 +409,7 @@ for ref in page404.refs:
     if url.path.endswith('/'):
         target404 /= 'index.html'
     assert target404.is_file(), ('404.html reference does not resolve', ref)
-assert {'/', '/en/', '/rank/'} <= {urlparse(r).path.removeprefix(base_path.rstrip('/')) for r in page404.refs}, '404.html must link home, /en/ and /rank/'
+assert {'/', '/zh/', '/rank/'} <= {urlparse(r).path.removeprefix(base_path.rstrip('/')) for r in page404.refs}, '404.html must link both homes and /rank/'
 
 ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9', 'x': 'http://www.w3.org/1999/xhtml'}
 robots_text = (dist / 'robots.txt').read_text()
@@ -402,26 +424,26 @@ if base_path == '/':
     urls = sitemap.findall('s:url', ns)
     locations = [u.findtext('s:loc', namespaces=ns) for u in urls]
     model_locations = {expected_base + route.removesuffix('index.html') for route in model_routes | provider_routes}   # redirect pages are not listed
-    base_locations = {expected_base, expected_base + 'en/', expected_base + 'rank/', expected_base + 'en/rank/', expected_base + 'claim/', expected_base + 'en/claim/', expected_base + 'method/', expected_base + 'notes/', expected_base + 'notes/agent-is-new-software/'}
+    base_locations = {expected_base, expected_base + 'zh/', expected_base + 'rank/', expected_base + 'zh/rank/', expected_base + 'claim/', expected_base + 'zh/claim/', expected_base + 'zh/method/', expected_base + 'zh/notes/', expected_base + 'zh/notes/agent-is-new-software/'}
     assert len(locations) == len(base_locations) + len(model_locations) and set(locations) == base_locations | model_locations
     for url in urls:
         location = url.findtext('s:loc', namespaces=ns)
         alternates = {a.attrib['hreflang']: a.attrib['href'] for a in url.findall('x:link', ns)}
         expected_alternates = {}
-        if location in {expected_base, expected_base + 'en/'}:
-            expected_alternates = {'zh-CN': expected_base, 'en': expected_base + 'en/'}
-        elif location in {expected_base + 'rank/', expected_base + 'en/rank/'}:
-            expected_alternates = {'zh-CN': expected_base + 'rank/', 'en': expected_base + 'en/rank/'}
-        elif location in {expected_base + 'claim/', expected_base + 'en/claim/'}:
-            expected_alternates = {'zh-CN': expected_base + 'claim/', 'en': expected_base + 'en/claim/'}
+        if location in {expected_base, expected_base + 'zh/'}:
+            expected_alternates = {'en': expected_base, 'zh-CN': expected_base + 'zh/'}
+        elif location in {expected_base + 'rank/', expected_base + 'zh/rank/'}:
+            expected_alternates = {'en': expected_base + 'rank/', 'zh-CN': expected_base + 'zh/rank/'}
+        elif location in {expected_base + 'claim/', expected_base + 'zh/claim/'}:
+            expected_alternates = {'en': expected_base + 'claim/', 'zh-CN': expected_base + 'zh/claim/'}
         if location in model_locations:
-            slug = location.removeprefix(expected_base).removeprefix('en/').rstrip('/')
-            expected_alternates = {'zh-CN': f'{expected_base}{slug}/', 'en': f'{expected_base}en/{slug}/'}
+            slug = location.removeprefix(expected_base).removeprefix('zh/').rstrip('/')
+            expected_alternates = {'en': f'{expected_base}{slug}/', 'zh-CN': f'{expected_base}zh/{slug}/'}
         assert alternates == expected_alternates
     assert ET.parse(dist / 'sitemap-index.xml').findtext('s:sitemap/s:loc', namespaces=ns) == expected_base + 'sitemap-0.xml'
     assert expected_base + 'sitemap-index.xml' in robots_text
     assert 'Disallow: /' not in robots_text
-    for relative in expected_routes - unlisted_routes - redirect_routes:
+    for relative in expected_routes - unlisted_routes - redirect_routes - set(migration_redirects):
         assert 'noindex' not in (dist / relative).read_text(), relative
     for relative in redirect_routes:
         assert '<meta name="robots" content="noindex"' in (dist / relative).read_text(), relative
@@ -431,7 +453,7 @@ else:
     # page carries noindex,nofollow so the preview never becomes a duplicate of the real site.
     assert not (dist / 'sitemap-0.xml').exists() and not (dist / 'sitemap-index.xml').exists()
     assert robots_text == 'User-agent: *\nDisallow: /\n', robots_text
-    for relative in expected_routes - redirect_routes:
+    for relative in expected_routes - redirect_routes - set(migration_redirects):
         assert '<meta name="robots" content="noindex,nofollow"' in (dist / relative).read_text(), relative
     report['sitemap'] = {'routes': [], 'hreflang_count': 0, 'generated': False, 'base': base_path}
 assert not [p for p in dist.rglob('*.js') if 'assets/vendor/' not in str(p)]
@@ -445,5 +467,7 @@ for name in lock['packages']:
 report['frameworks'] = []
 report['external_js_files'] = []
 report['network_fonts'] = []
+from verify_redirects import verify_redirects
+report['redirects'] = verify_redirects(dist, base_path, expected_http_redirects)
 report['dist'] = {str(p.relative_to(dist)): {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(dist.rglob('*')) if p.is_file()}
 print(json.dumps(report, indent=2, ensure_ascii=False))
