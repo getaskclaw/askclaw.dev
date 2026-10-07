@@ -13,6 +13,8 @@ const asset = (file: string) => route(`/assets/${file}`);
 const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
 const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
 const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
+// The completion matrix shows the lanes at 18 or more passes; the count is read from the board, not typed in.
+const matrixLanes = rawAxes.filter((lane) => lane.total >= 18).length;
 
 const questions = [
   {
@@ -68,7 +70,7 @@ const repos = [
   ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official'],
   ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go'],
   ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
-  ['amber-stepfun', "17'/24", 'step-5-preview @ stepfun plan endpoint — W41 re-test in the isolated exam room'],
+  ['amber-stepfun', "18'/24", 'step-5-preview @ stepfun plan endpoint — W41 re-test in the isolated exam room; brand case re-sat alone after a prompt revision'],
   ['amber-goldenpotato', "15'/24", 'Qwen3.8-27B @ community self-hosted (3× V100)'],
 ];
 ---
@@ -153,11 +155,11 @@ const repos = [
         These are static chart snapshots: open an image at full size, or follow its source details.
       </p>
       <figure>
-        <a href={asset('top5-2026-w41.en.webp')} aria-label="Open full-size AMBER board">
-          <img src={asset('top5-2026-w41.en.webp')} width="1400" height="1242" loading="lazy" alt="AMBER board: five rank tiers (2026-W41, with the 2026-10-02 correction, the 2026-10-02 tests, the four WorkBuddy direct lanes of 2026-10-04, the 2026-10-06 sittings and A-d511f9e8 on hold for every lane)" />
+        <a href={asset('top5-2026-w41b.en.webp')} aria-label="Open full-size AMBER board">
+          <img src={asset('top5-2026-w41b.en.webp')} width="1400" height="1263" loading="lazy" alt="AMBER board: five rank tiers (2026-W41, with the 2026-10-02 correction, the 2026-10-02 tests, the four WorkBuddy direct lanes of 2026-10-04, the 2026-10-06 sittings and A-d511f9e8 on hold for every lane)" />
         </a>
         <figcaption>
-          Snapshot 2026-W41, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Four WorkBuddy direct lanes joined on 2026-10-04: deepseek-v4.1-flash 18'/24, glm-5.3-flash 17'/24, hy4-preview-f 16'/24 and minimax-m3 16'/24. They sat in an isolated exam room, so their cells are not comparable one by one with the W37 and W39 sittings; hy4-preview-f therefore has two rows, WorkBuddy ACP (W37) and WorkBuddy direct (W40), which are different lanes. On 2026-10-06 (W41) three OpenAI Codex lanes joined: gpt-5.6-luna 17'/24, gpt-5.6-luna-900k 16'/24 and gpt-6-luna 16'/24; step-5-preview was re-tested and moved from 15'/24 to 17'/24, and gpt-6-luna-900k was re-tested at 15'/24. These sittings also used the isolated exam room, so their cells are not comparable one by one with the W37 to W39 cells; gpt-5.6-luna-900k (W41) is not the W37 lane gpt-5.6-luna-900k (high band). Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
+          Snapshot 2026-W41, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Four WorkBuddy direct lanes joined on 2026-10-04: deepseek-v4.1-flash 18'/24, glm-5.3-flash 17'/24, hy4-preview-f 16'/24 and minimax-m3 16'/24. They sat in an isolated exam room, so their cells are not comparable one by one with the W37 and W39 sittings; hy4-preview-f therefore has two rows, WorkBuddy ACP (W37) and WorkBuddy direct (W40), which are different lanes. On 2026-10-06 (W41) three OpenAI Codex lanes joined: gpt-5.6-luna 17'/24, gpt-5.6-luna-900k 16'/24 and gpt-6-luna 16'/24; step-5-preview was re-tested and moved from 15'/24 to 17'/24 (18'/24 after its brand case A-d9b79b46 was re-sat on its own under a revised prompt and passed), and gpt-6-luna-900k was re-tested at 15'/24. These sittings also used the isolated exam room, so their cells are not comparable one by one with the W37 to W39 cells; gpt-5.6-luna-900k (W41) is not the W37 lane gpt-5.6-luna-900k (high band). Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
           swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24.{' '}
           <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
           <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
@@ -177,10 +179,10 @@ const repos = [
         <a href={route('/en/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
       </p>
       <figure>
-        <a href={asset('completion-matrix-7way.en.webp')} aria-label="Open full-size completion matrix">
-          <img src={asset('completion-matrix-7way.en.webp')} width="1400" height="485" loading="lazy" alt="Ten-axis completion matrix" />
+        <a href={asset('completion-matrix-top8-2026-w41.en.webp')} aria-label="Open full-size completion matrix">
+          <img src={asset('completion-matrix-top8-2026-w41.en.webp')} width="1400" height="697" loading="lazy" alt={`Ten-axis completion matrix of the ${matrixLanes} lanes with 18 or more passes on the board (2026-10-07)`} />
         </a>
-        <figcaption>The former five-way 17/23 tie broke up in the convergence make-ups (k3 / glm-5.3-flash / v4.1-flash @ Ollama / hy4 at 18/24; CommandCode frozen at ∅), plus doubao 16/23 and gp27b 14/23. <a href="https://github.com/getaskclaw/amber">Matrix details →</a></figcaption>
+        <figcaption>The {matrixLanes} lanes with 18 or more passes on the board (2026-10-07), ten axes, 24 cases. NA = no scorable case on that axis (voided or held), not a zero. hy4-preview-f is the WorkBuddy ACP lane (W37). <a href="https://github.com/getaskclaw/amber">Matrix details →</a></figcaption>
       </figure>
     </section>
 
