@@ -503,7 +503,7 @@
   "cases": 24,
   "repo": "amber-stepfun",
   "file": "amber-stepfun/results/2026-W41.md",
-  "total": 17,
+  "total": 18,
   "n": 24,
   "axis": {
    "build": {
@@ -527,9 +527,8 @@
     "n": 1
    },
    "ui-build": {
-    "p": 0,
-    "n": 1,
-    "na": 1
+    "p": 1,
+    "n": 1
    },
    "vision": {
     "p": 0,
