@@ -1,7 +1,7 @@
 {
- "amber_db_blob": "caf3aa5141f53889dcb22db0fd314557083a1d9f",
- "amber_run_commit": "762fbf06cada644d042ba70df29ed37dc0b13576",
- "axes_sha256": "880a853a7279d0e826cc327bbdd54fb9116cc18c589f2fdd411087740da6fefd",
+ "amber_db_blob": "023b5e4d4aa8c11bd46d3c01aa9ed509d04eec76",
+ "amber_run_commit": "f6979c9b0829ada1183d7a8ff8ab6205c8857aff",
+ "axes_sha256": "05dce0666ec0fb14373ebed8511a0f940737a5db0ae33479c6d2d871eed16bd7",
  "generator": "amber-run tools/amberdb/publish.py + export_site_data.py via sync_site.py",
  "note": "do not edit axes.json or site-data.json by hand; regenerate with sync_site.py --write",
  "rule_version": "headline_v1",
