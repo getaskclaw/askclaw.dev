@@ -241,7 +241,7 @@ dialog.sheet::backdrop { background: rgba(10, 14, 20, .35); -webkit-backdrop-fil
 .sheet h4 { margin: 0; font-size: 14px; font-weight: 700; }
 
 /* ---------- v3: sticky context bar ---------- */
-.ctx { position: fixed; z-index: 6; left: 50%; top: calc(10px + env(safe-area-inset-top, 0px)); width: min(1080px, calc(100% - 24px)); display: flex; align-items: center; gap: 10px; padding: 7px 8px 7px 12px; border-radius: 22px; background: var(--ctx-bg); opacity: 0; pointer-events: none; transform: translate(-50%, -16px) scale(.98); transition: opacity .3s, transform .4s cubic-bezier(.2,.9,.3,1.1); }
+.ctx { position: fixed; z-index: 6; --ctx-w: min(var(--ctx-max, 1080px), calc(100% - 24px - var(--rail-inset, 0px))); width: var(--ctx-w); left: max(50%, calc(var(--rail-inset, 0px) + 12px + var(--ctx-w) / 2)); top: calc(var(--topbar-h, 0px) + 10px + env(safe-area-inset-top, 0px)); display: flex; align-items: center; gap: 10px; padding: 7px 8px 7px 12px; border-radius: 22px; background: var(--ctx-bg); opacity: 0; pointer-events: none; transform: translate(-50%, -16px) scale(.98); transition: opacity .3s, transform .4s cubic-bezier(.2,.9,.3,1.1); }
 .ctx.on { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
 .ctx-sum { display: none; }
 .ctx-full { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -263,16 +263,22 @@ dialog.sheet::backdrop { background: rgba(10, 14, 20, .35); -webkit-backdrop-fil
 .menu-list { position: absolute; right: 0; top: calc(100% + 8px); display: grid; min-width: 150px; padding: 6px; border-radius: 16px; background: var(--menu-bg); }
 .menu-list a { color: var(--ink); text-decoration: none; padding: 8px 12px; border-radius: 10px; font-size: 14px; }
 .menu-list a:hover, .menu-list a:focus-visible { background: var(--glass); }
-.tier { scroll-margin-top: 80px; }
+.tier { scroll-margin-top: calc(var(--topbar-h, 0px) + 80px); }
+/* the site header (side-rail.css) is a 48px sticky top bar on phones, tablets and touch screens, and a 56px rail beside the page on a wide window with a mouse.
+   The context bar is fixed under the top bar, or shifted right of the rail when the window is too narrow to centre it. Same media queries as side-rail.css. */
+@media not all and (min-width: 900px) and (hover: hover) and (pointer: fine) { :root { --topbar-h: 48px; } }
+/* the bar needs ~855px, so between 901 and ~935px it wraps to two rows: 104px clears even that */
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) { :root { --rail-inset: 56px; } .tier { scroll-margin-top: 104px; } }
 .tier.held .tier-no { background: transparent; color: var(--ink-soft); box-shadow: inset 0 0 0 1px var(--held); }
 @media (max-width: 900px), (max-height: 520px) {
   .ctx { flex-wrap: wrap; border-radius: 20px; }
-  .ctx.hide { transform: translate(-50%, -140%); }
+  .ctx.hide { transform: translate(-50%, calc(-100% - var(--topbar-h, 0px) - 24px)); }
+  .tier { scroll-margin-top: calc(var(--topbar-h, 0px) + 16px); }
   .ctx-sum { display: block; flex: 1; min-width: 0; appearance: none; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 13.5px; text-align: left; padding: 4px 2px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ctx-sum::after { content: " ▾"; color: var(--ink-soft); }
   .ctx-sum[aria-expanded="true"]::after { content: " ▴"; }
   .ctx-full { display: none; order: 3; flex-basis: 100%; padding: 6px 0 4px; }
-  .ctx.open .ctx-full { display: flex; }
+  .ctx.open .ctx-full { display: flex; max-height: calc(100vh - var(--topbar-h, 0px) - 64px); overflow-y: auto; }
   .ctx-tiers { margin-left: 0; }
 }
 
@@ -305,7 +311,7 @@ html { transition: background-color .4s; }
 }
 /* short screens (phones held sideways): keep the bars thin so the cards get the height */
 @media (max-height: 520px) {
-  .ctx { top: calc(6px + env(safe-area-inset-top, 0px)); padding: 4px 6px 4px 10px; }
+  .ctx { top: calc(var(--topbar-h, 0px) + 6px + env(safe-area-inset-top, 0px)); padding: 4px 6px 4px 10px; }
   .menu summary { width: 30px; height: 30px; }
   .dock { padding: 6px 6px 6px 12px; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
   .dock .btn { padding: 6px 14px; font-size: 13px; }
@@ -318,7 +324,7 @@ html { transition: background-color .4s; }
 /* 1500, not 1600: a 1920 screen at 125% OS scaling is a 1536px window, and with the 56px side margins of the rail four 320px cards (1322px) need about 1390px of page */
 @media (min-width: 1500px) {
   .page { max-width: 1480px; }
-  .ctx { width: min(1480px, calc(100% - 24px)); }
+  :root { --ctx-max: 1480px; }
 }
 /* 4K / 5K at 100% scaling: scale the whole page so type and cards keep their physical size */
 @media (min-width: 2400px) { body.picker-page { zoom: 1.3; } }
