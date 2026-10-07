@@ -6,16 +6,27 @@ import siteData from '../../data/site-data.json';
 import { route } from '../../utils/route';
 
 // Axes are data (amber.db axes.sql -> site-data.json): adding or splitting an axis needs no change here.
-const faces = siteData.axes.map((a) => [a.id, a.name_zh]);
+const faces = siteData.axes.map((a) => [a.id, a.name_en]);
 const allAxes = siteData.axes.map((a) => a.id).join(',');
 
-// Keep the canonical records byte-for-byte. Only this lane's public vendor
-// label is mapped; never substring-replace ordinary domain terminology.
-const lanes = rawLanes.map((lane) => ({
-  ...lane,
-  vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
-  name: lane.id === 'gpt-luna' ? 'gpt-5.6-luna-900k (high 档)' : lane.name,
-}));
+// Translate display labels only. Scores, periods, IDs and source records stay intact.
+const laneLabels: Record<string, { name?: string; vendor?: string }> = {
+  kimi: { vendor: 'Kimi official coding' },
+  'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
+  ds: { vendor: 'DeepSeek official' },
+  doubao: { vendor: 'Volcengine Ark Agent Plan' },
+  'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
+  gp: { vendor: 'Community self-hosted 3×V100' },
+  stepfun: { vendor: 'stepfun plan endpoint' },
+  claude: { vendor: 'Anthropic subscription lane' },
+  'claude-sonnet': { vendor: 'Anthropic subscription lane' },
+  'claude-fable': { vendor: 'Anthropic subscription lane' },
+  'wb2-hy4': { name: 'hy4-preview-f (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-d41f': { name: 'deepseek-v4.1-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-g53f': { name: 'glm-5.3-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-m3': { name: 'minimax-m3 (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+};
+const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
 
 // NA channel: `p` = effective passes, `n` = case slots (NA included), `na` = held/void cases,
 // which count as neither a win nor a loss. `n === 0` means the lane never sat that axis (not
@@ -31,65 +42,68 @@ const stats = faces.map(([id, label]) => {
 });
 ---
 <BaseLayout
-  title="按轴挑模型 — AMBER 琥珀评测"
-  description={`AMBER 按八类工作筛选模型：${lanes.length} 条车道、公开成绩、短板排序和原生浏览器交互。`}
+  title="Rank models by work — AMBER benchmark"
+  description={`Choose models across eight work types with AMBER: ${lanes.length} lanes, public scores, weakest-axis ordering and native browser filters.`}
+  lang="en"
   canonicalPath="/rank/"
+  keywords="AMBER, AI benchmark, model ranking, work types, axis matrix, AskClaw"
+  schemaType="WebPage"
+  schemaInLanguage="en"
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
-    <p class="note"><a href={route('/en/rank/')} lang="en" data-lang-switch="en">English version → /en/rank/</a></p>
-    <h1>按轴挑模型 — <em>别只看总分</em></h1>
+    <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
-      选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 {lanes.length} 条公开车道的差异更容易核对。
+      Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
+      This makes the differences between the {lanes.length} public lanes easier to check.
     </p>
-    <noscript>本页的筛选需要启用 JavaScript。</noscript>
+    <noscript>Enable JavaScript to use the filters on this page.</noscript>
 
     <section class="section" aria-labelledby="dots-title">
-      <h2 id="dots-title">全部车道一览</h2>
-      <p class="hint">一点 = 一案（一道计分任务）。实心 = 通过，空心 = 未过，灰点 = NA（作废或挂起，不计胜负）。按总分排序，同分不分先后。多数轴只有 1–2 案，一案就能改变该轴读数。</p>
-      <DotBoard lanes={lanes} lang="zh" />
+      <h2 id="dots-title">All lanes at a glance</h2>
+      <p class="hint">One dot = one case (one scored task). Filled = passed, hollow = failed, grey = NA (void or held; neither a win nor a loss). Sorted by total; equal totals are in no particular order. Most axes hold only 1–2 cases, so one case can change an axis reading.</p>
+      <DotBoard lanes={lanes} lang="en" />
     </section>
 
     <section class="section" aria-labelledby="pick-title">
-      <h2 id="pick-title">选择工作类型</h2>
-      <p class="hint">每个 chip 显示该类型里满分车道的数量；挂起案（NA）不计入满分统计。默认不选任何类型。</p>
+      <h2 id="pick-title">Choose work types</h2>
+      <p class="hint">Each chip shows how many lanes earned full marks for that type. No types are selected by default.</p>
       <div class="panel picker">
-        <div class="chips" aria-label="工作类型筛选">
+        <div class="chips" aria-label="Work-type filters">
           {stats.map(({ id, label, full, available }) => (
             <button class="chip" type="button" data-face={id} aria-pressed="false">
-              {label}<span class="count">{full}/{available} 满分</span>
+              {label}<span class="count">{full}/{available} full marks</span>
             </button>
           ))}
         </div>
         <div class="picker-bar">
-          <div class="preset-list" aria-label="预设">
-            <button class="preset" type="button" data-preset="build,ops">日常开发</button>
-            <button class="preset" type="button" data-preset="build,ops,ui-build">全栈开发</button>
-            <button class="preset" type="button" data-preset="review,defense,attribution">对抗审查</button>
-            <button class="preset" type="button" data-preset="build,ops,text,req-drift">省钱干活</button>
-            <button class="preset" type="button" data-preset={allAxes}>全选</button>
+          <div class="preset-list" aria-label="Presets">
+            <button class="preset" type="button" data-preset="build,ops">Everyday engineering</button>
+            <button class="preset" type="button" data-preset="build,ops,ui-build">Full-stack work</button>
+            <button class="preset" type="button" data-preset="review,defense,attribution">Adversarial review</button>
+            <button class="preset" type="button" data-preset="build,ops,text,req-drift">Budget work</button>
+            <button class="preset" type="button" data-preset={allAxes}>Select all</button>
           </div>
-          <button class="clear-button" id="clear-rank" type="button">清空</button>
+          <button class="clear-button" id="clear-rank" type="button">Clear</button>
         </div>
-        <div class="verdict" id="rank-verdict" role="status">还没有选择。先选一种工作类型。</div>
+        <div class="verdict" id="rank-verdict" role="status">Nothing selected yet. Choose a work type to start.</div>
       </div>
     </section>
 
     <section class="section" aria-labelledby="board-title">
-      <h2 id="board-title">短板排序</h2>
-      <p class="hint">规则：先比最低通过数，再比所选类型的通过总数；并列会保留。整轴全挂起的格子不参加排序。</p>
+      <h2 id="board-title">Weakest-axis ranking</h2>
+      <p class="hint">Rule: compare the lowest pass count first, then the combined pass count across the selected types. Ties are kept.</p>
       <div class="board-wrap">
         <table class="board">
           <caption class="sr-only">AMBER work-type ranking</caption>
           <thead><tr id="rank-head"></tr></thead>
           <tbody id="rank-body">
-            <tr><td colspan="12">选择一种工作类型后显示车道。</td></tr>
+            <tr><td colspan="12">Choose a work type to display the lanes.</td></tr>
           </tbody>
         </table>
       </div>
       <div class="saturation" id="rank-saturation" hidden></div>
-      <p class="note rank-legend">' = contested（安全拒答挂起）、invalid（基建相关（考场 harness 或判分环境）的挂起、作废或待重评）或 integrity（作答时越出考卷、接触判分材料，作废；见 2026-10-02 更正），均不计胜负；所有含 NA 的道都带撇号，包括冻结展示行；挂起不表示死因已定。格子读法：有效案通过数／有效案数；整轴全挂起的格子显示 NA，不计满分；所选轴里有整轴挂起的车道没有可比成绩，不参加排序（显示 —）；混合格先给有效案结果，挂起案数另列（NA n），有效负 = 案槽 − 通过 − 挂起。2026-10-02 起防御案 A-d511f9e8 在所有车道上记 NA（见<a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.md">更正声明</a>）：每条道的总分都带撇号，过案数不变，下文「零 NA」「无挂起」均指这一案以外。claude-opus-5-5 两场并列：W39 17'/24（17 胜 · 6 负 · 1 案考场(harness)基建 NA，A-1fd3683a；原卷未落盘、零流量闸误判；拒答仅留诊断附注，owner 已签撤回部署建议；A-d511f9e8 改记 NA 后为 17 胜 · 5 负 · 2 NA）；W40 重考 19'/24（19 胜 · 2 负 · 3 案 NA：A-a317e74b、A-be92627f 两次作答都撞考场时间上限，按当时成文规则记 NA、不计负；第三案是 A-d511f9e8）。两场各考一次，考场不同，榜上只取 W40 一行。gpt-5.6-luna-900k (high 档) 16'/24（W37 旧道，与下文 W41 新道 gpt-5.6-luna-900k 是两条不同的道）：16 胜 · 3 负 · 5 挂起（含 A-d511f9e8），UI／视觉／审查 NA，不是零。step-5-preview 18'/24（W41，2026-10-06 重考；18 胜 · 3 负 · 3 NA：A-d511f9e8 全车道挂起；A-a317e74b、A-be92627f 两次作答都撞考场时间上限，记 NA、不计负。A-d9b79b46 在 2026-10-06 首考时以文本形式发出工具调用、未交付文件，当时按 2026-10-02 先例裁定为 NA；题面修订后单案重考，通过，现记通过。除 claude-fable-5-1（见下）外，其他车道在这一案上的格子仍是旧题面下的结果，未重考）。周标签=基线考试周：luna high W37（2026-09-07），另列 W39 补测（2026-09-21）；step-5-preview 为 W41 单场。 Devin 19'/24（2 NA）；Doubao 17'/24（3 NA）；gpt-sol 冻结展示为 15'/23∅（4 NA），不改成 /24。W39 新入榜 5 道：gpt-6-astra 16'/24、gpt-6-sol 17'/24、gpt-6-luna-900k 15'/24（OpenAI Codex，除 A-d511f9e8 外均无挂起；W41 重考仍为 15'/24，周标签改 W41）；mimo-v2.6-pro 16'/24（1 案判分环境 invalid 挂起待重评，1 案越界作废，均不计负）；space-bunny-alpha 13'/24（2 案越界作废，另加 A-d511f9e8）。W40 新入榜：claude-sonnet-5-5 19'/24（除 A-d511f9e8 外零 NA）；claude-fable-5-1 16'/24（16 胜 · 6 负 · 2 NA：A-d511f9e8 全车道挂起；A-be92627f 撞考场时间上限，均不计负。A-d9b79b46 在 2026-10-02 因题面与考场不一致而挂起；题面于 2026-10-07 修订后单案重考，交付了两个文件，oracle 通过 11/12（一项未过：标题在 1280 px 处被截断），现记负，UI 轴 0/1）；gpt-6.1-sol 16'/24（除 A-d511f9e8 外零 NA；上下文窗口按 272K 基础档）。W41 新入榜 OpenAI Codex 三道：gpt-5.6-luna 17'/24、gpt-5.6-luna-900k 16'/24、gpt-6-luna 16'/24，三道的 NA 都只有 A-d511f9e8（全车道挂起）；W41 的四条 luna 道里，gpt-5.6-luna、gpt-5.6-luna-900k、gpt-6-luna 过了 A-d9b79b46，gpt-6-luna-900k 没过。2026-10-06 的各场都在隔离考场里考，与 W37–W39 的格子不能逐格对照。W40 另有 WorkBuddy 直连道四条：deepseek-v4.1-flash 18'/24、glm-5.3-flash 17'/24、hy4-preview-f 16'/24、minimax-m3 16'/24；四条道的 NA 都含 A-d511f9e8 全车道挂起和 A-d9b79b46（题面与考场不一致而挂起，不计负；minimax-m3 这一格最初记负，2026-10-05 改记 NA）。题面已于 2026-10-07 修订；这四条道的 A-d9b79b46 尚未重考，仍记 NA，hy4-preview-f 另有 A-be92627f 超时记 NA。2026-10-02 场次条件：Opus 与 gpt-6.1-sol 主场用镜像 v1，Fable 全场和 A-d511f9e8、A-a317e74b 的重考用镜像 v2（v2 = v1 + PyYAML）；A-d9b79b46 一题关考卷闸；超时新口径（端点正常的超时记负）待另发方法说明、自下一场起生效。2026-10-02 更正：9 张卷作答时越出考卷、接触判分材料，改记 NA——deepseek-v4.1-flash @ CommandCode 15'/23、deepseek-flash @ OpenCode Go 15'/24、deepseek-flash (GA) 16'/24 及 stepfun（W38 场次，已于 W41 重考）和上述 mimo、space-bunny。</p>
-      <p class="note">数据来自公开成绩仓。周标签按基线考试周，补测周单独披露，案集案数保留；方法与公开哈希索引见 <a href={route('/method/')}>方法</a>。</p>
+      <p class="note rank-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and earns no full marks; a lane with a wholly held axis among the selected types has no comparable result and stays outside the ranking (shown as —); a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. From 2026-10-02 defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>): every total carries an apostrophe, pass counts do not change, and the phrases "no NA" and "no holds" below mean apart from this case. claude-opus-5-5 has two tests, shown side by side: W39 17'/24 (17 wins · 6 losses · 1 test-harness infrastructure NA, A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner; with A-d511f9e8 now NA: 17 wins · 5 losses · 2 NA); W40 re-test 19'/24 (19 wins · 2 losses · 3 NA: on A-a317e74b and A-be92627f, both tries ran out of time. Under the rule we had at that time, these are NA, not losses. The third NA is A-d511f9e8). Each test was taken once, in a different exam room. The board uses the W40 row. gpt-5.6-luna-900k (high band) 16'/24 (the W37 lane, not the W41 lane gpt-5.6-luna-900k below): 16 wins · 3 losses · 5 held (including A-d511f9e8); UI / Vision / Review NA, not zero. step-5-preview 18'/24 (W41, new test on 2026-10-06; 18 wins · 3 losses · 3 NA: A-d511f9e8 is on hold for every lane; on A-a317e74b and A-be92627f both tries ran out of the wall-time cap, NA and not losses. On A-d9b79b46 the 2026-10-06 first try sent its tool call as text and delivered no files, adjudicated NA under the 2026-10-02 precedent at the time; after the prompt for that case was revised it was re-sat on its own and passed, and it now counts as a pass. Apart from claude-fable-5-1 (below), the other lanes' cells for that case still stand on the old prompt and were not re-sat). Week labels mean the baseline test week: Luna high W37 (2026-09-07), with a separate W39 make-up (2026-09-21); step-5-preview is a single W41 test. Devin 19'/24 (2 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (4 NA), not /24. W39 newcomers: gpt-6-astra 16'/24, gpt-6-sol 17'/24, gpt-6-luna-900k 15'/24 (OpenAI Codex, no holds apart from A-d511f9e8; its W41 re-test is again 15'/24 and its week label is now W41); mimo-v2.6-pro 16'/24 (1 scoring-environment invalid case held pending re-scoring, 1 integrity void; neither is a loss); space-bunny-alpha 13'/24 (2 integrity voids, plus A-d511f9e8). W40 new lanes: claude-sonnet-5-5 19'/24 (no NA apart from A-d511f9e8); claude-fable-5-1 16'/24 (16 wins · 6 losses · 2 NA: A-d511f9e8 is on hold for every lane; A-be92627f ran out of time; neither NA is a loss. A-d9b79b46 was held on 2026-10-02 because the question text and the exam room did not match; after the text was revised on 2026-10-07 it was re-sat on its own, both files were delivered, the oracle passed 11 of 12 checks (the one failure: title clipped at 1280 px), and it now counts as a loss; UI axis 0/1); gpt-6.1-sol 16'/24 (no NA apart from A-d511f9e8; 272K basic context window). W41 new OpenAI Codex lanes: gpt-5.6-luna 17'/24, gpt-5.6-luna-900k 16'/24 and gpt-6-luna 16'/24; the only NA on each is A-d511f9e8 (held for every lane). Of the four W41 luna lanes, gpt-5.6-luna, gpt-5.6-luna-900k and gpt-6-luna passed A-d9b79b46; gpt-6-luna-900k did not. The 2026-10-06 tests took place in the isolated exam room, so their cells are not comparable one by one with the W37 to W39 cells. W40 also has four WorkBuddy direct lanes: deepseek-v4.1-flash 18'/24, glm-5.3-flash 17'/24, hy4-preview-f 16'/24 and minimax-m3 16'/24. Every one of them has NA on A-d511f9e8 (held for every lane) and on A-d9b79b46 (held because the question text and the exam room do not match; not a loss; minimax-m3 was first recorded as a loss on this case and changed to NA on 2026-10-05). The text was revised on 2026-10-07; the A-d9b79b46 cells of these four lanes have not been re-sat yet and stay NA; hy4-preview-f also has A-be92627f, which ran out of time and is NA. Conditions on 2026-10-02: the main runs of Opus and gpt-6.1-sol used image v1. Fable's whole run, and the re-takes of A-d511f9e8 and A-a317e74b, used image v2 (v2 = v1 + PyYAML). The paper gate was off for A-d9b79b46 only. A new timeout rule (a timeout with a working endpoint counts as a loss) starts at the next test, after we publish a method note. 2026-10-02 correction: 9 papers whose candidate stepped outside the paper and touched grading material are now NA: deepseek-v4.1-flash @ CommandCode 15'/23, deepseek-flash @ OpenCode Go 15'/24, deepseek-flash (GA) 16'/24, plus stepfun (its W38 test, re-tested in W41), mimo and space-bunny above.</p>
+      <p class="note">Data comes from the public result repositories. Week labels follow the baseline test week; make-up weeks are disclosed separately. Case-set sizes stay on record. See the <a href={route('/zh/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
     </section>
   </div>
 </BaseLayout>
@@ -105,8 +119,6 @@ const stats = faces.map(([id, label]) => {
   const verdict = app.querySelector('#rank-verdict');
   const saturation = app.querySelector('#rank-saturation');
 
-  // NA channel: p = effective passes, n = case slots (NA included), na = held/void cases.
-  // An all-held axis (n > 0, na === n) leaves the math; n === 0 means the lane never sat it.
   const held = (cell) => cell.na ?? 0;
   const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
   const isAllHeld = (cell) => cell.n > 0 && usable(cell) === 0;
@@ -137,13 +149,13 @@ const stats = faces.map(([id, label]) => {
 
     if (active.length === 0) {
       const row = document.createElement('tr');
-      appendCell(row, '选择一种工作类型后显示车道。');
+      appendCell(row, 'Choose a work type to display the lanes.');
       body.append(row);
-      verdict.textContent = '还没有选择。先选一种工作类型。';
+      verdict.textContent = 'Nothing selected yet. Choose a work type to start.';
       return;
     }
 
-    ['#', '车道（模型 × 交付位置）', '总分'].forEach((label, index) => {
+    ['#', 'Lane (model × endpoint)', 'Total score'].forEach((label, index) => {
       const cell = document.createElement('th');
       cell.scope = 'col';
       cell.textContent = label;
@@ -157,7 +169,7 @@ const stats = faces.map(([id, label]) => {
       cell.textContent = faceLabel(id);
       head.append(cell);
     });
-    ['短板', '合计', '期 / 案数'].forEach((label) => {
+    ['Weakest axis', 'Combined', 'Week / cases'].forEach((label) => {
       const cell = document.createElement('th');
       cell.scope = 'col';
       cell.className = 'num';
@@ -165,9 +177,9 @@ const stats = faces.map(([id, label]) => {
       head.append(cell);
     });
 
-    // A lane stays on the board when every selected axis has case slots, even if some axes
-    // are wholly held. A hold is not a zero, and it is not a pass either: a lane with any
-    // wholly held selected axis cannot be ordered and shows '—' outside the ranking.
+    // A lane stays on the board when every selected axis has case slots, even if some axes are
+    // wholly held. A hold is not a zero, and it is not a pass either: a lane with any wholly held
+    // selected axis cannot be ordered and shows '—' outside the ranking.
     const rows = lanes
       .filter((lane) => active.every((id) => lane.axis[id].n > 0))
       .map((lane) => {
@@ -191,10 +203,10 @@ const stats = faces.map(([id, label]) => {
       const row = document.createElement('tr');
       const cell = document.createElement('td');
       cell.colSpan = 6 + active.length;
-      cell.textContent = '无匹配车道，请减少筛选条件。';
+      cell.textContent = 'No matching lanes. Try selecting fewer work types.';
       row.append(cell);
       body.append(row);
-      verdict.textContent = '无匹配车道，请减少筛选条件。';
+      verdict.textContent = 'No matching lanes. Try selecting fewer work types.';
       return;
     }
 
@@ -213,8 +225,8 @@ const stats = faces.map(([id, label]) => {
       vendor.textContent = lane.vendor;
       laneCell.append(vendor);
       row.append(laneCell);
-      // Every lane carrying an NA cell takes the apostrophe, frozen display rows included.
-      const heldLane = Object.values(lane.axis).some((cell) => held(cell) > 0)
+      // Draft presentation only; release remains blocked on NA-aware data and ranking.
+      const heldLane = Object.values(lane.axis).some((cell) => (cell.na ?? 0) > 0)
         || ["devin", "gpt-luna", "doubao", "claude", "gpt-sol"].includes(lane.id);
       const displayTotal = heldLane ? String(lane.total).replace(/'$/, '') + "'" : String(lane.total);
       appendCell(row, `${displayTotal}/${lane.n}`, 'num total');
@@ -257,21 +269,21 @@ const stats = faces.map(([id, label]) => {
     const winners = best ? ranked.filter((row) => row.min === best.min) : [];
     const chosen = active.map(faceLabel).join(' + ');
     verdict.replaceChildren();
-    verdict.append(document.createTextNode(`已选：${chosen}。最低通过数 `));
+    verdict.append(document.createTextNode(`Selected: ${chosen}. Lowest pass count: `));
     const strong = document.createElement('strong');
     strong.textContent = best ? String(best.min) : '—';
     verdict.append(strong);
-    verdict.append(document.createTextNode('。'));
+    verdict.append(document.createTextNode('. '));
     const names = winners.slice(0, 4).map((row) => row.lane.name).join(' / ');
-    verdict.append(document.createTextNode(`领先车道：${names}${winners.length > 4 ? ` 等 ${winners.length} 家` : ''}。`));
-    if (winners.length > 1) verdict.append(document.createTextNode(`共 ${winners.length} 家并列。`));
+    verdict.append(document.createTextNode(`Leading lanes: ${names}${winners.length > 4 ? ` (among ${winners.length} lanes)` : ''}.`));
+    if (winners.length > 1) verdict.append(document.createTextNode(` ${winners.length} lanes tied.`));
     const unranked = rows.length - ranked.length;
-    if (unranked > 0) verdict.append(document.createTextNode(`另有 ${unranked} 条道在所选轴里有整轴挂起，没有可比成绩，未参加排序。`));
+    if (unranked > 0) verdict.append(document.createTextNode(` ${unranked} lane(s) have a wholly held type among the selected ones, so there is no result to compare and they stay outside the ranking.`));
 
     const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
     if (saturated.length > 0) {
       saturation.hidden = false;
-      saturation.textContent = `提示：${saturated.map(faceLabel).join('、')} 当前所有车道均满分（挂起案不计），不改变排序。`;
+      saturation.textContent = `Note: all scored lanes currently have full marks for ${saturated.map(faceLabel).join(', ')}; these types do not change the ranking.`;
     }
   }
 

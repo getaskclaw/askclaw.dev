@@ -6,7 +6,7 @@ The askclaw.dev site source (Astro). The homepage IS the AMBER site (sealed-repl
 
 ## 结构
 
-- `src/` — Astro 页面与布局（首页、`/method/`、`/rank/`、`/en/`）
+- `src/` — Astro 页面与布局（英文默认 `/`、`/rank/`；中文 `/zh/`、`/zh/method/`；旧 `/en/*` 为 301 入口）
 - `public/assets/` — 图（WebP，1400px 宽）
 - 运行时边界：内容页零 JS，`/rank/` 有 3.5KB 内联交互脚本。
 - Runtime boundary: content pages ship zero JS; `/rank/` has a 3.5KB inline interaction script.
@@ -43,14 +43,15 @@ npm run build && python3 scripts/verify-dist.py
 
 ## 机检依赖
 
-两个脚本都要读图的原图（对比 WebP 与源 PNG）与手写英文页（对比 `/en/` 镜像）：
+两个脚本都要读图的原图（对比 WebP 与源 PNG）与手写英文页（对比英文 `/` 镜像）：
 
 | 变量 | 默认值 | 用途 |
 |---|---|---|
-| `MIRROR_EN_SOURCE` | 本仓 `public/en.html` | 手写英文页；`/en/` 镜像对比的真源 |
+| `MIRROR_EN_SOURCE` | 本仓 `public/en.html` | 手写英文页；英文 `/` 镜像对比的真源 |
 | `LEGACY_SITE_ROOT` | `../askclaw.dev`（相对本仓） | 老站根；只用于四张未改动的图（trust-chain / effort / score-vs-tokens / wallclock）的原图 |
 | `AXES_SOURCE` | 本仓 `src/data/axes.json` | 轴数据真源 |
 | `SITE_BASE` | `/` | 构建 base，同时决定机检期望的 URL 前缀 |
+| `CADDY_BIN` | PATH 上的 `caddy` | `verify-dist.py` 启动临时本地服务，实测 301；缺少即失败，不跳过 |
 
 在标准机器上无需设置（老站仓为相邻 checkout）。换机器或路径不同时显式指定：
 
@@ -61,6 +62,8 @@ LEGACY_SITE_ROOT=/path/to/legacy-site python3 scripts/verify-dist.py
 ```
 
 ## 部署（DEPLOY）
+
+英文默认迁移的先行勘察、B3 的 250,000 字节首页预算裁决、发布与回滚说明见 [docs/en-first.md](docs/en-first.md)。迁移产物含 `dist/_en-first.caddy`；Vesper 发布时须把它导入对应 Caddy site block，与同次构建的静态文件一起发布。只复制 HTML 不会产生 HTTP 301。本分支不部署、不合并。
 
 托管与 Caddy 配置：预览部署目标见运维手册（内部文档）。改配置前必备份，改后执行配置校验并 reload。
 

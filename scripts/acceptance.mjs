@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { chromium } from 'playwright';
 import astroConfig from '../astro.config.mjs';
+import { verifyLanguage } from './verify-language.mjs';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
@@ -33,7 +34,8 @@ async function detectDistBasePath() {
 // artifact's canonical URL so `SITE_BASE=... npm run build && <gate>` checks the same build.
 const previewPrefix = normalizeBasePath(process.env.SITE_BASE ?? await detectDistBasePath());
 const basePrefix = previewPrefix === '/' ? '' : previewPrefix.replace(/\/$/, '');
-// The hand-written English page is the mirror contract: the Astro /en/ page must still carry every
+const redirectManifest = JSON.parse(await readFile(resolve(distRoot, '_en-first-redirects.json'), 'utf8'));
+// The hand-written English page is the mirror contract: the Astro English / page must still carry every
 // repo card, heading, rule and figure from it. That page is repo-owned (public/en.html, folded into
 // public/ as the single source of truth); the older ~/2609/askclaw.dev checkout is a historical
 // archive and keeps the superseded W38 copy, so it is no longer the mirror source.
@@ -46,7 +48,7 @@ const mirrorSource = resolve(process.env.MIRROR_EN_SOURCE ?? resolve(projectRoot
 if (!existsSync(mirrorSource)) {
   throw new Error(
     `Hand-written English page not found: ${mirrorSource}\n`
-    + 'The /en/ mirror check compares the built page against the hand-written page in this repo\n'
+    + 'The English / mirror check compares the built page against the hand-written page in this repo\n'
     + '(public/en.html, the single source of truth for the English mirror).\n'
     + 'Set MIRROR_EN_SOURCE to its path when the checkout layout differs, e.g.\n'
     + '  MIRROR_EN_SOURCE=<checkout>/public/en.html npm run acceptance',
@@ -85,6 +87,14 @@ let server = null;
 const handleRequest = async (request, response) => {
   const url = new URL(request.url ?? '/', 'http://127.0.0.1');
   const pathname = decodeURIComponent(url.pathname);
+  const relative = pathname.slice(basePrefix.length);
+  const to = redirectManifest.redirects[relative.endsWith('/') ? relative : relative + '/'];
+  if (to) {
+    const [path, hash] = to.split('#');
+    response.writeHead(301, { Location: `${basePrefix}${path}${url.search}${hash ? '#' + hash : ''}` });
+    response.end();
+    return;
+  }
   const path = distPath(pathname);
   if (!path) {
     response.writeHead(400);
@@ -115,7 +125,7 @@ if (!baseUrl) {
   baseUrl = `http://127.0.0.1:${port}${basePrefix}`;
 }
 
-const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/method/', '/claim/', '/rank/', '/en/', '/en/claim/', '/en/rank/', '/claude-opus-5-5/', '/en/claude-opus-5-5/', '/gpt-5.6-sol-900k/', '/deepseek/', '/en/deepseek/', '/claude/', '/en/gpt/'];
+const routes = process.env.ACCEPTANCE_ROUTES?.split(',') ?? ['/', '/zh/method/', '/zh/claim/', '/zh/rank/', '/zh/', '/claim/', '/rank/', '/zh/claude-opus-5-5/', '/claude-opus-5-5/', '/zh/gpt-5.6-sol-900k/', '/zh/deepseek/', '/deepseek/', '/zh/claude/', '/gpt/'];
 
 // NA channel semantics (owner r2): p = effective passes, n = case slots (NA included), na =
 // held/void cases that count as neither a win nor a loss. An all-held axis (n > 0, na === n)
@@ -144,10 +154,11 @@ const results = [];
 let failed = false;
 
 try {
+  results.push(await verifyLanguage(browser, baseUrl));
   for (const route of routes) {
-    const isRankRoute = route === '/rank/' || route === '/en/rank/';
+    const isRankRoute = route === '/rank/' || route === '/zh/rank/';
     // The home pages (zh and en) are the model picker.
-    const isPickRoute = route === '/' || route === '/en/';
+    const isPickRoute = route === '/' || route === '/zh/';
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     const consoleErrors = [];
     const consoleMessages = [];
@@ -205,7 +216,7 @@ try {
     }
 
     if (isRankRoute) {
-      const english = route === '/en/rank/';
+      const english = route === '/rank/';
       const englishLabels = {
         kimi: { vendor: 'Kimi official coding' },
         'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
@@ -289,7 +300,7 @@ try {
           || await page.locator('#rank-body').innerText() !== 'Choose a work type to display the lanes.') failed = true;
       } else {
         result.englishRankLink = await page.getByRole('link', { name: 'English version → /en/rank/', exact: true }).getAttribute('href');
-        if (result.englishRankLink !== `${basePrefix}/en/rank/`) failed = true;
+        if (result.englishRankLink !== `${basePrefix}/rank/`) failed = true;
       }
 
       await page.locator('#clear-rank').click();
@@ -309,7 +320,7 @@ try {
       await page.locator('#clear-rank').click();
     }
 
-    if (route === '/method/') {
+    if (route === '/zh/method/') {
       result.scorePeriods = [];
       // Ollama shows its current lane score; CrofAI is frozen and keeps its sealed record (an owner-pinned value in the registry).
       for (const repo of ['amber-ollama', 'amber-crof']) {
@@ -328,14 +339,14 @@ try {
       if (!result.compositeExplanation) failed = true;
     }
 
-    if (route === '/claim/' || route === '/en/claim/') {
-      const english = route === '/en/claim/';
+    if (route === '/claim/' || route === '/zh/claim/') {
+      const english = route === '/claim/';
       result.claimRows = await page.locator('.claim-table tbody tr').count();
       result.claimExample = mainText.includes('A-87c472cb')
         && mainText.includes(english ? '20 failures' : '20 个 failure');
       result.claimLinks = {
-        method: await page.locator(`a[href="${basePrefix}/method/"]`).count() > 0,
-        rank: await page.locator(`a[href="${basePrefix}${english ? '/en/rank/' : '/rank/'}"]`).count() > 0,
+        method: await page.locator(`a[href="${basePrefix}/zh/method/"]`).count() > 0,
+        rank: await page.locator(`a[href="${basePrefix}${english ? '/rank/' : '/zh/rank/'}"]`).count() > 0,
       };
       result.claimCopy = english
         ? ['Completion claims', 'Weak verification (82)', 'Missing discipline (53)', 'W38 by public result repo'].every((text) => mainText.includes(text))
@@ -343,7 +354,7 @@ try {
       if (result.claimRows !== 11 || !result.claimExample || !Object.values(result.claimLinks).every(Boolean) || !result.claimCopy) failed = true;
     }
 
-    if (route === '/en/') {
+    if (route === '/') {
       const legacyHtml = await readFile(mirrorSource, 'utf8');
       const legacy = await page.evaluate((html) => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -411,7 +422,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/hash-index/v2026-09.md',
         'https://github.com/getaskclaw/amber/blob/main/PLAN.md',
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
-        `${basePrefix}/method/`, `${basePrefix}/en/rank/`,
+        `${basePrefix}/zh/method/`, `${basePrefix}/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
       result.englishMirrorPassed = result.resultRepoCount === 13
         && result.englishLeadPreserved
@@ -426,10 +437,10 @@ try {
         textLink: await page.getByRole('link', { name: 'Rank by work', exact: true }).getAttribute('href'),
         navigation: await page.getByRole('link', { name: 'Rank by axis', exact: true }).getAttribute('href'),
       };
-      if (Object.values(result.englishRankEntries).some((href) => href !== `${basePrefix}/en/rank/`)) failed = true;
+      if (Object.values(result.englishRankEntries).some((href) => href !== `${basePrefix}/rank/`)) failed = true;
     }
 
-    if (route.startsWith('/en/')) {
+    if (!route.startsWith('/zh/')) {
       result.accidentalChinese = await page.evaluate(() => {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         const matches = [];
@@ -443,11 +454,11 @@ try {
         return matches;
       });
       if (result.accidentalChinese.length) failed = true;
-      if (route === '/en/rank/') {
+      if (route === '/rank/') {
         const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
         result.englishRankSeo = await page.locator('html').getAttribute('lang') === 'en'
           && schema['@type'] === 'WebPage' && schema.inLanguage === 'en'
-          && schema.url === new URL(`${basePrefix}/en/rank/`, astroConfig.site).href
+          && schema.url === new URL(`${basePrefix}/rank/`, astroConfig.site).href
           && await page.locator('meta[property="og:url"]').getAttribute('content') === schema.url
           && await page.locator('meta[property="og:title"]').getAttribute('content') === schema.name
           && await page.locator('meta[property="og:description"]').getAttribute('content') === schema.description
@@ -456,7 +467,7 @@ try {
       }
     }
 
-    if (route === '/' || route === '/en/') {
+    if (route === '/' || route === '/zh/') {
       await page.setViewportSize({ width: 375, height: 844 });
       // Both home pages are the picker now (one card per lane); the legacy hand-typed board is gone.
       result.mobileLanes = isPickRoute ? null : await page.locator('.lane-name').evaluateAll((elements) => elements.map((element) => ({
@@ -537,11 +548,9 @@ try {
     result.expectedCanonical = new URL(`${basePrefix}${route}`, astroConfig.site).href;
     if (result.scriptTags !== (isRankRoute || isPickRoute ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
-    // Raw (uncompressed) bytes from the test server; each lane adds about 4 KB of card markup and picker data, so the 200 KB budget
-    // (197 KB with 22 lanes) cannot hold 26 lanes; 213 KB with 26 and 226 KB with 29 lanes (about 4 KB per lane), so 230 KB no longer
-    // holds 30. 260 KB (room for about 8 more lanes) is an owner decision flagged in the release notes; the home HTML is about 22 KB
-    // with gzip -9, and the production site block has `encode`.
-    if (route === '/' && initialTransfer.totalBytes >= 260_000) failed = true;
+    // Owner 2026-10-07 B3: English-first structural growth authorizes 230000 -> 250000 bytes.
+    // Same uncompressed navigation + resource transferSize contract; not the old 260KB relaxation.
+    if (route === '/' && initialTransfer.totalBytes >= 250_000) failed = true;
 
     // Direct load, refresh, ordinary navigation and back must remain real MPA paths.
     // The picker keeps its search, selected axes and tie-break in the address (?q=&axes=&sort=), so on the home pages the
@@ -550,9 +559,9 @@ try {
     const refreshed = await page.reload({ waitUntil: 'networkidle' });
     result.refreshStatus = refreshed?.status();
     result.refreshContentPreserved = (await page.locator('main').innerText()) === mainText;
-    if (route !== '/method/') {
-      await page.locator(`.header-nav a[href^="${basePrefix}/method/"]`).first().click();
-      await page.waitForURL((url) => url.pathname === `${basePrefix}/method/`, { waitUntil: 'load' });
+    if (route !== '/zh/method/') {
+      await page.locator(`.header-nav a[href^="${basePrefix}/zh/method/"]`).first().click();
+      await page.waitForURL((url) => url.pathname === `${basePrefix}/zh/method/`, { waitUntil: 'load' });
       await page.goBack({ waitUntil: 'networkidle' });
       result.backUrl = page.url();
     }
