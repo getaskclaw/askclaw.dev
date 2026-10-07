@@ -30,7 +30,7 @@
    "amber/en.html": null,
    "amber/index.html": null,
    "en.html": "/assets/top5-card-w41b.en.png",
-   "notes/agent-is-new-software/index.html": "/assets/traditional-vs-agent.png"
+   "zh/notes/agent-is-new-software/index.html": "/assets/traditional-vs-agent.png"
   },
   "snapshot": "W41",
   "top5_files": {
@@ -39,7 +39,7 @@
     "top5-2026-w41b.en.vega-lite.json",
     "top5-card-w41b.en.png"
    ],
-   "en/index.html": [
+   "index.html": [
     "top5-2026-w41b.en.webp"
    ]
   }
@@ -56,7 +56,7 @@
     "W39"
    ]
   },
-  "en/index.html": {
+  "index.html": {
    "historical_scores": [
     "14/23",
     "16/23",
@@ -69,7 +69,7 @@
     "W39"
    ]
   },
-  "method/index.html": {
+  "zh/method/index.html": {
    "historical_scores": [
     "15/21",
     "16/23",
@@ -85,22 +85,22 @@
  },
  "week_patterns": [
   {
-   "page": "method/index.html",
+   "page": "zh/method/index.html",
    "regex": "(W\\d\\d)\\s+保留的最新快照",
    "rule": "current"
   },
   {
-   "page": "en/index.html",
+   "page": "index.html",
    "regex": "Snapshot (2026-W\\d\\d)",
    "rule": "current"
   },
   {
-   "page": "en/index.html",
+   "page": "index.html",
    "regex": "scored in (W\\d\\d)",
    "rule": "historical:W37"
   },
   {
-   "page": "en/index.html",
+   "page": "index.html",
    "regex": "its (W\\d\\d) first test",
    "rule": "historical:W39"
   },

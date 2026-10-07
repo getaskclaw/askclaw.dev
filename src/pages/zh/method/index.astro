@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { route } from '../../utils/route';
-import siteData from '../../data/site-data.json';
-import axesLanes from '../../data/axes.json';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { route } from '../../../utils/route';
+import siteData from '../../../data/site-data.json';
+import axesLanes from '../../../data/axes.json';
 
 // The newest tested week on the board (was typed in by hand and went stale: it still said W39 after W40).
 const latestWeek = axesLanes.map((lane) => lane.wk).sort().at(-1);
@@ -29,9 +29,10 @@ const resultRepos = [
 ];
 ---
 <BaseLayout
+  lang="zh-CN"
   title="方法 — AMBER 琥珀评测"
   description={`AMBER 琥珀评测方法：24 案、27 卷、13 个成绩仓、${latestWeek} 快照和公开哈希索引。`}
-  canonicalPath="/method/"
+  canonicalPath="/zh/method/"
 >
   <div class="wrap">
     <section class="hero">
@@ -68,7 +69,7 @@ const resultRepos = [
         两道按 owner 令冻结，保留旧口径 17/23、16/23 并标 ∅，不参与 /24 换算（CommandCode 经 2026-10-02 更正为 15'/23）。
         历史沿革（史实，不改）：Ollama 的 glm-5.3-flash 与 CrofAI 的 qwen3.8-27b 曾用 W37 补考合成成绩——
         W36 的 15/21、14/21 各加两案，成为 17/23、16/23。
-        <a href={route('/rank/')}>按轴榜</a>保留各行原始期号与案数（含两条 W36 的 21 案记录），不是合成总分。
+        <a href={route('/zh/rank/')}>按轴榜</a>保留各行原始期号与案数（含两条 W36 的 21 案记录），不是合成总分。
         口径更正见{' '}
         <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-21.md">2026-09-21 更正</a>。
       </p>
@@ -91,7 +92,7 @@ const resultRepos = [
       <div class="panel">
         {groupsText.map((line) => <p>{line}</p>)}
         <p>2026-10-01 起，原「核验」拆成{axisNote('defense')}和{axisNote('attribution')}两个轴，轴名与规范仓的十轴说法统一。各模型总分不变，只是这三题分开记。</p>
-        <p><a href={route('/rank/')}>查看按轴排行</a></p>
+        <p><a href={route('/zh/rank/')}>查看按轴排行</a></p>
       </div>
     </section>
 
@@ -99,7 +100,7 @@ const resultRepos = [
       <h2 id="claim-title">完成声明也要能对上验收</h2>
       <p class="hint">AMBER 还统计跑案记录里的完成声明，和独立验收是否一致。</p>
       <div class="panel">
-        <p><a href={route('/claim/')}>看 W38 完成声明一致性</a>：验证弱 82 条，纪律缺失 53 条。</p>
+        <p><a href={route('/zh/claim/')}>看 W38 完成声明一致性</a>：验证弱 82 条，纪律缺失 53 条。</p>
       </div>
     </section>
 

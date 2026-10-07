@@ -42,7 +42,7 @@ const there = providerPath(zh ? 'en' : 'zh', slug);
 ---
 <BaseLayout title={t.title} description={t.desc} lang={zh ? 'zh-CN' : 'en'} canonicalPath={here} schemaInLanguage={zh ? 'zh-CN' : 'en'}>
   <div class="wrap lane-page">
-    <p class="note"><a href={route(zh ? '/rank/' : '/en/rank/')}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'} data-lang-switch={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
+    <p class="note"><a href={route(zh ? '/zh/rank/' : '/rank/')}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'} data-lang-switch={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
     <h1>{vendor}</h1>
     <p class="lead">{t.kind} · {t.sub}</p>
     <p class="hint">{t.note}</p>
