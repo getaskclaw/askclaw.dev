@@ -63,6 +63,8 @@ REFRESHED_CHART_ASSETS = {
     'top5-2026-w40c.en.webp': 'top5-2026-w40c.en.png',  # A-d511f9e8 on hold for every lane: apostrophe on every total (amber spec repo)  # 2026-10-02 tests: Opus re-test, Fable, gpt-6.1-sol (amber spec repo @83f08d7)
     'top5-2026-w41.en.webp': 'top5-2026-w41.en.png',  # 2026-10-06 sittings (W41) enter the board: three luna lanes, step-5-preview re-sit (amber spec repo @302151e)
     'top5-2026-w40h.en.webp': 'top5-2026-w40h.en.png',  # four WorkBuddy direct lanes (W40, 2026-10-04) enter the board (amber spec repo @48afefe)
+    'top5-2026-w41b.en.webp': 'top5-2026-w41b.en.png',  # step-5-preview brand case re-sat under the revised prompt: 18'/24 (amber spec repo @bbd90af)
+    'completion-matrix-top8-2026-w41.en.webp': 'completion-matrix-top8-2026-w41.en.png',  # the 8 lanes with 18+ (amber spec repo @bbd90af); replaces the 7-lane matrix
     'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
 }
 CHART_ASSETS = {**LEGACY_CHART_ASSETS, **REFRESHED_CHART_ASSETS}
@@ -77,6 +79,8 @@ LEGACY_ASSETS = {
     'top5-2026-w40c.png', 'top5-2026-w40c.en.png', 'top5-card-w40c.en.png',
     'top5-2026-w40h.png', 'top5-2026-w40h.en.png', 'top5-card-w40h.en.png',
     'top5-2026-w41.png', 'top5-2026-w41.en.png', 'top5-card-w41.en.png',
+    'top5-2026-w41b.png', 'top5-2026-w41b.en.png', 'top5-card-w41b.en.png',
+    'completion-matrix-top8-2026-w41.png', 'completion-matrix-top8-2026-w41.en.png',
     'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
     'trust-chain.png', 'trust-chain.en.png',
     'effort-curves-20260911.png', 'effort-curves-20260911.en.png',
