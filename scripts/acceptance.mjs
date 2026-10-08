@@ -309,10 +309,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'cc-sb', 'wb2-m3'];  // 2026-10-02 sittings: + claude-fable, gpt61-sol (both passed the convergence case); 2026-10-04: four WorkBuddy direct lanes (all pass the case except minimax-m3); 2026-10-06: gpt-5.6-luna, gpt-5.6-luna-900k, gpt-6-luna (all passed it; step-5-preview and gpt-6-luna-900k re-sat it, both passed again)
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'claude-haiku', 'cc-sb', 'wb2-m3'];  // 2026-10-08: claude-haiku (Nous Portal) passed the convergence case
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' || id === 'wb2-m3' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence24/26 full marks' : '收敛24/26 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence25/27 full marks' : '收敛25/27 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
@@ -386,7 +386,7 @@ try {
       }
       result.resultRepoCount = await page.locator('.repo-card[href^="https://github.com/getaskclaw/amber-"]').count();
       result.englishCopy = [...legacy.headings, ...legacy.rules,
-        'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '13 result repos',
+        'real history,', 'sealed in amber, replayed', '24 cases / 27 papers', '14 result repos',
         `Snapshot 2026-${currentWeek}`, 'swe-2-max was scored in W37',
         'three lanes now sit at 18/24', '2026-10-02 correction', 'Think longer ≠ score better', 'output-token bills span 17×',
         'hard ones slow the token stream down', 'Correction 2026-09-18',
@@ -424,7 +424,7 @@ try {
         'https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md',
         `${basePrefix}/zh/method/`, `${basePrefix}/rank/`,
       ]) result.englishLinks.push({ href, passed: await page.locator(`a[href="${href}"]`).count() > 0 });
-      result.englishMirrorPassed = result.resultRepoCount === 13
+      result.englishMirrorPassed = result.resultRepoCount === 14
         && result.englishLeadPreserved
         && result.englishCards.every((check) => check.passed)
         && result.englishCopy.every((check) => check.passed)
@@ -549,8 +549,9 @@ try {
     if (result.scriptTags !== (isRankRoute || isPickRoute ? 1 : 0) || result.fontRequests.length
       || result.scriptRequests.length || result.forbiddenTerms.length || result.canonical !== result.expectedCanonical) failed = true;
     // Owner 2026-10-07 B3: English-first structural growth authorizes 230000 -> 250000 bytes.
+    // Owner 2026-10-08 B3: 30-lane structural growth authorizes 250000 -> 300000 bytes（同场批准开压缩，①②同批）
     // Same uncompressed navigation + resource transferSize contract; not the old 260KB relaxation.
-    if (route === '/' && initialTransfer.totalBytes >= 250_000) failed = true;
+    if (route === '/' && initialTransfer.totalBytes >= 300_000) failed = true;
 
     // Direct load, refresh, ordinary navigation and back must remain real MPA paths.
     // The picker keeps its search, selected axes and tie-break in the address (?q=&axes=&sort=), so on the home pages the

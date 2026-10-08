@@ -305,15 +305,14 @@ for relative in sorted(expected_routes):
             main_text = re.sub(r'<script.*?</script>|<[^>]+>', '', re.search(r'<main.*?</main>', text, re.S).group(0), flags=re.S)
             assert not re.search(r'[\u3400-\u9fff]', main_text), (relative, 'Chinese text on an English page')
     if relative == 'zh/method/index.html':
-        assert len(parsed.cards) == 13
-        # Card scores, weeks and frozen values are checked against the data by check-claims (run below).
+        assert len(parsed.cards) == 14
         # The historical /21 composite note is fact and stays on the page.
         assert '15/21' in text and '14/21' in text
     if relative == 'index.html':
         # the English page ships only the English picker dictionary
         assert not re.search(r'[\u3400-\u9fff]', ''.join(scripts)), 'Chinese text in the English picker script'
-        assert len(parsed.cards) == 14
-        assert sum('/amber-' in c['href'] for c in parsed.cards) == 13
+        assert len(parsed.cards) == 15
+        assert sum('/amber-' in c['href'] for c in parsed.cards) == 14
         assert any(c['href'].endswith('/amber-claude') for c in parsed.cards)
         assert 'placeholder' not in text
         for phrase in ['24 cases / 27 papers', 'scored in W37', 'public hash index', 'Three counterintuitive findings']:   # 'Snapshot 2026-Wxx' is pinned to the data by check-claims

@@ -394,6 +394,56 @@
    "tok": 10923256,
    "tok_n": 23
   },
+  "claude-haiku": {
+   "ax": {
+    "attribution": [
+     959,
+     1
+    ],
+    "build": [
+     892,
+     6
+    ],
+    "convergence": [
+     25,
+     1
+    ],
+    "defense": [
+     1488,
+     2
+    ],
+    "ops": [
+     450,
+     6
+    ],
+    "req-drift": [
+     47,
+     1
+    ],
+    "review": [
+     150,
+     2
+    ],
+    "text": [
+     57,
+     3
+    ],
+    "ui-build": [
+     81,
+     1
+    ],
+    "vision": [
+     52,
+     1
+    ]
+   },
+   "t_med": 93,
+   "t_n": 24,
+   "t_p90": 488,
+   "t_total": 4202,
+   "tok": 23131134,
+   "tok_n": 24
+  },
   "claude-sonnet": {
    "ax": {
     "attribution": [
