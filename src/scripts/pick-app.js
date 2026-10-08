@@ -488,3 +488,8 @@ if (fromUrl.has('cmp')) {
 }
 
 render();
+
+// A link that already carries two or more compare picks reopens the side-by-side sheet, the same way
+// the open-cmp button does (same function, after renderDock so the dock is on screen to transition from).
+// One pick, or none, only restores the dock's selection and never opens a sheet on load.
+if (compare.length >= 2) openCompare();
