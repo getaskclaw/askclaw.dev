@@ -3,14 +3,14 @@
    only, never structure, so every page keeps its content and its checks. */
 :root {
   --ink: #17202b;
-  --sub: #586473;
+  --sub: #272d33;
   --teal: #2f8c94;
   --teal-dark: #24707a;
   --bg: #e9edf1;
   --card: rgba(255, 255, 255, 0.55);
   --line: rgba(23, 32, 43, 0.10);
   --amber: #e08a12;
-  --amber-deep: #a85a00;
+  --amber-deep: #a45800;
   --amber-hi: #ffd27a;
   --amber-lo: #c76a00;
   --rim: rgba(255, 255, 255, 0.85);
@@ -49,7 +49,7 @@ a { color: var(--teal-dark); }
 /* type accents */
 h1 em, .hero h1 em {
   font-style: normal;
-  background: linear-gradient(100deg, var(--amber-deep), var(--amber) 60%, #ffc75a);
+  background: linear-gradient(100deg, var(--amber-deep), #b06008); /* AA: end stop was #ffc75a (large-text 1.2:1 on the cream ground); #b06008 clears 3:1 large */
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .eyebrow { color: var(--amber-deep); }

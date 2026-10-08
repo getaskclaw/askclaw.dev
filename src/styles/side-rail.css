@@ -2,7 +2,7 @@
    Desktop (>= 900px): 56px icon rail, expands to 200px on hover or keyboard focus, floats over the page.
    Phone: slim top bar with a menu button; the same links slide in from the left. */
 
-:root { --claw-red: #f04820; } /* the crab's red, sampled from the logo mark */
+:root { --claw-red: #e2441e; } /* the crab's red, sampled from the logo mark; AA: darkened from #f04820 for the 19px logo text (3:1 large) */
 .rail-toggle-input {
   position: absolute; width: 1px; height: 1px; opacity: 0; margin: 0; pointer-events: none;
 }
