@@ -267,6 +267,7 @@ function toggleCompare(id) {
   if (i >= 0) compare.splice(i, 1); else { if (compare.length >= 3) compare.shift(); compare.push(id); }
   cards.forEach((el, lid) => syncToggle(el, lid));
   renderDock();
+  syncUrl();
 }
 function renderDock() {
   const dock = document.getElementById('dock');
@@ -277,7 +278,7 @@ function renderDock() {
   const ob = document.getElementById('open-cmp');
   ob.disabled = compare.length < 2; ob.style.opacity = compare.length < 2 ? .5 : 1;
 }
-document.getElementById('clear-cmp').addEventListener('click', () => { compare.length = 0; cards.forEach((el, lid) => syncToggle(el, lid)); renderDock(); });
+document.getElementById('clear-cmp').addEventListener('click', () => { compare.length = 0; cards.forEach((el, lid) => syncToggle(el, lid)); renderDock(); syncUrl(); });
 document.getElementById('open-cmp').addEventListener('click', () => { if (compare.length >= 2) openCompare(); });
 
 /* ---------- sheet ---------- */
@@ -462,6 +463,7 @@ function syncUrl() {
   const p = new URLSearchParams();
   if (rawQuery) p.set('q', rawQuery);
   if (active.length) p.set('axes', active.join(','));
+  if (compare.length) p.set('cmp', compare.join(','));
   if (tb !== 'time') p.set('sort', tb);
   const s = p.toString().replace(/%2C/g, ',');
   try { history.replaceState(history.state, '', location.pathname + (s ? '?' + s : '') + location.hash); } catch (e) { /* the address stays as it is */ }
@@ -472,6 +474,17 @@ if (fromUrl.has('axes')) active = fromUrl.get('axes').split(',').filter((id) => 
 if (['tok', 'name'].includes(fromUrl.get('sort'))) {
   tb = fromUrl.get('sort');
   document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.tb === tb)));
+}
+// The compare selection rides the address too (?cmp=id,id), so a shared or refreshed link reopens it.
+// Restore with the same rules toggleCompare applies: only real lane ids, de-duplicated, at most three
+// (the oldest is dropped first), kept in the order given.
+if (fromUrl.has('cmp')) {
+  const seen = new Set();
+  const ids = fromUrl.get('cmp').split(',').filter((id) => lanes.some((l) => l.id === id) && !seen.has(id) && seen.add(id));
+  // toggleCompare drops the oldest pick once a fourth arrives, so a URL with more than three keeps the newest three.
+  compare.push(...ids.slice(-3));
+  cards.forEach((el, lid) => syncToggle(el, lid));
+  renderDock();
 }
 
 render();
