@@ -23,12 +23,12 @@ class NoRedirect(HTTPRedirectHandler):
 
 def verify_redirects(dist, base, expected):
     dist = Path(dist).resolve()
-    manifest = json.loads((dist / '_en-first-redirects.json').read_text())
-    assert manifest['schema'] == 'en-first-redirects-v1'
+    manifest = json.loads((dist / '_zh-first-redirects.json').read_text())
+    assert manifest['schema'] == 'zh-first-redirects-v1'
     assert manifest['base'] == base and manifest['status'] == 301
     assert manifest['redirects'] == expected, 'redirect inventory differs from source-derived routes'
-    legacy = sorted(p for p in expected if p.startswith('/en/'))
-    assert manifest['legacyEnglish'] == legacy and len(legacy) == len(set(legacy))
+    legacy = sorted(p for p in expected if p.startswith('/zh/'))
+    assert manifest['legacyChinese'] == legacy and len(legacy) == len(set(legacy))
     binary = os.environ.get('CADDY_BIN') or shutil.which('caddy')
     assert binary, 'Install Caddy or set CADDY_BIN; actual HTTP 301 is required'
     prefix = base.rstrip('/')
@@ -39,12 +39,12 @@ def verify_redirects(dist, base, expected):
     direct = build_opener(ProxyHandler({}), NoRedirect())
     follow = build_opener(ProxyHandler({}))
     checks = []
-    with tempfile.TemporaryDirectory(prefix='en-first-caddy-') as tmp:
+    with tempfile.TemporaryDirectory(prefix='zh-first-caddy-') as tmp:
         config = Path(tmp) / 'Caddyfile'
         serving = f'root * "{dist}"\nfile_server'
         if prefix:
             serving = f'handle_path {base}* {{\n{serving}\n}}'
-        config.write_text(f'{{\nadmin off\nauto_https off\n}}\nhttp://127.0.0.1:{port} {{\nimport "{dist / "_en-first.caddy"}"\n{serving}\n}}\n')
+        config.write_text(f'{{\nadmin off\nauto_https off\n}}\nhttp://127.0.0.1:{port} {{\nimport "{dist / "_zh-first.caddy"}"\n{serving}\n}}\n')
         validation = subprocess.run([binary, 'validate', '--adapter', 'caddyfile', '--config', str(config)], capture_output=True, text=True)
         assert validation.returncode == 0, validation.stdout + validation.stderr
         with (Path(tmp) / 'caddy.log').open('w+') as log:
@@ -82,20 +82,20 @@ def verify_redirects(dist, base, expected):
                         html = response.read().decode()
                         assert '<meta http-equiv="refresh"' not in html, (source, 'chain ended on HTML refresh')
                         assert urlsplit(response.geturl()).query == 'keep=1', source
-                        lang = 'zh-CN' if source.startswith('/zh/') or source in ['/method/', '/notes/', '/notes/agent-is-new-software/'] else 'en'
+                        lang = 'en' if source.startswith('/en/') or source in ['/en/method/', '/en/notes/'] else 'zh-CN'
                         assert f'<html lang="{lang}"' in html, (source, lang)
                         if fragment:
                             assert f'id="{fragment}"' in html, (source, fragment)
-                # Prefix stripping is bounded to /en/, not /english/ or unrelated paths.
-                for source in ['/en/not-a-real-page/', '/english/not-a-real-page/']:
+                # Prefix stripping is bounded to /zh/, not /zhongwen/ or unrelated paths.
+                for source in ['/zh/not-a-real-page/', '/zhongwen/not-a-real-page/']:
                     try:
                         response = direct.open(origin + prefix + source, timeout=5)
                     except HTTPError as error:
                         response = error
                     with response:
-                        assert response.code == (301 if source.startswith('/en/') else 404), source
+                        assert response.code == (301 if source.startswith('/zh/') else 404), source
                 return {'server': subprocess.check_output([binary, 'version'], text=True).strip(),
-                        'base': base, 'legacy_english_count': len(legacy), 'mapping_count': len(expected),
+                        'base': base, 'legacy_chinese_count': len(legacy), 'mapping_count': len(expected),
                         'http_checks': len(checks), 'checks': checks, 'all_chains_reachable': True}
             finally:
                 process.terminate()

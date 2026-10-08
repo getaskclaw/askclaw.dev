@@ -1,0 +1,306 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DotBoard from '../../../components/DotBoard.astro';
+import rawLanes from '../../../data/axes.json';
+import siteData from '../../../data/site-data.json';
+import { route } from '../../../utils/route';
+
+// Axes are data (amber.db axes.sql -> site-data.json): adding or splitting an axis needs no change here.
+const faces = siteData.axes.map((a) => [a.id, a.name_en]);
+const allAxes = siteData.axes.map((a) => a.id).join(',');
+
+// Translate display labels only. Scores, periods, IDs and source records stay intact.
+const laneLabels: Record<string, { name?: string; vendor?: string }> = {
+  kimi: { vendor: 'Kimi official coding' },
+  'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
+  ds: { vendor: 'DeepSeek official' },
+  doubao: { vendor: 'Volcengine Ark Agent Plan' },
+  'gpt-sol': { name: 'gpt-5.6-sol-900k (high band)' },
+  gp: { vendor: 'Community self-hosted 3×V100' },
+  stepfun: { vendor: 'stepfun plan endpoint' },
+  claude: { vendor: 'Anthropic subscription lane' },
+  'claude-sonnet': { vendor: 'Anthropic subscription lane' },
+  'claude-fable': { vendor: 'Anthropic subscription lane' },
+  'wb2-hy4': { name: 'hy4-preview-f (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-d41f': { name: 'deepseek-v4.1-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-g53f': { name: 'glm-5.3-flash (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+  'wb2-m3': { name: 'minimax-m3 (WorkBuddy direct)', vendor: 'WorkBuddy direct' },
+};
+const lanes = rawLanes.map((lane) => ({ ...lane, ...laneLabels[lane.id] }));
+
+// NA channel: `p` = effective passes, `n` = case slots (NA included), `na` = held/void cases,
+// which count as neither a win nor a loss. `n === 0` means the lane never sat that axis (not
+// the same as a hold). Chip full marks require every case slot to have passed, so a lane with
+// any held case is not full — and a wholly held axis contributes no full marks (package G4).
+const held = (cell) => cell.na ?? 0;
+const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
+
+const stats = faces.map(([id, label]) => {
+  const available = lanes.filter((lane) => lane.axis[id].n > 0);
+  const full = available.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0);
+  return { id, label, full: full.length, available: available.length };
+});
+---
+<BaseLayout
+  title="Rank models by work — AMBER benchmark"
+  description={`Choose models across eight work types with AMBER: ${lanes.length} lanes, public scores, weakest-axis ordering and native browser filters.`}
+  lang="en"
+  canonicalPath="/en/rank/"
+  keywords="AMBER, AI benchmark, model ranking, work types, axis matrix, AskClaw"
+  schemaType="WebPage"
+  schemaInLanguage="en"
+>
+  <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
+    <h1>Rank models by work — <em>not just the total</em></h1>
+    <p class="lead">
+      Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
+      This makes the differences between the {lanes.length} public lanes easier to check.
+    </p>
+    <noscript>Enable JavaScript to use the filters on this page.</noscript>
+
+    <section class="section" aria-labelledby="dots-title">
+      <h2 id="dots-title">All lanes at a glance</h2>
+      <p class="hint">One dot = one case (one scored task). Filled = passed, hollow = failed, grey = NA (void or held; neither a win nor a loss). Sorted by total; equal totals are in no particular order. Most axes hold only 1–2 cases, so one case can change an axis reading.</p>
+      <DotBoard lanes={lanes} lang="en" />
+    </section>
+
+    <section class="section" aria-labelledby="pick-title">
+      <h2 id="pick-title">Choose work types</h2>
+      <p class="hint">Each chip shows how many lanes earned full marks for that type. No types are selected by default.</p>
+      <div class="panel picker">
+        <div class="chips" aria-label="Work-type filters">
+          {stats.map(({ id, label, full, available }) => (
+            <button class="chip" type="button" data-face={id} aria-pressed="false">
+              {label}<span class="count">{full}/{available} full marks</span>
+            </button>
+          ))}
+        </div>
+        <div class="picker-bar">
+          <div class="preset-list" aria-label="Presets">
+            <button class="preset" type="button" data-preset="build,ops">Everyday engineering</button>
+            <button class="preset" type="button" data-preset="build,ops,ui-build">Full-stack work</button>
+            <button class="preset" type="button" data-preset="review,defense,attribution">Adversarial review</button>
+            <button class="preset" type="button" data-preset="build,ops,text,req-drift">Budget work</button>
+            <button class="preset" type="button" data-preset={allAxes}>Select all</button>
+          </div>
+          <button class="clear-button" id="clear-rank" type="button">Clear</button>
+        </div>
+        <div class="verdict" id="rank-verdict" role="status">Nothing selected yet. Choose a work type to start.</div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="board-title">
+      <h2 id="board-title">Weakest-axis ranking</h2>
+      <p class="hint">Rule: compare the lowest pass count first, then the combined pass count across the selected types. Ties are kept.</p>
+      <div class="board-wrap">
+        <table class="board">
+          <caption class="sr-only">AMBER work-type ranking</caption>
+          <thead><tr id="rank-head"></tr></thead>
+          <tbody id="rank-body">
+            <tr><td colspan="12">Choose a work type to display the lanes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="saturation" id="rank-saturation" hidden></div>
+      <p class="note rank-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. Cell reading: effective passes / effective cases. A wholly held axis shows NA and earns no full marks; a lane with a wholly held axis among the selected types has no comparable result and stays outside the ranking (shown as —); a mixed axis shows the effective-case result with the held count listed beside it (NA n). Effective losses = case slots − passes − holds. From 2026-10-02 defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>): every total carries an apostrophe, pass counts do not change, and the phrases "no NA" and "no holds" below mean apart from this case. claude-opus-5-5 has two tests, shown side by side: W39 17'/24 (17 wins · 6 losses · 1 test-harness infrastructure NA, A-1fd3683a; original answer not saved, zero-traffic gate misclassification; refusal is a diagnostic note only, deployment advice withdrawn by the owner; with A-d511f9e8 now NA: 17 wins · 5 losses · 2 NA); W40 re-test 19'/24 (19 wins · 2 losses · 3 NA: on A-a317e74b and A-be92627f, both tries ran out of time. Under the rule we had at that time, these are NA, not losses. The third NA is A-d511f9e8). Each test was taken once, in a different exam room. The board uses the W40 row. gpt-5.6-luna-900k (high band) 16'/24 (the W37 lane, not the W41 lane gpt-5.6-luna-900k below): 16 wins · 3 losses · 5 held (including A-d511f9e8); UI / Vision / Review NA, not zero. step-5-preview 18'/24 (W41, new test on 2026-10-06; 18 wins · 3 losses · 3 NA: A-d511f9e8 is on hold for every lane; on A-a317e74b and A-be92627f both tries ran out of the wall-time cap, NA and not losses. On A-d9b79b46 the 2026-10-06 first try sent its tool call as text and delivered no files, adjudicated NA under the 2026-10-02 precedent at the time; after the prompt for that case was revised it was re-sat on its own and passed, and it now counts as a pass. Apart from claude-fable-5-1 (below), the other lanes' cells for that case still stand on the old prompt and were not re-sat). Week labels mean the baseline test week: Luna high W37 (2026-09-07), with a separate W39 make-up (2026-09-21); step-5-preview is a single W41 test. Devin 19'/24 (2 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (4 NA), not /24. W39 newcomers: gpt-6-astra 16'/24, gpt-6-sol 17'/24, gpt-6-luna-900k 15'/24 (OpenAI Codex; its W41 re-test is again 15'/24 and its week label is now W41; 15 wins · 7 losses · 2 NA: A-d511f9e8 is on hold for every lane, plus A-24bcf707, see below); mimo-v2.6-pro 16'/24 (1 scoring-environment invalid case held pending re-scoring, 1 integrity void; neither is a loss); space-bunny-alpha 13'/24 (2 integrity voids, plus A-d511f9e8). W40 new lanes: claude-sonnet-5-5 19'/24 (no NA apart from A-d511f9e8); claude-fable-5-1 16'/24 (16 wins · 5 losses · 3 NA: A-d511f9e8 is on hold for every lane; A-be92627f ran out of time; A-24bcf707 is held too (see below); none of the three NA is a loss. A-d9b79b46 was held on 2026-10-02 because the question text and the exam room did not match; after the text was revised on 2026-10-07 it was re-sat on its own, both files were delivered, the oracle passed 11 of 12 checks (the one failure: title clipped at 1280 px), and it now counts as a loss; UI axis 0/1); gpt-6.1-sol 16'/24 (16 wins · 6 losses · 2 NA: A-d511f9e8 is on hold for every lane, plus A-24bcf707, see below; 272K basic context window). W41 new OpenAI Codex lanes: gpt-5.6-luna 17'/24, gpt-5.6-luna-900k 16'/24 and gpt-6-luna 16'/24; the only NA on the first two is A-d511f9e8 (held for every lane); gpt-6-luna is 16 wins · 6 losses · 2 NA (A-d511f9e8, plus A-24bcf707, see below). Of the four W41 luna lanes, gpt-5.6-luna, gpt-5.6-luna-900k and gpt-6-luna passed A-d9b79b46; gpt-6-luna-900k did not. The 2026-10-06 tests took place in the isolated exam room, so their cells are not comparable one by one with the W37 to W39 cells. W40 also has four WorkBuddy direct lanes: deepseek-v4.1-flash 18'/24, glm-5.3-flash 17'/24, hy4-preview-f 16'/24 and minimax-m3 16'/24. Every one of them has NA on A-d511f9e8 (held for every lane) and on A-d9b79b46 (held because the question text and the exam room do not match; not a loss; minimax-m3 was first recorded as a loss on this case and changed to NA on 2026-10-05). The text was revised on 2026-10-07; the A-d9b79b46 cells of these four lanes have not been re-sat yet and stay NA; hy4-preview-f also has A-be92627f, which ran out of time and is NA. From 2026-10-07 ops case A-24bcf707 is NA (held) on seven lanes: Qwen3.8-27B @ GoldenPotato, gpt-6-astra-900k, gpt-6-sol-900k, gpt-6-luna-900k, claude-fable-5-1, gpt-6.1-sol and gpt-6-luna. The grader required the named removal commit to have deleted lines inside the feature's own files, which the prompt does not state; totals do not change, and the case moves from a loss to NA (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-07-a-24bcf707.en.md">amber spec repo correction of 2026-10-07</a>). Conditions on 2026-10-02: the main runs of Opus and gpt-6.1-sol used image v1. Fable's whole run, and the re-takes of A-d511f9e8 and A-a317e74b, used image v2 (v2 = v1 + PyYAML). The paper gate was off for A-d9b79b46 only. A new timeout rule (a timeout with a working endpoint counts as a loss) starts at the next test, after we publish a method note. 2026-10-02 correction: 9 papers whose candidate stepped outside the paper and touched grading material are now NA: deepseek-v4.1-flash @ CommandCode 15'/23, deepseek-flash @ OpenCode Go 15'/24, deepseek-flash (GA) 16'/24, plus stepfun (its W38 test, re-tested in W41), mimo and space-bunny above.</p>
+      <p class="note">Data comes from the public result repositories. Week labels follow the baseline test week; make-up weeks are disclosed separately. Case-set sizes stay on record. See the <a href={route('/method/')}>method (Chinese)</a> for the methodology and public hash index.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const app = document.querySelector('#rank-app');
+  const lanes = JSON.parse(app.dataset.lanes);
+  const faces = JSON.parse(app.dataset.faces);
+  const selected = new Set();
+  const chips = [...app.querySelectorAll('[data-face]')];
+  const head = app.querySelector('#rank-head');
+  const body = app.querySelector('#rank-body');
+  const verdict = app.querySelector('#rank-verdict');
+  const saturation = app.querySelector('#rank-saturation');
+
+  const held = (cell) => cell.na ?? 0;
+  const usable = (cell) => (cell.n > 0 ? cell.n - held(cell) : 0);
+  const isAllHeld = (cell) => cell.n > 0 && usable(cell) === 0;
+  const faceLabel = (id) => faces.find(([face]) => face === id)?.[1] ?? id;
+  const laneCount = (id) => lanes.filter((lane) => lane.axis[id].n > 0).length;
+  const fullCount = (id) => lanes.filter((lane) => lane.axis[id].p === lane.axis[id].n && held(lane.axis[id]) === 0).length;
+
+  function setSelection(values) {
+    selected.clear();
+    values.forEach((value) => selected.add(value));
+    chips.forEach((chip) => chip.setAttribute('aria-pressed', String(selected.has(chip.dataset.face))));
+    render();
+  }
+
+  function appendCell(row, text, className = '') {
+    const cell = document.createElement('td');
+    cell.textContent = text;
+    if (className) cell.className = className;
+    row.append(cell);
+  }
+
+  function render() {
+    const active = faces.map(([id]) => id).filter((id) => selected.has(id));
+    head.replaceChildren();
+    body.replaceChildren();
+    saturation.hidden = true;
+    saturation.textContent = '';
+
+    if (active.length === 0) {
+      const row = document.createElement('tr');
+      appendCell(row, 'Choose a work type to display the lanes.');
+      body.append(row);
+      verdict.textContent = 'Nothing selected yet. Choose a work type to start.';
+      return;
+    }
+
+    ['#', 'Lane (model × endpoint)', 'Total score'].forEach((label, index) => {
+      const cell = document.createElement('th');
+      cell.scope = 'col';
+      cell.textContent = label;
+      if (index === 2) cell.className = 'num';
+      head.append(cell);
+    });
+    active.forEach((id) => {
+      const cell = document.createElement('th');
+      cell.scope = 'col';
+      cell.className = 'num';
+      cell.textContent = faceLabel(id);
+      head.append(cell);
+    });
+    ['Weakest axis', 'Combined', 'Week / cases'].forEach((label) => {
+      const cell = document.createElement('th');
+      cell.scope = 'col';
+      cell.className = 'num';
+      cell.textContent = label;
+      head.append(cell);
+    });
+
+    // A lane stays on the board when every selected axis has case slots, even if some axes are
+    // wholly held. A hold is not a zero, and it is not a pass either: a lane with any wholly held
+    // selected axis cannot be ordered and shows '—' outside the ranking.
+    const rows = lanes
+      .filter((lane) => active.every((id) => lane.axis[id].n > 0))
+      .map((lane) => {
+        // A wholly held selected axis has no result to compare, so the lane cannot be placed
+        // against lanes that did sit it: it stays outside the ranking ('—') instead of being
+        // ordered on the remaining axes, which would let a hold outrank a real pass.
+        if (active.some((id) => usable(lane.axis[id]) === 0)) return { lane, min: null, sum: null };
+        const values = active.map((id) => lane.axis[id].p);
+        return {
+          lane,
+          min: Math.min(...values),
+          sum: values.reduce((total, value) => total + value, 0),
+        };
+      })
+      .sort((a, b) => {
+        if (a.min === null || b.min === null) return (a.min === null) - (b.min === null);
+        return b.min - a.min || b.sum - a.sum;
+      });
+
+    if (rows.length === 0) {
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.colSpan = 6 + active.length;
+      cell.textContent = 'No matching lanes. Try selecting fewer work types.';
+      row.append(cell);
+      body.append(row);
+      verdict.textContent = 'No matching lanes. Try selecting fewer work types.';
+      return;
+    }
+
+    rows.forEach(({ lane, min, sum }, index) => {
+      const row = document.createElement('tr');
+      appendCell(row, min === null ? '—' : String(index + 1), 'rank-number');
+      const laneCell = document.createElement('td');
+      laneCell.className = 'lane';
+      const link = document.createElement('a');
+      link.href = `https://github.com/getaskclaw/${lane.repo}`;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = lane.name;
+      laneCell.append(link);
+      const vendor = document.createElement('small');
+      vendor.textContent = lane.vendor;
+      laneCell.append(vendor);
+      row.append(laneCell);
+      // Draft presentation only; release remains blocked on NA-aware data and ranking.
+      const heldLane = Object.values(lane.axis).some((cell) => (cell.na ?? 0) > 0)
+        || ["devin", "gpt-luna", "doubao", "claude", "gpt-sol"].includes(lane.id);
+      const displayTotal = heldLane ? String(lane.total).replace(/'$/, '') + "'" : String(lane.total);
+      appendCell(row, `${displayTotal}/${lane.n}`, 'num total');
+
+      active.forEach((id) => {
+        const value = lane.axis[id];
+        const cell = document.createElement('td');
+        cell.className = 'num';
+        const span = document.createElement('span');
+        if (isAllHeld(value)) {
+          // Whole axis held: NA, and no part of the min/sum math.
+          span.className = 'cell na';
+          span.textContent = 'NA';
+        } else {
+          // Mixed axis: show the effective-case result (holds are not losses), then the
+          // held count beside it.
+          const eff = usable(value);
+          span.className = `cell ${value.p === eff ? 'pass' : value.p === 0 ? 'fail' : ''}`;
+          span.textContent = `${value.p}/${eff}`;
+        }
+        cell.append(span);
+        if (held(value) > 0 && usable(value) > 0) {
+          const note = document.createElement('span');
+          note.className = 'na-note';
+          note.textContent = `NA ${held(value)}`;
+          cell.append(note);
+        }
+        row.append(cell);
+      });
+
+      appendCell(row, min === null ? '—' : String(min), min === null ? 'num min' : `num min ${min === 0 ? 'bad' : 'good'}`);
+      appendCell(row, sum === null ? '—' : String(sum), 'num');
+      const baselineWeek = lane.id === 'gpt-luna' ? 'W37' : lane.wk;
+      appendCell(row, `${baselineWeek} · ${lane.n}`, 'num total');
+      body.append(row);
+    });
+
+    const ranked = rows.filter((row) => row.min !== null);
+    const best = ranked[0];
+    const winners = best ? ranked.filter((row) => row.min === best.min) : [];
+    const chosen = active.map(faceLabel).join(' + ');
+    verdict.replaceChildren();
+    verdict.append(document.createTextNode(`Selected: ${chosen}. Lowest pass count: `));
+    const strong = document.createElement('strong');
+    strong.textContent = best ? String(best.min) : '—';
+    verdict.append(strong);
+    verdict.append(document.createTextNode('. '));
+    const names = winners.slice(0, 4).map((row) => row.lane.name).join(' / ');
+    verdict.append(document.createTextNode(`Leading lanes: ${names}${winners.length > 4 ? ` (among ${winners.length} lanes)` : ''}.`));
+    if (winners.length > 1) verdict.append(document.createTextNode(` ${winners.length} lanes tied.`));
+    const unranked = rows.length - ranked.length;
+    if (unranked > 0) verdict.append(document.createTextNode(` ${unranked} lane(s) have a wholly held type among the selected ones, so there is no result to compare and they stay outside the ranking.`));
+
+    const saturated = active.filter((id) => fullCount(id) > 0 && fullCount(id) === laneCount(id));
+    if (saturated.length > 0) {
+      saturation.hidden = false;
+      saturation.textContent = `Note: all scored lanes currently have full marks for ${saturated.map(faceLabel).join(', ')}; these types do not change the ranking.`;
+    }
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const id = chip.dataset.face;
+      if (selected.has(id)) selected.delete(id);
+      else selected.add(id);
+      chip.setAttribute('aria-pressed', String(selected.has(id)));
+      render();
+    });
+  });
+
+  app.querySelectorAll('[data-preset]').forEach((button) => {
+    button.addEventListener('click', () => setSelection(button.dataset.preset.split(',').filter(Boolean)));
+  });
+
+  app.querySelector('#clear-rank').addEventListener('click', () => setSelection([]));
+  render();
+</script>

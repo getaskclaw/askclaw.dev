@@ -1,5 +1,7 @@
 # English-first route migration — reconnaissance and release handoff
 
+> **勘误（append-only，owner 2026-10-08 B3 令）**：本文件是 2026-10-07 English-first 翻转的**历史记录**，原文一字未改。同日 owner 令「make Chinese the default language for askclaw.dev」，做了同构**反向**翻转：`/` = 中文、英文迁 `/en/`、老 `/zh/*` 301 到根。新方向的勘察与发布交接见 [docs/zh-default.md](docs/zh-default.md)。下文凡出现 "English-first"、"default/x-default is English"、"`_en-first.caddy`"、"Chinese `/zh/...`" 等字样，均为当时（10-07）的准确事实，不代表当前线上形态。
+
 ## Authority and frozen scope
 
 Work order: `enfirst-site`, 2026-10-07. The reconnaissance was recorded before implementation. This branch changes routes and language plumbing only. Scores, case data, page wording, public assets and the original claims assertions remain unchanged. Vesper retains acceptance, merge and deployment authority. No deployment is performed by this branch.

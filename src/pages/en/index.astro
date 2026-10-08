@@ -1,0 +1,334 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picker from '../../components/Picker.astro';
+import rawAxes from '../../data/axes.json';
+import { route } from '../../utils/route';
+
+const asset = (file: string) => route(`/assets/${file}`);
+
+// Four-card hero, translated from the Chinese home (/src/pages/index.astro) and sharing its
+// question-* / crab-* / leaderboard-* classes. A follows the Chinese page's repos anchor;
+// D keeps the requested method-page entry path.
+// Facts in the ask card come from the generated board, not typed in.
+const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
+const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
+const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
+// The completion matrix shows the lanes at 18 or more passes; the count is read from the board, not typed in.
+const matrixLanes = rawAxes.filter((lane) => lane.total >= 18).length;
+
+const questions = [
+  {
+    code: 'A',
+    tone: 'teal',
+    question: 'Same model — official endpoint vs third-party. Any difference?',
+    preview: 'One model, compared lane by lane.',
+    cue: 'See lanes',
+    href: route('/method/#repos-title'),
+    ariaLabel: 'Same model — official endpoint vs third-party. Any difference? One model, compared lane by lane. See the result repos.',
+  },
+  {
+    code: 'B',
+    tone: 'amber',
+    question: 'Can the newly released models actually hold up?',
+    preview: `Same ${caseCount} cases; enter the board and see.`,
+    cue: `See ${latestWeek}`,
+    href: route('/en/#leaderboard'),
+    ariaLabel: `Can the newly released models actually hold up? Same ${caseCount} cases; enter the board and see. See the tiered board on this page.`,
+  },
+  {
+    code: 'C',
+    tone: 'cobalt',
+    question: 'Want to read the matrix cell by cell?',
+    preview: 'The axis matrix, ranked by axis.',
+    cue: 'Rank by axis',
+    href: route('/en/rank/'),
+    ariaLabel: 'Want to read the matrix cell by cell? The axis matrix, ranked by axis. Rank by work type.',
+  },
+  {
+    code: 'D',
+    tone: 'gold',
+    question: 'Can this board itself be trusted?',
+    preview: 'Sealed, clean-room, hash-checkable.',
+    cue: 'Read the spec',
+    href: route('/method/'),
+    ariaLabel: 'Can this board itself be trusted? Sealed, clean-room, hash-checkable. Read the spec and the evidence chain.',
+  },
+] as const;
+
+// Published repository summaries, now on the /24 basis (amber README headline scores,
+// commit 5be2ad08 onward). The axis picker keeps its own older W36 records for two lanes.
+const repos = [
+  ['amber', 'spec', 'Method spec + public hash index + cross-repo weekly board'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin — joint leader (2 NA)'],
+  ['amber-claude', "19'/24", "claude-sonnet-5-5 19'/24 (W40, joint leader, no NA apart from A-d511f9e8) · claude-opus-5-5 19'/24 (W40 re-test, W39 17'/24) · claude-fable-5-1 16'/24 @ Anthropic subscription lane"],
+  ['amber-kimi', "18'/24", 'k3 @ Kimi official coding endpoint + the K2.8 duel'],
+  ['amber-ollama', "18'/24", 'glm-5.3-flash / d41f @ Ollama Cloud'],
+  ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode — frozen at the owner\'s call'],
+  ['amber-workbuddy', "18'/24", "deepseek-v4.1-flash 18'/24 (W40) · glm-5.3-flash 17'/24 (W40) · hy4-preview-f 16'/24 (W40) · minimax-m3 16'/24 (W40) @ WorkBuddy direct · hy4-preview-f 18'/24 (W37) @ WorkBuddy ACP"],
+  ['amber-gpt', "17'/24", "gpt-5.6-luna 17'/24 (W41) · gpt-5.6-luna-900k 16'/24 (W41) · gpt-6-luna 16'/24 (W41) · gpt-6-luna-900k 15'/24 (W41) · gpt-6-astra 16'/24 · 5.6-luna-900k high 16'/24 (W37) · 5.6-sol high 15'/23 ∅ · 6.1-sol 16'/24 @ OpenAI Codex"],
+  ['amber-crof', "16'/23 ∅", 'qwen3.8-27b @ CrofAI — the $1.15 value king'],
+  ['amber-deepseek', "16'/24", 'deepseek-flash @ DeepSeek official'],
+  ['amber-opencode', "15'/24", 'deepseek-flash @ OpenCode Go'],
+  ['amber-doubao', "17'/24", 'doubao-seed-evolving @ Volcengine Ark Agent Plan'],
+  ['amber-stepfun', "18'/24", 'step-5-preview @ stepfun plan endpoint — W41 re-test in the isolated exam room; brand case re-sat alone after a prompt revision'],
+  ['amber-goldenpotato', "15'/24", 'Qwen3.8-27B @ community self-hosted (3× V100)'],
+  ['amber-nous', "16'/24", 'claude-haiku-5.5 @ Nous Portal'],
+];
+---
+<BaseLayout
+  title="AskClaw — AMBER: sealed-in-amber replay evaluation"
+  description="AMBER replays real, auditable historical events — frozen the moment before the answer was revealed. Private case library, public scores, independently checkable. A sealed-in-amber AI benchmark and leaderboard, updated weekly."
+  lang="en"
+  canonicalPath="/en/"
+  keywords="AMBER, sealed-in-amber replay evaluation, AI benchmark, model leaderboard, AskClaw"
+  schemaType="WebSite"
+  schemaName="AskClaw — AMBER: sealed-in-amber replay evaluation"
+  schemaInLanguage="en"
+  pageClass="picker-page"
+>
+  <Picker lang="en">
+    <div class="crab-guide" role="group" aria-label="Hero guide" slot="beside">
+      <div class="fact-rail" aria-label="AMBER current facts">
+        <span class="fact-dot" aria-hidden="true"></span>
+        <span>{caseCount} cases · {repoCount} result repos · 2026-{latestWeek}</span>
+      </div>
+    </div>
+
+  <div class="english-mirror">
+    <section class="home-more glass" aria-labelledby="more-title">
+      <h2 id="more-title">Or start with one of these</h2>
+      <div class="question-grid" aria-label="Four public data entry points">
+        {questions.map((entry) => (
+          <a class={`question-entry question-entry-${entry.tone}`} href={entry.href} aria-label={entry.ariaLabel}>
+            <span class="question-meta"><span class="question-dot" aria-hidden="true"></span><span>{entry.code}</span></span>
+            <span class="question-copy"><span class="question">{entry.question}</span><span class="preview">{entry.preview}</span></span>
+            <span class="edge-cue"><span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>{entry.cue}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="pending-section glass" aria-labelledby="pending-title">
+      <header class="pending-header">
+        <h2 id="pending-title">Still being filled in</h2>
+        <p>Evidence first, then it comes back to the hero.</p>
+      </header>
+      <div class="pending-list">
+        <div class="pending-row pending-row-e">
+          <span class="pending-letter" aria-hidden="true">E</span>
+          <div>
+            <h3>Has the model gotten dumber?</h3>
+            <p>Cross-vendor re-tests aren't complete; no capability regression is claimed yet.</p>
+          </div>
+          <span class="pending-status">data pending</span>
+        </div>
+        <div class="pending-row pending-row-f">
+          <span class="pending-letter" aria-hidden="true">F</span>
+          <div>
+            <h3>A cheaper alternative for my workload?</h3>
+            <p>Cheaper candidates need a systematic price / cost source; time and tokens are already on the cards.</p>
+          </div>
+          <span class="pending-status">pricing pending</span>
+        </div>
+      </div>
+      <p class="pending-note">The secondary section only records the gaps; it doesn't pre-decide the data.</p>
+    </section>
+
+    <section class="hero">
+      <h2 class="hero-heading"><em>AMBER</em> — real history,<br />sealed in amber, replayed</h2>
+      <p class="lead">
+        We take real, auditable incidents and freeze them at the moment before the answer was revealed.
+        Models must redo the work with only what was knowable then, against a rubric frozen before any output existed.{' '}
+        <b>The cases are never published. The scores always are.</b>
+      </p>
+      <div class="badges" aria-label="Evaluation facts">
+        <div class="badge"><strong>24 cases / 27 papers</strong><small>private library, hash-sealed</small></div>
+        <div class="badge"><strong>14 result repos</strong><small>one per vendor × endpoint</small></div>
+        <div class="badge"><strong>Updated weekly</strong><small>same library, same band, public hash index</small></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="board-title">
+      <h2 id="board-title">The board right now</h2>
+      <p class="hint">
+        Same band (high), same 24 cases, same public hash index. Five rank tiers; ties are labeled as ties.
+        Glossary: case = one task (from a real incident); paper = one sitting; band = reasoning-effort level.
+        These are static chart snapshots: open an image at full size, or follow its source details.
+      </p>
+      <figure>
+        <a href={asset('top5-2026-w41b.en.webp')} aria-label="Open full-size AMBER board">
+          <img src={asset('top5-2026-w41b.en.webp')} width="1400" height="1263" loading="lazy" alt="AMBER board: five rank tiers (2026-W41, with the 2026-10-02 correction, the 2026-10-02 tests, the four WorkBuddy direct lanes of 2026-10-04, the 2026-10-06 sittings and A-d511f9e8 on hold for every lane)" />
+        </a>
+        <figcaption>
+          Snapshot 2026-W41, including the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02.en.md">2026-10-02 correction</a> · swe-2-max @ Devin (19'/24, 2 NA), claude-sonnet-5-5 @ Anthropic subscription lane (19'/24, 1 NA) and claude-opus-5-5 @ Anthropic subscription lane (19'/24, 3 NA; re-test on 2026-10-02, its W39 first test was 17'/24) are level at the top. claude-fable-5-1 (16'/24) and gpt-6.1-sol (16'/24) joined the board on 2026-10-02. Four WorkBuddy direct lanes joined on 2026-10-04: deepseek-v4.1-flash 18'/24, glm-5.3-flash 17'/24, hy4-preview-f 16'/24 and minimax-m3 16'/24. They sat in an isolated exam room, so their cells are not comparable one by one with the W37 and W39 sittings; hy4-preview-f therefore has two rows, WorkBuddy ACP (W37) and WorkBuddy direct (W40), which are different lanes. On 2026-10-06 (W41) three OpenAI Codex lanes joined: gpt-5.6-luna 17'/24, gpt-5.6-luna-900k 16'/24 and gpt-6-luna 16'/24; step-5-preview was re-tested and moved from 15'/24 to 17'/24 (18'/24 after its brand case A-d9b79b46 was re-sat on its own under a revised prompt and passed), and gpt-6-luna-900k was re-tested at 15'/24. These sittings also used the isolated exam room, so their cells are not comparable one by one with the W37 to W39 cells; gpt-5.6-luna-900k (W41) is not the W37 lane gpt-5.6-luna-900k (high band). Every total carries an apostrophe because defense case A-d511f9e8 is NA on every lane (see the <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>); no pass count changes. ▼ marks lanes moved down by the correction: papers whose candidate touched grading material are now NA.<br />
+          swe-2-max was scored in W37 with the convergence case folded in; of the former five-way tie at 17/23, three lanes now sit at 18/24.{' '}
+          <a href="https://github.com/getaskclaw/amber">Board details →</a><br />
+          <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-18.en.md">Correction 2026-09-18</a>:
+          the bar now labeled "swe-2-high @ Devin (re-run)" was originally published as swe-2-low —
+          that model does not exist; the server silently routed to swe-2-high.
+          <a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-09-21.en.md">Correction 2026-09-21</a>:
+          astra's W36 UI-build cells were fallback-delivered, so its total is 16/24.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="matrix-title">
+      <h2 id="matrix-title">Same score, different shape</h2>
+      <p class="hint">
+        The ten-axis completion matrix: each cell is a face's pin-level completion.
+        Tied totals hide completely different profiles — the matrix shows what the sum can't.{' '}
+        <a href={route('/en/rank/')}>Rank by work</a> uses eight work types and preserves each record's own week and case count.
+      </p>
+      <figure>
+        <a href={asset('completion-matrix-top8-2026-w41.en.webp')} aria-label="Open full-size completion matrix">
+          <img src={asset('completion-matrix-top8-2026-w41.en.webp')} width="1400" height="697" loading="lazy" alt={`Ten-axis completion matrix of the ${matrixLanes} lanes with 18 or more passes on the board (2026-10-07)`} />
+        </a>
+        <figcaption>The {matrixLanes} lanes with 18 or more passes on the board (2026-10-07), ten axes, 24 cases. NA = no scorable case on that axis (voided or held), not a zero. hy4-preview-f is the WorkBuddy ACP lane (W37). <a href="https://github.com/getaskclaw/amber">Matrix details →</a></figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="trust-title">
+      <h2 id="trust-title">Why the scores can be trusted</h2>
+      <p class="hint">
+        Every weekly issue runs like an exam: cases sealed in advance, a clean-room sitting,
+        per-paper wire audits, anonymized publication, and a public index anyone can re-check.
+      </p>
+      <figure>
+        <a href={asset('trust-chain.en.webp')} aria-label="Open full-size result production process">
+          <img src={asset('trust-chain.en.webp')} width="1375" height="795" loading="lazy" alt="How a result is produced" />
+        </a>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="findings-title">
+      <h2 id="findings-title">Three counterintuitive findings</h2>
+      <p class="hint">Each comes with named boundaries and counterexamples in the original writeups.</p>
+      <figure>
+        <a href={asset('effort-curves-20260911.en.webp')} aria-label="Open full-size effort curves">
+          <img src={asset('effort-curves-20260911.en.webp')} width="1400" height="781" loading="lazy" alt="Effort curves" />
+        </a>
+        <figcaption>"Think longer ≠ score better": most families backfire at top bands; swe-2 is monotone. <a href="https://github.com/getaskclaw/amber#readme">Effort findings →</a></figcaption>
+      </figure>
+      <figure>
+        <a href={asset('score-vs-tokens-2026-w37.en.webp')} aria-label="Open full-size score and thinking budget chart">
+          <img src={asset('score-vs-tokens-2026-w37.en.webp')} width="1400" height="849" loading="lazy" alt="Score vs thinking budget" />
+        </a>
+        <figcaption>Same band, same library: output-token bills span 17× while scores differ by one case. <a href="https://github.com/getaskclaw/amber#readme">Token findings →</a></figcaption>
+      </figure>
+      <figure>
+        <a href={asset('wallclock-strip-2026-w37.en.webp')} aria-label="Open full-size per-case wall clock chart">
+          <img src={asset('wallclock-strip-2026-w37.en.webp')} width="1400" height="803" loading="lazy" alt="Per-case wall clock" />
+        </a>
+        <figcaption>A vendor's high TPS only holds on easy problems; hard ones slow the token stream down.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="repos-title">
+      <h2 id="repos-title">Result repos</h2>
+      <p class="hint">One repo per lane (model × endpoint × band), one matrix per week, wire audits and hash cross-checks included.</p>
+      <p class="note">
+        Scores are on the 24-case basis (convergence case folded in 2026-09-21). Two lanes are frozen
+        at ∅ at the owner's call — CommandCode 17/23 (corrected to 15'/23 on 2026-10-02) and CrofAI 16/23 — so they keep their sealed
+        earlier records. The axis picker retains its own older W36 records for two lanes.{' '}
+        <a href={route('/method/')}>Read the method and score-period notes</a>.
+      </p>
+      <p class="note score-legend">' = contested (held for safety refusal), invalid (infrastructure-related (test harness or scoring environment) cases: held, void or awaiting re-scoring) or integrity (the candidate stepped outside its paper and touched grading material; voided, see the 2026-10-02 correction); none counts as a win or a loss. Every lane with NA carries an apostrophe, including frozen display rows; a hold does not settle the cause. From 2026-10-02 defense case A-d511f9e8 is NA on every lane (<a href="https://github.com/getaskclaw/amber/blob/main/docs/corrections-2026-10-02-a-d511f9e8.en.md">correction</a>): every total carries an apostrophe and pass counts do not change. Devin 19'/24 (2 NA); Doubao 17'/24 (3 NA); the frozen gpt-sol display is 15'/23∅ (4 NA), not /24.</p>
+      <div class="repo-grid">
+        {repos.map(([repo, score, description]) => (
+          <a class="repo-card" href={`https://github.com/getaskclaw/${repo}`}>
+            <strong>{repo}</strong>
+            <span class="score">{score}</span>
+            <small>{description}</small>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rules-title">
+      <h2 id="rules-title">The rules</h2>
+      <div class="rule-list">
+        <div class="rule">Private side, never public: the case library, oracles, transcripts, internal case IDs and variant names.</div>
+        <div class="rule">Public side, always checkable: scores, aggregates, verdicts, the hash index — anyone can verify the library didn't change and the scores add up.</div>
+        <div class="rule">Historical outcomes are evidence, not the only correct answer; runtime sealing ≠ clean training data. Both warnings are printed on every issue.</div>
+      </div>
+      <p class="method-links">
+        Read the method: <a href="https://github.com/getaskclaw/amber/blob/main/AMBER-Core-Specification.md">AMBER Core Specification</a> ·{' '}
+        <a href="https://github.com/getaskclaw/amber/blob/main/hash-index/v2026-09.md">public hash index</a> ·{' '}
+        <a href="https://github.com/getaskclaw/amber/blob/main/PLAN.md">roadmap</a>
+      </p>
+    </section>
+  </div>
+  </Picker>
+</BaseLayout>
+
+<style>
+  /* The top-of-page four-card hero owns the page's single <h1>; the legacy English strapline
+     below stays visually identical to before, hence the explicit sizing. */
+  .hero-heading {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .hero-heading em {
+    color: var(--teal);
+    font-style: normal;
+  }
+
+  /* Scoped English-only difference from the shared card layout: the English cue labels
+     ("Rank by axis", "Read the spec") are wider than the Chinese cue labels and
+     the shared .edge-cue is nowrap. Because the card's cue column is an `auto` grid track, it
+     sized to the cue's max-content and starved the preview column down to a few characters per
+     line at 390px. Capping the cue width lets it wrap and gives the preview its column back. */
+  .question-entry .edge-cue {
+    max-width: 5.6em;
+    white-space: normal;
+  }
+
+  figure {
+    margin: 18px 0 28px;
+  }
+
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+  }
+
+  figcaption {
+    margin-top: 8px;
+    color: var(--sub);
+    font-size: 0.85rem;
+  }
+
+  .repo-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: start;
+    gap: 4px 12px;
+  }
+
+  .repo-card strong {
+    overflow-wrap: anywhere;
+  }
+
+  .repo-card .score {
+    float: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .repo-card small {
+    grid-column: 1 / -1;
+  }
+
+  .method-links {
+    margin-top: 18px;
+    color: var(--sub);
+    font-size: 0.92rem;
+  }
+</style>

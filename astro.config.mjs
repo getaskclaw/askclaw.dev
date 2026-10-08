@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import enFirstRedirects from './scripts/en-first-redirects.mjs';
+import zhFirstRedirects from './scripts/zh-first-redirects.mjs';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
@@ -32,17 +32,21 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   output: 'static',
-  integrations: [enFirstRedirects(base), ...(base === '/' ? [
+  integrations: [zhFirstRedirects(base), ...(base === '/' ? [
     sitemap({
-      // /model/<name>/ and /provider/<name>/ (both languages) are redirects to /<name>/: not listed
-      filter: (page) => !UNLISTED.some((path) => new URL(page).pathname === path)
-        && !/^\/en(?:\/|$)/.test(new URL(page).pathname)
-        && !/^\/(?:zh\/)?(?:model|provider)\//.test(new URL(page).pathname),
+      // /model/<name>/ and /provider/<name>/ (both languages) are redirects to /<name>/: not listed.
+      // The old /zh/... addresses the build rewrites to the plain path are not listed either.
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return !UNLISTED.some((path) => pathname === path)
+          && !/^\/zh(?:\/|$)/.test(pathname)
+          && !/^(?:\/en)?\/(?:model|provider)\//.test(pathname);
+      },
       i18n: {
-        defaultLocale: 'en',
+        defaultLocale: 'zh',
         locales: {
-          en: 'en',
           zh: 'zh-CN',
+          en: 'en',
         },
       },
       namespaces: { xhtml: true },

@@ -25,29 +25,29 @@ def card(repo, text, cls='repo-card'):
 
 def pages():
     return {
-        'zh/method/index.html': OG + card('amber-a', "19'/24 model-a (W40)") + card('amber-b', "17'/24 model-b W39")
+        'method/index.html': OG + card('amber-a', "19'/24 model-a (W40)") + card('amber-b', "17'/24 model-b W39")
             + card('amber-c', "16'/23 ∅ model-c W37") + '<p>W40 保留的最新快照</p>',
-        'index.html': OG + '<img src="/assets/top5-2026-w40c.en.webp"><p>Snapshot 2026-W40 · scored in W37 · its W39 first test was 17/23</p>',
+        'en/index.html': OG + '<img src="/assets/top5-2026-w40c.en.webp"><p>Snapshot 2026-W40 · scored in W37 · its W39 first test was 17/23</p>',
         'en.html': '<meta property="og:image" content="https://askclaw.dev/assets/top5-card-w40c.en.png">'
             + '<img src="/assets/top5-2026-w40c.en.png"><p>Snapshot 2026-W40 · scored in W37</p>',
-        'zh/index.html': OG,
+        'index.html': OG,
     }
 
 
 def registry(fingerprint):
     return {
-        'pages': {'zh/method/index.html': {}, 'index.html': {'historical_scores': ['17/23']}, 'en.html': {}},
+        'pages': {'method/index.html': {}, 'en/index.html': {'historical_scores': ['17/23']}, 'en.html': {}},
         'cards': {'amber-c': {'frozen_scores': ['16/23']}},
         'week_patterns': [
-            {'page': 'zh/method/index.html', 'regex': r'(W\d\d)\s+保留的最新快照', 'rule': 'current'},
-            {'page': 'index.html', 'regex': r'Snapshot (2026-W\d\d)', 'rule': 'current'},
-            {'page': 'index.html', 'regex': r'scored in (W\d\d)', 'rule': 'historical:W37'},
+            {'page': 'method/index.html', 'regex': r'(W\d\d)\s+保留的最新快照', 'rule': 'current'},
+            {'page': 'en/index.html', 'regex': r'Snapshot (2026-W\d\d)', 'rule': 'current'},
+            {'page': 'en/index.html', 'regex': r'scored in (W\d\d)', 'rule': 'historical:W37'},
             {'page': 'en.html', 'regex': r'Snapshot (2026-W\d\d)', 'rule': 'current'},
         ],
         'figures': {
             'data_fingerprint': fingerprint, 'og_image': '/assets/top5-2026-w40c.en.webp',
             'og_overrides': {'en.html': '/assets/top5-card-w40c.en.png'},
-            'top5_files': {'en.html': ['top5-2026-w40c.en.png', 'top5-card-w40c.en.png'], 'index.html': ['top5-2026-w40c.en.webp']},
+            'top5_files': {'en.html': ['top5-2026-w40c.en.png', 'top5-card-w40c.en.png'], 'en/index.html': ['top5-2026-w40c.en.webp']},
         },
     }
 
@@ -98,14 +98,14 @@ class CheckClaims(unittest.TestCase):
         self.assertEqual(code, 0, out)
 
     def test_card_score_gone_stale(self):
-        self.assertFails("card amber-a says 18/24", edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'].replace("19'/24", "18'/24")}))
+        self.assertFails("card amber-a says 18/24", edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'].replace("19'/24", "18'/24")}))
 
     def test_card_without_any_current_score(self):
         self.assertFails("carries none of its current scores",
-                         edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'].replace("17'/24 model-b", "model-b")}))
+                         edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'].replace("17'/24 model-b", "model-b")}))
 
     def test_card_week_not_a_lane_week(self):
-        self.assertFails("card amber-b mentions W35", edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'].replace('model-b W39', 'model-b W35')}))
+        self.assertFails("card amber-b mentions W35", edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'].replace('model-b W39', 'model-b W35')}))
 
     def test_frozen_score_is_owner_pinned_not_stale(self):
         code, out = self.run_case()          # amber-c shows 16'/23 while its lane says 15/23: allowed only via frozen_scores
@@ -118,14 +118,14 @@ class CheckClaims(unittest.TestCase):
     def test_registered_historical_score_is_tolerated(self):
         code, out = self.run_case()          # 17/23 appears on index.html and is registered there
         self.assertEqual(code, 0, out)
-        self.assertFails("score 17/23 is neither", edit_registry=lambda r: r['pages']['index.html'].pop('historical_scores'))
+        self.assertFails("score 17/23 is neither", edit_registry=lambda r: r['pages']['en/index.html'].pop('historical_scores'))
 
     def test_current_week_phrase_gone_stale(self):
-        self.assertFails("Snapshot", edit_pages=lambda p: p.update({'index.html': p['index.html'].replace('Snapshot 2026-W40', 'Snapshot 2026-W39')}))
-        self.assertFails("保留的最新快照", edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'].replace('W40 保留', 'W39 保留')}))
+        self.assertFails("Snapshot", edit_pages=lambda p: p.update({'en/index.html': p['en/index.html'].replace('Snapshot 2026-W40', 'Snapshot 2026-W39')}))
+        self.assertFails("保留的最新快照", edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'].replace('W40 保留', 'W39 保留')}))
 
     def test_historical_phrase_changed(self):
-        self.assertFails("rule historical:W37 wants W37", edit_pages=lambda p: p.update({'index.html': p['index.html'].replace('scored in W37', 'scored in W38')}))
+        self.assertFails("rule historical:W37 wants W37", edit_pages=lambda p: p.update({'en/index.html': p['en/index.html'].replace('scored in W37', 'scored in W38')}))
 
     def test_expected_phrase_removed(self):
         self.assertFails("expected phrase", edit_pages=lambda p: p.update({'en.html': p['en.html'].replace('Snapshot 2026-W40', 'Snapshot')}))
@@ -134,34 +134,34 @@ class CheckClaims(unittest.TestCase):
         self.assertFails("newer than the current week", edit_pages=lambda p: p.update({'en.html': p['en.html'] + '<p>W41</p>'}))
 
     def test_unregistered_old_week(self):
-        self.assertFails("week W35 is not registered", edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'] + '<p>see W35</p>'}))
+        self.assertFails("week W35 is not registered", edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'] + '<p>see W35</p>'}))
 
     def test_share_image_changed(self):
-        self.assertFails("og:image", edit_pages=lambda p: p.update({'zh/index.html': p['zh/index.html'].replace('w40c', 'w41a')}))
+        self.assertFails("og:image", edit_pages=lambda p: p.update({'index.html': p['index.html'].replace('w40c', 'w41a')}))
 
     def test_page_specific_share_image_changed(self):
         self.assertFails("en.html: og:image", edit_pages=lambda p: p.update({'en.html': p['en.html'].replace('top5-card-w40c', 'top5-card-w39')}))
 
     def test_figure_file_name_changed(self):
-        self.assertFails("figure files", edit_pages=lambda p: p.update({'index.html': p['index.html'].replace('top5-2026-w40c.en.webp', 'top5-2026-w41a.en.webp')}))
+        self.assertFails("figure files", edit_pages=lambda p: p.update({'en/index.html': p['en/index.html'].replace('top5-2026-w40c.en.webp', 'top5-2026-w41a.en.webp')}))
 
     def test_scores_changed_so_figures_may_be_stale(self):
         moved = [dict(l) for l in LANES]
         moved[1] = {**moved[1], 'total': 18}          # one lane moves; the registry was approved against the old scores
         self.assertFails("figures: scores changed", lanes=moved, registry_lanes=LANES,
-                         edit_pages=lambda p: p.update({'zh/method/index.html': p['zh/method/index.html'].replace("17'/24", "18'/24")}))
+                         edit_pages=lambda p: p.update({'method/index.html': p['method/index.html'].replace("17'/24", "18'/24")}))
 
-    def test_legacy_english_redirect_is_allowed_without_share_image(self):
-        code, out = self.run_case(edit_pages=lambda p: p.update({'en/index.html':
-            '<link rel="canonical" href="https://askclaw.dev/"><meta http-equiv="refresh" content="0; url=/">'}))
+    def test_legacy_chinese_redirect_is_allowed_without_share_image(self):
+        code, out = self.run_case(edit_pages=lambda p: p.update({'zh/rank/index.html':
+            '<link rel="canonical" href="https://askclaw.dev/rank/"><meta http-equiv="refresh" content="0; url=/rank/">'}))
         self.assertEqual(code, 0, out)
 
-    def test_legacy_english_content_cannot_hide_from_share_gate(self):
-        self.assertFails('expected a redirect stub', edit_pages=lambda p: p.update({'en/index.html': '<p>not a redirect</p>'}))
+    def test_legacy_chinese_content_cannot_hide_from_share_gate(self):
+        self.assertFails('expected a redirect stub', edit_pages=lambda p: p.update({'zh/rank/index.html': '<p>not a redirect</p>'}))
 
     def test_redirect_needs_canonical(self):
-        self.assertFails('expected a redirect stub', edit_pages=lambda p: p.update({'en/index.html':
-            '<meta http-equiv="refresh" content="0; url=/">'}))
+        self.assertFails('expected a redirect stub', edit_pages=lambda p: p.update({'zh/rank/index.html':
+            '<meta http-equiv="refresh" content="0; url=/rank/">'}))
 
     def test_apostrophe_follows_na_and_frozen_rule(self):
         sys.path.insert(0, str(HERE))

@@ -10,19 +10,19 @@ interface Props {
 
 const { lang = 'en', currentPath = '/', altPath } = Astro.props;
 const isEnglish = lang === 'en';
-const homePath = isEnglish ? '/' : '/zh/';
+const homePath = isEnglish ? '/en/' : '/';
 // icon = one inline SVG path (24x24 viewBox, stroke only)
 const items = isEnglish
   ? [
-      ['matrix', 'Rank by axis', '/rank/', 'M4 20V10M10 20V4M16 20v-7M22 20H2'],
-      ['method', 'Method (中文)', '/zh/method/', 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7'],
-      ['claim', 'Claim consistency', '/claim/', 'M5 12l4 4 10-10'],
-      ['notes', 'Notes (中文)', '/zh/notes/', 'M4 20l1-4L16 5l3 3L8 19zM14 7l3 3'],
+      ['matrix', 'Rank by axis', '/en/rank/', 'M4 20V10M10 20V4M16 20v-7M22 20H2'],
+      ['method', 'Method (中文)', '/method/', 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7'],
+      ['claim', 'Claim consistency', '/en/claim/', 'M5 12l4 4 10-10'],
+      ['notes', 'Notes (中文)', '/notes/', 'M4 20l1-4L16 5l3 3L8 19zM14 7l3 3'],
     ]
   : [
-      ['matrix', '按轴排行', '/zh/rank/', 'M4 20V10M10 20V4M16 20v-7M22 20H2'],
-      ['method', '方法', '/zh/method/', 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7'],
-      ['notes', '随笔', '/zh/notes/', 'M4 20l1-4L16 5l3 3L8 19zM14 7l3 3'],
+      ['matrix', '按轴排行', '/rank/', 'M4 20V10M10 20V4M16 20v-7M22 20H2'],
+      ['method', '方法', '/method/', 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7'],
+      ['notes', '随笔', '/notes/', 'M4 20l1-4L16 5l3 3L8 19zM14 7l3 3'],
     ];
 ---
 <header class="site-header">
@@ -49,7 +49,7 @@ const items = isEnglish
     </a>
     <a
       class="language-toggle"
-      href={route(altPath ?? (isEnglish ? '/zh/' : '/'))}
+      href={route(altPath ?? (isEnglish ? '/' : '/en/'))}
       data-lang-switch={isEnglish ? 'zh-CN' : 'en'}
       title={isEnglish ? '切换到中文' : 'Switch to English'}
       aria-label={isEnglish ? '切换到中文' : 'Switch to English'}
