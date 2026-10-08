@@ -4,8 +4,8 @@
     python3 scripts/check-claims.py                  # check dist/ against src/data and scripts/figures.json
     python3 scripts/check-claims.py --propose        # print a registry skeleton for what is on the pages now
 
-Pages that are rendered from data cannot drift. Pages that are written by hand (the repo cards on /zh/method/ and
-/, public/en.html, the figure names and captions, the share image) can: a new sitting changes a score and the
+Pages that are rendered from data cannot drift. Pages that are written by hand (the repo cards on /method/ and
+/en/, public/en.html, the figure names and captions, the share image) can: a new sitting changes a score and the
 hand-written copy keeps the old one. This gate fails closed on that:
 
   1. repo cards      every score in a card must be a current score of one of that repo's lanes (or an owner-pinned
@@ -166,8 +166,7 @@ def run(root, dist, registry, propose=False):
                               "the owner must re-approve the figures and re-register figures.json")
         for html_path in sorted(dist.rglob('*.html')):
             relative = str(html_path.relative_to(dist))
-            if (relative.startswith('en/') or re.match(r'(?:zh/)?(?:model|provider)/', relative)
-                    or relative in {'method/index.html', 'notes/index.html', 'notes/agent-is-new-software/index.html'}):
+            if relative.startswith('zh/') or re.match(r'(?:en/)?(?:model|provider)/', relative):
                 # Only genuine redirect stubs may omit a share image. Content is checked at its new URL.
                 stub = html_path.read_text(encoding='utf-8')
                 if '<meta http-equiv="refresh"' not in stub or '<link rel="canonical"' not in stub:

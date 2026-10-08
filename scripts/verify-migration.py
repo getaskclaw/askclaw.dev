@@ -69,13 +69,13 @@ def main():
         html = old.read_text()
         if '<main' not in html or rel in ['en.html', 'amber/en.html', 'amber/index.html']:
             continue
-        new_rel = rel if rel == '404.html' else rel.removeprefix('en/') if rel.startswith('en/') else 'zh/' + rel
+        new_rel = rel if rel == '404.html' else rel.removeprefix('zh/') if rel.startswith('zh/') else 'en/' + rel
         new = dist / new_rel
         assert new.is_file(), (rel, new_rel, 'missing target')
         before, after = Copy(html), Copy(new.read_text())
         assert before.signature() == after.signature(), (rel, new_rel, 'copy changed')
         compared.append({'from': rel, 'to': new_rel})
-    assert compared and any(p['to'] == 'index.html' for p in compared) and any(p['to'] == 'zh/index.html' for p in compared)
+    assert compared and any(p['to'] == 'index.html' for p in compared) and any(p['to'].startswith('en/') for p in compared)
     protected = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', args.baseline_ref, '--', 'src/data', 'public'], cwd=root, text=True).splitlines()
     for path in protected:
         original = subprocess.check_output(['git', 'show', f'{args.baseline_ref}:{path}'], cwd=root)
@@ -85,8 +85,8 @@ def main():
     registry = json.loads((root / 'scripts/figures.json').read_text())
     baseline_registry = json.loads(subprocess.check_output(['git', 'show', f'{args.baseline_ref}:scripts/figures.json'], cwd=root, text=True))
     # Only URL registration keys move: all scores, dates, fingerprints and figure values stay identical.
-    mapping = {'en/index.html': 'index.html', 'method/index.html': 'zh/method/index.html',
-               'notes/agent-is-new-software/index.html': 'zh/notes/agent-is-new-software/index.html'}
+    mapping = {'index.html': 'en/index.html', 'zh/method/index.html': 'method/index.html',
+               'zh/notes/agent-is-new-software/index.html': 'notes/agent-is-new-software/index.html'}
     def mapped(value):
         if isinstance(value, dict):
             return {mapping.get(k, k): mapped(v) for k, v in value.items()}

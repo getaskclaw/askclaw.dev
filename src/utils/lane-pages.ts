@@ -18,7 +18,7 @@ export function laneInfo(id: string, lang: Lang) {
   return { id, lane, page, name: label.name ?? lane.name, vendor: label.vendor ?? lane.vendor };
 }
 
-// One URL space: /<name>/ (English) and /zh/<name>/. A name is a model, or a provider that has several lanes.
+// One URL space: /<name>/ (Chinese, the default) and /en/<name>/. A name is a model, or a provider that has several lanes.
 // A provider with a single lane has no page of its own (it would repeat the model page): its old
 // /provider/<name>/ address redirects to that lane's model page.
 //
@@ -47,7 +47,7 @@ for (const s of providerPageSlugs()) if (models.includes(s)) throw new Error(`na
 for (const s of entitySlugs()) if (RESERVED.has(s)) throw new Error(`name ${s} collides with a site path`);
 export const entityKind = (slug: string) => (models.includes(slug) ? 'model' : 'provider');
 
-export const entityPath = (lang: Lang, slug: string) => `/${lang === 'zh' ? 'zh/' : ''}${slug}/`;
+export const entityPath = (lang: Lang, slug: string) => `/${lang === 'en' ? 'en/' : ''}${slug}/`;
 export const modelPath = (lang: Lang, slug: string) => entityPath(lang, canonModel(slug));
 /** Where a provider's address leads: its own page, or (single lane) the model page, at that lane's block when the model has several. */
 export function providerPath(lang: Lang, slug: string) {

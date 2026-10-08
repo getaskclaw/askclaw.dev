@@ -6,7 +6,7 @@ The askclaw.dev site source (Astro). The homepage IS the AMBER site (sealed-repl
 
 ## 结构
 
-- `src/` — Astro 页面与布局（英文默认 `/`、`/rank/`；中文 `/zh/`、`/zh/method/`；旧 `/en/*` 为 301 入口）
+- `src/` — Astro 页面与布局（中文默认 `/`、`/rank/`、`/method/`；英文 `/en/`、`/en/rank/`；旧 `/zh/*` 为 301 入口）
 - `public/assets/` — 图（WebP，1400px 宽）
 - 运行时边界：内容页零 JS，`/rank/` 有 3.5KB 内联交互脚本。
 - Runtime boundary: content pages ship zero JS; `/rank/` has a 3.5KB inline interaction script.
@@ -63,7 +63,7 @@ LEGACY_SITE_ROOT=/path/to/legacy-site python3 scripts/verify-dist.py
 
 ## 部署（DEPLOY）
 
-英文默认迁移的先行勘察、B3 的 250,000 字节首页预算裁决、发布与回滚说明见 [docs/en-first.md](docs/en-first.md)。迁移产物含 `dist/_en-first.caddy`；Vesper 发布时须把它导入对应 Caddy site block，与同次构建的静态文件一起发布。只复制 HTML 不会产生 HTTP 301。本分支不部署、不合并。
+中文默认翻转的先行勘察、B3 的 300,000 字节首页预算裁决、发布与回滚说明见 [docs/zh-default.md](docs/zh-default.md)。`/` = 中文，英文迁 `/en/`，老 `/zh/*` 由服务端 301 回根。迁移产物含 `dist/_zh-first.caddy`；发布时须把它导入对应 Caddy site block（在 `file_server` 之前），与同次构建的静态文件一起发布。只复制 HTML 不会产生 HTTP 301。
 
 托管与 Caddy 配置：预览部署目标见运维手册（内部文档）。改配置前必备份，改后执行配置校验并 reload。
 

@@ -88,7 +88,7 @@ const t = zh ? {
 };
 const here = modelPath(lang, slug);
 const there = modelPath(zh ? 'en' : 'zh', slug);
-const rankPath = zh ? '/zh/rank/' : '/rank/';
+const rankPath = zh ? '/rank/' : '/en/rank/';
 const H = multi ? 'h3' : 'h2';
 const groups = siteData.groups.map((g: any) => ({ id: g.id, label: zh ? g.name_zh : g.name_en, axes: axes.filter((a: any) => a.grp === g.id) }));
 const dots = (cell: any) => cell && cell.n > 0 ? [
