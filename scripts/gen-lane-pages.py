@@ -53,6 +53,30 @@ GIT = ["env", "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "git",
        "-c", "core.fsmonitor=", "-c", "core.hooksPath=/dev/null", "-C", DB_HOME]
 
 
+# history-frozen-v1 (owner rulings RULING-20261009-r2 / -r3; table work/history-freeze-table-20261009.md).
+# A non-current sitting shows the total the published issue states for it, not a recomputation.
+# "db" is the recomputed (total, n, na) at freeze time: if amber.db later gives something else the run stops.
+# Non-current headlines without an entry here are left out of history with a WARN.
+FROZEN_HISTORY_V1 = {
+    ("claude", "2026-W39"): {"total": 17, "n": 24, "na": 1, "db": (17, 24, 3),
+                             "src": "amber-claude results/2026-W39.md L56 (17 胜 · 6 负 · 1 ⊘)"},
+    ("gpt6-luna", "2026-W39"): {"total": 15, "n": 24, "na": 2, "db": (15, 24, 2),
+                                "src": "amber-gpt results/2026-W39.md L59 (15'/24; matrix L33: 2 ⊘)"},
+    ("stepfun", "2026-W38"): {"total": 15, "n": 24, "na": 1, "db": (14, 23, 3),
+                              "src": "amber-stepfun results/2026-W38.md L3 (16'/24 -> 15'/24; the only NA the issue states: A-61f7ad01)"},
+    ("ollama", "2026-W36"): {"total": 15, "n": 21, "na": 2, "db": (15, 21, 2),
+                             "src": "amber-ollama results/2026-W36.md L69 (15/21)"},
+    ("ollama", "2026-W37"): {"total": 18, "n": 24, "na": 2, "db": (15, 23, 2),
+                             "src": "amber-ollama results/2026-W37.md L3 (10-07 update: board 18'/24, 18 胜 · 4 负 · 2 NA; 16/23 same-day re-test is not the board baseline)"},
+    ("gpt-luna", "2026-W38"): {"total": 15, "n": 23, "na": 0, "db": (16, 23, 2),
+                               "src": "amber-gpt results/2026-W38.md L91 (max 'real' 15/23 after removing the confounded UI case)"},
+    ("gpt-sol", "2026-W37"): {"total": 14, "n": 23, "na": 0, "db": (13, 23, 4),
+                              "src": "amber-gpt results/2026-W37.md L30 (sol high 14/23; 2 timeouts counted as not passed)"},
+}
+WARNINGS = []
+DRIFT = []
+
+
 def git(*args):
     return subprocess.run(GIT + list(args), capture_output=True, text=True).stdout.strip()
 
@@ -126,6 +150,15 @@ def build(con):
                    "current": h["run_dir"] == shown_run}
             if row["current"]:
                 row.update(total=lr["total"], na=lr["na"], n=lr["n"])
+            elif (pid, h["week"]) in FROZEN_HISTORY_V1:
+                fz = FROZEN_HISTORY_V1[(pid, h["week"])]
+                if (row["total"], row["n"], row["na"]) != fz["db"]:
+                    DRIFT.append(f"{pid} {h['week']}: amber.db now gives {row['total']}/{row['n']}/{row['na']}, "
+                                 f"freeze recorded {fz['db']} ({fz['src']})")
+                row.update(total=fz["total"], n=fz["n"], na=fz["na"])
+            else:
+                WARNINGS.append(f"{pid} {h['week']}: sitting in amber.db with no published issue in FROZEN_HISTORY_V1; left out of history")
+                continue
             history.append(row)
         lanes[pid] = {
             "id": pid, "name": lane["public_name"], "model": lane["model"], "vendor": lane["vendor"],
@@ -165,10 +198,12 @@ def main():
     args = ap.parse_args()
     con = A.connect(A.DB_PATH, write=False)
     doc = build(con)
-    errors = against_site_axes(doc)
+    errors = against_site_axes(doc) + DRIFT
     for lane in doc["lanes"].values():
         lane.pop("_axis_check")
     hits = X.redline(con, doc)
+    for w in WARNINGS:
+        print("WARN", w)
     if hits:
         print("gen-lane-pages aborted (redline):", *hits[:20], sep="\n    ")
         return 1
