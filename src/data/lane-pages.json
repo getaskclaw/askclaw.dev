@@ -90,7 +90,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 9022,
      "wall_s": 87
     },
@@ -178,7 +178,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 16,
      "week": "2026-W39"
     }
@@ -188,7 +188,7 @@
    "model": "gpt-6-astra-900k",
    "model_slug": "gpt-6-astra-900k",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "gpt-6-astra-900k",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -286,7 +286,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 16825,
      "wall_s": 55
     },
@@ -367,7 +367,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 3,
+     "na": 4,
      "total": 15,
      "week": "2026-W37"
     }
@@ -377,7 +377,7 @@
    "model": "deepseek/deepseek-v4.1-flash",
    "model_slug": "deepseek-v4.1-flash",
    "n": 23,
-   "na": 3,
+   "na": 4,
    "name": "deepseek-v4.1-flash",
    "provider_slug": "commandcode",
    "repo": "amber-commandcode",
@@ -475,7 +475,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 36874,
      "wall_s": 129
     },
@@ -563,7 +563,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 16,
      "week": "2026-W39"
     }
@@ -573,7 +573,7 @@
    "model": "mimo-v2.6-pro",
    "model_slug": "mimo-v2.6-pro",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "mimo-v2.6-pro",
    "provider_slug": "commandcode",
    "repo": "amber-commandcode",
@@ -671,7 +671,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 18730,
      "wall_s": 148
     },
@@ -759,7 +759,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 3,
+     "na": 4,
      "total": 13,
      "week": "2026-W39"
     }
@@ -769,7 +769,7 @@
    "model": "space-bunny-alpha",
    "model_slug": "space-bunny-alpha",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "space-bunny-alpha",
    "provider_slug": "commandcode",
    "repo": "amber-commandcode",
@@ -867,7 +867,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 14583,
      "wall_s": 78
     },
@@ -955,14 +955,14 @@
     {
      "current": false,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 17,
      "week": "2026-W39"
     },
     {
      "current": true,
      "n": 24,
-     "na": 3,
+     "na": 4,
      "total": 19,
      "week": "2026-W40"
     }
@@ -972,7 +972,7 @@
    "model": "claude-opus-5-5",
    "model_slug": "claude-opus-5-5",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "claude-opus-5-5",
    "provider_slug": "claude",
    "repo": "amber-claude",
@@ -1070,7 +1070,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 8269,
      "wall_s": 13
     },
@@ -1158,7 +1158,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 3,
+     "na": 4,
      "total": 16,
      "week": "2026-W40"
     }
@@ -1168,7 +1168,7 @@
    "model": "claude-fable-5-1",
    "model_slug": "claude-fable-5-1",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "claude-fable-5-1",
    "provider_slug": "claude",
    "repo": "amber-claude",
@@ -1462,7 +1462,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 15259,
      "wall_s": 69
     },
@@ -1550,7 +1550,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 1,
+     "na": 2,
      "total": 19,
      "week": "2026-W40"
     }
@@ -1560,7 +1560,7 @@
    "model": "claude-sonnet-5-5",
    "model_slug": "claude-sonnet-5-5",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "claude-sonnet-5-5",
    "provider_slug": "claude",
    "repo": "amber-claude",
@@ -1658,7 +1658,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": null,
      "wall_s": 469
     },
@@ -1746,7 +1746,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 2,
+     "na": 3,
      "total": 18,
      "week": "2026-W37"
     }
@@ -1756,7 +1756,7 @@
    "model": "swe-2-max",
    "model_slug": "swe-2-max",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "swe-2-max",
    "provider_slug": "devin",
    "repo": "amber-devin",
@@ -1854,7 +1854,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 26162,
      "wall_s": 621
     },
@@ -1942,7 +1942,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 3,
+     "na": 4,
      "total": 16,
      "week": "2026-W38"
     }
@@ -1952,7 +1952,7 @@
    "model": "doubao-seed-evolving",
    "model_slug": "doubao-seed-evolving",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "doubao-seed-evolving",
    "provider_slug": "doubao",
    "repo": "amber-doubao",
@@ -2050,7 +2050,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 23068,
      "wall_s": 86
     },
@@ -2138,7 +2138,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 2,
+     "na": 3,
      "total": 15,
      "week": "2026-W37"
     }
@@ -2148,7 +2148,7 @@
    "model": "deepseek-flash",
    "model_slug": "deepseek-flash",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "deepseek-flash (GA)",
    "provider_slug": "deepseek",
    "repo": "amber-deepseek",
@@ -2246,7 +2246,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 22040,
      "wall_s": 114
     },
@@ -2334,7 +2334,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 2,
+     "na": 3,
      "total": 14,
      "week": "2026-W38"
     }
@@ -2344,7 +2344,7 @@
    "model": "Qwen3.8-27B",
    "model_slug": "qwen3.8-27b",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "Qwen3.8-27B",
    "provider_slug": "goldenpotato",
    "repo": "amber-goldenpotato",
@@ -2530,7 +2530,7 @@
     {
      "current": false,
      "n": 23,
-     "na": 1,
+     "na": 2,
      "total": 16,
      "week": "2026-W38"
     }
@@ -2719,7 +2719,7 @@
     {
      "current": false,
      "n": 23,
-     "na": 3,
+     "na": 4,
      "total": 13,
      "week": "2026-W37"
     },
@@ -2733,7 +2733,7 @@
     {
      "current": false,
      "n": 24,
-     "na": 5,
+     "na": 6,
      "total": 13,
      "week": "2026-W39"
     }
@@ -2841,7 +2841,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 7734,
      "wall_s": 28
     },
@@ -2929,14 +2929,14 @@
     {
      "current": false,
      "n": 24,
-     "na": 1,
+     "na": 2,
      "total": 15,
      "week": "2026-W39"
     },
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 15,
      "week": "2026-W41"
     }
@@ -2946,7 +2946,7 @@
    "model": "gpt-6-luna-900k",
    "model_slug": "gpt-6-luna-900k",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "gpt-6-luna-900k",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -3044,7 +3044,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 9763,
      "wall_s": 110
     },
@@ -3132,7 +3132,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 17,
      "week": "2026-W39"
     }
@@ -3142,7 +3142,7 @@
    "model": "gpt-6-sol-900k",
    "model_slug": "gpt-6-sol-900k",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "gpt-6-sol-900k",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -3240,7 +3240,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 9120,
      "wall_s": 146
     },
@@ -3328,7 +3328,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 16,
      "week": "2026-W40"
     }
@@ -3338,7 +3338,7 @@
    "model": "gpt-6.1-sol",
    "model_slug": "gpt-6.1-sol",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "gpt-6.1-sol",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -3436,7 +3436,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 8210,
      "wall_s": 70
     },
@@ -3524,7 +3524,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 1,
+     "na": 2,
      "total": 17,
      "week": "2026-W38"
     }
@@ -3534,7 +3534,7 @@
    "model": "k3",
    "model_slug": "k3",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "k3",
    "provider_slug": "kimi",
    "repo": "amber-kimi",
@@ -3632,7 +3632,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 14705,
      "wall_s": 161
     },
@@ -3720,7 +3720,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 1,
+     "na": 2,
      "total": 17,
      "week": "2026-W41"
     }
@@ -3730,7 +3730,7 @@
    "model": "gpt-5.6-luna",
    "model_slug": "gpt-5.6-luna",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "gpt-5.6-luna",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -3828,7 +3828,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 14125,
      "wall_s": 149
     },
@@ -3916,7 +3916,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 1,
+     "na": 2,
      "total": 16,
      "week": "2026-W41"
     }
@@ -3926,7 +3926,7 @@
    "model": "gpt-5.6-luna-900k",
    "model_slug": "gpt-5.6-luna-900k",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "gpt-5.6-luna-900k",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -4024,7 +4024,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 8098,
      "wall_s": 41
     },
@@ -4112,7 +4112,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 16,
      "week": "2026-W41"
     }
@@ -4122,7 +4122,7 @@
    "model": "gpt-6-luna",
    "model_slug": "gpt-6-luna",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "gpt-6-luna",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
@@ -4220,7 +4220,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 6168,
      "wall_s": 4
     },
@@ -4308,7 +4308,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 3,
+     "na": 4,
      "total": 14,
      "week": "2026-W37"
     }
@@ -4318,7 +4318,7 @@
    "model": "deepseek-flash",
    "model_slug": "deepseek-flash",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "deepseek-flash",
    "provider_slug": "opencode",
    "repo": "amber-opencode",
@@ -4416,7 +4416,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 12987,
      "wall_s": 74
     },
@@ -4504,14 +4504,14 @@
     {
      "current": false,
      "n": 21,
-     "na": 1,
+     "na": 2,
      "total": 15,
      "week": "2026-W36"
     },
     {
      "current": false,
      "n": 23,
-     "na": 1,
+     "na": 2,
      "total": 15,
      "week": "2026-W37"
     }
@@ -4521,7 +4521,7 @@
    "model": "glm-5.3-flash",
    "model_slug": "glm-5.3-flash",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "glm-5.3-flash",
    "provider_slug": "ollama",
    "repo": "amber-ollama",
@@ -4619,7 +4619,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 13328,
      "wall_s": 114
     },
@@ -4707,14 +4707,14 @@
     {
      "current": false,
      "n": 23,
-     "na": 2,
+     "na": 3,
      "total": 14,
      "week": "2026-W38"
     },
     {
      "current": true,
      "n": 24,
-     "na": 3,
+     "na": 4,
      "total": 18,
      "week": "2026-W41"
     }
@@ -4724,7 +4724,7 @@
    "model": "step-5-preview",
    "model_slug": "step-5-preview",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "step-5-preview",
    "provider_slug": "stepfun",
    "repo": "amber-stepfun",
@@ -4822,7 +4822,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": null,
      "wall_s": 486
     },
@@ -4910,7 +4910,7 @@
     {
      "current": true,
      "n": 23,
-     "na": 1,
+     "na": 2,
      "total": 17,
      "week": "2026-W37"
     }
@@ -4920,7 +4920,7 @@
    "model": "hy4-preview-f",
    "model_slug": "hy4-preview-f",
    "n": 24,
-   "na": 1,
+   "na": 2,
    "name": "hy4-preview-f",
    "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
@@ -5018,7 +5018,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 9150,
      "wall_s": 24
     },
@@ -5106,7 +5106,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 18,
      "week": "2026-W40"
     }
@@ -5116,7 +5116,7 @@
    "model": "deepseek-v4.1-flash",
    "model_slug": "deepseek-v4.1-flash",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "deepseek-v4.1-flash (WorkBuddy 直连)",
    "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
@@ -5214,7 +5214,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 5263,
      "wall_s": 10
     },
@@ -5302,7 +5302,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 17,
      "week": "2026-W40"
     }
@@ -5312,7 +5312,7 @@
    "model": "glm-5.3-flash",
    "model_slug": "glm-5.3-flash",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "glm-5.3-flash (WorkBuddy 直连)",
    "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
@@ -5410,7 +5410,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 7492,
      "wall_s": 403
     },
@@ -5498,7 +5498,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 3,
+     "na": 4,
      "total": 16,
      "week": "2026-W40"
     }
@@ -5508,7 +5508,7 @@
    "model": "hy4-preview-f",
    "model_slug": "hy4-preview-f",
    "n": 24,
-   "na": 3,
+   "na": 4,
    "name": "hy4-preview-f (WorkBuddy 直连)",
    "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
@@ -5606,7 +5606,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "status": "fail",
+     "status": "na",
      "tokens": 5227,
      "wall_s": 12
     },
@@ -5694,7 +5694,7 @@
     {
      "current": true,
      "n": 24,
-     "na": 2,
+     "na": 3,
      "total": 16,
      "week": "2026-W40"
     }
@@ -5704,7 +5704,7 @@
    "model": "minimax-m3",
    "model_slug": "minimax-m3",
    "n": 24,
-   "na": 2,
+   "na": 3,
    "name": "minimax-m3 (WorkBuddy 直连)",
    "provider_slug": "workbuddy",
    "repo": "amber-workbuddy",
@@ -5719,9 +5719,9 @@
   "crof"
  ],
  "source": {
-  "amber_db_blob": "8a47bbdfad0d926d3b0b6560b44b62ab789d741b",
-  "amber_db_sha256": "f05dcf4cd81831a8bf99749abad9dacb36bc1248b4956114b484486b9703bd44",
-  "amber_run_commit": "b0b73f891b448b611e8d3da68f847aa5c7136490",
+  "amber_db_blob": "220a267145ee019af301bb97f4f800173349c053",
+  "amber_db_sha256": "7acd3a7a9f01daf502727b1524451ff60d13e261b2a783418372ecc198fc9b77",
+  "amber_run_commit": "fbbf1522d44807269db7344b9ac4259adab8498c",
   "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
   "tools_or_db_uncommitted": false
  }
