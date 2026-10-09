@@ -121,9 +121,12 @@ def build(con):
                     if held_case in results and results[held_case] != "pass":
                         results[held_case] = "NA:" + hold["na_reason"]
             values = list(results.values())
-            history.append({"week": h["week"], "total": sum(v == "pass" for v in values),
-                            "na": sum(v not in ("pass", "fail") for v in values), "n": len(values),
-                            "current": h["run_dir"] == shown_run})
+            row = {"week": h["week"], "total": sum(v == "pass" for v in values),
+                   "na": sum(v not in ("pass", "fail") for v in values), "n": len(values),
+                   "current": h["run_dir"] == shown_run}
+            if row["current"]:
+                row.update(total=lr["total"], na=lr["na"], n=lr["n"])
+            history.append(row)
         lanes[pid] = {
             "id": pid, "name": lane["public_name"], "model": lane["model"], "vendor": lane["vendor"],
             "repo": lane["repo"], "provider_slug": lane["repo"].removeprefix("amber-"),
