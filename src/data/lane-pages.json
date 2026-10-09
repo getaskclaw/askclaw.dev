@@ -955,7 +955,7 @@
     {
      "current": false,
      "n": 24,
-     "na": 3,
+     "na": 1,
      "total": 17,
      "week": "2026-W39"
     },
@@ -2530,8 +2530,8 @@
     {
      "current": false,
      "n": 23,
-     "na": 2,
-     "total": 16,
+     "na": 0,
+     "total": 15,
      "week": "2026-W38"
     }
    ],
@@ -2719,8 +2719,8 @@
     {
      "current": false,
      "n": 23,
-     "na": 4,
-     "total": 13,
+     "na": 0,
+     "total": 14,
      "week": "2026-W37"
     },
     {
@@ -2729,13 +2729,6 @@
      "na": 4,
      "total": 15,
      "week": "2026-W38"
-    },
-    {
-     "current": false,
-     "n": 24,
-     "na": 6,
-     "total": 13,
-     "week": "2026-W39"
     }
    ],
    "history_withheld": true,
@@ -4510,9 +4503,9 @@
     },
     {
      "current": false,
-     "n": 23,
+     "n": 24,
      "na": 2,
-     "total": 15,
+     "total": 18,
      "week": "2026-W37"
     }
    ],
@@ -4706,9 +4699,9 @@
    "history": [
     {
      "current": false,
-     "n": 23,
-     "na": 3,
-     "total": 14,
+     "n": 24,
+     "na": 1,
+     "total": 15,
      "week": "2026-W38"
     },
     {
