@@ -15,7 +15,7 @@ export function laneInfo(id: string, lang: Lang) {
     throw new Error(`lane-pages.json disagrees with axes.json for ${id}`);
   }
   const label = (I18N as any)[lang].laneLabels?.[id] ?? {};
-  return { id, lane, page, name: label.name ?? lane.name, vendor: label.vendor ?? lane.vendor };
+  return { id, lane, page, name: label.card ?? label.name ?? lane.name, record: label.name ?? lane.name, vendor: label.vendor ?? lane.vendor };
 }
 
 // One URL space: /<name>/ (Chinese, the default) and /en/<name>/. A name is a model, or a provider that has several lanes.
@@ -27,14 +27,22 @@ export function laneInfo(id: string, lang: Lang) {
 // owner 2026-10-06: V4.1-Flash came out on 09-10 and deepseek-flash has been it since. The lanes keep their
 // recorded names and are still scored per endpoint, never merged.
 // laguna-s-2.1 on two gateways is one page (owner WO site-laguna-merge-20261010): the two lanes are sections of it.
+// swe-2 is one model on four lanes (owner ruling A, 2026-10-10): the ACP lane swe-2-max joins the three HTTP lanes.
 const MODEL_MERGE: Record<string, string> = { 'deepseek-flash': 'deepseek', 'deepseek-v4.1-flash': 'deepseek',
-  'laguna-s-2.1-free-nous': 'laguna-s-2.1', 'laguna-s-2.1-free-commandcode': 'laguna-s-2.1' };
-export const MODEL_TITLE: Record<string, string> = { deepseek: 'deepseek-flash', 'laguna-s-2.1': 'laguna-s-2.1' };
+  'laguna-s-2.1-free-nous': 'laguna-s-2.1', 'laguna-s-2.1-free-commandcode': 'laguna-s-2.1', 'swe-2-max': 'swe-2' };
+export const MODEL_TITLE: Record<string, string> = { deepseek: 'deepseek-flash', 'laguna-s-2.1': 'laguna-s-2.1', 'swe-2': 'swe-2' };
 // Pages that compare exactly two lanes of one model: a per-case table side by side and a divergence list.
 export const PAIR_PAGE: Record<string, { h1: { zh: string; en: string } }> = {
   'laguna-s-2.1': { h1: { zh: 'laguna-s-2.1 · 2 条道', en: 'laguna-s-2.1 · 2 lanes' } },
 };
 export const MODEL_NOTE: Record<string, { href: string }> = { deepseek: { href: 'https://api-docs.deepseek.com/quick_start/pricing' } };
+// Footnote on a provider page: why two lanes of one account pool differ (owner, 2026-10-10). Display text only.
+export const PROVIDER_NOTE: Record<string, { zh: string; en: string }> = {
+  devin: {
+    zh: '两条道用的是同一个 Devin Max 账号池，区别在调用方式。swe-2-max (ACP)：经 Devin 智能体客户端外壳发出，请求前带系统前缀；W37 测试时图片输入会被静默丢弃；它名字里的 max 是旧模型名的一部分，不是推理档位。swe-2-max (API)、swe-2-medium (API)、swe-2-high (API)：普通的 chat/completions 调用，没有智能体外壳，图片输入真实可用。',
+    en: 'Both lanes draw on the same Devin Max account pool; they differ in how the model is called. swe-2-max (ACP) goes through the Devin agent client shell: a system prefix is attached, images were silently dropped during the W37 sitting, and its "max" is part of the legacy model name, not a reasoning tier. swe-2-max (API), swe-2-medium (API) and swe-2-high (API) are plain chat/completions calls to the model, with no agent shell and with true vision.',
+  },
+};
 export const canonModel = (slug: string) => MODEL_MERGE[slug] ?? slug;
 
 export const modelSlugs = () => [...new Set(pageLaneIds.map((id) => canonModel(lanesData[id].model_slug)))];
@@ -42,6 +50,8 @@ export const providerSlugs = () => [...new Set(pageLaneIds.map((id) => lanesData
 export const lanesOfModel = (slug: string) => pageLaneIds.filter((id) => canonModel(lanesData[id].model_slug) === slug);
 export const lanesOfProvider = (slug: string) => pageLaneIds.filter((id) => lanesData[id].provider_slug === slug);
 export const modelSlugOf = (id: string) => (lanesData[id] ? canonModel(lanesData[id].model_slug) : undefined) as string | undefined;
+/** The model-group table: lane id -> model key. The board's chips, counts and tier titles all read this one map. */
+export const modelKeyByLane = () => Object.fromEntries(pageLaneIds.map((id) => [id, modelSlugOf(id)]));
 /** Providers with at least two lanes keep a page; the others are redirects to their model page. */
 export const providerHasPage = (slug: string) => lanesOfProvider(slug).length > 1;
 export const providerPageSlugs = () => providerSlugs().filter(providerHasPage);

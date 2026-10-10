@@ -443,6 +443,8 @@ html { transition: background-color .4s; }
 
 .same-model { display: inline-block; margin: 6px 0 0; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line, #d7dee6); background: rgba(90, 166, 214, .12); font-size: .8rem; text-decoration: none; color: inherit; }
 .same-model:hover { background: rgba(90, 166, 214, .24); }
+.sib-note { grid-column: 1 / -1; margin: 6px 6px 0; font-size: 12px; color: var(--ink-soft); }
+.card[data-sib] { outline: 2px solid var(--amber); outline-offset: 3px; }
 .multi-lane { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line, #d7dee6); }
 .multi-lane h3 { margin: 0 0 4px; font-size: 1rem; }
 .multi-lane .hint { margin: 0 0 6px; font-size: .86rem; color: var(--sub, #607d8b); }

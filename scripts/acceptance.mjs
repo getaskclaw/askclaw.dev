@@ -7,6 +7,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { chromium } from 'playwright';
 import astroConfig from '../astro.config.mjs';
 import { verifyLanguage } from './verify-language.mjs';
+import { I18N } from '../src/utils/picker-i18n.js';
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const distRoot = resolve(projectRoot, 'dist');
@@ -245,9 +246,11 @@ try {
       if (result.chipCount !== siteAxes.length
         || result.presetRowCount !== expectedRankRows(sourceLanes, ['build', 'ops', 'ui-build']).length) failed = true;
       const shippedLanes = JSON.parse(await page.locator('#rank-app').getAttribute('data-lanes'));
+      // Display names come from the same dictionary the pages read (picker-i18n card titles); the DB name stays in `record`.
       const expectedLanes = sourceLanes.map((lane) => ({
         ...lane,
         ...(english ? englishLabels[lane.id] : { vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor }),
+        ...(I18N[english ? 'en' : 'zh'].laneLabels[lane.id]?.card ? { name: I18N[english ? 'en' : 'zh'].laneLabels[lane.id].card } : {}),
       }));
       result.laneDataPreserved = isDeepStrictEqual(shippedLanes, expectedLanes);
       result.kimiVendor = await page.locator('#rank-body tr').filter({ has: page.locator('a[href="https://github.com/getaskclaw/amber-kimi"]') }).locator('small').innerText();

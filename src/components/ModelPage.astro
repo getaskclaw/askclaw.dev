@@ -202,7 +202,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
       <div class="lane-block" id={`lane-${b.id}`}>
         {multi && <h2>{b.label}</h2>}
         <p class="lead">
-          {t.provider}: {providerHasPage(b.page.provider_slug) ? <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> : b.vendor} · {t.sub(b)}{multi && b.name !== modelName && <Fragment> · {t.recName}: <code>{b.name}</code></Fragment>}
+          {t.provider}: {providerHasPage(b.page.provider_slug) ? <a href={route(providerPath(lang, b.page.provider_slug))}>{b.vendor}</a> : b.vendor} · {t.sub(b)}{multi && b.record !== modelName && <Fragment> · {t.recName}: <code>{b.record}</code></Fragment>}
         </p>
         {b.others.length > 0 && (
           <p class="note">{t.moreHere}: {b.others.map((o: any, i: number) => (<Fragment>{i > 0 ? ' · ' : ''}<a href={route(modelPath(lang, o.page.model_slug))}>{o.name}</a></Fragment>))}</p>

@@ -65,6 +65,7 @@ REFRESHED_CHART_ASSETS = {
     'top5-2026-w40h.en.webp': 'top5-2026-w40h.en.png',  # four WorkBuddy direct lanes (W40, 2026-10-04) enter the board (amber spec repo @48afefe)
     'top5-2026-w41b.en.webp': 'top5-2026-w41b.en.png',  # step-5-preview brand case re-sat under the revised prompt: 18'/24 (amber spec repo @bbd90af)
     'top5-2026-w41c.en.webp': 'top5-2026-w41c.en.png',  # 2026-10-10 board redraw: swe-2 HTTP lanes enter; lanes no longer in amber.db removed (owner gate, figures registry)
+    'top5-2026-w41d.en.webp': 'top5-2026-w41d.en.png',  # 2026-10-10 label change: HTTP lanes shown as (API), ACP lane as (ACP) (owner gate, figures registry)
     'completion-matrix-top8-2026-w41.en.webp': 'completion-matrix-top8-2026-w41.en.png',  # the 8 lanes with 18+ (amber spec repo @bbd90af); replaces the 7-lane matrix
     'completion-matrix-7way.en.webp': 'completion-matrix-7way.en.png',
 }
@@ -82,6 +83,7 @@ LEGACY_ASSETS = {
     'top5-2026-w41.png', 'top5-2026-w41.en.png', 'top5-card-w41.en.png',
     'top5-2026-w41b.png', 'top5-2026-w41b.en.png', 'top5-card-w41b.en.png',
     'top5-2026-w41c.en.png', 'top5-card-w41c.en.png',
+    'top5-2026-w41d.en.png', 'top5-card-w41d.en.png',
     'completion-matrix-top8-2026-w41.png', 'completion-matrix-top8-2026-w41.en.png',
     'completion-matrix-7way.png', 'completion-matrix-7way.en.png',
     'trust-chain.png', 'trust-chain.en.png',
@@ -144,7 +146,7 @@ assert lane_pages_doc['schema'] == 'lane-pages-v1' and lane_pages_doc['source'][
 lane_pages = lane_pages_doc['lanes']
 # One address per name: /<name>/ is a model page or the page of a provider with several lanes (src/utils/lane-pages.ts).
 # The old /model/<slug>/ and /provider/<slug>/ addresses stay as redirect pages.
-MODEL_MERGE = {'deepseek-flash': 'deepseek', 'deepseek-v4.1-flash': 'deepseek', 'laguna-s-2.1-free-nous': 'laguna-s-2.1', 'laguna-s-2.1-free-commandcode': 'laguna-s-2.1'}   # same model, two names; keep in step with lane-pages.ts
+MODEL_MERGE = {'deepseek-flash': 'deepseek', 'deepseek-v4.1-flash': 'deepseek', 'laguna-s-2.1-free-nous': 'laguna-s-2.1', 'laguna-s-2.1-free-commandcode': 'laguna-s-2.1', 'swe-2-max': 'swe-2'}   # same model, two names; keep in step with lane-pages.ts
 canon_model = lambda slug: MODEL_MERGE.get(slug, slug)
 PAIR_SLUGS = {'laguna-s-2.1'}   # PAIR_PAGE in lane-pages.ts: one table for two lanes
 raw_model_slugs = sorted({l['model_slug'] for l in lane_pages.values()})
@@ -159,7 +161,7 @@ redirect_routes = {f'{prefix}model/{slug}/index.html' for slug in raw_model_slug
 expected_routes |= model_routes | provider_routes | redirect_routes
 # Independently derive the old English inventory; do not trust the build's manifest as its own oracle.
 # Independently derive the old Chinese inventory; do not trust the build's manifest as its own oracle.
-RETIRED = {'laguna-s-2.1-free-nous/index.html': 'laguna-s-2.1/#lane-laguna-np', 'laguna-s-2.1-free-commandcode/index.html': 'laguna-s-2.1/#lane-laguna-cc', 'en/laguna-s-2.1-free-nous/index.html': 'en/laguna-s-2.1/#lane-laguna-np', 'en/laguna-s-2.1-free-commandcode/index.html': 'en/laguna-s-2.1/#lane-laguna-cc'}  # zh-first-redirects.mjs MOVED
+RETIRED = {'laguna-s-2.1-free-nous/index.html': 'laguna-s-2.1/#lane-laguna-np', 'laguna-s-2.1-free-commandcode/index.html': 'laguna-s-2.1/#lane-laguna-cc', 'en/laguna-s-2.1-free-nous/index.html': 'en/laguna-s-2.1/#lane-laguna-np', 'en/laguna-s-2.1-free-commandcode/index.html': 'en/laguna-s-2.1/#lane-laguna-cc', 'swe-2-max/index.html': 'swe-2/#lane-devin', 'en/swe-2-max/index.html': 'en/swe-2/#lane-devin'}  # zh-first-redirects.mjs MOVED
 expected_routes |= set(RETIRED)
 redirect_routes = redirect_routes | set(RETIRED)   # retired addresses are redirect stubs
 chinese_files = {p for p in expected_routes if not p.startswith('en/') and p not in RETIRED}
@@ -270,7 +272,7 @@ for relative in sorted(expected_routes):
         target = RETIRED[relative]
         assert f'<meta http-equiv="refresh" content="0; url={base_path}{target}">' in text, (relative, target)
         assert f'<link rel="canonical" href="{expected_base}{target.split("#")[0]}">' in text, (relative, 'canonical')
-        assert f'<meta property="og:image" content="https://askclaw.dev/assets/top5-2026-w41c.en.webp">' in text, (relative, 'og')
+        assert f'<meta property="og:image" content="https://askclaw.dev/assets/top5-2026-w41d.en.webp">' in text, (relative, 'og')
         assert (dist / target.split('#')[0] / 'index.html').is_file(), (relative, target)
         expected_http_redirects['/' + relative.removesuffix('index.html')] = '/' + target
         continue
