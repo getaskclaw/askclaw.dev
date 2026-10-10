@@ -309,10 +309,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'claude-haiku', 'cc-sb', 'wb2-m3'];  // 2026-10-08: claude-haiku (Nous Portal) passed the convergence case
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'claude-haiku', 'laguna-np', 'laguna-cc', 'cc-sb', 'wb2-m3'];  // 2026-10-08: claude-haiku (Nous Portal) passed the convergence case; 2026-10-09: laguna-np / laguna-cc (owner record #4)
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' || id === 'wb2-m3' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence25/27 full marks' : '收敛25/27 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence27/29 full marks' : '收敛27/29 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);

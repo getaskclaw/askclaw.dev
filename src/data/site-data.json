@@ -1036,6 +1036,106 @@
    "tok": 14340024,
    "tok_n": 24
   },
+  "laguna-cc": {
+   "ax": {
+    "attribution": [
+     3600,
+     1
+    ],
+    "build": [
+     6293,
+     6
+    ],
+    "convergence": [
+     151,
+     1
+    ],
+    "defense": [
+     1763,
+     2
+    ],
+    "ops": [
+     4312,
+     6
+    ],
+    "req-drift": [
+     367,
+     1
+    ],
+    "review": [
+     176,
+     2
+    ],
+    "text": [
+     61,
+     3
+    ],
+    "ui-build": [
+     118,
+     1
+    ],
+    "vision": [
+     47,
+     1
+    ]
+   },
+   "t_med": 288,
+   "t_n": 24,
+   "t_p90": 1800,
+   "t_total": 16889,
+   "tok": 15324145,
+   "tok_n": 21
+  },
+  "laguna-np": {
+   "ax": {
+    "attribution": [
+     3600,
+     1
+    ],
+    "build": [
+     7476,
+     6
+    ],
+    "convergence": [
+     292,
+     1
+    ],
+    "defense": [
+     3600,
+     2
+    ],
+    "ops": [
+     3169,
+     6
+    ],
+    "req-drift": [
+     375,
+     1
+    ],
+    "review": [
+     57,
+     2
+    ],
+    "text": [
+     52,
+     3
+    ],
+    "ui-build": [
+     107,
+     1
+    ],
+    "vision": [
+     12,
+     1
+    ]
+   },
+   "t_med": 366,
+   "t_n": 24,
+   "t_p90": 1800,
+   "t_total": 18741,
+   "tok": 11757087,
+   "tok_n": 20
+  },
   "luna56": {
    "ax": {
     "attribution": [
