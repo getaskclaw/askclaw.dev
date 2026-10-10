@@ -153,6 +153,11 @@ dialog.sheet::backdrop { background: rgba(10, 14, 20, .35); -webkit-backdrop-fil
 /* The sheet is translucent: a fixed bar at the viewport bottom (compare dock, back-to-top) showed through its lower edge
    as a light strip. While the sheet is open those bars are hidden; their layout is unchanged and they return on close. */
 html:has(dialog.sheet[open]) .dock, html:has(dialog.sheet[open]) .totop { visibility: hidden; }
+/* The sheet body is itself the scroll container. The .glass rim ring (::before, absolutely positioned) scrolls with its
+   content, so its bottom edge rose into view as a white arc at some widths and pixel ratios. The sheet keeps the rim as an
+   inset shadow instead, which does not scroll. */
+.sheet-body.glass::before { display: none; }
+.sheet-body.glass { box-shadow: var(--shadow), inset 0 1px 0 var(--rim), inset 0 -1px 0 var(--rim-low), inset 0 0 0 1px rgba(255, 255, 255, .55); }
 .sheet-body { padding: 24px; display: grid; gap: 16px; max-height: calc(100vh - 48px); overflow: auto; overscroll-behavior: contain; scrollbar-width: none; background: var(--glass-strong); border-radius: 28px; }
 .sheet-body::-webkit-scrollbar { display: none; }
 .sheet-body.more { -webkit-mask: linear-gradient(#000 calc(100% - 56px), transparent); mask: linear-gradient(#000 calc(100% - 56px), transparent); }
