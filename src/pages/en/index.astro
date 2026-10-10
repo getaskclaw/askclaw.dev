@@ -3,8 +3,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picker from '../../components/Picker.astro';
 import rawAxes from '../../data/axes.json';
 import { route } from '../../utils/route';
+import { laneInfo, lanesOfModel, modelPath, modelSlugs, MODEL_TITLE } from '../../utils/lane-pages';
 
 const asset = (file: string) => route(`/assets/${file}`);
+// Models tested on more than one lane (gateway): the spread is the largest gap between their totals.
+const multiModels = modelSlugs().map((slug) => {
+  const ids = lanesOfModel(slug);
+  if (ids.length < 2) return null;
+  const totals = ids.map((id) => laneInfo(id, 'en').lane.total);
+  return {
+    name: MODEL_TITLE[slug] ?? laneInfo(ids[0], 'en').page.model.split('/').pop(),
+    n: ids.length,
+    spread: Math.max(...totals) - Math.min(...totals),
+    href: route(modelPath('en', slug)) + (slug === 'laguna-s-2.1' ? '#pair-cases' : ''),
+  };
+}).filter(Boolean);
 
 // Four-card hero, translated from the Chinese home (/src/pages/index.astro) and sharing its
 // question-* / crab-* / leaderboard-* classes. A follows the Chinese page's repos anchor;
@@ -23,7 +36,7 @@ const questions = [
     question: 'Same model — official endpoint vs third-party. Any difference?',
     preview: 'One model, compared lane by lane.',
     cue: 'See lanes',
-    href: route('/method/#repos-title'),
+    href: route('/en/#multi-lane'),
     ariaLabel: 'Same model — official endpoint vs third-party. Any difference? One model, compared lane by lane. See the result repos.',
   },
   {
@@ -105,6 +118,15 @@ const repos = [
             <span class="edge-cue"><span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>{entry.cue}</span>
           </a>
         ))}
+      </div>
+      <div class="multi-lane" id="multi-lane">
+        <h3>The same model, how many lanes?</h3>
+        <p class="hint">Spread = the largest gap between the totals of one model's lanes. Open the model page for the lane-by-lane comparison.</p>
+        <ul>
+          {multiModels.map((m) => (
+            <li><a href={m.href}><b>{m.name}</b> · {m.n} lanes · spread {m.spread} · see the divergence →</a></li>
+          ))}
+        </ul>
       </div>
     </section>
 

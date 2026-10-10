@@ -129,6 +129,8 @@ def build(con):
                 "status": "pass" if status == "pass" else "fail" if status == "fail" else "na",
                 "wall_s": round(attempt["wall_s"]) if attempt and attempt["wall_s"] is not None else None,
                 "tokens": tokens_of(board, attempt["id"], unreported) if attempt else None,
+                # why an NA case is not counted (held / infra / legacy / contested ...), from the board's own result
+                **({"na_reason": status.removeprefix("NA:")} if status.startswith("NA:") else {}),
             })
         latest = board.headline_of(lane["id"])
         comp = lr.get("combine")

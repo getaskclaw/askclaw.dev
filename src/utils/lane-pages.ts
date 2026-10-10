@@ -26,8 +26,14 @@ export function laneInfo(id: string, lang: Lang) {
 // (api-docs.deepseek.com/quick_start/pricing) says the model name deepseek-flash is DeepSeek-V4.1-Flash;
 // owner 2026-10-06: V4.1-Flash came out on 09-10 and deepseek-flash has been it since. The lanes keep their
 // recorded names and are still scored per endpoint, never merged.
-const MODEL_MERGE: Record<string, string> = { 'deepseek-flash': 'deepseek', 'deepseek-v4.1-flash': 'deepseek' };
-export const MODEL_TITLE: Record<string, string> = { deepseek: 'deepseek-flash' };
+// laguna-s-2.1 on two gateways is one page (owner WO site-laguna-merge-20261010): the two lanes are sections of it.
+const MODEL_MERGE: Record<string, string> = { 'deepseek-flash': 'deepseek', 'deepseek-v4.1-flash': 'deepseek',
+  'laguna-s-2.1-free-nous': 'laguna-s-2.1', 'laguna-s-2.1-free-commandcode': 'laguna-s-2.1' };
+export const MODEL_TITLE: Record<string, string> = { deepseek: 'deepseek-flash', 'laguna-s-2.1': 'laguna-s-2.1' };
+// Pages that compare exactly two lanes of one model: a per-case table side by side and a divergence list.
+export const PAIR_PAGE: Record<string, { h1: { zh: string; en: string } }> = {
+  'laguna-s-2.1': { h1: { zh: 'laguna-s-2.1 · 2 条道', en: 'laguna-s-2.1 · 2 lanes' } },
+};
 export const MODEL_NOTE: Record<string, { href: string }> = { deepseek: { href: 'https://api-docs.deepseek.com/quick_start/pricing' } };
 export const canonModel = (slug: string) => MODEL_MERGE[slug] ?? slug;
 

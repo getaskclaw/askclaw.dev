@@ -13,6 +13,7 @@ export function tr(T, key, vars = {}) {
   const n = vars.n;
   return String(T[key]).replace(/\{(\w+)\}/g, (m, k) => {
     if (k === 'cases') return T.lang === 'en' ? (n === 1 ? 'case' : 'cases') : T.caseWord;
+    if (k === 'lanes') return T.lang === 'en' ? (n === 1 ? 'lane' : 'lanes') : T.laneWord;
     return k in vars ? String(vars[k]) : m;
   });
 }

@@ -38,9 +38,26 @@ export default function zhFirstRedirects(base) {
           const canonical = new URL(target.split('#')[0], 'https://askclaw.dev').href;
           await writeFile(filename, `<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Moved — AskClaw</title><link rel="canonical" href="${escape(canonical)}"><meta http-equiv="refresh" content="0; url=${escape(target)}"></head><body><a href="${escape(target)}">→ ${escape(target)}</a></body></html>\n`);
         };
+        // Retired per-lane addresses (owner WO site-laguna-merge-20261010): the two laguna lanes now sit as
+        // sections of /laguna-s-2.1/. Each old address is a 301 to its section, with a no-JS fallback page.
+        const MOVED = {
+          '/laguna-s-2.1-free-nous/': '/laguna-s-2.1/#lane-laguna-np',
+          '/laguna-s-2.1-free-commandcode/': '/laguna-s-2.1/#lane-laguna-cc',
+          '/en/laguna-s-2.1-free-nous/': '/en/laguna-s-2.1/#lane-laguna-np',
+          '/en/laguna-s-2.1-free-commandcode/': '/en/laguna-s-2.1/#lane-laguna-cc',
+        };
+        for (const [from, to] of Object.entries(MOVED)) {
+          redirects[from] = to;
+          const filename = join(root, from.replace(/^\//, ''), 'index.html');
+          await mkdir(join(filename, '..'), { recursive: true });
+          const canonical = new URL(to.split('#')[0], 'https://askclaw.dev').href;
+          const en = from.startsWith('/en/');
+          await writeFile(filename, `<!doctype html><html lang="${en ? 'en' : 'zh-CN'}"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>${en ? 'Moved' : '已迁移'} — AskClaw</title><link rel="canonical" href="${escape(canonical)}"><meta property="og:image" content="https://askclaw.dev/assets/top5-2026-w41b.en.webp"><meta http-equiv="refresh" content="0; url=${escape(prefix + to)}"></head><body><p><a href="${escape(prefix + to)}">${en ? 'This page moved' : '此页已迁移'}</a></p></body></html>\n`);
+        }
         for (const file of await htmlFiles(root)) {
           if (!file.endsWith('index.html') || file.startsWith('amber/')) continue;
           const path = '/' + file.slice(0, -'index.html'.length);
+          if (Object.hasOwn(MOVED, path)) continue; // the retired laguna addresses: their own 301s above
           // The English twin keeps its /en/ address. Every other page is Chinese by default:
           // its old /zh/<path> address now strips the prefix to the plain path.
           if (!path.startsWith('/en/')) {

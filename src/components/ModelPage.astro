@@ -6,7 +6,7 @@ import { I18N } from '../utils/picker-i18n.js';
 import { displayTotal, fmtSec, fmtTok } from '../utils/picker-core.js';
 import { route } from '../utils/route';
 import siteData from '../data/site-data.json';
-import { MODEL_NOTE, MODEL_TITLE, laneInfo, lanesOfModel, lanesOfProvider, modelPath, modelSlugOf, providerHasPage, providerPath } from '../utils/lane-pages';
+import { MODEL_NOTE, MODEL_TITLE, PAIR_PAGE, laneInfo, lanesOfModel, lanesOfProvider, modelPath, modelSlugOf, providerHasPage, providerPath } from '../utils/lane-pages';
 
 interface Props { lang: 'zh' | 'en'; slug: string }
 const { lang, slug } = Astro.props;
@@ -45,6 +45,12 @@ const blocks = infos.map((i) => {
 const dupVendor = (v: string) => blocks.filter((o) => o.vendor === v).length > 1;
 blocks.forEach((b: any) => { b.label = dupVendor(b.vendor) ? `${b.vendor} · ${b.name}` : b.vendor; });
 const first = blocks[0];
+// Exactly two lanes of a pair page: the per-case table is side by side, and the cases where the lanes differ are listed.
+const pairOn = Boolean(PAIR_PAGE[slug]) && blocks.length === 2;
+const pairRows = pairOn ? blocks[0].cases.map((c: any) => {
+  const o = blocks[1].cases.find((d: any) => d.alias === c.alias);
+  return { c, o, diff: !o || o.status !== c.status, miss: c.status !== 'pass' || (o ? o.status !== 'pass' : true) };
+}) : [];
 const t = zh ? {
   title: multi ? `${modelName} 成绩（各端点）— AMBER 琥珀评测` : `${modelName} 成绩 — AMBER 琥珀评测`,
   desc: multi
@@ -65,6 +71,10 @@ const t = zh ? {
   cardLabel: '十轴', statsLabel: '用时与 token',
   recName: '记录名', aliasNote: '官方文档现行写法：模型名 deepseek-flash 即 DeepSeek-V4.1-Flash。本页把用 deepseek-flash 和 deepseek-v4.1-flash 这两个名字考的车道放在一起；各端点的成绩仍分别记录，不合并、不互比。', aliasSrc: 'DeepSeek 官方定价页',
   repo: '成绩仓', secret: '题目永不公开，每案只给 A- 别名。NA = 作废或挂起，不计输赢。',
+  pairCasesH: '逐案对照（两道并排）', pairDivH: '两道结果不同的案', pairDivNote: '只有下列案在两道上结果不同；两道结果相同的案只在下方完整表里看。',
+  pairTest: (band: string, week: string, n: number) => `测试条件：${band} 档 · 模型名含 free · 测于 ${week} · ${n} 案`,
+  onlyDiff: '只看分歧', onlyFail: '只看未过或 NA', correction: '更正声明', timeCap: '撞考场时间上限',
+  naR: { held: '全车道挂起', infra: '考场基建作废', integrity: '作答越界作废', legacy: '裁定作废', contested: '待重评' },
 } : {
   title: multi ? `${modelName} results by endpoint — AMBER` : `${modelName} results — AMBER`,
   desc: multi
@@ -85,12 +95,27 @@ const t = zh ? {
   cardLabel: 'By axis', statsLabel: 'Time and tokens',
   recName: 'Recorded as', aliasNote: 'DeepSeek\'s documentation now says the model name deepseek-flash is DeepSeek-V4.1-Flash. This page puts the lanes sat under deepseek-flash and deepseek-v4.1-flash together; each endpoint keeps its own record, not merged and not ranked against the others.', aliasSrc: 'DeepSeek pricing page',
   repo: 'Result repo', secret: 'Cases are never published; each case is shown by its A- alias. NA = voided or held; neither a win nor a loss.',
+  pairCasesH: 'Case by case (two lanes side by side)', pairDivH: 'Cases where the two lanes differ', pairDivNote: 'Only these cases give different results on the two lanes; the cases the lanes share are in the full table below.',
+  pairTest: (band: string, week: string, n: number) => `Test conditions: ${band} band · free model build · tested ${week} · ${n} cases`,
+  onlyDiff: 'Only differences', onlyFail: 'Only failed or NA', correction: 'correction notice', timeCap: 'hit the exam-room time cap',
+  naR: { held: 'held on every lane', infra: 'voided for infrastructure', integrity: 'voided for integrity', legacy: 'voided by ruling', contested: 'contested' },
 };
 const here = modelPath(lang, slug);
 const there = modelPath(zh ? 'en' : 'zh', slug);
 const rankPath = zh ? '/rank/' : '/en/rank/';
 const H = multi ? 'h3' : 'h2';
 const groups = siteData.groups.map((g: any) => ({ id: g.id, label: zh ? g.name_zh : g.name_en, axes: axes.filter((a: any) => a.grp === g.id) }));
+// One writing for a cell's visible text and its aria-label: passes over the axis's cases (the denominator is fixed,
+// as in the generated tables), the NA count named beside it, and a wholly held axis reads NA (never as a fail).
+const cellText = (c: any) => !c || c.n === 0 ? '—' : c.na === c.n ? 'NA' : `${c.p}/${c.n}` + (c.na ? ` · NA ${c.na}` : '');
+// NA rows say why they are not counted; held cases link to their correction notice.
+const CORRECTION: Record<string, string> = { 'A-d511f9e8': 'corrections-2026-10-02-a-d511f9e8', 'A-cdc3d11a': 'corrections-2026-10-07-a-cdc3d11a', 'A-24bcf707': 'corrections-2026-10-07-a-24bcf707' };
+const correctionHref = (alias: string) => CORRECTION[alias] ? `https://github.com/getaskclaw/amber/blob/main/docs/${CORRECTION[alias]}${zh ? '.md' : '.en.md'}` : undefined;
+const naLabel = (c: any) => {
+  if (c.status !== 'na') return t[c.status];
+  const why = c.na_reason === 'infra' && c.wall_s >= 1800 ? t.timeCap : (t.naR as any)[c.na_reason];
+  return why ? `NA · ${why}` : 'NA';
+};
 const dots = (cell: any) => cell && cell.n > 0 ? [
   ...Array(cell.p).fill('pass'),
   ...Array(cell.n - cell.p - (cell.na ?? 0)).fill('fail'),
@@ -100,7 +125,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
 <BaseLayout title={t.title} description={t.desc} lang={zh ? 'zh-CN' : 'en'} canonicalPath={here} schemaInLanguage={zh ? 'zh-CN' : 'en'}>
   <div class="wrap lane-page">
     <p class="note"><a href={route(rankPath)}>{t.back}</a> · <a href={route(there)} lang={zh ? 'en' : 'zh-CN'} data-lang-switch={zh ? 'en' : 'zh-CN'}>{t.other}</a></p>
-    <h1>{modelName}</h1>
+    <h1>{pairOn ? PAIR_PAGE[slug].h1[lang] : modelName}</h1>
 
     {note && <p class="hint alias-note">{t.aliasNote} <a href={note.href} target="_blank" rel="noopener">{t.aliasSrc}</a></p>}
 
@@ -118,6 +143,53 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
                   <td class="num">{b.total}/{b.lane.n}</td>
                   <td>{wk(b.page.week)}</td>
                   <td class="num">{b.eff ? fmtSec(b.eff.t_med, T) : '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {pairOn && (
+      <section class="section pair" id="pair-cases">
+        <h2>{t.pairCasesH}</h2>
+        <p class="hint">{t.pairTest(first.page.band, wk(first.page.week), first.lane.n)}</p>
+        {pairRows.some((r: any) => r.diff) && (
+          <div class="diverge">
+            <h3>{t.pairDivH} · {pairRows.filter((r: any) => r.diff).length}</h3>
+            <p class="hint">{t.pairDivNote}</p>
+            <ul class="diverge-list">
+              {pairRows.filter((r: any) => r.diff).map((r: any) => (
+                <li><code>{r.c.alias}</code> · {axisName(r.c.axis)} · <strong>{blocks[0].label}</strong>: {naLabel(r.c)} · <strong>{blocks[1].label}</strong>: {r.o ? naLabel(r.o) : '—'}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <input type="checkbox" id="pair-only-diff" class="pair-toggle pair-toggle-diff" />
+        <input type="checkbox" id="pair-only-fail" class="pair-toggle pair-toggle-fail" />
+        <div class="pair-filter">
+          <label for="pair-only-diff">{t.onlyDiff}</label>
+          <label for="pair-only-fail">{t.onlyFail}</label>
+        </div>
+        <div class="pair-wrap board-wrap">
+          <table class="board pair-table">
+            <thead>
+              <tr><th rowspan="2">{t.cAlias}</th><th rowspan="2" class="axis-col">{t.cAxis}</th>{blocks.map((b: any) => <th colspan="3">{b.label}</th>)}</tr>
+              <tr>{blocks.map(() => (<Fragment><th>{t.cResult}</th><th class="num">{t.cTime}</th><th class="num">{t.cTok}</th></Fragment>))}</tr>
+            </thead>
+            <tbody>
+              {pairRows.map((r: any) => (
+                <tr data-diff={r.diff ? '1' : '0'} data-fail={r.miss ? '1' : '0'}>
+                  <td><code>{r.c.alias}</code></td>
+                  <td class="axis-col">{axisName(r.c.axis)}</td>
+                  {[r.c, r.o].map((c: any) => (
+                    <Fragment>
+                      <td><span class="res"><i class={`dot ${c ? c.status : 'na'}`}></i>{c ? naLabel(c) : '—'}{c && c.status === 'na' && correctionHref(c.alias) && <Fragment> · <a href={correctionHref(c.alias)} target="_blank" rel="noopener">{t.correction}</a></Fragment>}</span></td>
+                      <td class="num">{c && c.wall_s != null ? fmtSec(c.wall_s, T) : '—'}</td>
+                      <td class="num">{c ? tokText(c.tokens) : '—'}</td>
+                    </Fragment>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -150,7 +222,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
                     return (
                       <li>
                         <span class="axis-name">{zh ? a.name_zh : a.name_en}</span>
-                        {d ? <span class="dots" role="img" aria-label={`${cell.p}/${cell.n}`}>{d.map((st) => <i class={`dot ${st}`}></i>)}</span> : <span class="dot-none">—</span>}
+                        {d ? (<Fragment><span class="dots" role="img" aria-label={cellText(cell)}>{d.map((st) => <i class={`dot ${st}`}></i>)}</span><span class="axis-txt" aria-hidden="true">{cellText(cell)}</span></Fragment>) : <span class="dot-none">—</span>}
                       </li>
                     );
                   })}
@@ -174,15 +246,16 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
             <H class="ev-title" id={`cases-${b.id}`}>{t.casesH}</H>
             <p class="hint">{t.secret}</p>
             {(b.fails > 0 || b.nas > 0) && <p class="tally">{t.tally(b.fails, b.nas)}</p>}
+            {!pairOn && (
             <div class="board-wrap">
               <table class="board">
                 <thead><tr><th>{t.cAlias}</th><th class="axis-col">{t.cAxis}</th><th>{t.cResult}</th><th class="num">{t.cTime}</th><th class="num">{t.cTok}</th></tr></thead>
                 <tbody>
                   {b.cases.map((c: any) => (
                     <tr class={`row-${c.status}`}>
-                      <td><code>{c.alias}</code><small class="axis-sub">{axisName(c.axis)}</small></td>
+                      <td><code>{c.alias}</code></td>
                       <td class="axis-col">{axisName(c.axis)}</td>
-                      <td><span class="res"><i class={`dot ${c.status}`}></i>{t[c.status]}</span></td>
+                      <td><span class="res"><i class={`dot ${c.status}`}></i>{naLabel(c)}{c.status === 'na' && correctionHref(c.alias) && <Fragment> · <a href={correctionHref(c.alias)} target="_blank" rel="noopener">{t.correction}</a></Fragment>}</span></td>
                       <td class="num">{c.wall_s == null ? '—' : fmtSec(c.wall_s, T)}</td>
                       <td class="num">{tokText(c.tokens)}</td>
                     </tr>
@@ -190,6 +263,7 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
                 </tbody>
               </table>
             </div>
+            )}
 
             {b.showHistory && (
               <div class="history">
@@ -256,7 +330,15 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
   .dot.na { background: #aeb6bf; border-color: #aeb6bf; }
   .dot-none { color: var(--sub); }
   .res { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .axis-sub { display: none; color: var(--sub); font-size: 0.78rem; }
+  .axis-txt { margin-left: 10px; color: var(--sub); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+  .pair-toggle { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; }
+  .pair-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
+  .pair-filter label { cursor: pointer; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.86rem; background: rgba(255,255,255,.6); }
+  .pair-toggle-diff:checked ~ .pair-filter label[for="pair-only-diff"], .pair-toggle-fail:checked ~ .pair-filter label[for="pair-only-fail"] { background: #d8ecf8; border-color: #5aa6d6; }
+  .pair-toggle-diff:checked ~ .pair-wrap tbody tr[data-diff="0"], .pair-toggle-fail:checked ~ .pair-wrap tbody tr[data-fail="0"] { display: none; }
+  .diverge { margin: 14px 0 6px; padding: 10px 14px; border-left: 3px solid #5aa6d6; background: rgba(90, 166, 214, .10); border-radius: 0 10px 10px 0; }
+  .diverge h3 { margin: 0 0 4px; font-size: 1.02rem; }
+  .diverge-list { margin: 6px 0 0; padding-left: 18px; font-size: 0.9rem; line-height: 1.7; }
   @media (max-height: 760px) { .summary { position: static; } }
   @media (max-width: 1000px) {
     .lane-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
@@ -264,7 +346,6 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
     .axes-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
   }
   @media (max-width: 600px) {
-    .axis-col { display: none; }
-    .axis-sub { display: block; }
+    .axis-col { white-space: nowrap; }
   }
 </style>

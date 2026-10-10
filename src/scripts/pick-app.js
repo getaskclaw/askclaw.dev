@@ -73,6 +73,12 @@ function buildCard(l) {
   el.querySelector('.tm').textContent = t('median', { t: fS(l.e.t_med) });
   el.querySelector('.tbar i').style.width = `${Math.max(4, Math.round(l.e.t_med / MAX_MED * 100))}%`;
   el.querySelector('.tt').textContent = t('totalLine', { t: fS(l.e.t_total), n: l.e.t_n, tok: fT(l.e.tok) });
+  const same = SAME[l.id];
+  if (same) {
+    const chip = Object.assign(document.createElement('a'), { className: 'same-model', href: same.href, textContent: t('sameModel', { n: same.n, name: same.name, total: same.total }) });
+    chip.addEventListener('click', (e) => e.stopPropagation());
+    el.querySelector('.card-foot').before(chip);
+  }
   el.querySelector('.cmp-toggle').addEventListener('click', (e) => { e.stopPropagation(); toggleCompare(l.id); });
   el.addEventListener('click', () => openDetail(l.id, el));
   el.addEventListener('keydown', (e) => { if (e.target === el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(l.id, el); } });
