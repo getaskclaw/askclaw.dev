@@ -150,6 +150,9 @@ body.picker-page { background: transparent; color: var(--ink); font-family: var(
 /* ---------- sheet (detail / compare) ---------- */
 dialog.sheet { border: 0; padding: 0; background: transparent; color: var(--ink); width: min(900px, calc(100% - 32px)); max-height: calc(100% - 48px); overflow: visible; }
 dialog.sheet::backdrop { background: rgba(10, 14, 20, .35); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+/* The sheet is translucent: a fixed bar at the viewport bottom (compare dock, back-to-top) showed through its lower edge
+   as a light strip. While the sheet is open those bars are hidden; their layout is unchanged and they return on close. */
+html:has(dialog.sheet[open]) .dock, html:has(dialog.sheet[open]) .totop { visibility: hidden; }
 .sheet-body { padding: 24px; display: grid; gap: 16px; max-height: calc(100vh - 48px); overflow: auto; overscroll-behavior: contain; scrollbar-width: none; background: var(--glass-strong); border-radius: 28px; }
 .sheet-body::-webkit-scrollbar { display: none; }
 .sheet-body.more { -webkit-mask: linear-gradient(#000 calc(100% - 56px), transparent); mask: linear-gradient(#000 calc(100% - 56px), transparent); }
