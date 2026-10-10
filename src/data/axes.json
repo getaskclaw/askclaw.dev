@@ -1786,5 +1786,170 @@
     "na": 1
    }
   }
+ },
+ {
+  "id": "swe2-http-max",
+  "name": "swe-2-max (HTTP)",
+  "vendor": "Devin",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-devin",
+  "file": "amber-devin/results/2026-W41.md",
+  "total": 19,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "swe2-http-medium",
+  "name": "swe-2-medium (HTTP)",
+  "vendor": "Devin",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-devin",
+  "file": "amber-devin/results/2026-W41.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "swe2-http-high",
+  "name": "swe-2-high (HTTP)",
+  "vendor": "Devin",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-devin",
+  "file": "amber-devin/results/2026-W41.md",
+  "total": 15,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 4,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   }
+  }
  }
 ]
