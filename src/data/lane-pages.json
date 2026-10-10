@@ -5203,6 +5203,600 @@
    "vendor": "stepfun plan 端点",
    "week": "2026-W41"
   },
+  "swe2-http-high": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 1936,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2456,
+     "wall_s": 120
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4609,
+     "wall_s": 134
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 41704,
+     "wall_s": 206
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 408031,
+     "wall_s": 652
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 13461,
+     "wall_s": 306
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 101081,
+     "wall_s": 214
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 166447,
+     "wall_s": 213
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 439494,
+     "wall_s": 1029
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 7178305,
+     "wall_s": 2546
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 1471732,
+     "wall_s": 589
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 32666,
+     "wall_s": 1065
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 14814,
+     "wall_s": 176
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 7235,
+     "wall_s": 139
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 126301,
+     "wall_s": 140
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 140379,
+     "wall_s": 192
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 87975,
+     "wall_s": 147
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 588387,
+     "wall_s": 453
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 48229,
+     "wall_s": 57
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 18197,
+     "wall_s": 240
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 20954,
+     "wall_s": 31
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 38754,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 52172,
+     "wall_s": 91
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 15,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "swe2-http-high",
+   "model": "devin/swe-2",
+   "model_slug": "swe-2",
+   "n": 24,
+   "na": 2,
+   "name": "swe-2-high (HTTP)",
+   "provider_slug": "devin",
+   "repo": "amber-devin",
+   "total": 15,
+   "vendor": "Devin",
+   "week": "2026-W41"
+  },
+  "swe2-http-max": {
+   "band": "max",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2863,
+     "wall_s": 26
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3436,
+     "wall_s": 35
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 9480,
+     "wall_s": 171
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 221505,
+     "wall_s": 366
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 344679,
+     "wall_s": 169
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 518930,
+     "wall_s": 1114
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 211901,
+     "wall_s": 416
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 137821,
+     "wall_s": 245
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 410387,
+     "wall_s": 307
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 12412882,
+     "wall_s": 3157
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 4167203,
+     "wall_s": 878
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 20017,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 20049,
+     "wall_s": 293
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 9646,
+     "wall_s": 146
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 169405,
+     "wall_s": 232
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 177156,
+     "wall_s": 108
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 110436,
+     "wall_s": 187
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 849323,
+     "wall_s": 368
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 91170,
+     "wall_s": 95
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 22874,
+     "wall_s": 157
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 30278,
+     "wall_s": 50
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 39866,
+     "wall_s": 66
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 79181,
+     "wall_s": 80
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 19,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "swe2-http-max",
+   "model": "devin/swe-2",
+   "model_slug": "swe-2",
+   "n": 24,
+   "na": 2,
+   "name": "swe-2-max (HTTP)",
+   "provider_slug": "devin",
+   "repo": "amber-devin",
+   "total": 19,
+   "vendor": "Devin",
+   "week": "2026-W41"
+  },
+  "swe2-http-medium": {
+   "band": "medium",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 1838,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 1831,
+     "wall_s": 17
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2876,
+     "wall_s": 21
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 85281,
+     "wall_s": 80
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 106998,
+     "wall_s": 78
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 323421,
+     "wall_s": 250
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 63040,
+     "wall_s": 69
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 129710,
+     "wall_s": 89
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 158144,
+     "wall_s": 131
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 1617968,
+     "wall_s": 704
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 1686731,
+     "wall_s": 961
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 309855,
+     "wall_s": 212
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 15205,
+     "wall_s": 87
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "fail",
+     "tokens": 11121,
+     "wall_s": 64
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 2766,
+     "wall_s": 66
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 95410,
+     "wall_s": 74
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 59730,
+     "wall_s": 62
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 60701,
+     "wall_s": 42
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 264509,
+     "wall_s": 184
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 66944,
+     "wall_s": 56
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 13368,
+     "wall_s": 107
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 20320,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 36934,
+     "wall_s": 35
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 30435,
+     "wall_s": 34
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 16,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "swe2-http-medium",
+   "model": "devin/swe-2",
+   "model_slug": "swe-2",
+   "n": 24,
+   "na": 2,
+   "name": "swe-2-medium (HTTP)",
+   "provider_slug": "devin",
+   "repo": "amber-devin",
+   "total": 16,
+   "vendor": "Devin",
+   "week": "2026-W41"
+  },
   "wb": {
    "band": "high",
    "cases": [
@@ -6205,9 +6799,9 @@
   "crof"
  ],
  "source": {
-  "amber_db_blob": "87aa5291440fc56680056d78d76dbea803fff04d",
-  "amber_db_sha256": "883ee9eb4963896d145e75bdc18ee01d13515578a567a708c616cd61ca989009",
-  "amber_run_commit": "9b5934de71d6d6a911e02b6e375f3242a96921dc",
+  "amber_db_blob": "e58440f6dfb4fcf8ba5076d042bbe0a0f2bae477",
+  "amber_db_sha256": "9949636972da163aa96ddeee8c0f1ccfa0e835d8564ff21cebdc9bc355d32404",
+  "amber_run_commit": "9d25179589818d71dc897b1d35930064d72d9655",
   "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
   "tools_or_db_uncommitted": false
  }

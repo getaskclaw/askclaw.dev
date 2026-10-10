@@ -1436,6 +1436,156 @@
    "tok": 35262410,
    "tok_n": 22
   },
+  "swe2-http-high": {
+   "ax": {
+    "attribution": [
+     2546,
+     1
+    ],
+    "build": [
+     2620,
+     6
+    ],
+    "convergence": [
+     91,
+     1
+    ],
+    "defense": [
+     2389,
+     2
+    ],
+    "ops": [
+     1014,
+     6
+    ],
+    "req-drift": [
+     57,
+     1
+    ],
+    "review": [
+     1241,
+     2
+    ],
+    "text": [
+     272,
+     3
+    ],
+    "ui-build": [
+     240,
+     1
+    ],
+    "vision": [
+     139,
+     1
+    ]
+   },
+   "t_med": 199,
+   "t_n": 24,
+   "t_p90": 1065,
+   "t_total": 10609,
+   "tok": 11005319,
+   "tok_n": 23
+  },
+  "swe2-http-max": {
+   "ax": {
+    "attribution": [
+     3157,
+     1
+    ],
+    "build": [
+     2617,
+     6
+    ],
+    "convergence": [
+     80,
+     1
+    ],
+    "defense": [
+     2678,
+     2
+    ],
+    "ops": [
+     1011,
+     6
+    ],
+    "req-drift": [
+     95,
+     1
+    ],
+    "review": [
+     351,
+     2
+    ],
+    "text": [
+     232,
+     3
+    ],
+    "ui-build": [
+     157,
+     1
+    ],
+    "vision": [
+     146,
+     1
+    ]
+   },
+   "t_med": 179,
+   "t_n": 24,
+   "t_p90": 1114,
+   "t_total": 10526,
+   "tok": 20060488,
+   "tok_n": 23
+  },
+  "swe2-http-medium": {
+   "ax": {
+    "attribution": [
+     961,
+     1
+    ],
+    "build": [
+     697,
+     6
+    ],
+    "convergence": [
+     34,
+     1
+    ],
+    "defense": [
+     915,
+     2
+    ],
+    "ops": [
+     420,
+     6
+    ],
+    "req-drift": [
+     56,
+     1
+    ],
+    "review": [
+     151,
+     2
+    ],
+    "text": [
+     56,
+     3
+    ],
+    "ui-build": [
+     107,
+     1
+    ],
+    "vision": [
+     66,
+     1
+    ]
+   },
+   "t_med": 72,
+   "t_n": 24,
+   "t_p90": 250,
+   "t_total": 3461,
+   "tok": 5165136,
+   "tok_n": 24
+  },
   "wb": {
    "ax": {
     "attribution": [
