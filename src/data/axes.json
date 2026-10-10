@@ -1672,5 +1672,119 @@
     "n": 2
    }
   }
+ },
+ {
+  "id": "laguna-np",
+  "name": "laguna-s-2.1 (Nous Portal)",
+  "vendor": "Nous Portal",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-nous",
+  "file": "amber-nous/results/2026-W41.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 4,
+    "n": 6,
+    "na": 1
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 2
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1,
+    "na": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "laguna-cc",
+  "name": "laguna-s-2.1 (CommandCode)",
+  "vendor": "CommandCode",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-commandcode",
+  "file": "amber-commandcode/results/2026-W41.md",
+  "total": 14,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 4,
+    "n": 6,
+    "na": 2
+   },
+   "text": {
+    "p": 2,
+    "n": 3
+   },
+   "ops": {
+    "p": 6,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 0,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1,
+    "na": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
  }
 ]

@@ -169,6 +169,15 @@ def build(con):
             "history_withheld": shown_run != latest["run_dir"], "composed": bool(comp),
             "_axis_check": {k: [v["p"], v["n"], v["na"]] for k, v in lr["axis"].items() if k in axis_ids},
         }
+    # owner 2026-10-09 (authorization #3): a page slug stands for one model name. Where two different names
+    # collapse to one slug, only those lanes take their provider suffix; every other slug, and so every
+    # existing URL, is unchanged.
+    names = {}
+    for lane in lanes.values():
+        names.setdefault(lane["model_slug"], set()).add(lane["model"].split("/")[-1].lower())
+    for lane in lanes.values():
+        if len(names[lane["model_slug"]]) > 1:
+            lane["model_slug"] = f"{lane['model_slug']}-{lane['provider_slug']}"
     slugs = {}
     for lane in lanes.values():
         slugs.setdefault(lane["model_slug"], set()).add(lane["model"].split("/")[-1].lower())

@@ -3535,6 +3535,398 @@
    "vendor": "Kimi 官方 coding 端点",
    "week": "2026-W38"
   },
+  "laguna-cc": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2621,
+     "wall_s": 16
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "fail",
+     "tokens": 2289,
+     "wall_s": 20
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3584,
+     "wall_s": 25
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 356539,
+     "wall_s": 866
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 2597872,
+     "wall_s": 956
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 151719,
+     "wall_s": 460
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 327541,
+     "wall_s": 411
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": 1152093,
+     "wall_s": 477
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 930192,
+     "wall_s": 1286
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "na",
+     "tokens": 6933,
+     "wall_s": 90
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 11241,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 2061,
+     "wall_s": 47
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 461125,
+     "wall_s": 209
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 2826104,
+     "wall_s": 2154
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 193219,
+     "wall_s": 163
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 5869546,
+     "wall_s": 1593
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "fail",
+     "tokens": 163640,
+     "wall_s": 367
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 14137,
+     "wall_s": 118
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 106016,
+     "wall_s": 66
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 81078,
+     "wall_s": 127
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 64595,
+     "wall_s": 151
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 5,
+     "total": 14,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "laguna-cc",
+   "model": "poolside/laguna-s-2.1-free",
+   "model_slug": "laguna-s-2.1-free-commandcode",
+   "n": 24,
+   "na": 5,
+   "name": "laguna-s-2.1 (CommandCode)",
+   "provider_slug": "commandcode",
+   "repo": "amber-commandcode",
+   "total": 14,
+   "vendor": "CommandCode",
+   "week": "2026-W41"
+  },
+  "laguna-np": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2559,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2383,
+     "wall_s": 10
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3762,
+     "wall_s": 30
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 571747,
+     "wall_s": 328
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 2994004,
+     "wall_s": 1602
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1614757,
+     "wall_s": 866
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 70576,
+     "wall_s": 1581
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 1325671,
+     "wall_s": 1300
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 3600
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "na",
+     "tokens": null,
+     "wall_s": 1800
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "status": "na",
+     "tokens": 7498,
+     "wall_s": 21
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 12434,
+     "wall_s": 36
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 1503,
+     "wall_s": 12
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 992110,
+     "wall_s": 681
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 864978,
+     "wall_s": 688
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 338187,
+     "wall_s": 358
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 2097459,
+     "wall_s": 1275
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 464645,
+     "wall_s": 375
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 14122,
+     "wall_s": 107
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 66081,
+     "wall_s": 74
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 66390,
+     "wall_s": 92
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 246221,
+     "wall_s": 292
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 5,
+     "total": 16,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "laguna-np",
+   "model": "poolside/laguna-s-2.1:free",
+   "model_slug": "laguna-s-2.1-free-nous",
+   "n": 24,
+   "na": 5,
+   "name": "laguna-s-2.1 (Nous Portal)",
+   "provider_slug": "nous",
+   "repo": "amber-nous",
+   "total": 16,
+   "vendor": "Nous Portal",
+   "week": "2026-W41"
+  },
   "luna56": {
    "band": "high",
    "cases": [
@@ -5712,9 +6104,9 @@
   "crof"
  ],
  "source": {
-  "amber_db_blob": "220a267145ee019af301bb97f4f800173349c053",
-  "amber_db_sha256": "7acd3a7a9f01daf502727b1524451ff60d13e261b2a783418372ecc198fc9b77",
-  "amber_run_commit": "e65ac0d2444cd558976426d41302f388de03ff68",
+  "amber_db_blob": "87aa5291440fc56680056d78d76dbea803fff04d",
+  "amber_db_sha256": "883ee9eb4963896d145e75bdc18ee01d13515578a567a708c616cd61ca989009",
+  "amber_run_commit": "9b5934de71d6d6a911e02b6e375f3242a96921dc",
   "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
   "tools_or_db_uncommitted": false
  }
