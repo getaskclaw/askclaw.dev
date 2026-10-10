@@ -69,6 +69,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 2430309,
      "wall_s": 615
@@ -90,6 +91,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9022,
      "wall_s": 87
@@ -125,6 +127,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 208696,
      "wall_s": 159
@@ -258,6 +261,7 @@
     {
      "alias": "A-61f7ad01",
      "axis": "build",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 2723328,
      "wall_s": 340
@@ -265,6 +269,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 10608642,
      "wall_s": 621
@@ -286,6 +291,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 16825,
      "wall_s": 55
@@ -321,6 +327,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 523255,
      "wall_s": 105
@@ -454,6 +461,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -475,6 +483,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 36874,
      "wall_s": 129
@@ -496,6 +505,7 @@
     {
      "alias": "A-a5608487",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 934394,
      "wall_s": 1077
@@ -650,6 +660,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -664,6 +675,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 29310007,
      "wall_s": 1776
@@ -671,6 +683,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 18730,
      "wall_s": 148
@@ -692,6 +705,7 @@
     {
      "alias": "A-a5608487",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 1450994,
      "wall_s": 290
@@ -846,6 +860,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 6143367,
      "wall_s": 1055
@@ -853,6 +868,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -860,6 +876,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -867,6 +884,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 14583,
      "wall_s": 78
@@ -1049,6 +1067,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 4381585,
      "wall_s": 1334
@@ -1063,6 +1082,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -1070,6 +1090,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 8269,
      "wall_s": 13
@@ -1105,6 +1126,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 87328,
      "wall_s": 58
@@ -1245,6 +1267,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 6925729,
      "wall_s": 1001
@@ -1301,6 +1324,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 376005,
      "wall_s": 66
@@ -1441,6 +1465,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 3578332,
      "wall_s": 1119
@@ -1462,6 +1487,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 15259,
      "wall_s": 69
@@ -1637,6 +1663,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -1644,6 +1671,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -1658,6 +1686,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 469
@@ -1833,6 +1862,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -1840,6 +1870,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -1847,6 +1878,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -1854,6 +1886,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 26162,
      "wall_s": 621
@@ -2029,6 +2062,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 14601254,
      "wall_s": 756
@@ -2050,6 +2084,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 23068,
      "wall_s": 86
@@ -2071,6 +2106,7 @@
     {
      "alias": "A-a5608487",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 705152,
      "wall_s": 77
@@ -2225,6 +2261,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 8271359,
      "wall_s": 3547
@@ -2246,6 +2283,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 22040,
      "wall_s": 114
@@ -2281,6 +2319,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 168927,
      "wall_s": 158
@@ -2421,6 +2460,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 6842002,
      "wall_s": 699
@@ -2442,6 +2482,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 904,
      "wall_s": 282
@@ -2449,6 +2490,7 @@
     {
      "alias": "A-47eea242",
      "axis": "review",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 748,
      "wall_s": 280
@@ -2456,6 +2498,7 @@
     {
      "alias": "A-ea80d793",
      "axis": "vision",
+     "na_reason": "held",
      "status": "na",
      "tokens": 2011,
      "wall_s": 18
@@ -2498,6 +2541,7 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 833,
      "wall_s": 280
@@ -2617,6 +2661,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 5163186,
      "wall_s": 994
@@ -2638,6 +2683,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 891,
      "wall_s": 282
@@ -2645,6 +2691,7 @@
     {
      "alias": "A-47eea242",
      "axis": "review",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 741,
      "wall_s": 281
@@ -2652,6 +2699,7 @@
     {
      "alias": "A-ea80d793",
      "axis": "vision",
+     "na_reason": "legacy",
      "status": "na",
      "tokens": 557,
      "wall_s": 365
@@ -2813,6 +2861,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 1363188,
      "wall_s": 240
@@ -2834,6 +2883,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 7734,
      "wall_s": 28
@@ -2869,6 +2919,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 78772,
      "wall_s": 62
@@ -3016,6 +3067,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 3304804,
      "wall_s": 483
@@ -3037,6 +3089,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9763,
      "wall_s": 110
@@ -3072,6 +3125,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 314902,
      "wall_s": 98
@@ -3212,6 +3266,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 2996365,
      "wall_s": 1392
@@ -3233,6 +3288,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9120,
      "wall_s": 146
@@ -3268,6 +3324,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 134931,
      "wall_s": 195
@@ -3408,6 +3465,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 5029421,
      "wall_s": 1833
@@ -3429,6 +3487,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 8210,
      "wall_s": 70
@@ -3576,6 +3635,7 @@
     {
      "alias": "A-87c472cb",
      "axis": "build",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -3597,6 +3657,7 @@
     {
      "alias": "A-61f7ad01",
      "axis": "build",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -3604,6 +3665,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 1152093,
      "wall_s": 477
@@ -3611,6 +3673,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -3625,6 +3688,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 6933,
      "wall_s": 90
@@ -3772,6 +3836,7 @@
     {
      "alias": "A-87c472cb",
      "axis": "build",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -3800,6 +3865,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -3807,6 +3873,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -3814,6 +3881,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -3821,6 +3889,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 7498,
      "wall_s": 21
@@ -3996,6 +4065,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9746904,
      "wall_s": 901
@@ -4017,6 +4087,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 14705,
      "wall_s": 161
@@ -4192,6 +4263,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 8515725,
      "wall_s": 1116
@@ -4213,6 +4285,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 14125,
      "wall_s": 149
@@ -4388,6 +4461,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 1163798,
      "wall_s": 232
@@ -4409,6 +4483,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 8098,
      "wall_s": 41
@@ -4444,6 +4519,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "held",
      "status": "na",
      "tokens": 84687,
      "wall_s": 55
@@ -4584,6 +4660,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 11808913,
      "wall_s": 746
@@ -4605,6 +4682,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 6168,
      "wall_s": 4
@@ -4640,6 +4718,7 @@
     {
      "alias": "A-24bcf707",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 637301,
      "wall_s": 107
@@ -4647,6 +4726,7 @@
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
+     "na_reason": "integrity",
      "status": "na",
      "tokens": 1901364,
      "wall_s": 213
@@ -4780,6 +4860,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 21418268,
      "wall_s": 1688
@@ -4801,6 +4882,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 12987,
      "wall_s": 74
@@ -4983,6 +5065,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9253826,
      "wall_s": 1661
@@ -4990,6 +5073,7 @@
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 3600
@@ -4997,6 +5081,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -5004,6 +5089,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 13328,
      "wall_s": 114
@@ -5186,6 +5272,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1215
@@ -5207,6 +5294,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 486
@@ -5382,6 +5470,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9445757,
      "wall_s": 900
@@ -5403,6 +5492,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 9150,
      "wall_s": 24
@@ -5459,6 +5549,7 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
+     "na_reason": "contested",
      "status": "na",
      "tokens": 9838,
      "wall_s": 18
@@ -5578,6 +5669,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -5599,6 +5691,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 5263,
      "wall_s": 10
@@ -5655,6 +5748,7 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
+     "na_reason": "contested",
      "status": "na",
      "tokens": 11356,
      "wall_s": 131
@@ -5774,6 +5868,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -5788,6 +5883,7 @@
     {
      "alias": "A-be92627f",
      "axis": "defense",
+     "na_reason": "infra",
      "status": "na",
      "tokens": null,
      "wall_s": 1800
@@ -5795,6 +5891,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 7492,
      "wall_s": 403
@@ -5851,6 +5948,7 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
+     "na_reason": "contested",
      "status": "na",
      "tokens": 28735,
      "wall_s": 21
@@ -5970,6 +6068,7 @@
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
+     "na_reason": "held",
      "status": "na",
      "tokens": 2379533,
      "wall_s": 1224
@@ -5991,6 +6090,7 @@
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
+     "na_reason": "held",
      "status": "na",
      "tokens": 5227,
      "wall_s": 12
@@ -6047,6 +6147,7 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
+     "na_reason": "contested",
      "status": "na",
      "tokens": 53375,
      "wall_s": 531

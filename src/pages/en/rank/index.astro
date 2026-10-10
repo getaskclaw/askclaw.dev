@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import DotBoard from '../../../components/DotBoard.astro';
 import rawLanes from '../../../data/axes.json';
+import { pageLaneIds } from '../../../utils/lane-pages';
 import siteData from '../../../data/site-data.json';
 import { route } from '../../../utils/route';
 
@@ -50,7 +51,7 @@ const stats = faces.map(([id, label]) => {
   schemaType="WebPage"
   schemaInLanguage="en"
 >
-  <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-faces={JSON.stringify(faces)}>
+  <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-pages={JSON.stringify(pageLaneIds)} data-faces={JSON.stringify(faces)}>
     <h1>Rank models by work — <em>not just the total</em></h1>
     <p class="lead">
       Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
@@ -111,6 +112,8 @@ const stats = faces.map(([id, label]) => {
 <script is:inline>
   const app = document.querySelector('#rank-app');
   const lanes = JSON.parse(app.dataset.lanes);
+  // lanes that have a detail page; a lane without one (the frozen crof) says so in its row
+  const withPage = new Set(JSON.parse(app.dataset.pages));
   const faces = JSON.parse(app.dataset.faces);
   const selected = new Set();
   const chips = [...app.querySelectorAll('[data-face]')];
@@ -222,7 +225,7 @@ const stats = faces.map(([id, label]) => {
       link.textContent = lane.name;
       laneCell.append(link);
       const vendor = document.createElement('small');
-      vendor.textContent = lane.vendor;
+      vendor.textContent = withPage.has(lane.id) ? lane.vendor : `${lane.vendor} · no detail page`;
       laneCell.append(vendor);
       row.append(laneCell);
       // Draft presentation only; release remains blocked on NA-aware data and ranking.

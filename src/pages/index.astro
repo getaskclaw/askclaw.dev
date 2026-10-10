@@ -3,12 +3,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Picker from '../components/Picker.astro';
 import rawAxes from '../data/axes.json';
 import { route } from '../utils/route';
+import { laneInfo, lanesOfModel, modelPath, modelSlugs, MODEL_TITLE } from '../utils/lane-pages';
 
 
 // Facts in the ask card come from the generated board, not typed in.
 const caseCount = Math.max(...rawAxes.map((lane) => lane.n));
 const repoCount = new Set(rawAxes.map((lane) => lane.repo)).size;
 const latestWeek = rawAxes.map((lane) => lane.wk).sort().at(-1);
+// Models tested on more than one lane (gateway): the spread is the largest gap between their totals.
+const multiModels = modelSlugs().map((slug) => {
+  const ids = lanesOfModel(slug);
+  if (ids.length < 2) return null;
+  const totals = ids.map((id) => laneInfo(id, 'zh').lane.total);
+  return {
+    name: MODEL_TITLE[slug] ?? laneInfo(ids[0], 'zh').page.model.split('/').pop(),
+    n: ids.length,
+    spread: Math.max(...totals) - Math.min(...totals),
+    href: route(modelPath('zh', slug)) + (slug === 'laguna-s-2.1' ? '#pair-cases' : ''),
+  };
+}).filter(Boolean);
 
 const questions = [
   {
@@ -17,8 +30,8 @@ const questions = [
     question: '同一个模型，官方端点和第三方有差吗？',
     preview: '同模型，分 lane 对照。',
     cue: '看 lane',
-    href: route('/method/#repos-title'),
-    ariaLabel: '同一个模型，官方端点和第三方有差吗？同模型，分 lane 对照。查看成绩仓。',
+    href: route('/#multi-lane'),
+    ariaLabel: '同一个模型，官方端点和第三方有差吗？同模型，分 lane 对照。查看多道模型。',
   },
   {
     code: 'B',
@@ -79,6 +92,15 @@ const questions = [
             <span class="edge-cue"><span class="cue-mark" aria-hidden="true">{entry.code === 'D' ? '#' : '•'}</span>{entry.cue}</span>
           </a>
         ))}
+      </div>
+      <div class="multi-lane" id="multi-lane">
+        <h3>同一个模型，几道？</h3>
+        <p class="hint">分差 = 同一模型各道总分的最大差。点进模型页，看逐道对照。</p>
+        <ul>
+          {multiModels.map((m) => (
+            <li><a href={m.href}><b>{m.name}</b> · {m.n} 道 · 分差 {m.spread} · 看分歧 →</a></li>
+          ))}
+        </ul>
       </div>
     </section>
 

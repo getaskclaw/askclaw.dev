@@ -9,7 +9,7 @@ import {
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
 import { route } from '../utils/route';
-import { modelPath, providerPath, providerHasPage, modelSlugOf, lanesOfModel } from '../utils/lane-pages';
+import { modelPath, providerPath, providerHasPage, modelSlugOf, lanesOfModel, laneInfo } from '../utils/lane-pages';
 import pageData from '../data/lane-pages.json';
 import { transform } from 'esbuild';
 import coreSource from '../utils/picker-core.js?raw';
@@ -46,6 +46,15 @@ for (const l of lanes) {
   const prov = (pageData as any).lanes[l.id].provider_slug;
   PAGES[l.id] = [route(modelPath(lang, m)) + anchor, providerHasPage(prov) ? route(providerPath(lang, prov)) : ''];
 }
+// A lane's sibling lanes (the same model on another gateway): the card's same-model chip links to that model's page.
+const SAME: Record<string, { n: number; href: string; name: string; total: string }> = {};
+for (const l of lanes) {
+  const m = modelSlugOf(l.id);
+  const sibs = m ? lanesOfModel(m).filter((x) => x !== l.id) : [];
+  if (!sibs.length) continue;
+  const first = laneInfo(sibs[0], lang);
+  SAME[l.id] = { n: sibs.length, href: route(modelPath(lang, m!)), name: first.vendor, total: `${displayTotal(first.lane)}/${first.lane.n}` };
+}
 const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 
 // Default view (nothing selected): the same grouping the script computes, rendered at build time,
@@ -60,7 +69,7 @@ const pipList = (c) => [
 // stripped), then the page app.
 // Minified at build time: Astro does not minify inline scripts, and the home page has a size budget.
 const clientSource = (await transform(
-  `(() => {\nconst T = ${JSON.stringify(T)};\nconst PAGES = ${JSON.stringify(PAGES)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
+  `(() => {\nconst T = ${JSON.stringify(T)};\nconst PAGES = ${JSON.stringify(PAGES)};\nconst SAME = ${JSON.stringify(SAME)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
   { minify: true, target: 'es2020', charset: 'utf8' },
 )).code;
 const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], ['name', T.sortName, 'false']];
