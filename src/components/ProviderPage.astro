@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { I18N } from '../utils/picker-i18n.js';
 import DotBoard from './DotBoard.astro';
 import { route } from '../utils/route';
-import { laneInfo, lanesOfProvider, providerPath } from '../utils/lane-pages';
+import { laneInfo, lanesOfProvider, providerPath, PROVIDER_NOTE } from '../utils/lane-pages';
 
 interface Props { lang: 'zh' | 'en'; slug: string }
 const { lang, slug } = Astro.props;
@@ -37,6 +37,7 @@ const t = zh ? {
   scope: 'Only lanes on this board are listed; the result repo may hold earlier lanes, and the repo is the record.',
   repo: 'Result repo for this provider',
 };
+const footnote = PROVIDER_NOTE[slug]?.[lang];
 const here = providerPath(lang, slug);
 const there = providerPath(zh ? 'en' : 'zh', slug);
 ---
@@ -47,6 +48,7 @@ const there = providerPath(zh ? 'en' : 'zh', slug);
     <p class="lead">{t.kind} · {t.sub}</p>
     <p class="hint">{t.note}</p>
     <DotBoard lanes={boardLanes} lang={lang} hideVendor={sameVendor} />
+    {footnote && <p class="hint">{footnote}</p>}
     <p class="hint">{t.scope}</p>
     <p class="note"><a href={`https://github.com/getaskclaw/${repo}`} target="_blank" rel="noopener">{t.repo}: {repo}</a></p>
   </div>

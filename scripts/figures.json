@@ -25,22 +25,22 @@
  },
  "figures": {
   "data_fingerprint": "e24ac64537c4f2a2eea132e5fb75ac4224040cf658337c56e323d72340224bdd",
-  "og_image": "/assets/top5-2026-w41c.en.webp",
+  "og_image": "/assets/top5-2026-w41d.en.webp",
   "og_overrides": {
    "amber/en.html": null,
    "amber/index.html": null,
-   "en.html": "/assets/top5-card-w41c.en.png",
+   "en.html": "/assets/top5-card-w41d.en.png",
    "notes/agent-is-new-software/index.html": "/assets/traditional-vs-agent.png"
   },
   "snapshot": "W41",
   "top5_files": {
    "en.html": [
-    "top5-2026-w41c.en.png",
-    "top5-2026-w41c.en.vega-lite.json",
-    "top5-card-w41c.en.png"
+    "top5-2026-w41d.en.png",
+    "top5-2026-w41d.en.vega-lite.json",
+    "top5-card-w41d.en.png"
    ],
    "en/index.html": [
-    "top5-2026-w41c.en.webp"
+    "top5-2026-w41d.en.webp"
    ]
   }
  },

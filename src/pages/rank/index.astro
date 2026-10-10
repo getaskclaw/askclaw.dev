@@ -4,6 +4,7 @@ import DotBoard from '../../components/DotBoard.astro';
 import rawLanes from '../../data/axes.json';
 import siteData from '../../data/site-data.json';
 import { route } from '../../utils/route';
+import { I18N } from '../../utils/picker-i18n.js';
 import { pageLaneIds } from '../../utils/lane-pages';
 
 // Axes are data (amber.db axes.sql -> site-data.json): adding or splitting an axis needs no change here.
@@ -15,7 +16,7 @@ const allAxes = siteData.axes.map((a) => a.id).join(',');
 const lanes = rawLanes.map((lane) => ({
   ...lane,
   vendor: lane.id === 'kimi' ? 'Kimi 官方 coding' : lane.vendor,
-  name: lane.id === 'gpt-luna' ? 'gpt-5.6-luna-900k (high 档)' : lane.name,
+  name: lane.id === 'gpt-luna' ? 'gpt-5.6-luna-900k (high 档)' : (I18N.zh.laneLabels[lane.id]?.card ?? lane.name),
 }));
 
 // NA channel: `p` = effective passes, `n` = case slots (NA included), `na` = held/void cases,

@@ -21,6 +21,8 @@ export const labels = (T) => Object.fromEntries(T.faces.map(([id, label]) => [id
 
 export const held = (c) => c.na ?? 0;
 export const usable = (c) => (c.n > 0 ? c.n - held(c) : 0);
+// An axis cell as text: a wholly held cell has no result, so it reads NA, never 0/n.
+export const fracText = (c, T) => (c.n === 0 ? '—' : usable(c) === 0 ? T.naCell : `${c.p}/${c.n}`);
 export const tierName = (i, T) => T.tierNames[i] || tr(T, 'tierN', { n: i + 1 });
 export const displayTotal = (l) => (Object.values(l.axis).some((c) => held(c) > 0) || FROZEN_HELD.includes(l.id)) ? `${l.total}'` : String(l.total);
 export function fmtSec(s, T) {
@@ -35,9 +37,40 @@ export function fmtTok(t, T) {
   return t >= 1e8 ? tr(T, 'tokBig', { n: (t / 1e8).toFixed(1) }) : tr(T, 'tokSmall', { n: Math.round(t / 1e4) });
 }
 
-// Public lane records + their effort record, with the language's display labels (as on /rank/).
+// Public lane records + their effort record, with the language's display labels (as on /rank/) and
+// the model key from the group table (T.modelKey, built from lane-pages.ts). A label's `card` is the
+// picker's card title (the lane suffix inside a model group); the recorded name on a page stays `name`.
 export function joinLanes(axes, siteData, T) {
-  return axes.map((l) => ({ ...l, ...(T.laneLabels[l.id] || {}), e: siteData.lanes[l.id] || null }));
+  return axes.map((l) => {
+    const L = T.laneLabels[l.id] || {};
+    return { ...l, ...L, name: L.card ?? L.name ?? l.name, mk: T.modelKey[l.id], e: siteData.lanes[l.id] || null };
+  });
+}
+export const modelCount = (rows) => new Set(rows.map((r) => r.lane.mk)).size;
+// The same-model chip: every lane of the model on the board in board order, the current lane marked.
+// Past four lanes it shows three and a count.
+export function sameChip(lanes, l, T) {
+  const all = lanes.filter((x) => x.mk === l.mk);
+  const shown = all.length > 4 ? all.slice(0, 3) : all;
+  const parts = shown.map((x) => ({ text: `${x.tag || x.vendor} ${displayTotal(x)}`, cur: x.id === l.id }));
+  if (all.length > 4) parts.push({ text: `+${all.length - 3}`, cur: false });
+  return { n: all.length, head: tr(T, 'sameHead', { n: all.length }), parts, end: T.sameEnd };
+}
+// Same-model lanes that sit next to each other inside one tier (equal totals by construction).
+// Keyed by lane id: the run's note id and text, and where the card sits in the run.
+export function siblingRuns(rows, T) {
+  const runs = [], plan = new Map();
+  rows.forEach((r) => {
+    const run = runs[runs.length - 1];
+    if (run && run[run.length - 1].lane.mk === r.lane.mk) run.push(r); else runs.push([r]);
+  });
+  runs.filter((run) => run.length > 1).forEach((run) => {
+    const weeks = [...new Set(run.map((r) => r.lane.wk))];
+    const text = tr(T, 'sibNote', { n: run.length }) + (weeks.length > 1 ? tr(T, 'sibWeeks', { weeks: weeks.join(' vs ') }) : '');
+    const id = `sib-${run[0].lane.id}`;
+    run.forEach((r, i) => plan.set(r.lane.id, { id, text, pos: i === 0 ? 'first' : i === run.length - 1 ? 'last' : 'mid' }));
+  });
+  return plan;
 }
 // Case slots of the largest axis on the board; every bar track has this many equal slots.
 export function axisN(lanes, T) {
@@ -93,14 +126,14 @@ export function tierTitle(t, active, T) {
   const what = !active.length ? tr(T, 'tierTotal', { s: r0.label })
     : active.length === 1 ? tr(T, 'tierOne', { axis: L[active[0]], n: r0.min })
       : tr(T, 'tierMulti', { min: r0.min, sum: r0.sum });
-  return (t.rows.length > 1 ? tr(T, 'tied', { n: t.rows.length }) : T.alone) + T.titleJoin + what;
+  return (t.rows.length > 1 ? tr(T, 'tied', { n: t.rows.length, m: modelCount(t.rows) }) : T.alone) + T.titleJoin + what;
 }
 export function verdictText(result, active, T) {
   const ts = result.tiers, L = labels(T);
   if (!ts.length) return T.noMatch;
   const t0 = ts[0];
   const scope = active.length ? tr(T, 'scopeSel', { axes: active.map((id) => L[id]).join(T.axesJoin) }) : T.scopeAll;
-  const head = t0.rows.length > 1 ? tr(T, 'headTied', { n: t0.rows.length }) : tr(T, 'headAlone', { name: t0.rows[0].lane.name });
+  const head = t0.rows.length > 1 ? tr(T, 'headTied', { n: t0.rows.length, m: modelCount(t0.rows) }) : tr(T, 'headAlone', { name: t0.rows[0].lane.name });
   // no 'fastest of the tie' here: the tied lanes sat in different weeks and endpoints, so a speed ranking in the headline would compare unlike runs
   return tr(T, 'verdict', { scope, head, n: ts.length });
 }

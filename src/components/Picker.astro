@@ -5,11 +5,11 @@ import rawAxes from '../data/axes.json';
 import siteData from '../data/site-data.json';
 import {
   axisIds, tr, labels, joinLanes, axisN, tiers, splitters, tierTitle, tierName, verdictText,
-  held, displayTotal, fmtSec, fmtTok,
+  held, displayTotal, fmtSec, fmtTok, fracText, sameChip, siblingRuns,
 } from '../utils/picker-core.js';
 import { I18N } from '../utils/picker-i18n.js';
 import { route } from '../utils/route';
-import { modelPath, providerPath, providerHasPage, modelSlugOf, lanesOfModel, laneInfo } from '../utils/lane-pages';
+import { modelPath, providerPath, providerHasPage, modelSlugOf, lanesOfModel, modelKeyByLane } from '../utils/lane-pages';
 import pageData from '../data/lane-pages.json';
 import { transform } from 'esbuild';
 import coreSource from '../utils/picker-core.js?raw';
@@ -25,7 +25,7 @@ const groupPresets = siteData.groups.map((g) => [
   siteData.axes.filter((a) => a.grp === g.id).map((a) => a.id).join(','),
   tr(I18N[lang], 'groupPreset', { name: zh ? g.name_zh : g.name_en }),
 ]);
-const T = { ...I18N[lang], faces, presets: [...I18N[lang].presets, ...groupPresets, ['', I18N[lang].clearPreset]] };
+const T = { ...I18N[lang], faces, presets: [...I18N[lang].presets, ...groupPresets, ['', I18N[lang].clearPreset]], modelKey: modelKeyByLane() };
 const LABEL = labels(T);
 
 // Both data files are generated from amber.db (amber-run sync_site.py) and checked against
@@ -46,15 +46,6 @@ for (const l of lanes) {
   const prov = (pageData as any).lanes[l.id].provider_slug;
   PAGES[l.id] = [route(modelPath(lang, m)) + anchor, providerHasPage(prov) ? route(providerPath(lang, prov)) : ''];
 }
-// A lane's sibling lanes (the same model on another gateway): the card's same-model chip links to that model's page.
-const SAME: Record<string, { n: number; href: string; name: string; total: string }> = {};
-for (const l of lanes) {
-  const m = modelSlugOf(l.id);
-  const sibs = m ? lanesOfModel(m).filter((x) => x !== l.id) : [];
-  if (!sibs.length) continue;
-  const first = laneInfo(sibs[0], lang);
-  SAME[l.id] = { n: sibs.length, href: route(modelPath(lang, m!)), name: first.vendor, total: `${displayTotal(first.lane)}/${first.lane.n}` };
-}
 const maxMed = Math.max(...lanes.filter((l) => l.e).map((l) => l.e.t_med));
 
 // Default view (nothing selected): the same grouping the script computes, rendered at build time,
@@ -69,7 +60,7 @@ const pipList = (c) => [
 // stripped), then the page app.
 // Minified at build time: Astro does not minify inline scripts, and the home page has a size budget.
 const clientSource = (await transform(
-  `(() => {\nconst T = ${JSON.stringify(T)};\nconst PAGES = ${JSON.stringify(PAGES)};\nconst SAME = ${JSON.stringify(SAME)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
+  `(() => {\nconst T = ${JSON.stringify(T)};\nconst PAGES = ${JSON.stringify(PAGES)};\n${coreSource.replace(/^export /gm, '')}\n${appSource}\n})();`,
   { minify: true, target: 'es2020', charset: 'utf8' },
 )).code;
 const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], ['name', T.sortName, 'false']];
@@ -129,13 +120,18 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
     <div class="grid" id="grid">
       {initial.tiers.map((t, i) => {
         const sp = splitters(t.rows, [], T);
+        const sibRuns = siblingRuns(t.rows, T);
         return [
           <div class="tier" data-tier={i + 1} id={`tier-${i + 1}`}>
             <div class="tier-line"><span class="tier-no">{tierName(i, T)}</span><span class="tier-title">{tierTitle(t, [], T)}</span></div>
             {sp.length > 0 && <div class="tier-sub"><span>{T.splitHint}</span>{sp.map((id) => <span class="split">+ {LABEL[id]}{small(id) && <span class="tiny">{caseTag(id)}</span>}</span>)}</div>}
           </div>,
-          ...t.rows.map(({ lane: l }) => (
-            <article class="card glass" data-id={l.id}>
+          ...t.rows.flatMap(({ lane: l }) => {
+            const sib = sibRuns.get(l.id);
+            const chip = sameChip(lanes, l, T);
+            return [
+              sib?.pos === 'first' && <p class="sib-note" id={sib.id} aria-hidden="true">{sib.text}</p>,
+              <article class="card glass" data-id={l.id} data-sib={sib?.pos} aria-describedby={sib?.id}>
               <div class="card-head"><div class="who"><b>{l.name}</b><small>{PAGES[l.id]?.[1] ? <a href={PAGES[l.id][1]}>{l.vendor}</a> : l.vendor}</small></div><div class="pk-score"><big>{displayTotal(l)}/{l.n}</big><small>{T.totalScore}</small></div></div>
               <div class="rows">
                 {axisIds(T).map((id) => {
@@ -144,7 +140,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
                     <div class="axis-row">
                       <span class="lbl">{LABEL[id]}{small(id) && <span class="tiny">{caseTag(id)}</span>}</span>
                       {c.n === 0 ? <span class="none">{T.notSat}</span> : <div class="pips">{pipList(c).map((cls) => <i class={cls}></i>)}</div>}
-                      <span class="frac">{c.n === 0 ? '—' : `${c.p}/${c.n}`}</span>
+                      <span class="frac">{fracText(c, T)}</span>
                     </div>
                   );
                 })}
@@ -152,9 +148,11 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
               {l.e && (
                 <div class="effort"><span class="k">{T.perCase}</span><span class="v"><b class="tm">{tr(T, 'median', { t: fmtSec(l.e.t_med, T) })}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">{T.total}</span><span class="v"><small class="tt">{tr(T, 'totalLine', { t: fmtSec(l.e.t_total, T), n: l.e.t_n, tok: fmtTok(l.e.tok, T) })}</small></span></div>
               )}
+              {chip.n > 1 && <a class="same-model" href={PAGES[l.id][0].split('#')[0]}>{chip.head}{chip.parts.map((x, k) => <>{k ? ' · ' : ''}{x.cur ? <b aria-current="true">{x.text}</b> : x.text}</>)}{chip.end}</a>}
               <div class="card-foot"><span class="wk">{tr(T, 'week', { wk: l.wk, n: l.cases })}</span><a class="card-page" href={PAGES[l.id] ? PAGES[l.id][0] : `https://github.com/getaskclaw/${l.repo}`}>{PAGES[l.id] ? T.pageLink : T.repoLink}</a></div>
-            </article>
-          )),
+              </article>,
+            ];
+          }),
         ];
       })}
     </div>

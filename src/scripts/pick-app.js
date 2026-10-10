@@ -50,7 +50,7 @@ function axisRow(l, id, weakest) {
   const frac = document.createElement('span'); frac.className = 'frac';
   row.append(lbl);
   if (c.n === 0) { const n = document.createElement('span'); n.className = 'none'; n.textContent = T.notSat; row.append(n); frac.textContent = '—'; }
-  else { row.append(pips(c)); frac.textContent = `${c.p}/${c.n}`; }
+  else { row.append(pips(c)); frac.textContent = fracText(c, T); }
   if (weakest) row.classList.add('weak');
   row.append(frac);
   return row;
@@ -73,9 +73,16 @@ function buildCard(l) {
   el.querySelector('.tm').textContent = t('median', { t: fS(l.e.t_med) });
   el.querySelector('.tbar i').style.width = `${Math.max(4, Math.round(l.e.t_med / MAX_MED * 100))}%`;
   el.querySelector('.tt').textContent = t('totalLine', { t: fS(l.e.t_total), n: l.e.t_n, tok: fT(l.e.tok) });
-  const same = SAME[l.id];
-  if (same) {
-    const chip = Object.assign(document.createElement('a'), { className: 'same-model', href: same.href, textContent: t('sameModel', { n: same.n, name: same.name, total: same.total }) });
+  const chipParts = sameChip(lanes, l, T);
+  if (chipParts.n > 1) {
+    const chip = Object.assign(document.createElement('a'), { className: 'same-model', href: pg[0].split('#')[0] });
+    chip.append(chipParts.head);
+    chipParts.parts.forEach((x, k) => {
+      if (k) chip.append(' · ');
+      if (!x.cur) return chip.append(x.text);
+      const b = Object.assign(document.createElement('b'), { textContent: x.text }); b.setAttribute('aria-current', 'true'); chip.append(b);
+    });
+    chip.append(chipParts.end);
     chip.addEventListener('click', (e) => e.stopPropagation());
     el.querySelector('.card-foot').before(chip);
   }
@@ -109,6 +116,19 @@ function syncToggle(el, id) {
   const t = el.querySelector('.cmp-toggle');
   t.setAttribute('aria-pressed', String(compare.includes(id)));
   t.textContent = compare.includes(id) ? T.added : T.addCmp;
+}
+
+/* ---------- same-model notes (one per run of same-model cards inside a tier) ---------- */
+const noteEls = new Map();
+function siblingNote(s) {
+  let el = noteEls.get(s.id);
+  if (!el) { el = Object.assign(document.createElement('p'), { className: 'sib-note', id: s.id }); el.setAttribute('aria-hidden', 'true'); noteEls.set(s.id, el); }
+  el.textContent = s.text;
+  return el;
+}
+function markSib(el, s) {
+  if (s) { el.dataset.sib = s.pos; el.setAttribute('aria-describedby', s.id); }
+  else { delete el.dataset.sib; el.removeAttribute('aria-describedby'); }
 }
 
 /* ---------- tier headers ---------- */
@@ -157,7 +177,14 @@ function render() {
     const vis = t.rows.filter((r) => match(r.lane));
     if (!vis.length) return;
     seq.push(tierEl(i, t));
-    vis.forEach((r) => { fillCard(cards.get(r.lane.id), r.lane, r); seq.push(cards.get(r.lane.id)); });
+    const sib = siblingRuns(vis, T);
+    vis.forEach((r) => {
+      const el = cards.get(r.lane.id), s = sib.get(r.lane.id);
+      fillCard(el, r.lane, r);
+      markSib(el, s);
+      if (s && s.pos === 'first') seq.push(siblingNote(s));
+      seq.push(el);
+    });
   });
   const heldRows = unordered.filter((r) => match(r.lane));
   if (heldRows.length) {
