@@ -46,11 +46,8 @@ const stats = faces.map(([id, label]) => {
       <h2 id="dots-title">全部车道一览</h2>
       <DotBoard lanes={lanes} lang="zh" />
 
-      <p class="hint">一点 = 一案（一道计分任务）。实心 = 通过，空心 = 未过，灰点 = NA（作废或挂起，不计胜负）。按总分排序，同分不分先后。多数轴只有 1–2 案，一案就能改变该轴读数。</p>
-      <p class="lead">
-      选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 {lanes.length} 条公开车道的差异更容易核对。
-      </p>
+      <p class="lead">本页列出全部 {lanes.length} 条公开车道。排名规则：先比你在下方选的各类工作里「最少过了几案」，再比总过案数。</p>
+      <p class="hint">● = 通过　○ = 未过　灰点 = NA（作废或挂起，不计胜负）。一点 = 一案（一道计分任务）。按总分排序，同分并列。多数类型只有 1–2 案，一案就能改变读数。</p>
       <noscript>本页的筛选需要启用 JavaScript。</noscript>
     </section>
 
