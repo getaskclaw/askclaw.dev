@@ -15,8 +15,8 @@
       "step-5-preview re-sit 15'→18' (incl. the 10-07 brand-case re-sit under the revised prompt)",
       "W41 sittings: isolated exam room, not comparable cell by cell with W37–W39; gpt-5.6-luna-900k has two lanes, W37 (high) and W41; no claim it got stronger or weaker",
       "Frozen lanes stay on the board with their sealed record (deepseek-v4.1-flash @ CommandCode, W37); the list of changes is in docs/leaderboard-notes.en",
-      "2026-10-10 (W41) sittings: swe-2 HTTP lanes on the Devin route — max 19', medium 16', high 15'; a separate lane from the ACP swe-2-max; no claim it got stronger or weaker",
-      "swe-2-max (HTTP) ties the top tier with three other lanes at 19' — a tie, not a new top score",
+      "2026-10-10 (W41) sittings: swe-2 API lanes on the Devin route — max 19', medium 16', high 15'; a separate lane from the ACP swe-2-max; no claim it got stronger or weaker",
+      "swe-2-max (API) ties the top tier with three other lanes at 19' — a tie, not a new top score",
       "Rows follow the current site board: lanes no longer in amber.db are not shown; 23-case rows are marked /23"
     ],
     "subtitleFontSize": 16,
@@ -27,7 +27,7 @@
   "data": {
     "values": [
       {
-        "lane": "swe-2-max @ Devin",
+        "lane": "swe-2-max (ACP) @ Devin",
         "pass": 19,
         "rank": "#1 tie",
         "label": "19'"
@@ -45,7 +45,7 @@
         "label": "19'"
       },
       {
-        "lane": "swe-2-max (HTTP) @ Devin (W41)",
+        "lane": "swe-2-max (API) @ Devin (W41)",
         "pass": 19,
         "rank": "#1 tie",
         "label": "19'"
@@ -177,7 +177,7 @@
         "label": "16'"
       },
       {
-        "lane": "swe-2-medium (HTTP) @ Devin (W41)",
+        "lane": "swe-2-medium (API) @ Devin (W41)",
         "pass": 16,
         "rank": "#4 tie",
         "label": "16'"
@@ -213,7 +213,7 @@
         "label": "15'/23"
       },
       {
-        "lane": "swe-2-high (HTTP) @ Devin (W41)",
+        "lane": "swe-2-high (API) @ Devin (W41)",
         "pass": 15,
         "rank": "#5 tie",
         "label": "15'"
