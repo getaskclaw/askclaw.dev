@@ -59,12 +59,9 @@ const stats = faces.map(([id, label]) => {
       <h2 id="dots-title">All lanes at a glance</h2>
       <DotBoard lanes={lanes} lang="en" />
 
-      <p class="hint">One dot = one case (one scored task). Filled = passed, hollow = failed, grey = NA (void or held; neither a win nor a loss). Sorted by total; equal totals are in no particular order. Most axes hold only 1–2 cases, so one case can change an axis reading.</p>
-      <p class="lead">
-      Choose the types of work you need. The table compares the lowest pass count across your selected types first, then their combined pass count.
-      This makes the differences between the {lanes.length} public lanes easier to check.
-      </p>
-      <noscript>Enable JavaScript to use the filters on this page.</noscript>
+      <p class="lead">All {lanes.length} public lanes. Ranking rule: first, the fewest passed cases across the work types you select below; then the total passed cases.</p>
+      <p class="hint">● = passed, ○ = failed, grey dot = NA (void or held; neither a win nor a loss). One dot = one case (one scored task). Sorted by total; equal totals are tied. Most work types have only 1–2 cases, so one case can change a reading.</p>
+      <noscript>Filters on this page need JavaScript.</noscript>
     </section>
 
     <section class="section" aria-labelledby="pick-title">
