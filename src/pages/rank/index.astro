@@ -41,16 +41,17 @@ const stats = faces.map(([id, label]) => {
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-pages={JSON.stringify(pageLaneIds)} data-faces={JSON.stringify(faces)}>
     <p class="note"><a href={route('/en/rank/')} lang="en" data-lang-switch="en">English version → /en/rank/</a></p>
     <h1>按轴挑模型 — <em>别只看总分</em></h1>
-    <p class="lead">
-      选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
-      这让 {lanes.length} 条公开车道的差异更容易核对。
-    </p>
-    <noscript>本页的筛选需要启用 JavaScript。</noscript>
 
     <section class="section" aria-labelledby="dots-title">
       <h2 id="dots-title">全部车道一览</h2>
-      <p class="hint">一点 = 一案（一道计分任务）。实心 = 通过，空心 = 未过，灰点 = NA（作废或挂起，不计胜负）。按总分排序，同分不分先后。多数轴只有 1–2 案，一案就能改变该轴读数。</p>
       <DotBoard lanes={lanes} lang="zh" />
+
+      <p class="hint">一点 = 一案（一道计分任务）。实心 = 通过，空心 = 未过，灰点 = NA（作废或挂起，不计胜负）。按总分排序，同分不分先后。多数轴只有 1–2 案，一案就能改变该轴读数。</p>
+      <p class="lead">
+      选择你要做的工作类型，下表先比较所选类型里的最低通过数，再比较合计。
+      这让 {lanes.length} 条公开车道的差异更容易核对。
+      </p>
+      <noscript>本页的筛选需要启用 JavaScript。</noscript>
     </section>
 
     <section class="section" aria-labelledby="pick-title">
