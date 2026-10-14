@@ -511,7 +511,7 @@
   "cases": 24,
   "repo": "amber-stepfun",
   "file": "amber-stepfun/results/2026-W41.md",
-  "total": 18,
+  "total": 16,
   "n": 24,
   "axis": {
    "build": {
@@ -519,8 +519,9 @@
     "n": 6
    },
    "text": {
-    "p": 3,
-    "n": 3
+    "p": 2,
+    "n": 3,
+    "na": 1
    },
    "ops": {
     "p": 6,
@@ -535,12 +536,14 @@
     "n": 1
    },
    "ui-build": {
-    "p": 1,
-    "n": 1
+    "p": 0,
+    "n": 1,
+    "na": 1
    },
    "vision": {
     "p": 0,
-    "n": 1
+    "n": 1,
+    "na": 1
    },
    "defense": {
     "p": 0,
@@ -563,12 +566,12 @@
   "id": "gpt-sol",
   "name": "gpt-5.6-sol-900k (high 档)",
   "vendor": "OpenAI Codex",
-  "wk": "W38",
-  "cases": 23,
+  "wk": "W41",
+  "cases": 24,
   "repo": "amber-gpt",
-  "file": "amber-gpt/results/2026-W38.md",
-  "total": 15,
-  "n": 23,
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 17,
+  "n": 24,
   "axis": {
    "build": {
     "p": 5,
@@ -579,7 +582,7 @@
     "n": 3
    },
    "ops": {
-    "p": 5,
+    "p": 4,
     "n": 6
    },
    "req-drift": {
@@ -587,17 +590,16 @@
     "n": 1
    },
    "convergence": {
-    "p": 0,
-    "n": 0
+    "p": 1,
+    "n": 1
    },
    "ui-build": {
     "p": 1,
     "n": 1
    },
    "vision": {
-    "p": 0,
-    "n": 1,
-    "na": 1
+    "p": 1,
+    "n": 1
    },
    "defense": {
     "p": 0,
@@ -609,9 +611,9 @@
     "n": 1
    },
    "review": {
-    "p": 0,
+    "p": 1,
     "n": 2,
-    "na": 2
+    "na": 1
    }
   }
  },
@@ -785,11 +787,11 @@
   "id": "astra",
   "name": "gpt-6-astra-900k",
   "vendor": "OpenAI Codex",
-  "wk": "W39",
+  "wk": "W41",
   "cases": 24,
   "repo": "amber-gpt",
-  "file": "amber-gpt/results/2026-W39.md",
-  "total": 16,
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 15,
   "n": 24,
   "axis": {
    "build": {
@@ -831,7 +833,7 @@
     "n": 1
    },
    "review": {
-    "p": 1,
+    "p": 0,
     "n": 2,
     "na": 1
    }
@@ -1176,11 +1178,11 @@
   "id": "gpt61-sol",
   "name": "gpt-6.1-sol",
   "vendor": "OpenAI Codex",
-  "wk": "W40",
+  "wk": "W41",
   "cases": 24,
   "repo": "amber-gpt",
-  "file": "amber-gpt/results/2026-W40.md",
-  "total": 16,
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 18,
   "n": 24,
   "axis": {
    "build": {
@@ -1192,7 +1194,7 @@
     "n": 3
    },
    "ops": {
-    "p": 4,
+    "p": 5,
     "n": 6,
     "na": 1
    },
@@ -1209,7 +1211,7 @@
     "n": 1
    },
    "vision": {
-    "p": 0,
+    "p": 1,
     "n": 1
    },
    "defense": {
@@ -1476,7 +1478,7 @@
     "n": 6
    },
    "req-drift": {
-    "p": 1,
+    "p": 0,
     "n": 1
    },
    "convergence": {
@@ -1488,7 +1490,7 @@
     "n": 1
    },
    "vision": {
-    "p": 0,
+    "p": 1,
     "n": 1
    },
    "defense": {
@@ -1531,7 +1533,7 @@
     "n": 6
    },
    "req-drift": {
-    "p": 0,
+    "p": 1,
     "n": 1
    },
    "convergence": {
@@ -1556,7 +1558,7 @@
     "n": 1
    },
    "review": {
-    "p": 1,
+    "p": 0,
     "n": 2,
     "na": 1
    }
@@ -1947,6 +1949,226 @@
    },
    "review": {
     "p": 0,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "gpt56-sol",
+  "name": "gpt-5.6-sol",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 18,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "gpt56-terra",
+  "name": "gpt-5.6-terra",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 16,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 4,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "gpt6-astra",
+  "name": "gpt-6-astra",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 0,
+    "n": 1
+   },
+   "vision": {
+    "p": 1,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
+    "n": 2,
+    "na": 1
+   }
+  }
+ },
+ {
+  "id": "gpt6-sol-std",
+  "name": "gpt-6-sol",
+  "vendor": "OpenAI Codex",
+  "wk": "W41",
+  "cases": 24,
+  "repo": "amber-gpt",
+  "file": "amber-gpt/results/2026-W41.md",
+  "total": 17,
+  "n": 24,
+  "axis": {
+   "build": {
+    "p": 5,
+    "n": 6
+   },
+   "text": {
+    "p": 3,
+    "n": 3
+   },
+   "ops": {
+    "p": 5,
+    "n": 6
+   },
+   "req-drift": {
+    "p": 1,
+    "n": 1
+   },
+   "convergence": {
+    "p": 1,
+    "n": 1
+   },
+   "ui-build": {
+    "p": 1,
+    "n": 1
+   },
+   "vision": {
+    "p": 0,
+    "n": 1
+   },
+   "defense": {
+    "p": 0,
+    "n": 2,
+    "na": 1
+   },
+   "attribution": {
+    "p": 0,
+    "n": 1
+   },
+   "review": {
+    "p": 1,
     "n": 2,
     "na": 1
    }

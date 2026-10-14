@@ -7,172 +7,172 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2434,
-     "wall_s": 17
+     "tokens": 2412,
+     "wall_s": 16
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 2530,
-     "wall_s": 22
+     "tokens": 2562,
+     "wall_s": 27
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "fail",
-     "tokens": 4280,
-     "wall_s": 56
+     "tokens": 3765,
+     "wall_s": 37
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 108125,
-     "wall_s": 140
+     "tokens": 98635,
+     "wall_s": 121
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 403916,
-     "wall_s": 188
+     "tokens": 117934,
+     "wall_s": 106
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 326338,
-     "wall_s": 129
+     "tokens": 133223,
+     "wall_s": 74
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 250333,
-     "wall_s": 181
+     "tokens": 64934,
+     "wall_s": 100
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 366867,
-     "wall_s": 175
+     "tokens": 146282,
+     "wall_s": 157
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 183279,
-     "wall_s": 103
+     "tokens": 83115,
+     "wall_s": 65
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 2430309,
-     "wall_s": 615
+     "tokens": 1901640,
+     "wall_s": 814
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 2847811,
-     "wall_s": 980
+     "tokens": 1214203,
+     "wall_s": 660
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 694371,
-     "wall_s": 382
+     "tokens": 623427,
+     "wall_s": 400
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "na_reason": "held",
      "status": "na",
-     "tokens": 9022,
-     "wall_s": 87
+     "tokens": 8639,
+     "wall_s": 83
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
-     "status": "pass",
-     "tokens": 11904,
-     "wall_s": 58
+     "status": "fail",
+     "tokens": 11938,
+     "wall_s": 63
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
      "status": "pass",
-     "tokens": 5677,
-     "wall_s": 54
+     "tokens": 5239,
+     "wall_s": 129
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 498366,
-     "wall_s": 228
+     "tokens": 116688,
+     "wall_s": 137
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 481538,
-     "wall_s": 249
+     "tokens": 149959,
+     "wall_s": 159
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "na_reason": "held",
      "status": "na",
-     "tokens": 208696,
-     "wall_s": 159
+     "tokens": 181191,
+     "wall_s": 90
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 551723,
-     "wall_s": 241
+     "tokens": 265601,
+     "wall_s": 160
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "pass",
-     "tokens": 204098,
-     "wall_s": 106
+     "tokens": 151933,
+     "wall_s": 53
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "fail",
-     "tokens": 14972,
-     "wall_s": 221
+     "tokens": 14214,
+     "wall_s": 140
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 224524,
-     "wall_s": 78
+     "tokens": 38941,
+     "wall_s": 42
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 267650,
-     "wall_s": 132
+     "tokens": 54813,
+     "wall_s": 71
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 142676,
-     "wall_s": 114
+     "tokens": 69904,
+     "wall_s": 66
     }
    ],
    "composed": false,
@@ -182,8 +182,8 @@
      "current": true,
      "n": 24,
      "na": 3,
-     "total": 16,
-     "week": "2026-W39"
+     "total": 15,
+     "week": "2026-W41"
     }
    ],
    "history_withheld": false,
@@ -195,9 +195,9 @@
    "name": "gpt-6-astra-900k",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "total": 16,
+   "total": 15,
    "vendor": "OpenAI Codex",
-   "week": "2026-W39"
+   "week": "2026-W41"
   },
   "cc": {
    "band": "high",
@@ -2599,169 +2599,174 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 3719,
-     "wall_s": 14
+     "tokens": 2419,
+     "wall_s": 12
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 4037,
-     "wall_s": 29
+     "tokens": 2357,
+     "wall_s": 12
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 6890,
-     "wall_s": 74
+     "tokens": 6164,
+     "wall_s": 61
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 356042,
-     "wall_s": 368
+     "tokens": 264038,
+     "wall_s": 253
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 310266,
-     "wall_s": 185
+     "tokens": 207296,
+     "wall_s": 223
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 309358,
-     "wall_s": 212
+     "tokens": 144324,
+     "wall_s": 122
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 276370,
-     "wall_s": 245
+     "tokens": 247794,
+     "wall_s": 141
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 491729,
-     "wall_s": 367
+     "tokens": 296773,
+     "wall_s": 137
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 249224,
-     "wall_s": 214
+     "tokens": 240839,
+     "wall_s": 123
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 5163186,
-     "wall_s": 994
+     "tokens": 4734945,
+     "wall_s": 878
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 5506372,
-     "wall_s": 1192
+     "tokens": 7322006,
+     "wall_s": 1815
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 2002854,
-     "wall_s": 824
+     "tokens": 3868864,
+     "wall_s": 1329
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
-     "na_reason": "legacy",
+     "na_reason": "held",
      "status": "na",
-     "tokens": 891,
-     "wall_s": 282
+     "tokens": 18147,
+     "wall_s": 238
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
-     "na_reason": "legacy",
-     "status": "na",
-     "tokens": 741,
-     "wall_s": 281
+     "status": "pass",
+     "tokens": 17827,
+     "wall_s": 148
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
-     "na_reason": "legacy",
-     "status": "na",
-     "tokens": 557,
-     "wall_s": 365
+     "status": "pass",
+     "tokens": 4925,
+     "wall_s": 97
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 681909,
-     "wall_s": 287
+     "tokens": 249685,
+     "wall_s": 364
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
-     "status": "pass",
-     "tokens": 1609245,
-     "wall_s": 506
+     "status": "fail",
+     "tokens": 140857,
+     "wall_s": 87
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "status": "fail",
-     "tokens": 324296,
-     "wall_s": 166
+     "tokens": 144407,
+     "wall_s": 205
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 2079229,
-     "wall_s": 394
+     "tokens": 305582,
+     "wall_s": 362
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "pass",
-     "tokens": 284196,
-     "wall_s": 172
+     "tokens": 139891,
+     "wall_s": 62
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "pass",
-     "tokens": 18552,
-     "wall_s": 178
+     "tokens": 18541,
+     "wall_s": 141
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 53126,
-     "wall_s": 32
+     "tokens": 50066,
+     "wall_s": 37
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 194788,
-     "wall_s": 110
+     "tokens": 59298,
+     "wall_s": 52
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 106642,
+     "wall_s": 89
     }
    ],
-   "composed": true,
+   "composed": false,
    "frozen_week": null,
    "history": [
     {
@@ -2773,24 +2778,618 @@
     },
     {
      "current": true,
-     "n": 23,
-     "na": 4,
-     "total": 15,
-     "week": "2026-W38"
+     "n": 24,
+     "na": 2,
+     "total": 17,
+     "week": "2026-W41"
     }
    ],
-   "history_withheld": true,
+   "history_withheld": false,
    "id": "gpt-sol",
    "model": "gpt-5.6-sol-900k",
    "model_slug": "gpt-5.6-sol-900k",
-   "n": 23,
-   "na": 4,
+   "n": 24,
+   "na": 2,
    "name": "gpt-5.6-sol-900k (high 档)",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "total": 15,
+   "total": 17,
    "vendor": "OpenAI Codex",
-   "week": "2026-W38"
+   "week": "2026-W41"
+  },
+  "gpt56-sol": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2524,
+     "wall_s": 11
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2345,
+     "wall_s": 9
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5876,
+     "wall_s": 56
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 143946,
+     "wall_s": 191
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 441386,
+     "wall_s": 373
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 190472,
+     "wall_s": 151
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 205148,
+     "wall_s": 144
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 242871,
+     "wall_s": 112
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 214704,
+     "wall_s": 128
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 6695609,
+     "wall_s": 1548
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 7494778,
+     "wall_s": 1170
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 2841955,
+     "wall_s": 1302
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 16878,
+     "wall_s": 185
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 18914,
+     "wall_s": 147
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 9033,
+     "wall_s": 94
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 379736,
+     "wall_s": 191
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 138380,
+     "wall_s": 335
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 141006,
+     "wall_s": 220
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 405663,
+     "wall_s": 415
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 62254,
+     "wall_s": 27
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 16156,
+     "wall_s": 156
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 48896,
+     "wall_s": 30
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 72659,
+     "wall_s": 52
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 80287,
+     "wall_s": 59
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 18,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt56-sol",
+   "model": "gpt-5.6-sol",
+   "model_slug": "gpt-5.6-sol",
+   "n": 24,
+   "na": 2,
+   "name": "gpt-5.6-sol",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 18,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
+  "gpt56-terra": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2405,
+     "wall_s": 16
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2373,
+     "wall_s": 8
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 5508,
+     "wall_s": 89
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 101029,
+     "wall_s": 312
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 170712,
+     "wall_s": 224
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 284670,
+     "wall_s": 239
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 240307,
+     "wall_s": 294
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 137221,
+     "wall_s": 147
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 248684,
+     "wall_s": 204
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 2149660,
+     "wall_s": 754
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 2213687,
+     "wall_s": 1134
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 924959,
+     "wall_s": 669
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 11391,
+     "wall_s": 166
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 14536,
+     "wall_s": 150
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 6195,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 209160,
+     "wall_s": 182
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 170172,
+     "wall_s": 233
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 113241,
+     "wall_s": 96
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 227910,
+     "wall_s": 353
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 161614,
+     "wall_s": 69
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 15300,
+     "wall_s": 51
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 22576,
+     "wall_s": 18
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 59721,
+     "wall_s": 59
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 63420,
+     "wall_s": 69
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 16,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt56-terra",
+   "model": "gpt-5.6-terra",
+   "model_slug": "gpt-5.6-terra",
+   "n": 24,
+   "na": 2,
+   "name": "gpt-5.6-terra",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 16,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
+  "gpt6-astra": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2351,
+     "wall_s": 14
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2380,
+     "wall_s": 22
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 3940,
+     "wall_s": 43
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 61313,
+     "wall_s": 86
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 124161,
+     "wall_s": 116
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 147416,
+     "wall_s": 70
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 104146,
+     "wall_s": 182
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 94554,
+     "wall_s": 77
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 156108,
+     "wall_s": 116
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 1859747,
+     "wall_s": 898
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 2507251,
+     "wall_s": 827
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 645076,
+     "wall_s": 411
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 8508,
+     "wall_s": 85
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 12861,
+     "wall_s": 88
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "pass",
+     "tokens": 5520,
+     "wall_s": 68
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 127477,
+     "wall_s": 141
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 186886,
+     "wall_s": 172
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 140285,
+     "wall_s": 132
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 254442,
+     "wall_s": 176
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 145734,
+     "wall_s": 72
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "fail",
+     "tokens": 14150,
+     "wall_s": 135
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 45693,
+     "wall_s": 40
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 55103,
+     "wall_s": 65
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 71636,
+     "wall_s": 67
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 17,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt6-astra",
+   "model": "gpt-6-astra",
+   "model_slug": "gpt-6-astra",
+   "n": 24,
+   "na": 2,
+   "name": "gpt-6-astra",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 17,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
   },
   "gpt6-luna": {
    "band": "high",
@@ -3197,6 +3796,204 @@
    "vendor": "OpenAI Codex",
    "week": "2026-W39"
   },
+  "gpt6-sol-std": {
+   "band": "high",
+   "cases": [
+    {
+     "alias": "A-791e90ac",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2322,
+     "wall_s": 8
+    },
+    {
+     "alias": "A-1fd3683a",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 2787,
+     "wall_s": 15
+    },
+    {
+     "alias": "A-13854d9d",
+     "axis": "text",
+     "status": "pass",
+     "tokens": 4093,
+     "wall_s": 33
+    },
+    {
+     "alias": "A-77d62143",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 113275,
+     "wall_s": 73
+    },
+    {
+     "alias": "A-569dbe0d",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 149832,
+     "wall_s": 128
+    },
+    {
+     "alias": "A-87c472cb",
+     "axis": "build",
+     "status": "fail",
+     "tokens": 180097,
+     "wall_s": 90
+    },
+    {
+     "alias": "A-641195e2",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 147626,
+     "wall_s": 82
+    },
+    {
+     "alias": "A-442d4aab",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 119539,
+     "wall_s": 58
+    },
+    {
+     "alias": "A-61f7ad01",
+     "axis": "build",
+     "status": "pass",
+     "tokens": 178110,
+     "wall_s": 83
+    },
+    {
+     "alias": "A-d511f9e8",
+     "axis": "defense",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 3425993,
+     "wall_s": 460
+    },
+    {
+     "alias": "A-a317e74b",
+     "axis": "attribution",
+     "status": "fail",
+     "tokens": 6785079,
+     "wall_s": 711
+    },
+    {
+     "alias": "A-be92627f",
+     "axis": "defense",
+     "status": "fail",
+     "tokens": 705194,
+     "wall_s": 265
+    },
+    {
+     "alias": "A-cdc3d11a",
+     "axis": "review",
+     "na_reason": "held",
+     "status": "na",
+     "tokens": 9129,
+     "wall_s": 57
+    },
+    {
+     "alias": "A-47eea242",
+     "axis": "review",
+     "status": "pass",
+     "tokens": 10568,
+     "wall_s": 13
+    },
+    {
+     "alias": "A-ea80d793",
+     "axis": "vision",
+     "status": "fail",
+     "tokens": 6309,
+     "wall_s": 41
+    },
+    {
+     "alias": "A-a5608487",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 154325,
+     "wall_s": 81
+    },
+    {
+     "alias": "A-984e80ee",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 328870,
+     "wall_s": 103
+    },
+    {
+     "alias": "A-24bcf707",
+     "axis": "ops",
+     "status": "fail",
+     "tokens": 111173,
+     "wall_s": 116
+    },
+    {
+     "alias": "A-8d4bc770",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 308404,
+     "wall_s": 79
+    },
+    {
+     "alias": "A-0676097b",
+     "axis": "req-drift",
+     "status": "pass",
+     "tokens": 70431,
+     "wall_s": 24
+    },
+    {
+     "alias": "A-d9b79b46",
+     "axis": "ui-build",
+     "status": "pass",
+     "tokens": 14857,
+     "wall_s": 133
+    },
+    {
+     "alias": "A-6fbeb363",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 65185,
+     "wall_s": 41
+    },
+    {
+     "alias": "A-8c909d0a",
+     "axis": "ops",
+     "status": "pass",
+     "tokens": 54397,
+     "wall_s": 154
+    },
+    {
+     "alias": "A-3f2a9cdd",
+     "axis": "convergence",
+     "status": "pass",
+     "tokens": 99042,
+     "wall_s": 61
+    }
+   ],
+   "composed": false,
+   "frozen_week": null,
+   "history": [
+    {
+     "current": true,
+     "n": 24,
+     "na": 2,
+     "total": 17,
+     "week": "2026-W41"
+    }
+   ],
+   "history_withheld": false,
+   "id": "gpt6-sol-std",
+   "model": "gpt-6-sol",
+   "model_slug": "gpt-6-sol",
+   "n": 24,
+   "na": 2,
+   "name": "gpt-6-sol",
+   "provider_slug": "gpt",
+   "repo": "amber-gpt",
+   "total": 17,
+   "vendor": "OpenAI Codex",
+   "week": "2026-W41"
+  },
   "gpt61-sol": {
    "band": "high",
    "cases": [
@@ -3204,172 +4001,172 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2492,
-     "wall_s": 26
+     "tokens": 2496,
+     "wall_s": 15
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 2470,
-     "wall_s": 35
+     "tokens": 2591,
+     "wall_s": 23
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 4206,
-     "wall_s": 68
+     "tokens": 4200,
+     "wall_s": 39
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 86962,
-     "wall_s": 181
+     "tokens": 105881,
+     "wall_s": 87
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 128205,
-     "wall_s": 216
+     "tokens": 106284,
+     "wall_s": 94
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 122584,
-     "wall_s": 133
+     "tokens": 120286,
+     "wall_s": 73
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 91609,
-     "wall_s": 288
+     "tokens": 84174,
+     "wall_s": 117
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 100571,
-     "wall_s": 160
+     "tokens": 113505,
+     "wall_s": 80
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 106285,
-     "wall_s": 192
+     "tokens": 101317,
+     "wall_s": 91
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 2996365,
-     "wall_s": 1392
+     "tokens": 2259697,
+     "wall_s": 949
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 4494075,
-     "wall_s": 1805
+     "tokens": 7569936,
+     "wall_s": 1415
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 694826,
-     "wall_s": 793
+     "tokens": 424063,
+     "wall_s": 319
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "na_reason": "held",
      "status": "na",
-     "tokens": 9120,
-     "wall_s": 146
+     "tokens": 7820,
+     "wall_s": 53
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
      "status": "pass",
-     "tokens": 13417,
-     "wall_s": 140
+     "tokens": 12520,
+     "wall_s": 67
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
-     "status": "fail",
-     "tokens": 6879,
-     "wall_s": 176
+     "status": "pass",
+     "tokens": 5858,
+     "wall_s": 64
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 159560,
-     "wall_s": 263
+     "tokens": 139476,
+     "wall_s": 122
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 180020,
-     "wall_s": 292
+     "tokens": 119505,
+     "wall_s": 129
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "na_reason": "held",
      "status": "na",
-     "tokens": 134931,
-     "wall_s": 195
+     "tokens": 208491,
+     "wall_s": 139
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 670850,
-     "wall_s": 379
+     "tokens": 376915,
+     "wall_s": 176
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "pass",
-     "tokens": 148305,
-     "wall_s": 108
+     "tokens": 154103,
+     "wall_s": 66
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "pass",
-     "tokens": 14165,
-     "wall_s": 241
+     "tokens": 14792,
+     "wall_s": 130
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 58098,
-     "wall_s": 81
+     "tokens": 64131,
+     "wall_s": 50
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
-     "status": "fail",
-     "tokens": 74094,
-     "wall_s": 125
+     "status": "pass",
+     "tokens": 76858,
+     "wall_s": 71
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 68044,
-     "wall_s": 123
+     "tokens": 62322,
+     "wall_s": 48
     }
    ],
    "composed": false,
@@ -3379,8 +4176,8 @@
      "current": true,
      "n": 24,
      "na": 3,
-     "total": 16,
-     "week": "2026-W40"
+     "total": 18,
+     "week": "2026-W41"
     }
    ],
    "history_withheld": false,
@@ -3392,9 +4189,9 @@
    "name": "gpt-6.1-sol",
    "provider_slug": "gpt",
    "repo": "amber-gpt",
-   "total": 16,
+   "total": 18,
    "vendor": "OpenAI Codex",
-   "week": "2026-W40"
+   "week": "2026-W41"
   },
   "kimi": {
    "band": "high",
@@ -4003,171 +4800,171 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2560,
-     "wall_s": 12
+     "tokens": 2661,
+     "wall_s": 16
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 2471,
-     "wall_s": 18
+     "tokens": 2598,
+     "wall_s": 8
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 6968,
-     "wall_s": 88
+     "tokens": 5631,
+     "wall_s": 24
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 504015,
-     "wall_s": 376
+     "tokens": 300925,
+     "wall_s": 149
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 464117,
-     "wall_s": 171
+     "tokens": 263452,
+     "wall_s": 199
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 266300,
-     "wall_s": 150
+     "tokens": 189911,
+     "wall_s": 122
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 214623,
-     "wall_s": 164
+     "tokens": 109473,
+     "wall_s": 62
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 88443,
-     "wall_s": 97
+     "tokens": 114938,
+     "wall_s": 76
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 234860,
-     "wall_s": 260
+     "tokens": 549936,
+     "wall_s": 372
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 9746904,
-     "wall_s": 901
+     "tokens": 7218870,
+     "wall_s": 573
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 6445205,
-     "wall_s": 872
+     "tokens": 7020063,
+     "wall_s": 1005
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 1956430,
-     "wall_s": 752
+     "tokens": 2669163,
+     "wall_s": 587
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "na_reason": "held",
      "status": "na",
-     "tokens": 14705,
-     "wall_s": 161
+     "tokens": 15571,
+     "wall_s": 173
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
      "status": "pass",
-     "tokens": 18686,
-     "wall_s": 162
+     "tokens": 21024,
+     "wall_s": 76
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
-     "status": "fail",
-     "tokens": 10059,
-     "wall_s": 119
+     "status": "pass",
+     "tokens": 6259,
+     "wall_s": 78
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 321393,
-     "wall_s": 190
+     "tokens": 241366,
+     "wall_s": 105
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 119127,
-     "wall_s": 78
+     "tokens": 287538,
+     "wall_s": 148
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
-     "status": "pass",
-     "tokens": 210129,
-     "wall_s": 148
+     "status": "fail",
+     "tokens": 95750,
+     "wall_s": 145
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
-     "status": "fail",
-     "tokens": 858980,
-     "wall_s": 534
+     "status": "pass",
+     "tokens": 359908,
+     "wall_s": 239
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
-     "status": "pass",
-     "tokens": 156104,
-     "wall_s": 90
+     "status": "fail",
+     "tokens": 116512,
+     "wall_s": 54
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "pass",
-     "tokens": 17356,
-     "wall_s": 183
+     "tokens": 16967,
+     "wall_s": 49
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 32030,
-     "wall_s": 31
+     "tokens": 30406,
+     "wall_s": 16
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 80212,
-     "wall_s": 85
+     "tokens": 40595,
+     "wall_s": 27
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 77583,
-     "wall_s": 95
+     "tokens": 73820,
+     "wall_s": 43
     }
    ],
    "composed": false,
@@ -4201,171 +4998,171 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2637,
-     "wall_s": 13
+     "tokens": 2515,
+     "wall_s": 8
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 3451,
-     "wall_s": 35
+     "tokens": 2664,
+     "wall_s": 9
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 6614,
-     "wall_s": 81
+     "tokens": 6088,
+     "wall_s": 28
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 212374,
-     "wall_s": 522
+     "tokens": 205036,
+     "wall_s": 131
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 378622,
-     "wall_s": 223
+     "tokens": 331897,
+     "wall_s": 196
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 334146,
-     "wall_s": 259
+     "tokens": 579222,
+     "wall_s": 157
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 382583,
-     "wall_s": 370
+     "tokens": 567267,
+     "wall_s": 250
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 451897,
-     "wall_s": 273
+     "tokens": 67140,
+     "wall_s": 104
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 296607,
-     "wall_s": 341
+     "tokens": 506792,
+     "wall_s": 164
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 8515725,
-     "wall_s": 1116
+     "tokens": 13374668,
+     "wall_s": 698
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 9657858,
-     "wall_s": 1900
+     "tokens": 6511854,
+     "wall_s": 728
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 3366843,
-     "wall_s": 977
+     "tokens": 1618831,
+     "wall_s": 431
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "na_reason": "held",
      "status": "na",
-     "tokens": 14125,
-     "wall_s": 149
+     "tokens": 17474,
+     "wall_s": 86
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
-     "status": "pass",
-     "tokens": 16127,
-     "wall_s": 216
+     "status": "fail",
+     "tokens": 24644,
+     "wall_s": 98
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
      "status": "fail",
-     "tokens": 9591,
-     "wall_s": 50
+     "tokens": 6955,
+     "wall_s": 84
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 207213,
-     "wall_s": 151
+     "tokens": 267557,
+     "wall_s": 120
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 238561,
-     "wall_s": 275
+     "tokens": 305572,
+     "wall_s": 175
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "status": "pass",
-     "tokens": 153429,
-     "wall_s": 319
+     "tokens": 149904,
+     "wall_s": 158
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "fail",
-     "tokens": 1892795,
-     "wall_s": 292
+     "tokens": 2187075,
+     "wall_s": 136
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
-     "status": "fail",
-     "tokens": 178997,
-     "wall_s": 104
+     "status": "pass",
+     "tokens": 114399,
+     "wall_s": 45
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "pass",
-     "tokens": 19594,
-     "wall_s": 221
+     "tokens": 17944,
+     "wall_s": 58
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 42369,
-     "wall_s": 38
+     "tokens": 58378,
+     "wall_s": 28
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 43017,
-     "wall_s": 58
+     "tokens": 48204,
+     "wall_s": 23
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 190848,
-     "wall_s": 133
+     "tokens": 62325,
+     "wall_s": 37
     }
    ],
    "composed": false,
@@ -4399,172 +5196,172 @@
      "alias": "A-791e90ac",
      "axis": "text",
      "status": "pass",
-     "tokens": 2376,
-     "wall_s": 12
+     "tokens": 2380,
+     "wall_s": 7
     },
     {
      "alias": "A-1fd3683a",
      "axis": "text",
      "status": "pass",
-     "tokens": 2515,
-     "wall_s": 18
+     "tokens": 2395,
+     "wall_s": 13
     },
     {
      "alias": "A-13854d9d",
      "axis": "text",
      "status": "pass",
-     "tokens": 4224,
-     "wall_s": 22
+     "tokens": 4170,
+     "wall_s": 16
     },
     {
      "alias": "A-77d62143",
      "axis": "build",
      "status": "pass",
-     "tokens": 84843,
-     "wall_s": 88
+     "tokens": 48027,
+     "wall_s": 27
     },
     {
      "alias": "A-569dbe0d",
      "axis": "build",
      "status": "pass",
-     "tokens": 102854,
-     "wall_s": 107
+     "tokens": 81440,
+     "wall_s": 56
     },
     {
      "alias": "A-87c472cb",
      "axis": "build",
      "status": "fail",
-     "tokens": 65898,
-     "wall_s": 63
+     "tokens": 296115,
+     "wall_s": 61
     },
     {
      "alias": "A-641195e2",
      "axis": "build",
      "status": "pass",
-     "tokens": 164400,
-     "wall_s": 140
+     "tokens": 84873,
+     "wall_s": 77
     },
     {
      "alias": "A-442d4aab",
      "axis": "build",
      "status": "pass",
-     "tokens": 131516,
-     "wall_s": 56
+     "tokens": 58399,
+     "wall_s": 38
     },
     {
      "alias": "A-61f7ad01",
      "axis": "build",
      "status": "pass",
-     "tokens": 171933,
-     "wall_s": 115
+     "tokens": 143110,
+     "wall_s": 62
     },
     {
      "alias": "A-d511f9e8",
      "axis": "defense",
      "na_reason": "held",
      "status": "na",
-     "tokens": 1163798,
-     "wall_s": 232
+     "tokens": 980742,
+     "wall_s": 183
     },
     {
      "alias": "A-a317e74b",
      "axis": "attribution",
      "status": "fail",
-     "tokens": 2068643,
-     "wall_s": 562
+     "tokens": 1394806,
+     "wall_s": 218
     },
     {
      "alias": "A-be92627f",
      "axis": "defense",
      "status": "fail",
-     "tokens": 442096,
-     "wall_s": 226
+     "tokens": 418795,
+     "wall_s": 128
     },
     {
      "alias": "A-cdc3d11a",
      "axis": "review",
      "na_reason": "held",
      "status": "na",
-     "tokens": 8098,
-     "wall_s": 41
+     "tokens": 8038,
+     "wall_s": 37
     },
     {
      "alias": "A-47eea242",
      "axis": "review",
      "status": "pass",
-     "tokens": 11202,
-     "wall_s": 27
+     "tokens": 11125,
+     "wall_s": 13
     },
     {
      "alias": "A-ea80d793",
      "axis": "vision",
      "status": "fail",
-     "tokens": 5419,
-     "wall_s": 26
+     "tokens": 5565,
+     "wall_s": 35
     },
     {
      "alias": "A-a5608487",
      "axis": "ops",
      "status": "pass",
-     "tokens": 211466,
-     "wall_s": 410
+     "tokens": 180584,
+     "wall_s": 75
     },
     {
      "alias": "A-984e80ee",
      "axis": "ops",
      "status": "pass",
-     "tokens": 95609,
-     "wall_s": 77
+     "tokens": 119435,
+     "wall_s": 64
     },
     {
      "alias": "A-24bcf707",
      "axis": "ops",
      "na_reason": "held",
      "status": "na",
-     "tokens": 84687,
-     "wall_s": 55
+     "tokens": 105549,
+     "wall_s": 56
     },
     {
      "alias": "A-8d4bc770",
      "axis": "ops",
      "status": "pass",
-     "tokens": 494077,
-     "wall_s": 133
+     "tokens": 1039555,
+     "wall_s": 125
     },
     {
      "alias": "A-0676097b",
      "axis": "req-drift",
      "status": "fail",
-     "tokens": 142417,
-     "wall_s": 163
+     "tokens": 86335,
+     "wall_s": 37
     },
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
      "status": "pass",
-     "tokens": 14797,
-     "wall_s": 135
+     "tokens": 15488,
+     "wall_s": 56
     },
     {
      "alias": "A-6fbeb363",
      "axis": "ops",
      "status": "pass",
-     "tokens": 30687,
-     "wall_s": 25
+     "tokens": 36879,
+     "wall_s": 14
     },
     {
      "alias": "A-8c909d0a",
      "axis": "ops",
      "status": "pass",
-     "tokens": 52244,
-     "wall_s": 43
+     "tokens": 56221,
+     "wall_s": 28
     },
     {
      "alias": "A-3f2a9cdd",
      "axis": "convergence",
      "status": "pass",
-     "tokens": 73621,
-     "wall_s": 57
+     "tokens": 71965,
+     "wall_s": 47
     }
    ],
    "composed": false,
@@ -5009,7 +5806,8 @@
     {
      "alias": "A-1fd3683a",
      "axis": "text",
-     "status": "pass",
+     "na_reason": "held",
+     "status": "na",
      "tokens": 11372,
      "wall_s": 126
     },
@@ -5104,7 +5902,8 @@
     {
      "alias": "A-ea80d793",
      "axis": "vision",
-     "status": "fail",
+     "na_reason": "held",
+     "status": "na",
      "tokens": 2744,
      "wall_s": 56
     },
@@ -5146,7 +5945,8 @@
     {
      "alias": "A-d9b79b46",
      "axis": "ui-build",
-     "status": "pass",
+     "na_reason": "held",
+     "status": "na",
      "tokens": 39188,
      "wall_s": 445
     },
@@ -5185,8 +5985,8 @@
     {
      "current": true,
      "n": 24,
-     "na": 4,
-     "total": 18,
+     "na": 7,
+     "total": 16,
      "week": "2026-W41"
     }
    ],
@@ -5195,11 +5995,11 @@
    "model": "step-5-preview",
    "model_slug": "step-5-preview",
    "n": 24,
-   "na": 4,
+   "na": 7,
    "name": "step-5-preview",
    "provider_slug": "stepfun",
    "repo": "amber-stepfun",
-   "total": 18,
+   "total": 16,
    "vendor": "stepfun plan 端点",
    "week": "2026-W41"
   },
@@ -6799,9 +7599,9 @@
   "crof"
  ],
  "source": {
-  "amber_db_blob": "e58440f6dfb4fcf8ba5076d042bbe0a0f2bae477",
-  "amber_db_sha256": "9949636972da163aa96ddeee8c0f1ccfa0e835d8564ff21cebdc9bc355d32404",
-  "amber_run_commit": "9d25179589818d71dc897b1d35930064d72d9655",
+  "amber_db_blob": "cd5a1870a11d243853829a36ab8013e1034a2703",
+  "amber_db_sha256": "64d0ee9b2b7bf197113c2de3f436b7ccbb318796bce1876363f2b85838e9dc75",
+  "amber_run_commit": "7f8d2eee10697792cd868eeecea500f927578bcf",
   "note": "generated by scripts/gen-lane-pages.py from amber.db; do not edit by hand",
   "tools_or_db_uncommitted": false
  }
