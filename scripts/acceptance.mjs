@@ -554,7 +554,8 @@ try {
     // Owner 2026-10-07 B3: English-first structural growth authorizes 230000 -> 250000 bytes.
     // Owner 2026-10-08 B3: 30-lane structural growth authorizes 250000 -> 300000 bytes（同场批准开压缩，①②同批）
     // Same uncompressed navigation + resource transferSize contract; not the old 260KB relaxation.
-    if (isPickRoute && initialTransfer.totalBytes >= 300_000) failed = true;
+    // Owner 2026-10-13 (via Vesper): homepage budget raised 300_000 -> 1_000_000 bytes (uncompressed transfer).
+    if (isPickRoute && initialTransfer.totalBytes >= 1_000_000) failed = true;
 
     // Direct load, refresh, ordinary navigation and back must remain real MPA paths.
     // The picker keeps its search, selected axes and tie-break in the address (?q=&axes=&sort=), so on the home pages the
