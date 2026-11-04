@@ -54,7 +54,7 @@ export default function zhFirstRedirects(base) {
           await mkdir(join(filename, '..'), { recursive: true });
           const canonical = new URL((prefix + to).split('#')[0], 'https://askclaw.dev').href;
           const en = from.startsWith('/en/');
-          await writeFile(filename, `<!doctype html><html lang="${en ? 'en' : 'zh-CN'}"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>${en ? 'Moved' : '已迁移'} — AskClaw</title><link rel="canonical" href="${escape(canonical)}"><meta property="og:image" content="https://askclaw.dev/assets/top5-2026-w41e.en.webp"><meta http-equiv="refresh" content="0; url=${escape(prefix + to)}"></head><body><p><a href="${escape(prefix + to)}">${en ? 'This page moved' : '此页已迁移'}</a></p></body></html>\n`);
+          await writeFile(filename, `<!doctype html><html lang="${en ? 'en' : 'zh-CN'}"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>${en ? 'Moved' : '已迁移'} — AskClaw</title><link rel="canonical" href="${escape(canonical)}"><meta property="og:image" content="https://askclaw.dev/assets/top5-2026-w45.en.webp"><meta http-equiv="refresh" content="0; url=${escape(prefix + to)}"></head><body><p><a href="${escape(prefix + to)}">${en ? 'This page moved' : '此页已迁移'}</a></p></body></html>\n`);
         }
         for (const file of await htmlFiles(root)) {
           if (!file.endsWith('index.html') || file.startsWith('amber/')) continue;
