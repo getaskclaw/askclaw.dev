@@ -14,6 +14,7 @@ const allAxes = siteData.axes.map((a) => a.id).join(',');
 // Translate display labels only. Scores, periods, IDs and source records stay intact.
 const laneLabels: Record<string, { name?: string; vendor?: string }> = {
   kimi: { vendor: 'Kimi official coding' },
+  'kimi-k31-pro-high': { vendor: 'Kimi official coding endpoint' },
   'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
   ds: { vendor: 'DeepSeek official' },
   doubao: { vendor: 'Volcengine Ark Agent Plan' },

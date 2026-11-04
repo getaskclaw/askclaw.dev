@@ -76,6 +76,7 @@ export const I18N = {
     providerLabels: { workbuddy: 'WorkBuddy' },
     laneLabels: {
       kimi: { vendor: 'Kimi official coding' },
+      'kimi-k31-pro-high': { vendor: 'Kimi official coding endpoint' },
       devin: { card: 'swe-2-max (ACP)', tag: 'ACP' },
       'swe2-http-max': { card: 'swe-2-max (API)', tag: 'API' }, 'swe2-http-medium': { card: 'swe-2-medium (API)', tag: 'medium' }, 'swe2-http-high': { card: 'swe-2-high (API)', tag: 'high' },
       ds: { vendor: 'DeepSeek official', tag: 'official' },

@@ -1240,6 +1240,56 @@
    "tok": 14340024,
    "tok_n": 24
   },
+  "kimi-k31-pro-high": {
+   "ax": {
+    "attribution": [
+     1468,
+     1
+    ],
+    "build": [
+     1192,
+     6
+    ],
+    "convergence": [
+     109,
+     1
+    ],
+    "defense": [
+     1990,
+     2
+    ],
+    "ops": [
+     790,
+     6
+    ],
+    "req-drift": [
+     102,
+     1
+    ],
+    "review": [
+     123,
+     2
+    ],
+    "text": [
+     117,
+     3
+    ],
+    "ui-build": [
+     146,
+     1
+    ],
+    "vision": [
+     278,
+     1
+    ]
+   },
+   "t_med": 114,
+   "t_n": 24,
+   "t_p90": 525,
+   "t_total": 6315,
+   "tok": 21441698,
+   "tok_n": 24
+  },
   "laguna-cc": {
    "ax": {
     "attribution": [

@@ -220,6 +220,7 @@ try {
       const english = route === '/en/rank/';
       const englishLabels = {
         kimi: { vendor: 'Kimi official coding' },
+        'kimi-k31-pro-high': { vendor: 'Kimi official coding endpoint' },
         'gpt-luna': { name: 'gpt-5.6-luna-900k (high band)' },
         ds: { vendor: 'DeepSeek official' },
         doubao: { vendor: 'Volcengine Ark Agent Plan' },
@@ -253,7 +254,7 @@ try {
         ...(I18N[english ? 'en' : 'zh'].laneLabels[lane.id]?.card ? { name: I18N[english ? 'en' : 'zh'].laneLabels[lane.id].card } : {}),
       }));
       result.laneDataPreserved = isDeepStrictEqual(shippedLanes, expectedLanes);
-      result.kimiVendor = await page.locator('#rank-body tr').filter({ has: page.locator('a[href="https://github.com/getaskclaw/amber-kimi"]') }).locator('small').innerText();
+      result.kimiVendor = await page.locator('#rank-body tr').filter({ has: page.locator('a').filter({ hasText: /^k3$/ }) }).locator('small').innerText();
       result.presetContent = await page.locator('#rank-body').innerText();
       if (!result.laneDataPreserved || result.kimiVendor !== (english ? 'Kimi official coding' : 'Kimi 官方 coding')) failed = true;
       const axes = ['build', 'ops', 'ui-build'];
@@ -312,10 +313,10 @@ try {
       await convergenceChip.click();
       result.convergenceRows = await page.locator('#rank-body .lane a').allTextContents();
       result.convergenceScores = await page.locator('#rank-body .cell').allTextContents();
-      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'gpt-sol', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'claude-haiku', 'laguna-np', 'laguna-cc', 'swe2-http-max', 'swe2-http-medium', 'swe2-http-high', 'gpt56-sol', 'gpt56-terra', 'gpt6-astra', 'gpt6-sol-std', 'cc-sb', 'wb2-m3'];  // 2026-10-08: claude-haiku (Nous Portal) passed the convergence case; 2026-10-09: laguna-np / laguna-cc (owner record #4)
+      const convergenceIds = ['devin', 'kimi', 'wb', 'gpt-luna', 'ds', 'ocgo', 'doubao', 'claude', 'stepfun', 'gpt-sol', 'ollama', 'gp', 'astra', 'gpt6-sol', 'gpt6-luna', 'cc-m26p', 'claude-sonnet', 'claude-fable', 'gpt61-sol', 'wb2-hy4', 'wb2-d41f', 'wb2-g53f', 'luna56', 'luna56k', 'luna6', 'claude-haiku', 'laguna-np', 'laguna-cc', 'swe2-http-max', 'swe2-http-medium', 'swe2-http-high', 'gpt56-sol', 'gpt56-terra', 'gpt6-astra', 'gpt6-sol-std', 'kimi-k31-pro-high', 'cc-sb', 'wb2-m3'];  // 2026-10-08: claude-haiku (Nous Portal) passed the convergence case; 2026-10-09: laguna-np / laguna-cc (owner record #4)
       // space-bunny-alpha sat the convergence case and lost it: 0/1 is a real negative, not a hold.
       const convergenceScoresExpected = convergenceIds.map((id) => (id === 'cc-sb' || id === 'wb2-m3' ? '0/1' : '1/1'));
-      result.convergencePassed = result.convergenceChip === (english ? 'Convergence35/37 full marks' : '收敛35/37 满分')
+      result.convergencePassed = result.convergenceChip === (english ? 'Convergence36/38 full marks' : '收敛36/38 满分')
         && await convergenceChip.getAttribute('aria-pressed') === 'true'
         && isDeepStrictEqual(result.convergenceRows, convergenceIds.map((id) => expectedLanes.find((lane) => lane.id === id).name))
         && isDeepStrictEqual(result.convergenceScores, convergenceScoresExpected);
