@@ -148,6 +148,7 @@ const sortButtons = [['time', T.sortTime, 'true'], ['tok', T.sortTok, 'false'], 
               {l.e && (
                 <div class="effort"><span class="k">{T.perCase}</span><span class="v"><b class="tm">{tr(T, 'median', { t: fmtSec(l.e.t_med, T) })}</b><span class="tbar"><i style={`width:${Math.max(4, Math.round(l.e.t_med / maxMed * 100))}%`}></i></span></span><span class="k">{T.total}</span><span class="v"><small class="tt">{tr(T, 'totalLine', { t: fmtSec(l.e.t_total, T), n: l.e.t_n, tok: fmtTok(l.e.tok, T) })}</small></span></div>
               )}
+              {l.id === 'workbuddy-hy4free-high' && l.e && <p class="fine" data-time-scope={l.id}>{T.hy4freeTimeScope} <a href={T.hy4freeAuditHref} target="_blank" rel="noopener">{T.hy4freeAuditLabel}</a></p>}
               {chip.n > 1 && <a class="same-model" href={PAGES[l.id][0].split('#')[0]}>{chip.head}{chip.parts.map((x, k) => <>{k ? ' · ' : ''}{x.cur ? <b aria-current="true">{x.text}</b> : x.text}</>)}{chip.end}</a>}
               <div class="card-foot"><span class="wk">{tr(T, 'week', { wk: l.wk, n: l.cases })}</span><a class="card-page" href={PAGES[l.id] ? PAGES[l.id][0] : `https://github.com/getaskclaw/${l.repo}`}>{PAGES[l.id] ? T.pageLink : T.repoLink}</a></div>
               </article>,

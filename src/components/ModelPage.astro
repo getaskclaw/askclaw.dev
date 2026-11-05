@@ -239,12 +239,14 @@ const dots = (cell: any) => cell && cell.n > 0 ? [
                   <div><dt>{t.tokTotal}</dt><dd>{b.eff.tok ? fmtTok(b.eff.tok, T) : T.tokNone}</dd></div>
                 </dl>
               ) : <p class="card-note">—</p>}
+             {b.id === 'workbuddy-hy4free-high' && b.eff && <p class="card-note" data-time-scope={b.id}>{T.hy4freeTimeScope} <a href={T.hy4freeAuditHref} target="_blank" rel="noopener">{T.hy4freeAuditLabel}</a></p>}
             </div>
           </aside>
 
           <div class="evidence">
             <H class="ev-title" id={`cases-${b.id}`}>{t.casesH}</H>
             <p class="hint">{t.secret}</p>
+            {b.id === 'workbuddy-hy4free-high' && <p class="hint" data-time-scope={b.id}>{T.hy4freeTimeScope} <a href={T.hy4freeAuditHref} target="_blank" rel="noopener">{T.hy4freeAuditLabel}</a></p>}
             {(b.fails > 0 || b.nas > 0) && <p class="tally">{t.tally(b.fails, b.nas)}</p>}
             {!pairOn && (
             <div class="board-wrap">
