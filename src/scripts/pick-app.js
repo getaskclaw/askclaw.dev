@@ -55,6 +55,16 @@ function axisRow(l, id, weakest) {
   row.append(frac);
   return row;
 }
+// Presentation only: the selected-answer timing is not the full root + child resource scope.
+function timeScopeNote(l) {
+  if (l.id !== 'workbuddy-hy4free-high') return null;
+  const note = Object.assign(document.createElement('p'), { className: 'fine' });
+  note.dataset.timeScope = l.id;
+  const audit = Object.assign(document.createElement('a'), { href: T.hy4freeAuditHref, textContent: T.hy4freeAuditLabel, target: '_blank', rel: 'noopener' });
+  audit.addEventListener('click', (e) => e.stopPropagation());
+  note.append(T.hy4freeTimeScope + ' ', audit);
+  return note;
+}
 function buildCard(l) {
   const el = document.createElement('article');
   el.className = 'card glass'; el.tabIndex = 0; el.dataset.id = l.id;
@@ -73,6 +83,8 @@ function buildCard(l) {
   el.querySelector('.tm').textContent = t('median', { t: fS(l.e.t_med) });
   el.querySelector('.tbar i').style.width = `${Math.max(4, Math.round(l.e.t_med / MAX_MED * 100))}%`;
   el.querySelector('.tt').textContent = t('totalLine', { t: fS(l.e.t_total), n: l.e.t_n, tok: fT(l.e.tok) });
+  const scopeNote = timeScopeNote(l);
+  if (scopeNote) el.querySelector('.effort').after(scopeNote);
   const chipParts = sameChip(lanes, l, T);
   if (chipParts.n > 1) {
     const chip = Object.assign(document.createElement('a'), { className: 'same-model', href: pg[0].split('#')[0] });
@@ -353,6 +365,8 @@ function openDetail(id, from) {
     [t('effMed', { t: fS(l.e.t_med) }), t('effP90', { t: fS(l.e.t_p90) }), t('effTotal', { t: fS(l.e.t_total), n: l.e.t_n }), t('effTok', { tok: fT(l.e.tok) }) + (l.e.tok != null && l.e.tok_n < l.e.t_n ? t('effTokN', { n: l.e.tok_n }) : '')]
       .forEach((t) => ef.append(Object.assign(document.createElement('span'), { className: 'eff', textContent: t })));
     body.append(ef);
+    const scopeNote = timeScopeNote(l);
+    if (scopeNote) body.append(scopeNote);
     // one row per axis: result on the left, time spent on the right
     const ax = document.createElement('div'); ax.className = 'detail-axes';
     const hd = document.createElement('div'); hd.className = 'drow dhead';
@@ -434,6 +448,10 @@ function openCompare() {
       tb_.append(tr);
     });
     tbl.append(tb_); wrap.append(tbl); body.append(wrap);
+    ls.forEach((l) => {
+      const scopeNote = timeScopeNote(l);
+      if (scopeNote) { scopeNote.prepend(l.name + ' · '); body.append(scopeNote); }
+    });
     body.append(Object.assign(document.createElement('p'), { className: 'fine', textContent: T.cmpNote + MONEY_NOTE }));
   });
 }

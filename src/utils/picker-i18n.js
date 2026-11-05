@@ -7,6 +7,9 @@
 export const I18N = {
   zh: {
     lang: 'zh',
+    hy4freeTimeScope: '所选原卷作答耗时，非全场总耗时（首轮超时、重试及子会话的完整资源范围见审计）。',
+    hy4freeAuditLabel: '完整根＋子会话审计',
+    hy4freeAuditHref: 'https://github.com/getaskclaw/amber-workbuddy/blob/main/results/2026-W45.md',
     laneLabels: {
       kimi: { vendor: 'Kimi 官方 coding' },
       devin: { card: 'swe-2-max (ACP)', tag: 'ACP' },
@@ -73,6 +76,9 @@ export const I18N = {
   },
   en: {
     lang: 'en',
+    hy4freeTimeScope: 'Selected original-answer time, not full-run time (see audit for full resource coverage of first-round timeouts, retries and child sessions).',
+    hy4freeAuditLabel: 'Full root + child-session audit',
+    hy4freeAuditHref: 'https://github.com/getaskclaw/amber-workbuddy/blob/main/results/2026-W45.en.md',
     providerLabels: { workbuddy: 'WorkBuddy' },
     laneLabels: {
       kimi: { vendor: 'Kimi official coding' },

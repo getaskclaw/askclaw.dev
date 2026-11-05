@@ -6,9 +6,9 @@
   "fontSize": 22,
   "anchor": "start",
   "subtitle": [
-   "k3.1-pro high · 16'/24 · 16 wins / 6 losses / 2 NA",
-   "' = grading or infrastructure hold, neither win nor loss; denominator unchanged",
-   "Older k3 and this result are different batches; no improvement or regression is claimed.",
+   "HY4Free high · 18'/24 · 18 / 3 / 3 (win / loss / NA)",
+   "' = holds / interruptions; denominator unchanged; accepted driver record",
+   "Resource totals: see full audit side ledger; no speed or cost comparison",
    "askclaw.dev/en/rank/"
   ],
   "subtitleFontSize": 16,
@@ -74,6 +74,12 @@
    },
    {
     "lane": "gpt-5.6-sol @ OpenAI Codex",
+    "pass": 18,
+    "rank": "#2 tie",
+    "label": "18'"
+   },
+   {
+    "lane": "HY4Free high @ WorkBuddy routed API (W45)",
     "pass": 18,
     "rank": "#2 tie",
     "label": "18'"
@@ -243,7 +249,7 @@
   ]
  },
  "width": 620,
- "height": 864,
+ "height": 888,
  "layer": [
   {
    "mark": {
