@@ -13,7 +13,7 @@ const axisNote = (id) => `「${axisById[id].name_zh}」（${axisById[id].hint_zh
 const groupsText = siteData.groups.map((g) => `${g.name_zh}：${siteData.axes.filter((a) => a.grp === g.id).map((a) => a.name_zh).join('、')}`);
 
 const resultRepos = [
-  ['amber-devin', "19'/24", 'swe-2-max @ Devin · 旧榜存档 gemini-4-argon @ high（2026-11 场次）：严格口径 13/24（13 过 · 5 不过 · 6 NA；每案只认第一次开考；原记 16/24 仅对照），上线前成绩、未逐条核验，不进当前榜', 'W37'],
+  ['amber-devin', "19'/24", 'swe-2-max @ Devin · 旧榜存档 gemini-4-argon @ high（2026-11 场次）：严格口径 13/24（13 过 · 5 不过 · 6 NA；每案只认第一次开考；原记 16/24 仅对照），上线前成绩、未逐条核验，不进当前榜', 'W37 / 2026-11 存档'],
   ['amber-kimi', "16'/24 · k3 18'/24", 'k3.1-pro high；旧 k3 为不同批次', 'W45 / W38'],
   ['amber-ollama', "18'/24", 'glm-5.3-flash / d41f @ Ollama Cloud', 'W37'],
   ['amber-commandcode', "15'/23 ∅", 'd41f @ CommandCode · owner 令冻结', 'W37'],
