@@ -29,9 +29,15 @@ class Facts:
             marked = any(cell.get('na', 0) > 0 for cell in lane['axis'].values()) or lane['id'] in frozen
             self.shown[lane['id']] = f"{lane['total']}{chr(39) if marked else ''}/{lane['n']}"
         self.numeric = {lane['id']: f"{lane['total']}/{lane['n']}" for lane in self.lanes}
+        # New board (src/data/axes-new.json, board='new'): its weeks and scores are real published facts,
+        # but it stays out of self.lanes / shown / fingerprint so the old-board figure registry is untouched.
+        new_path = root / 'src/data/axes-new.json'
+        self.new_lanes = json.loads(new_path.read_text(encoding='utf-8')) if new_path.exists() else []
+        self.new_numeric = {lane['id']: f"{lane['total']}/{lane['n']}" for lane in self.new_lanes}
+        self.new_weeks = {lane['wk'] for lane in self.new_lanes}
         weeks = sorted(lane['wk'] for lane in self.lanes)
-        self.current_week = weeks[-1]                       # e.g. 'W40'
-        self.lane_weeks = set(weeks)
+        self.current_week = weeks[-1]                       # e.g. 'W40' (old board; snapshot wording follows it)
+        self.lane_weeks = set(weeks) | self.new_weeks
         self.repo_lanes = {}
         for lane in self.lanes:
             self.repo_lanes.setdefault(lane['repo'], []).append(lane)

@@ -1,9 +1,13 @@
 {
- "amber_db_blob": "3a2cec5b7e994eff83d274d75733231a7df00258",
- "amber_run_commit": "248fecbe3ab53f9cadc7fa9ac9f51ba1aa69aad2",
+ "amber_run_commit": "8733bc8f24f54111a5b749c6119a75b08bc654d2",
+ "axes_new_sha256": "94da968a3733e8cafc4bb0ae9117ae8eb768883ccf3281dde42b3688c6f3b060",
  "axes_sha256": "480c7265c5edf363f486fe933ade9b19df7b4cf0cf2cecea9dbdfd5ae5a63157",
  "generator": "amber-run tools/amberdb/publish.py + export_site_data.py via sync_site.py",
  "note": "do not edit axes.json or site-data.json by hand; regenerate with sync_site.py --write",
  "rule_version": "headline_v1",
- "site_data_sha256": "16e9c12082931f5292735d3e9e9789cbb78c5d149e195c4f01fc87f5daac6561"
+ "site_data_sha256": "16e9c12082931f5292735d3e9e9789cbb78c5d149e195c4f01fc87f5daac6561",
+ "snapshot_created_at_utc": "2026-11-13T14:41:09.999843+00:00",
+ "snapshot_manifest_sha256": "79a5aa248d238d67dead74d6c07feb1472737626f8782e9f040c00dfbac5833a",
+ "snapshot_sha256": "e12dcda29db35249c5d201bb5494e6b839894d29fad18ac96ede745565f771b6",
+ "snapshot_source": "owner-designated-primary-backup"
 }

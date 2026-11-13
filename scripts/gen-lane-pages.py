@@ -116,7 +116,7 @@ def build(con):
     lanes = {}
     for lane in board.lanes:
         pid = lane["public_id"]
-        if pid in SKIP_LANES:
+        if pid in SKIP_LANES or lane.get("board", "old") != "old":  # new-board lanes have no lane pages (yet)
             continue
         lr = board.combined_lane(lane) or board.compute_lane(lane)
         unreported = {c for c in (lane["unreported_cols"] or "").split(",") if c}

@@ -88,7 +88,7 @@ def week_tokens(text):
 def run(root, dist, registry, propose=False):
     facts = Facts(root)
     violations, checked = [], {'cards': 0, 'score_tokens': 0, 'week_tokens': 0, 'patterns': 0, 'pages': 0}
-    current_scores = set(facts.numeric.values())
+    current_scores = set(facts.numeric.values()) | set(facts.new_numeric.values())
     num = lambda w: int(w[1:])
     proposal = {'pages': {}, 'cards': {}}
 
@@ -137,7 +137,7 @@ def run(root, dist, registry, propose=False):
         checked['week_tokens'] += len(weeks)
         allowed_weeks = set(spec.get('historical_weeks', [])) | facts.lane_weeks | {facts.current_week}
         for week in sorted(set(weeks)):
-            if num(week) > num(facts.current_week):
+            if num(week) > num(facts.current_week) and week not in facts.new_weeks:
                 violations.append(f"{page}: {week} is newer than the current week {facts.current_week}")
             elif week not in allowed_weeks:
                 violations.append(f"{page}: week {week} is not registered (current is {facts.current_week})")

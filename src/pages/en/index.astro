@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picker from '../../components/Picker.astro';
+import NewBoard from '../../components/NewBoard.astro';
 import rawAxes from '../../data/axes.json';
 import { route } from '../../utils/route';
 import { laneInfo, lanesOfModel, modelPath, modelSlugs, MODEL_TITLE } from '../../utils/lane-pages';
@@ -130,6 +131,8 @@ const repos = [
         </ul>
       </div>
     </section>
+
+    <NewBoard lang="en" />
 
     <section class="pending-section glass" aria-labelledby="pending-title">
       <header class="pending-header">

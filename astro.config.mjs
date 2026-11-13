@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs';
 // axes.provenance.json. Every build checks both against it, so a hand edit (or a stale provenance)
 // fails the build.
 const provenance = JSON.parse(readFileSync(new URL('./src/data/axes.provenance.json', import.meta.url), 'utf8'));
-for (const [file, key] of [['axes.json', 'axes_sha256'], ['site-data.json', 'site_data_sha256']]) {
+for (const [file, key] of [['axes.json', 'axes_sha256'], ['site-data.json', 'site_data_sha256'], ['axes-new.json', 'axes_new_sha256']]) {
   const sha = createHash('sha256').update(readFileSync(new URL(`./src/data/${file}`, import.meta.url))).digest('hex');
   if (provenance[key] !== sha) {
     throw new Error(

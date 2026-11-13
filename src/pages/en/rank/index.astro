@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import DotBoard from '../../../components/DotBoard.astro';
+import NewBoard from '../../../components/NewBoard.astro';
 import rawLanes from '../../../data/axes.json';
 import { pageLaneIds } from '../../../utils/lane-pages';
 import siteData from '../../../data/site-data.json';
@@ -55,6 +56,8 @@ const stats = faces.map(([id, label]) => {
 >
   <div class="wrap rank-page" id="rank-app" data-lanes={JSON.stringify(lanes)} data-pages={JSON.stringify(pageLaneIds)} data-faces={JSON.stringify(faces)}>
     <h1>Rank models by work — <em>not just the total</em></h1>
+
+    <NewBoard lang="en" />
 
     <section class="section" aria-labelledby="dots-title">
       <h2 id="dots-title">All lanes at a glance</h2>
